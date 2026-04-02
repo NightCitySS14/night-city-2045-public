@@ -15,7 +15,7 @@
 - type: startingGear
   id: TraumaTeamCoronerGear
   equipment:
-    jumpsuit: ClothingUniformJumpsuitMedicalDoctor
+    jumpsuit: ClothingUniformJumpsuitMedicalGreen
     back: ClothingBackpackMedical
     shoes: ClothingShoesColorWhite
     ears: ClothingHeadsetMedical

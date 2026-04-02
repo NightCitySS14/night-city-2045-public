@@ -16,7 +16,7 @@
 - type: startingGear
   id: TraumaTeamOperativeGear
   equipment:
-    jumpsuit: ClothingUniformJumpsuitSecBlue
+    jumpsuit: ClothingUniformJumpsuitMedicalGreen
     back: ClothingBackpackSecurity
     shoes: ClothingShoesBootsCombat
     ears: ClothingHeadsetAltSecurity
