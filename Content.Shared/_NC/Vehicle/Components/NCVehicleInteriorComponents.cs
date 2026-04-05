@@ -1,10 +1,12 @@
 using Robust.Shared.GameObjects;
+using Robust.Shared.GameStates;
 using Robust.Shared.Map;
+using Robust.Shared.Serialization;
 
 namespace Content.Shared._NC.Vehicle.Components;
 
-[RegisterComponent]
-public sealed partial class NCVehicleInteriorComponent : Component
+[RegisterComponent, NetworkedComponent]
+public sealed partial class RMCVehicleInteriorComponent : Component
 {
     public EntityUid Map = EntityUid.Invalid;
     public MapId MapId = MapId.Nullspace;
@@ -15,14 +17,15 @@ public sealed partial class NCVehicleInteriorComponent : Component
     public HashSet<EntityUid> Passengers = new();
 }
 
-[RegisterComponent]
-public sealed partial class NCVehicleInteriorLinkComponent : Component
+[RegisterComponent, NetworkedComponent]
+public sealed partial class RMCVehicleInteriorLinkComponent : Component
 {
     public EntityUid Vehicle = EntityUid.Invalid;
 }
 
-[RegisterComponent]
-public sealed partial class NCVehicleInteriorOccupantComponent : Component
+[RegisterComponent, NetworkedComponent]
+public sealed partial class RMCVehicleInteriorOccupantComponent : Component
 {
+    [ViewVariables]
     public EntityUid Vehicle = EntityUid.Invalid;
 }

@@ -6,7 +6,6 @@ using Content.Shared.Access.Components;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Buckle;
 using Content.Shared.Buckle.Components;
-using Content.Shared.Containers.ItemSlots;
 using Content.Shared.Damage;
 using Content.Shared.DoAfter;
 using Content.Shared.Interaction;
@@ -15,6 +14,7 @@ using Content.Shared.Movement.Events;
 using Content.Shared.Movement.Systems;
 using Content.Shared.Popups;
 using Content.Shared.Whitelist;
+using Content.Shared.Containers.ItemSlots;
 using JetBrains.Annotations;
 using Robust.Shared.Containers;
 using Robust.Shared.EntitySerialization.Systems;
@@ -33,8 +33,6 @@ public sealed partial class VehicleSystem : EntitySystem
     [Dependency] private readonly EntityWhitelistSystem _entityWhitelist = default!;
     [Dependency] private readonly SharedMoverController _mover = default!;
     [Dependency] private readonly IGameTiming _timing = default!;
-    
-    // RMC Dependencies
     [Dependency] private readonly SharedEyeSystem _eye = default!;
     [Dependency] private readonly INetManager _net = default!;
     [Dependency] private readonly IMapManager _mapManager = default!;
@@ -43,6 +41,7 @@ public sealed partial class VehicleSystem : EntitySystem
     [Dependency] private readonly SharedPopupSystem _popup = default!;
     [Dependency] private readonly MetaDataSystem _meta = default!;
     [Dependency] private readonly SharedTransformSystem _transform = default!;
+    [Dependency] private readonly NCVehicleTopologySystem _topology = default!; 
     [Dependency] private readonly ItemSlotsSystem _itemSlots = default!;
 
     public override void Initialize()
@@ -58,6 +57,47 @@ public sealed partial class VehicleSystem : EntitySystem
         SubscribeLocalEvent<VehicleComponent, GetAdditionalAccessEvent>(OnVehicleGetAdditionalAccess);
 
         SubscribeLocalEvent<VehicleOperatorComponent, ComponentShutdown>(OnOperatorShutdown);
+        
+        // Жизненный цикл обитателя (ТОЧНЫЙ ПЕРЕНОС RMC)
+        SubscribeLocalEvent<RMCVehicleInteriorOccupantComponent, ComponentStartup>(OnOccupantStartup);
+        SubscribeLocalEvent<RMCVehicleInteriorOccupantComponent, ComponentRemove>(OnOccupantRemove);
+        SubscribeLocalEvent<RMCVehicleInteriorOccupantComponent, MapUidChangedEvent>(OnOccupantMapChanged);
+        
+        // События пристегивания
+        SubscribeLocalEvent<VehicleDriverSeatComponent, StrappedEvent>(OnDriverSeatStrapped);
+        SubscribeLocalEvent<VehicleDriverSeatComponent, UnstrappedEvent>(OnDriverSeatUnstrapped);
+    }
+
+    private void OnDriverSeatStrapped(Entity<VehicleDriverSeatComponent> ent, ref StrappedEvent args)
+    {
+        if (_net.IsClient)
+            return;
+
+        if (!TryGetVehicleFromInterior(ent.Owner, out var vehicleUid) ||
+            !TryComp<VehicleComponent>(vehicleUid, out var vehicleComp))
+        {
+            return;
+        }
+
+        TrySetOperator((vehicleUid.Value, vehicleComp), args.Buckle.Owner);
+        EnsureComp<VehicleOperatorComponent>(args.Buckle.Owner);
+    }
+
+    private void OnDriverSeatUnstrapped(Entity<VehicleDriverSeatComponent> ent, ref UnstrappedEvent args)
+    {
+        if (_net.IsClient)
+            return;
+
+        if (!TryGetVehicleFromInterior(ent.Owner, out var vehicleUid) ||
+            !TryComp<VehicleComponent>(vehicleUid, out var vehicleComp))
+        {
+            return;
+        }
+
+        if (vehicleComp.Operator != args.Buckle.Owner)
+            return;
+
+        TryRemoveOperator((vehicleUid.Value, vehicleComp));
     }
 
     private void OnBeforeDamageChanged(Entity<VehicleComponent> ent, ref BeforeDamageChangedEvent args)
@@ -89,7 +129,7 @@ public sealed partial class VehicleSystem : EntitySystem
     private void OnVehicleShutdown(Entity<VehicleComponent> ent, ref ComponentShutdown args)
     {
         TryRemoveOperator(ent);
-        CleanupInterior(ent.Owner); // New
+        CleanupInterior(ent.Owner);
     }
 
     private void OnVehicleGetAdditionalAccess(Entity<VehicleComponent> ent, ref GetAdditionalAccessEvent args)

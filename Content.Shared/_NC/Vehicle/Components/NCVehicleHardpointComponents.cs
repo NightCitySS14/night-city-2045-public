@@ -78,7 +78,6 @@ public sealed partial class RMCHardpointSlotsComponent : Component
     [DataField, AutoNetworkedField]
     public ProtoId<RMCHardpointVehicleFamilyPrototype> VehicleFamily;
 
-    // Поправлено: ToolQualityPrototype обычно лежит в Content.Shared.Tools
     [DataField, AutoNetworkedField]
     public ProtoId<Content.Shared.Tools.ToolQualityPrototype> RemoveToolQuality = "Prying";
 

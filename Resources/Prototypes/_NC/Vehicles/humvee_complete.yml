@@ -1,0 +1,203 @@
+# --- ХАМВИ: ОСНОВНАЯ СУЩНОСТЬ ---
+- type: entity
+  id: NCVehicleHumvee
+  name: humvee
+  description: A fast armored utility vehicle outfitted for patrols and support.
+  components:
+  - type: Vehicle
+    movementKind: Grid
+  - type: Clickable
+  - type: GridVehicleMover
+    maxSpeed: 9
+    acceleration: 6
+    deceleration: 12
+  - type: Physics
+    bodyType: Dynamic
+  - type: Fixtures
+    fixtures:
+      world:
+        shape:
+          !type:PhysShapeAabb
+          bounds: -0.425,-1.2,0.425,1.2
+        density: 1000
+        mask:
+        - Impassable
+        - HighImpassable
+        - LowImpassable
+        layer:
+        - LargeMobLayer
+  - type: Sprite
+    drawdepth: Mobs
+    sprite: _NC/Structures/Vehicles/humvee.rsi
+    layers:
+    - map: [ base ]
+      state: humvee_base
+    - map: [ rmc-wheels ]
+      state: wheels_1
+  - type: VehicleEnter
+    interiorPath: /Maps/_NC/Vehicles/humvee_interior.yml
+    enterDoAfter: 1.0
+    exitDoAfter: 1.0
+    maxPassengers: 4
+    entryPoints:
+    - offset: -1,0.8
+      radius: 0.45
+      interiorCoords: 1.61, -2.15
+    - offset: -1,-0.1
+      radius: 0.45
+      interiorCoords: 2.47, -2.15
+    - offset: 1,0.8
+      radius: 0.45
+      interiorCoords: 1.6, -1.35
+    - offset: 1,-0.1
+      radius: 0.45
+      interiorCoords: 2.41,-1.35
+  - type: Damageable
+    damageContainer: Inorganic
+
+# --- ИНТЕРЬЕРНЫЕ СУЩНОСТИ ---
+
+- type: entity
+  id: RMCSeatHumveeBase
+  name: humvee seat
+  abstract: true
+  components:
+  - type: Transform
+    anchored: true
+  - type: Physics
+    bodyType: Static
+  - type: Sprite
+    sprite: _NC/Structures/Vehicles/Interiors/general_humvee.rsi
+    state: car_seat
+    drawdepth: BelowMobs
+  - type: Clickable
+  - type: InteractionOutline
+  - type: Strap
+  - type: Buckle
+
+- type: entity
+  parent: RMCSeatHumveeBase
+  id: RMCSeatHumveePassenger
+  name: humvee passenger seat
+
+- type: entity
+  parent: RMCSeatHumveeBase
+  id: RMCSeatHumveeDriver
+  name: humvee driver seat
+  components:
+  - type: VehicleDriverSeat
+
+- type: entity
+  parent: RMCSeatHumveeBase
+  id: RMCSeatHumveeWeaponsOperator
+  name: humvee gunner seat
+  components:
+  - type: VehicleWeaponsSeat
+    isPrimaryOperatorSeat: true
+
+- type: entity
+  id: RMCVehicleExitArea
+  name: выход
+  components:
+  - type: Transform
+    anchored: true
+  - type: VehicleExit
+  - type: Sprite
+    sprite: _NC/Structures/Vehicles/Interiors/general.rsi
+    state: exit
+
+- type: entity
+  id: RMCVehicleHumveeChassis
+  name: humvee chassis
+  components:
+  - type: Transform
+    anchored: true
+  - type: Sprite
+    sprite: _NC/Structures/Vehicles/Interiors/humvee_chassis.rsi
+    state: humvee_chassis
+
+- type: entity
+  id: RMCVehicleHumveeExitDoor
+  name: humvee door
+  components:
+  - type: Transform
+    anchored: true
+  - type: Sprite
+    sprite: _NC/Structures/Vehicles/Interiors/general_humvee.rsi
+    state: exit_door
+  - type: VehicleExit
+  - type: Physics
+    bodyType: Static
+  - type: Fixtures
+    fixtures:
+      world:
+        shape:
+          !type:PhysShapeAabb
+          bounds: -0.45,-0.45,0.45,0.45
+
+- type: entity
+  id: RMCVehicleHumveeExitDoorDirectional
+  parent: RMCVehicleHumveeExitDoor
+
+- type: entity
+  id: RMCVehicleHumveeViewportSmall
+  name: viewport
+  components:
+  - type: Transform
+    anchored: true
+  - type: Sprite
+    sprite: _NC/Structures/Vehicles/Interiors/general_humvee.rsi
+    state: small_viewport
+  - type: RMCVehicleViewport
+
+- type: entity
+  id: RMCVehicleHumveeViewportFrontNorth
+  parent: RMCVehicleHumveeViewportSmall
+  components:
+  - type: Sprite
+    state: viewport_frontwindow_north
+
+- type: entity
+  id: RMCVehicleHumveeViewportDoor
+  parent: RMCVehicleHumveeViewportSmall
+  components:
+  - type: Sprite
+    state: viewport_door
+
+- type: entity
+  id: RMCVehicleInvisibleWallNoVision
+  name: wall
+  components:
+  - type: Transform
+    anchored: true
+  - type: Physics
+    bodyType: Static
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.49,-0.49,0.49,0.49"
+        mask:
+        - FullTileMask
+        layer:
+        - HighImpassable
+
+- type: entity
+  id: RMCWallInvisibleBulletBlocker
+  parent: RMCVehicleInvisibleWallNoVision
+
+- type: entity
+  id: RMCWallInvisibleBulletLightBlocker
+  parent: RMCVehicleInvisibleWallNoVision
+
+- type: entity
+  id: RMCVehicleHumveeAmmoLoader
+  name: humvee ammo loader
+  components:
+  - type: Transform
+    anchored: true
+  - type: Sprite
+    sprite: _NC/Structures/Vehicles/Interiors/general_humvee.rsi
+    state: weapons_loader
+  - type: RMCVehicleAmmoLoader
