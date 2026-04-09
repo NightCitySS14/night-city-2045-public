@@ -48,4 +48,12 @@
   description: department-Biotechnica-description
   color: "#2ecc71"
   roles:
-    - BiotechChief
+    - BiotechnicaChief
+    - BiotechnicaSecurityLead
+    - BiotechnicaOperativeLead
+    - BiotechnicaOperative
+    - BiotechnicaNetrunner
+    - BiotechnicaBotanist
+    - BiotechnicaMedTech
+    - BiotechnicaTech
+    - BiotechnicaParamedic
