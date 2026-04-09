@@ -1,7 +1,7 @@
 - type: gameMap
   id: Aldente
   mapName: 'New Aldenteе'
-  mapPath: /Maps/_NC/night_city.yml
+  mapPath: /Maps/_NC/aldente.yml
   maxRandomOffset: 0
   randomPainting: false
   minPlayers: 0 # TempChange 0 (10)
@@ -12,9 +12,7 @@
       components:
       - type: StationNameSetup
         mapNameTemplate: '{0} New Aldente {1}'
-        nameGenerator:
-          !type:NanotrasenNameGenerator
-          prefixCreator: 'NC'
+
       - type: StationBiome
         biome: LowDesert
       - type: StationJobs

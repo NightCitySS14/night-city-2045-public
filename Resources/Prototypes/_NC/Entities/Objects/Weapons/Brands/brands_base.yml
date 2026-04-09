@@ -273,6 +273,23 @@
     meleeDamageBonus: 10     # Приклад — холодное оружие
     drawTimeMultiplier: 1.8  # Очень долго доставать
 
+# Nokota — «Американская классика»
+# Надёжное, простое в обслуживании оружие. Хорошие средние показатели.
+- type: entity
+  id: NCBrandNokota
+  abstract: true
+  components:
+  - type: Clothing
+    equipDelay: 0.5
+    unequipDelay: 0.5
+  - type: NCWeapon
+    manufacturer: Nokota
+    tier: Standard
+    durability: 110
+    maxDurability: 110
+    degradationRate: 0.55
+    jamChance: 0.01
+
 #endregion
 
 #region ТИР-2: «Корпоративная Элита» (Отличное качество)

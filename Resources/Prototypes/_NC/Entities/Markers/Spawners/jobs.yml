@@ -54,7 +54,6 @@
   - type: Sprite
     layers:
       - state: green
-      - state: security_cadet
 
 - type: entity
   id: SpawnPointNCPDChief
@@ -66,7 +65,6 @@
   - type: Sprite
     layers:
       - state: green
-      - state: hos
 
 - type: entity
   id: SpawnPointNCPDOfficer
@@ -78,7 +76,6 @@
   - type: Sprite
     layers:
       - state: green
-      - state: security_officer
 
 - type: entity
   id: SpawnPointNCPDSergeant
@@ -90,7 +87,6 @@
   - type: Sprite
     layers:
       - state: green
-      - state: warden
 
 - type: entity
   id: SpawnPointNCPDWatchAgent
@@ -102,7 +98,6 @@
   - type: Sprite
     layers:
       - state: green
-      - state: detective
 
 # MaxTac
 
@@ -116,7 +111,6 @@
   - type: Sprite
     layers:
       - state: green
-      - state: hos
 
 - type: entity
   id: SpawnPointMaxTacNetrunner
@@ -152,7 +146,6 @@
   - type: Sprite
     layers:
       - state: green
-      - state: cmo
 
 - type: entity
   id: SpawnPointTraumaTeamDoctor
@@ -164,7 +157,6 @@
   - type: Sprite
     layers:
       - state: green
-      - state: doctor
 
 - type: entity
   id: SpawnPointTraumaTeamParamedic
@@ -176,7 +168,6 @@
   - type: Sprite
     layers:
       - state: green
-      - state: paramedic
 
 - type: entity
   id: SpawnPointTraumaTeamTech
@@ -188,7 +179,6 @@
   - type: Sprite
     layers:
       - state: green
-      - state: engineer
 
 - type: entity
   id: SpawnPointTraumaTeamCoroner
@@ -200,7 +190,6 @@
   - type: Sprite
     layers:
       - state: green
-      - state: doctor
 
 - type: entity
   id: SpawnPointTraumaTeamPsych
@@ -212,7 +201,6 @@
   - type: Sprite
     layers:
       - state: green
-      - state: doctor
 
 - type: entity
   id: SpawnPointTraumaTeamOperative
@@ -237,7 +225,6 @@
   - type: Sprite
     layers:
       - state: green
-      - state: rd
 
 - type: entity
   id: SpawnPointBiotechnicaSecurityLead
@@ -249,7 +236,6 @@
   - type: Sprite
     layers:
       - state: green
-      - state: hos
 
 - type: entity
   id: SpawnPointBiotechnicaOperativeLead
@@ -261,7 +247,6 @@
   - type: Sprite
     layers:
       - state: green
-      - state: warden
 
 - type: entity
   id: SpawnPointBiotechnicaOperative
@@ -273,7 +258,6 @@
   - type: Sprite
     layers:
       - state: green
-      - state: security_officer
 
 - type: entity
   id: SpawnPointBiotechnicaNetrunner
@@ -296,7 +280,6 @@
   - type: Sprite
     layers:
       - state: green
-      - state: botanist
 
 - type: entity
   id: SpawnPointBiotechnicaMedTech
@@ -308,8 +291,6 @@
   - type: Sprite
     layers:
       - state: green
-      - state: doctor
-
 - type: entity
   id: SpawnPointBiotechnicaTech
   parent: SpawnPointJobBase
@@ -320,7 +301,6 @@
   - type: Sprite
     layers:
       - state: green
-      - state: engineer
 
 - type: entity
   id: SpawnPointBiotechnicaParamedic
@@ -332,8 +312,9 @@
   - type: Sprite
     layers:
       - state: green
-      - state: paramedic
-awnPointBiotechnicaParamedic
+
+- type: entity
+  id: SpawnPointBiotechnicaParamedic
   parent: SpawnPointJobBase
   name: biotechnica paramedic spawn point
   components:
@@ -342,4 +323,3 @@ awnPointBiotechnicaParamedic
   - type: Sprite
     layers:
       - state: green
-      - state: paramedic
