@@ -32,8 +32,7 @@
     back: ClothingBackpackSecurity
     shoes: ClothingShoesBootsCombatFilled
     head: ClothingHeadHelmetHardsuitSecurityRed
-    eyes: ClothingEyesGlassesSunglasses
-  
+    eyes: ClothingEyesGlassesSunglasses 
     id: MaxTacCommanderPDA
     belt: ClothingBeltSecurityFilled
     outerClothing: ClothingOuterHardsuitMilitech
