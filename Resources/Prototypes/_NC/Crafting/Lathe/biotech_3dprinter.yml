@@ -1,7 +1,7 @@
 - type: entity
-  id: NC3dPrinterCivilian
+  id: NC3dPrinterBiotechnica
   parent: [BaseLatheLube, BaseMaterialSiloUtilizer]
-  name: 3д принтер общего назначения
+  name: 3д принтер Биотехники
   description: Конвертирует сырье в продвинутые предметы.
   components:
   - type: Sprite

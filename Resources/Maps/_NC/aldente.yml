@@ -143,6 +143,24 @@ entities:
     - type: Transform
     - type: Map
       mapPaused: True
+    - type: MapAtmosphere
+      space: False
+      mixture:
+        volume: 2500
+        immutable: True
+        moles:
+        - 21.824879
+        - 82.10312
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
     - type: PhysicsMap
     - type: GridTree
     - type: MovedGrids
