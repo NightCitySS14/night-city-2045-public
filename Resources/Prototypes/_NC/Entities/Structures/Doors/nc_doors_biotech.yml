@@ -6,7 +6,6 @@
   parent: BaseNCAirlock
   name: шлюз руководителя Биотехника
   components:
-  - type: Sprite
   - type: AccessReader
     access: [["Biotech_Director"]]
 
@@ -16,7 +15,6 @@
   parent: BaseNCAirlock
   name: шлюз руководителя отдела Биотехника
   components:
-  - type: Sprite
   - type: AccessReader
     access: [["Biotech_HeadOfDepartment"]]
 
@@ -26,7 +24,6 @@
   parent: BaseNCAirlock
   name: шлюз МедТех Биотехника
   components:
-  - type: Sprite
   - type: AccessReader
     access: [["Biotech_MedTech"]]
 
@@ -36,7 +33,6 @@
   parent: BaseNCAirlock
   name: шлюз оперативников Биотехника
   components:
-  - type: Sprite
   - type: AccessReader
     access: [["Biotech_Operative"]]
 
@@ -46,7 +42,6 @@
   parent: BaseNCAirlock
   name: шлюз персонала Биотехника
   components:
-  - type: Sprite
   - type: AccessReader
     access: [["Biotech_Staff"]]
 
@@ -56,6 +51,5 @@
   parent: BaseNCAirlock
   name: шлюз Биотехника общий
   components:
-  - type: Sprite
   - type: AccessReader
-    access: [["Biotechnica"]]
+    access: [["Biotech_General"]]

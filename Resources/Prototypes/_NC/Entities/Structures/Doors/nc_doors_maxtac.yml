@@ -6,7 +6,6 @@
   parent: BaseNCAirlock
   name: шлюз Макстак для персонала
   components:
-  - type: Sprite
   - type: AccessReader
     access: [["MaxTac_General"]]
 
@@ -16,7 +15,6 @@
   parent: BaseNCAirlock
   name: шлюз командира отряда Макстак
   components:
-  - type: Sprite
   - type: AccessReader
     access: [["MaxTac_Command"]]
 
@@ -26,6 +24,5 @@
   parent: BaseNCAirlock
   name: шлюз нетраннера Макстак
   components:
-  - type: Sprite
   - type: AccessReader
     access: [["MaxTac_Armory"]]

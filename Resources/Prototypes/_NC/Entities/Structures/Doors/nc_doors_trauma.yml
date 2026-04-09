@@ -6,7 +6,6 @@
   parent: BaseNCAirlock
   name: шлюз Траума медицинский
   components:
-  - type: Sprite
   - type: AccessReader
     access: [["Trauma_Medical"]]
 
@@ -16,7 +15,6 @@
   parent: BaseNCAirlock
   name: шлюз морга Траума
   components:
-  - type: Sprite
   - type: AccessReader
     access: [["Trauma_Morgue"]]
 
@@ -26,7 +24,6 @@
   parent: BaseNCAirlock
   name: шлюз ангара Траума
   components:
-  - type: Sprite
   - type: AccessReader
     access: [["Trauma_Hangar"]]
 
@@ -36,7 +33,6 @@
   parent: BaseNCAirlock
   name: шлюз командования Траума
   components:
-  - type: Sprite
   - type: AccessReader
     access: [["Trauma_Command"]]
 
@@ -46,6 +42,5 @@
   parent: BaseNCAirlock
   name: шлюз оперативников Траума
   components:
-  - type: Sprite
   - type: AccessReader
     access: [["Trauma_Operative"]]

@@ -6,9 +6,8 @@
   parent: BaseNCAirlock
   name: шлюз НСПД общий
   components:
-  - type: Sprite
   - type: AccessReader
-    access: [["NCPD"]]
+    access: [["NCPD_Patrol"]]
 
 # Шлюз для персонала НСПД
 - type: entity
@@ -16,7 +15,6 @@
   parent: BaseNCAirlock
   name: шлюз НСПД для персонала
   components:
-  - type: Sprite
   - type: AccessReader
     access: [["NCPD_Patrol"]]
 
@@ -26,7 +24,6 @@
   parent: BaseNCAirlock
   name: шлюз арсенала НСПД
   components:
-  - type: Sprite
   - type: AccessReader
     access: [["NCPD_Armory"]]
 
@@ -36,6 +33,5 @@
   parent: BaseNCAirlock
   name: шлюз начальника департамента НСПД
   components:
-  - type: Sprite
   - type: AccessReader
     access: [["NCPD_Command"]]
