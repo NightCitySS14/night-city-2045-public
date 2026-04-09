@@ -50,3 +50,6 @@
 - type: playTimeTracker
   id: JobTraumaTeamPsych
 
+# Jobs Biotech
+- type: playTimeTracker
+  id: JobBiotechChief

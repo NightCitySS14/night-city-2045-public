@@ -19,7 +19,7 @@
   entries:
   - proto: SeedExtractorFlatpack
     price: 5000
-    count: 1
+    count: 3
   - proto: HydroponicsTrayFlatpack
     price: 1200
     count: 3

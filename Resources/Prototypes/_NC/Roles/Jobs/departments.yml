@@ -41,3 +41,11 @@
     - TraumaTeamTech
     - TraumaTeamCoroner
     - TraumaTeamPsych
+
+- type: department
+  id: Biotechnica
+  name: Отделение Biotechnica
+  description: department-Biotechnica-description
+  color: "#2ecc71"
+  roles:
+    - BiotechChief
