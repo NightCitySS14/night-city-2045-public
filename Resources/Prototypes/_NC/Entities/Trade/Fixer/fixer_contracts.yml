@@ -17,6 +17,8 @@
     weight: 40
   - id: fixer_contract_ClinicSupplies
     weight: 50
+  - id: fixer_contract_MedicalSmuggling
+    weight: 40
   # Medium
   - id: fixer_contract_BarrelsForMaelstrom
     weight: 30

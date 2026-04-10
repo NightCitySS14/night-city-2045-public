@@ -223,6 +223,21 @@
   - proto: Syringe
     price: 40
     count: 30
+  - proto: PillCanisterBicaridine
+    price: 400
+    count: 4
+  - proto: PillCanisterKelotane
+    price: 400
+    count: 4
+  - proto: PillCanisterDylovene
+    price: 500
+    count: 3
+  - proto: PillCanisterDexalin
+    price: 600
+    count: 3
+  - proto: PillCanisterTricordrazine
+    price: 800
+    count: 2
 
 - type: storeCategoryStructured
   id: NightMarket_BotanyEquipment
@@ -254,6 +269,81 @@
   - proto: ReagentGrinderFlatpack
     price: 1500
     count: 2
+
+- type: storeCategoryStructured
+  id: NightMarket_Chemistry
+  name: "Химия"
+  entries:
+  - proto: PrimeTimeChemistryBottle
+    price: 550
+    count: 5
+  - proto: NitroPolymerChemistryBottle
+    price: 650
+    count: 3
+  - proto: SixGunChemistryBottle
+    price: 450
+    count: 4
+  - proto: OmnizineChemistryBottle
+    price: 1200
+    count: 1
+  - proto: EphedrineChemistryBottle
+    price: 300
+    count: 5
+  - proto: MorphineChemistryBottle
+    price: 400
+    count: 4
+  - proto: NocturineChemistryBottle
+    price: 500
+    count: 3
+  - proto: UnstableMutagenChemistryBottle
+    price: 400
+    count: 3
+
+- type: storeCategoryStructured
+  id: NightMarket_Hacking
+  name: "Нетраннинг и Софт"
+  entries:
+  - proto: NCCyberdeck
+    price: 8000
+    count: 3
+  - proto: NCProgramPing
+    price: 1000
+    count: 3
+  - proto: NCProgramShock
+    price: 2500
+    count: 3
+  - proto: NCProgramSword
+    price: 3500
+    count: 3
+  - proto: NCProgramBreach
+    price: 3000
+    count: 3
+  - proto: NeuralLinkCable
+    price: 500
+    count: 3
+  - proto: BurnerChip
+    price: 400
+    count: 5
+
+- type: storeCategoryStructured
+  id: NightMarket_TechGear
+  name: "Техника и Сборка"
+  entries:
+  - proto: NCNetVisor
+    price: 2500
+    count: 2
+  - proto: Multitool
+    price: 5000
+    count: 1
+  - proto: Welder
+    price: 800
+    count: 3
+  - proto: CigarettePackNCPink
+    price: 200
+    count: 5
+  - proto: Matchbox
+    price: 50
+    count: 10
 
 - type: storeCategoryStructured
   id: NightMarket_Seeds
@@ -316,5 +406,8 @@
   - NightMarket_Medical
   - NightMarket_BotanyEquipment
   - NightMarket_IndustrialEquipment
+  - NightMarket_Chemistry
+  - NightMarket_Hacking
+  - NightMarket_TechGear
   - NightMarket_Seeds
 
