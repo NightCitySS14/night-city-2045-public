@@ -8,7 +8,7 @@
   maxPlayers: 60
   stations:
     City:
-      stationProto: StandardNanotrasenStation
+      stationProto: NightCityStation
       components:
       - type: StationNameSetup
         mapNameTemplate: '{0} New Aldente {1}'
