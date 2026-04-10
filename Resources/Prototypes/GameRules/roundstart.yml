@@ -4,15 +4,15 @@
   components:
   - type: GameRule
 
-# - type: entity
-#   parent: BaseGameRule
-#   id: RespawnDeadRule
-#   components:
-#   - type: RespawnDeadRule
-#     alwaysRespawnDead: true
-#   - type: RespawnTracker
-#     respawnDelay: 10
-#     deleteBody: false
+- type: entity
+  parent: BaseGameRule
+  id: RespawnDeadRule
+  components:
+  - type: RespawnDeadRule
+    alwaysRespawnDead: true
+  - type: RespawnTracker
+    respawnDelay: 10
+    deleteBody: false
 
 # - type: entity
 #   parent: BaseGameRule
