@@ -338,9 +338,6 @@
   - proto: Welder
     price: 800
     count: 3
-  - proto: CigarettePackNCPink
-    price: 200
-    count: 5
   - proto: Matchbox
     price: 50
     count: 10

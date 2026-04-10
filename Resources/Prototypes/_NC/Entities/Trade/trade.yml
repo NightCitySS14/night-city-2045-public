@@ -153,9 +153,6 @@
   - proto: ClothingOuterArmorBasic
     price: 200
     count: 2
-  - proto: ClothingOuterArmorVest
-    price: 150
-    count: 2
   - proto: ClothingOuterCoatTrench
     price: 100
     count: 4
