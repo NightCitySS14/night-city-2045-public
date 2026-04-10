@@ -313,13 +313,4 @@
     layers:
       - state: green
 
-- type: entity
-  id: SpawnPointBiotechnicaParamedic
-  parent: SpawnPointJobBase
-  name: biotechnica paramedic spawn point
-  components:
-  - type: SpawnPoint
-    job_id: BiotechnicaParamedic
-  - type: Sprite
-    layers:
-      - state: green
+

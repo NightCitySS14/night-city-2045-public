@@ -29,25 +29,8 @@
     EmergencyMedipen: 3
     PowerCellMedium: 2
     RollerBedSpawnFolded: 2
-
-
-
-    #NC EDIT START
+  #NC EDIT START
   startingItemPrices:
-    # Night City 2045 Market Prices (Civilian/Contractor)
-    # HandheldHealthAnalyzer: 1000
-    # Brutepack: 50
-    # Ointment: 50
-    # MedicalPatchPrefilledBicaridine: 50
-    # MedicalPatchPrefilledDermaline: 50
-    # Bloodpack: 50
-    # EpinephrineChemistryBottle: 50
-    # Syringe: 20
-    # Defibrillator: 500
-    # ParamedHypo: 100
-    # EmergencyRollerBedSpawnFolded: 100
-    # VehicleWheelchairFolded: 100
-    # Night City 2045 Employee Prices (Trauma Team internal logic)
     HandheldHealthAnalyzer: 50
     Brutepack: 5
     Ointment: 5
@@ -71,8 +54,7 @@
     RollerBedSpawnFolded: 50
     EmergencyRollerBedSpawnFolded: 50
     VehicleWheelchairFolded: 100
-    #NC EDIT END
-
+  #NC EDIT END
   # WD EDIT START
   emaggedInventory:
     StimpackMini: 1

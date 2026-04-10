@@ -1,11 +1,11 @@
 # # Base
 
-# - type: entity
-#   id: BaseVariationPass
-#   parent: BaseGameRule
-#   abstract: true
-#   components:
-#   - type: StationVariationPassRule
+- type: entity
+  id: BaseVariationPass
+  parent: BaseGameRule
+  abstract: true
+  components:
+  - type: StationVariationPassRule
 
 # # Actual rules
 
