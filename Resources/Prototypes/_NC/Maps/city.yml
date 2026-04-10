@@ -12,9 +12,6 @@
       components:
       - type: StationNameSetup
         mapNameTemplate: '{0} New Aldente {1}'
-
-      - type: StationBiome
-        biome: LowDesert
       - type: StationJobs
         availableJobs:
           # === Гражданские (CivilianNC) ===
