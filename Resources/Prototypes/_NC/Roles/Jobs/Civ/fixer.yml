@@ -1,9 +1,9 @@
 - type: job
   id: Fixer
   name: Фиксер
-  description: job-description-fixer
+  description: Посредник между заказчиками и исполнителями. Тарговец
   playTimeTracker: JobFixer
-  salary: 0
+  salary: 200
   access:
     - NC_General
     - Fixer

@@ -46,7 +46,6 @@
   color: "#2ecc71"
   roles:
     - BiotechnicaChief
-    - BiotechnicaSecurityLead
     - BiotechnicaOperativeLead
     - BiotechnicaOperative
     - BiotechnicaNetrunner
