@@ -1,4 +1,4 @@
-<div align="center"><img alt="WWDP logo" src="https://raw.githubusercontent.com/WWhiteDreamProject/wwdpublic/master/Resources/Textures/_White/Logo/WWDPDarkSplashIcon.png" width="512px" /></div>
+<div align="center"><img alt="WWDP logo" src="https://raw.githubusercontent.com/NightCitySS14/night-station/dev/Resources/Textures/_NC/Logo/14062025_092658.png" width="512px" /></div>
 
 ---
 
