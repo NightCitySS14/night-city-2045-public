@@ -69,3 +69,9 @@
   id: JobBiotechnicaTech
 - type: playTimeTracker
   id: JobBiotechnicaParamedic
+
+# Jobs Zhirafa
+- type: playTimeTracker
+  id: JobZhirafaEngeneer
+- type: playTimeTracker
+  id: JobZhirafaJanitor
