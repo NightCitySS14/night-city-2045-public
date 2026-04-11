@@ -1,0 +1,20 @@
+- type: htnCompound
+  id: NCBanditRootCompound
+  branches:
+    # Priority 1: Combat.
+    - tasks:
+        - !type:HTNCompoundTask
+          task: SimpleHumanoidHostileCompound
+    
+    # Priority 2: Maintenance (Racking). 
+    # This will only be reached if combat planning fails.
+    - tasks:
+        - !type:HTNCompoundTask
+          task: RackGunCompound
+
+- type: htnCompound
+  id: RackGunCompound
+  branches:
+    - tasks:
+        - !type:HTNPrimitiveTask
+          operator: !type:NPCUseInHandOperator

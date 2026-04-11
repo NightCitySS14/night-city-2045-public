@@ -1,0 +1,29 @@
+# Bandit NPC for Night City
+- type: startingGear
+  id: NCBanditGear
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitAncient
+    outerClothing: ClothingOuterArmorMilitechBulletproof
+    shoes: ClothingShoesColorBlack
+    pocket1: MagazinePistolAvenger
+    pocket2: MagazinePistolAvenger
+  inhand:
+  - WeaponPistolAvenger
+
+- type: entity
+  name: бандит
+  parent: BaseMobHuman
+  id: MobNCBandit
+  description: Обычный уличный бандит, вооружившийся корпо-снаряжением с черного рынка.
+  components:
+  - type: NpcFactionMember
+    factions:
+    - Syndicate
+  - type: HTN
+    rootTask:
+      task: SimpleHumanoidHostileCompound
+  - type: Loadout
+    prototypes: [NCBanditGear]
+  - type: NPCAutoReload
+  - type: InputMover
+  - type: MobMover
