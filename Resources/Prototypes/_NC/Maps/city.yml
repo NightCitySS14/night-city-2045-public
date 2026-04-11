@@ -16,31 +16,27 @@
         availableJobs:
           # === Гражданские (CivilianNC) ===
           NCCitizen: [-1, -1]
-          EdgeRunnerSolo: [-1, -1]
+          EdgeRunnerSolo: [5, 5]
           Fixer: [2, 2]
           Reaper: [2, 2]
           # === NCPD ===
           NCPDChief: [1, 1]
           NCPDCommander: [1, 1]
           NCPDLieutenant: [2, 2]
-          NCPDInspector: [2, 2]
-          NCPDSergeant: [3, 3]
-          NCPDOfficer: [4, 4]
-          NCPDWatchAgent: [4, 4]
+          NCPDInspector: [1, 1]
+          NCPDSergeant: [5, 5]
+          NCPDOfficer: [5, 5]
+          NCPDWatchAgent: [3, 3]
           # === NCPD MaxTac ===
           MaxTacCommander: [1, 1]
-          MaxTacPretor: [2, 2]
-          MaxTacInterdictor: [2, 2]
-          MaxTacNetrunner: [1, 1]
           MaxTacEraser: [2, 2]
           # === Trauma Team ===
           TraumaTeamChief: [1, 1]
-          TraumaTeamDoctor: [2, 2]
+          TraumaTeamDoctor: [3, 3]
           TraumaTeamParamedic: [2, 2]
-          TraumaTeamOperative: [3, 3]
+          TraumaTeamOperative: [4, 4]
           TraumaTeamCoroner: [1, 1]
           TraumaTeamPsych: [1, 1]
-          TraumaTeamTech: [2, 2]
           # === Biotechnica ===
           BiotechnicaChief: [1, 1]
           BiotechnicaOperativeLead: [1, 1]

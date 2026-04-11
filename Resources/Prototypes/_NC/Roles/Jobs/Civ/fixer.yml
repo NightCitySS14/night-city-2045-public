@@ -1,10 +1,11 @@
 - type: job
   id: Fixer
   name: Фиксер
-  description: job-description-fixer
+  description: Посредник между заказчиками и исполнителями. Торговец.
   playTimeTracker: JobFixer
   salary: 0
   icon: "JobIconCivilCitizen"
+  salary: 200
   access:
     - NC_General
     - Fixer

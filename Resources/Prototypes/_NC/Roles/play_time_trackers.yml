@@ -26,13 +26,7 @@
 - type: playTimeTracker
   id: JobMaxTacCommander
 - type: playTimeTracker
-  id: JobMaxTacNetrunner
-- type: playTimeTracker
   id: JobMaxTacEraser
-- type: playTimeTracker
-  id: JobMaxTacPretor
-- type: playTimeTracker
-  id: JobMaxTacInterdictor
 
 # Jobs TraumaTeam
 - type: playTimeTracker
@@ -49,12 +43,12 @@
   id: JobTraumaTeamCoroner
 - type: playTimeTracker
   id: JobTraumaTeamPsych
+- type: playTimeTracker
+  id: JobTraumaTeamTech
 
 # Jobs Biotech
 - type: playTimeTracker
   id: JobBiotechnicaChief
-- type: playTimeTracker
-  id: JobBiotechnicaSecurityLead
 - type: playTimeTracker
   id: JobBiotechnicaOperativeLead
 - type: playTimeTracker

@@ -1,6 +1,6 @@
 - type: job
   id: MaxTacCommander
-  name: Штурм командир Макс-Так
+  name: Штурм командир Max-Tac
   description: job-description-maxtac-commander
   playTimeTracker: JobMaxTacCommander
   weight: 95
@@ -35,7 +35,7 @@
     back: ClothingBackpackSecurity
     shoes: ClothingShoesBootsCombatFilled
     head: ClothingHeadHelmetHardsuitSecurityRed
-    eyes: ClothingEyesGlassesSunglasses 
+    eyes: ClothingEyesGlassesSunglasses
     id: MaxTacCommanderPDA
     belt: ClothingBeltSecurityFilled
     outerClothing: ClothingOuterHardsuitMilitech
