@@ -10820,10 +10820,6 @@ entities:
           decals:
             7293: -36.679695,44.90313
             7297: -34.210945,44.923977
-    - type: GridAtmosphere
-      version: 2
-      data:
-        chunkSize: 4
     - type: GasTileOverlay
     - type: RadiationGridResistance
     - type: NavMap
