@@ -3,8 +3,8 @@
   parent: BaseGameRule
   components:
   - type: MaxTimeRestartRule
-    roundMaxTime: 7200 # 2 hours
-    roundEndDelay: 10
+    roundMaxTime: 14400 # 2 hours
+    roundEndDelay: 300
   - type: NightCityObjectiveRule
     baseObjective: SurvivalObjective
     departmentObjectives:

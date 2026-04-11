@@ -26,13 +26,7 @@
 - type: playTimeTracker
   id: JobMaxTacCommander
 - type: playTimeTracker
-  id: JobMaxTacNetrunner
-- type: playTimeTracker
   id: JobMaxTacEraser
-- type: playTimeTracker
-  id: JobMaxTacPretor
-- type: playTimeTracker
-  id: JobMaxTacInterdictor
 
 # Jobs TraumaTeam
 - type: playTimeTracker
