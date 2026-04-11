@@ -4,6 +4,7 @@
   description: job-description-reaper
   playTimeTracker: JobReaper
   salary: 300
+  icon: "JobIconCivilCitizen"
   access:
     - NC_General
   startingGear: ReaperGear
@@ -15,4 +16,3 @@
     back: ClothingBackpackSatchelMedical
     shoes: ClothingShoesColorWhite
     id: RipperPDA
-    ears: ClothingHeadsetMedical

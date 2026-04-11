@@ -3,8 +3,9 @@
   name: Претор
   description: 'Тяжело бронированный аргумент в любом споре с ПсихОтрядом. Вооруженный крупнокалиберным оружием и разрывным снаряжением, вы — тот, кто стоит между обезумевшим мясником и гражданскими. Ваше кредо: если цель всё еще шевелится после прямого попадания, значит, калибр был недостаточно велик'
   playTimeTracker: JobMaxTacPretor
-  weight: 10
+  weight: 65
   salary: 1500
+  icon: "JobIconMaxTacOperator"
   startingGear: MaxTacPretorGear
   supervisors: Штурм командир
   access:
@@ -28,7 +29,6 @@
     back: ClothingBackpackSecurity
     shoes: ClothingShoesBootsCombatFilled
     head: ClothingHeadHelmetHardsuitSecurity
-    ears: ClothingHeadsetAltSecurity
     id: MaxTacPretorPDA
     belt: ClothingBeltSecurityFilled
     outerClothing: ClothingOuterHardsuitSecurity

@@ -5,6 +5,7 @@
   playTimeTracker: JobBiotechnicaBotanist
   weight: 10
   salary: 1100
+  icon: "JobIconBiotechAgrarian"
   startingGear: BiotechnicaBotanistGear
   access:
     - Trauma_Command
@@ -21,7 +22,6 @@
     shoes: ClothingShoesColorWhite
     head: ClothingHeadHatBeretSeniorPhysician
     eyes: ClothingEyesGlassesSunglasses
-    ears: ClothingHeadsetCMO
     id: TraumaTeamChiefPDA
     belt: ClothingBeltMedicalFilled
     outerClothing: ClothingOuterCoatLabCmo

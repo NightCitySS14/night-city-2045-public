@@ -4,6 +4,7 @@
   description: job-description-edgerunner
   playTimeTracker: JobEdgeRunnerSolo
   salary: 0
+  icon: "JobIconCivilEdgerunner"
   access:
     - NC_General
     - EdgeRunner
@@ -16,6 +17,5 @@
     back: ClothingBackpackSatchelSecurity
     shoes: ClothingShoesBootsCombat
     id: EdgeRunnerPDA
-    ears: ClothingHeadsetAltSecurity
     gloves: ClothingHandsGlovesColorBlack
     outerClothing: ClothingOuterArmorBasic

@@ -3,8 +3,9 @@
   name: Техник Trauma Team
   description: 'Вы — тот, кто заставляет это ведро с гайками лететь, когда в него всадили очередь из турели. Пока врачи латают клиента, вы латаете "AV", используя смекалку и гаечный ключ. Помните: если двигатель заглохнет в Пустоши, медицинская страховка вам уже не понадобится'
   playTimeTracker: JobTraumaTeamTech
-  weight: 20
+  weight: 40
   salary: 450
+  icon: "JobIconTraumaTech"
   startingGear: TraumaTeamTechGear
   supervisors: Главный врач Trauma Team
   access:
@@ -23,6 +24,5 @@
     jumpsuit: ClothingUniformJumpsuitJeansBrown
     back: ClothingBackpackDuffel
     shoes: ClothingShoesColorWhite
-    ears: ClothingHeadsetMedical
     id: TraumaTeamTechPDA
     belt: ClothingBeltUtilityFilled

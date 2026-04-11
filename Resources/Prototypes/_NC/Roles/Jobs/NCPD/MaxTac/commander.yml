@@ -3,8 +3,9 @@
   name: Штурм командир Макс-Так
   description: job-description-maxtac-commander
   playTimeTracker: JobMaxTacCommander
-  weight: 5
+  weight: 95
   salary: 1800
+  icon: "JobIconMaxTacCommander"
   startingGear: MaxTacCommanderGear
   supervisors: job-supervisors-centcom
   access:

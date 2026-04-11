@@ -4,6 +4,7 @@
   description: job-description-citizen
   playTimeTracker: JobNCCitizen
   salary: 50
+  icon: "JobIconCivilCitizen"
   startingGear: NCCitizenGear
   access:
     - NC_General
@@ -15,4 +16,3 @@
     back: ClothingBackpackSatchel
     shoes: ClothingShoesColorBlack
     id: CitizenPDA
-    ears: ClothingHeadsetGrey

@@ -3,8 +3,9 @@
   name: Стиратель
   description: Стандартизированная ячейка ПсихОтряда и ваша персональная путевка в чистилище. Используя штатное снаряжение MAX-TAC, вы методично зачищаете последствия чужого цифрового безумия. Вы — последняя линия обороны, за которой только тишина и отчеты о летальных исходах
   playTimeTracker: JobMaxTacEraser
-  weight: 10
+  weight: 60
   salary: 1200
+  icon: "JobIconMaxTacOperator"
   startingGear: MaxTacEraserGear
   supervisors: Штурм командир
   access:

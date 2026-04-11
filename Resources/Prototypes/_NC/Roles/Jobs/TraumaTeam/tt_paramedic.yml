@@ -3,8 +3,9 @@
   name: Парамедик Trauma Team
   description: 'Элитный мясник на зарплате. Ваша задача — заставить сердце клиента биться, даже если оно решило уйти на покой. Плевать на этику: залейте пациента стимуляторами и латайте дыры. Пока горит статус "Платина", смерть — лишь техническое неудобство'
   playTimeTracker: JobTraumaTeamParamedic
-  weight: 20
+  weight: 70
   salary: 850
+  icon: "JobIconTraumaParamed"
   startingGear: TraumaTeamParamedicGear
   supervisors: Главный врач Trauma Team
   access:
@@ -24,7 +25,6 @@
     jumpsuit: ClothingUniformJumpsuitParamedicUniform
     back: ClothingBackpackSatchelMedical
     shoes: ClothingShoesBootsCombat
-    ears: ClothingHeadsetMedical
     id: TraumaTeamParamedicPDA
     belt: ClothingBeltMedicalEMTFilled
     outerClothing: ClothingOuterHardsuitTraumaTeamMedic

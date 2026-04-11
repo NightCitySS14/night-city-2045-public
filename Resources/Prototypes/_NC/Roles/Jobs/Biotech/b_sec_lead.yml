@@ -1,10 +1,11 @@
 - type: job
   id: BiotechnicaSecurityLead
-  name: Старший офиер безопасности Biotechnica
-  description: 'Руковodитель отдела Biotechnica отвечает за управление и координацию всех операций, связанных с биотехнологическими исследованиями и разработками. Он обеспечивает эффективное использование ресурсов, поддерживает высокие стандарты безопасности и качества, а также способствует инновациям в области биотехнологий.'
+  name: Старший офицер безопасности Biotechnica
+  description: 'Руковoдитель службы безопасности Biotechnica. Отвечает напрямую перед руководителем объекта. Под его началом находятся все силы службы безопасности корпорации на объекте.'
   playTimeTracker: JobBiotechnicaSecurityLead
-  weight: 10
+  weight: 90
   salary: 2200
+  icon: "JobIconBiotechParamedOper"
   startingGear: BiotechnicaSecurityLeadGear
   access:
     - Trauma_Command
