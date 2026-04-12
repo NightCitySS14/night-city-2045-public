@@ -3,7 +3,7 @@
   name: Риппер
   description: Частный врач, работает как в своей клинике так и в паре с наемниками
   playTimeTracker: JobReaper
-  icon: "JobIconCivilCitizen"
+  icon: "JobIconCivilRipper"
   salary: 200
   access:
     - NC_General

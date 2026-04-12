@@ -3,7 +3,7 @@
   name: Фиксер
   description: Посредник между заказчиками и исполнителями. Торговец.
   playTimeTracker: JobFixer
-  icon: "JobIconCivilCitizen"
+  icon: "JobIconCivilFixer"
   salary: 200
   access:
     - NC_General
