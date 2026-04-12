@@ -3,8 +3,9 @@
   name: Техник Trauma Team
   description: занимается починкой техники Trauma Team
   playTimeTracker: JobTraumaTeamTech
-  weight: 20
+  weight: 40
   salary: 450
+  icon: "JobIconTraumaTech"
   startingGear: TraumaTeamTechGear
   supervisors: Главный врач Trauma Team
   access:
@@ -23,6 +24,5 @@
     jumpsuit: ClothingUniformJumpsuitJeansBrown
     back: ClothingBackpackDuffel
     shoes: ClothingShoesColorWhite
-    ears: ClothingHeadsetMedical
     id: TraumaTeamTechPDA
     belt: ClothingBeltUtilityFilled

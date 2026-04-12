@@ -3,8 +3,9 @@
   name: Старший патрульный
   description: Опытный патрульный, который повидал многое на улицах Найт-Сити. Знает, как обращаться с бандитами и как не попасть в передрягу
   playTimeTracker: JobNCPDSergeant
-  weight: 10
+  weight: 45
   salary: 600
+  icon: "JobIconNCPDPolice"
   startingGear: NCPDSergeantGear
   supervisors: Лейтенант
   access:
@@ -29,7 +30,6 @@
     back: ClothingBackpackSecurity
     shoes: ClothingShoesBootsJack
     head: ClothingHeadHatWarden
-    ears: ClothingHeadsetAltSecurity
     id: NCPDSergeantPDA
     belt: ClothingBeltSecurityFilled
     outerClothing: ClothingOuterCoatWarden

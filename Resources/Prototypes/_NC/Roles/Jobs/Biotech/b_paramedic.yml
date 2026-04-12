@@ -1,10 +1,11 @@
 - type: job
   id: BiotechnicaParamedic
   name: Парамедик Biotechnica
-  description: 'Относится к рядовому составу, стоит на ровне с Оперативниками в иерархии'
+  description: 'Относится к рядовому составу, стоит на ровне с Оперативниками в иерархии.'
   playTimeTracker: JobBiotechnicaParamedic
-  weight: 10
+  weight: 60
   salary: 1200
+  icon: "JobIconBiotechParamed"
   startingGear: BiotechnicaParamedicGear
   access:
     - Trauma_Command
@@ -26,7 +27,6 @@
     shoes: ClothingShoesColorWhite
     head: ClothingHeadHatBeretSeniorPhysician
     eyes: ClothingEyesGlassesSunglasses
-    ears: ClothingHeadsetCMO
     id: TraumaTeamChiefPDA
     belt: ClothingBeltMedicalFilled
     outerClothing: ClothingOuterCoatLabCmo

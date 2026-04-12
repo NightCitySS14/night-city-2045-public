@@ -3,8 +3,9 @@
   name: Младший патрульный
   description: 'Вы — самая нижняя строчка в пищевой цепочке департамента и основной расходный материал городских улиц. Ваша работа — это бесконечные пешие обходы, проверка документов у подозрительных типов и надежда, что первый же выстрел из подворотни не станет для вас последним. Помните: пока вы рядовой, вы обязаны подчиняться всем, у кого на плечах больше одной полоски, и молиться, чтобы ваш напарник не сбежал при виде первой же банды'
   playTimeTracker: JobNCPDOfficer
-  weight: 20
+  weight: 40
   salary: 350
+  icon: "JobIconNCPDPolice"
   startingGear: NCPDOfficerGear
   supervisors: Старший патрульный
   access:
@@ -26,7 +27,6 @@
     back: ClothingBackpackSecurity
     shoes: ClothingShoesBootsJack
     head: ClothingHeadHelmetBasic
-    ears: ClothingHeadsetAltSecurity
     id: NCPDOfficerPDA
     belt: ClothingBeltSecurityFilled
     outerClothing: ClothingOuterArmorBasic

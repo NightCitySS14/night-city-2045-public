@@ -3,8 +3,9 @@
   name: Коммандер
   description: Заместитель шефа полиции. Относится к младшему командному составу.
   playTimeTracker: JobNCPDCommander
-  weight: 20
+  weight: 90
   salary: 1000
+  icon: "JobIconNCPDCommander"
   startingGear: NCPDCommanderGear
   supervisors: Начальник департамента полиции
   access:
@@ -28,7 +29,6 @@
     back: ClothingBackpackSecurity
     shoes: ClothingShoesBootsJack
     head: ClothingHeadHelmetBasic
-    ears: ClothingHeadsetAltSecurity
     id: NCPDCommanderPDA
     belt: ClothingBeltSecurityFilled
     outerClothing: ClothingOuterArmorBasic

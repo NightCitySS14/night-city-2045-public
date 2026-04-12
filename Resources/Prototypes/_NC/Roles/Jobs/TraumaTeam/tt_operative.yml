@@ -3,8 +3,9 @@
   name: Оперативник Trauma Team
   description: Охраняет парамедика Trauma Team
   playTimeTracker: JobTraumaTeamOperative
-  weight: 15
+  weight: 60
   salary: 900
+  icon: "JobIconTraumaOperator"
   startingGear: TraumaTeamOperativeGear
   supervisors: Главный врач Trauma Team, Парамедик Trauma Team
   access:
@@ -24,7 +25,6 @@
     jumpsuit: ClothingUniformJumpsuitMedicalGreen
     back: ClothingBackpackSecurity
     shoes: ClothingShoesBootsCombat
-    ears: ClothingHeadsetAltSecurity
     id: TraumaTeamOperativePDA
     belt: ClothingBeltSecurityFilled
     outerClothing: ClothingOuterHardsuitTraumaTeamOperative

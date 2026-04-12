@@ -3,8 +3,9 @@
   name: Инспектор
   description: Исполняет должность детектива
   playTimeTracker: JobNCPDInspector
-  weight: 15
+  weight: 80
   salary: 800
+  icon: "JobIconNCPDInspector"
   startingGear: NCPDInspectorGear
   supervisors: Коммандер
   access:
@@ -26,6 +27,5 @@
     back: ClothingBackpackSecurity
     shoes: ClothingShoesBootsJack
     head: ClothingHeadHatBeretSecurity
-    ears: ClothingHeadsetAltSecurity
     id: NCPDInspectorPDA
     belt: ClothingBeltSecurityFilled

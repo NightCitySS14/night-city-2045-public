@@ -3,8 +3,9 @@
   name: Лейтенант
   description: Стандартный младший руководитель сил NCPD. Относится к старшему офицерскому составу
   playTimeTracker: JobNCPDLieutenant
-  weight: 10
+  weight: 85
   salary: 800
+  icon: "JobIconNCPDLiutenant"
   startingGear: NCPDLieutenantGear
   supervisors: Коммандер
   access:
@@ -27,7 +28,6 @@
     back: ClothingBackpackSecurity
     shoes: ClothingShoesBootsJack
     head: ClothingHeadHatWarden
-    ears: ClothingHeadsetAltSecurity
     id: NCPDLieutenantPDA
     belt: ClothingBeltSecurityFilled
     outerClothing: ClothingOuterCoatWarden

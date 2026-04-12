@@ -3,8 +3,9 @@
   name: КиберПсихолог Trauma Team
   description: Лечит от киберпсихоза при помощи терапии
   playTimeTracker: JobTraumaTeamPsych
-  weight: 20
+  weight: 80
   salary: 800
+  icon: "JobIconTraumaPsiholog"
   startingGear: TraumaTeamPsychGear
   supervisors: Главный врач Trauma Team
   access:
@@ -23,7 +24,6 @@
     jumpsuit: ClothingUniformJumpsuitMedicalDoctor
     back: ClothingBackpackMedical
     shoes: ClothingShoesColorWhite
-    ears: ClothingHeadsetMedical
     id: TraumaTeamPsychPDA
     belt: ClothingBeltMedicalFilled
     outerClothing: ClothingOuterCoatLab
