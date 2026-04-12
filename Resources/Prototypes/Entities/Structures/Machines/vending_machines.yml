@@ -937,7 +937,7 @@
     - state: panel
       map: ["enum.WiresVisualLayers.MaintenancePanel"]
   - type: AccessReader
-    access: [["TraumaTeam"]]
+    access: [["Trauma_Medical"]]
   - type: PointLight
     radius: 2
     energy: 1.6
@@ -981,7 +981,7 @@
     - state: panel
       map: ["enum.WiresVisualLayers.MaintenancePanel"]
   - type: AccessReader
-    access: [["Biotechnica"]]
+    access: [["Biotech_General"]]
   - type: PointLight
     radius: 2
     energy: 1.6
@@ -1018,7 +1018,7 @@
     - state: panel
       map: ["enum.WiresVisualLayers.MaintenancePanel"]
   - type: AccessReader
-    access: [["NCPD"]]
+    access: [["NCPD_Patrol"]]
   - type: PointLight
     radius: 2
     energy: 1.8
@@ -1076,7 +1076,7 @@
   suffix: Hydroponics
   components:
   - type: AccessReader
-    access: [["Biotechnica"]]
+    access: [["Biotech_General"]]
 
 - type: entity
   parent: VendingMachine
@@ -1685,7 +1685,7 @@
     mask: /Textures/Effects/LightMasks/cone.png
     autoRot: true
   - type: AccessReader
-    access: [["TraumaTeam"]]
+    access: [["Trauma_Medical"]]
   - type: GuideHelp
     guides:
     - Medical
@@ -1727,7 +1727,7 @@
     energy: 1.6
     color: "#326e3f"
   - type: AccessReader
-    access: [["Biotechnica"]]
+    access: [["Biotech_General"]]
 
 - type: entity
   parent: VendingMachine
@@ -1785,7 +1785,7 @@
     energy: 1.6
     color: "#d82929"
   - type: AccessReader
-    access: [["NCPD"]]
+    access: [["NCPD_Patrol"]]
 
 - type: entity
   parent: VendingMachine
@@ -1897,7 +1897,7 @@
     - state: panel
       map: ["enum.WiresVisualLayers.MaintenancePanel"]
   - type: AccessReader
-    access: [["TraumaTeam"]]
+    access: [["Trauma_Medical"]]
 
 - type: entity
   parent: VendingMachine
@@ -1925,7 +1925,7 @@
     - state: panel
       map: ["enum.WiresVisualLayers.MaintenancePanel"]
   - type: AccessReader
-    access: [["Biotechnica"]]
+    access: [["Biotech_General"]]
 
 - type: entity
   parent: VendingMachine
@@ -2065,7 +2065,7 @@
     - state: panel
       map: ["enum.WiresVisualLayers.MaintenancePanel"]
   - type: AccessReader
-    access: [["NCPD"]]
+    access: [["NCPD_Patrol"]]
 
 - type: entity
   parent: VendingMachine
@@ -2211,7 +2211,7 @@
     - state: panel
       map: ["enum.WiresVisualLayers.MaintenancePanel"]
   - type: AccessReader
-    access: [["TraumaTeam"]]
+    access: [["Trauma_Medical"]]
 
 - type: entity
   parent: VendingMachine
@@ -2239,7 +2239,7 @@
     - state: panel
       map: ["enum.WiresVisualLayers.MaintenancePanel"]
   - type: AccessReader
-    access: [["TraumaTeam"]]
+    access: [["Trauma_Medical"]]
 
 - type: entity
   parent: VendingMachine
@@ -2359,7 +2359,7 @@
     - state: panel
       map: ["enum.WiresVisualLayers.MaintenancePanel"]
   - type: AccessReader
-    access: [["Biotechnica"]]
+    access: [["Biotech_General"]]
   - type: GuideHelp
     guides:
     - Chemicals
