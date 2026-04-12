@@ -3,6 +3,7 @@
   name: Риппер
   description: Частный врач, работает как в своей клинике так и в паре с наемниками
   playTimeTracker: JobReaper
+  icon: "JobIconCivilCitizen"
   salary: 200
   access:
     - NC_General
@@ -15,4 +16,3 @@
     back: ClothingBackpackSatchelMedical
     shoes: ClothingShoesColorWhite
     id: RipperPDA
-    ears: ClothingHeadsetMedical

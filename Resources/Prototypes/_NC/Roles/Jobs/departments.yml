@@ -11,7 +11,7 @@
 
 - type: department
   id: NCPD
-  name: NCPD
+  name: Night City Police Department
   description: department-NCPD-description
   color: "#1e90ff"
   roles:
@@ -53,3 +53,12 @@
     - BiotechnicaMedTech
     - BiotechnicaTech
     - BiotechnicaParamedic
+
+- type: department
+  id: Jiraff
+  name: Корпорация Zhirafa
+  description: department-Biotechnica-description
+  color: "#2ecc71"
+  roles:
+    - ZhirafaEngeneer
+    - ZhirafaJanitor

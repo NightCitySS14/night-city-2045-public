@@ -3,8 +3,9 @@
   name: Агент Дозора
   description: Нетраннер при НСПД
   playTimeTracker: JobNCPDWatchAgent
-  weight: 10
+  weight: 50
   salary: 800
+  icon: "JobIconNCPDPolice"
   startingGear: NCPDWatchAgentGear
   supervisors: Начальник департамента полиции
   access:
@@ -29,6 +30,5 @@
     back: ClothingBackpackSatchelSecurity
     shoes: ClothingShoesColorBlack
     head: ClothingHeadHatFedoraBrown
-    ears: ClothingHeadsetSecurity
     id: NCPDWatchAgentPDA
     outerClothing: ClothingOuterCoatDetective

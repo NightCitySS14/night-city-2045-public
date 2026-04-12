@@ -3,8 +3,9 @@
   name: Парамедик Trauma Team
   description: Врач занимающийся спасением випов но не всегда успешно
   playTimeTracker: JobTraumaTeamParamedic
-  weight: 20
+  weight: 70
   salary: 850
+  icon: "JobIconTraumaParamed"
   startingGear: TraumaTeamParamedicGear
   supervisors: Главный врач Trauma Team
   access:
@@ -24,7 +25,6 @@
     jumpsuit: ClothingUniformJumpsuitParamedicUniform
     back: ClothingBackpackSatchelMedical
     shoes: ClothingShoesBootsCombat
-    ears: ClothingHeadsetMedical
     id: TraumaTeamParamedicPDA
     belt: ClothingBeltMedicalEMTFilled
     outerClothing: ClothingOuterHardsuitTraumaTeamMedic

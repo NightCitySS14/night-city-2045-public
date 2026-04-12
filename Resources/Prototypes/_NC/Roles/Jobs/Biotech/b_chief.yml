@@ -3,8 +3,9 @@
   name: Руководитель объекта Biotechnica
   description: 'Руководитель отдела Biotechnica отвечает за управление и координацию всех операций, связанных с биотехнологическими исследованиями и разработками. Он обеспечивает эффективное использование ресурсов, поддерживает высокие стандарты безопасности и качества, а также способствует инновациям в области биотехнологий.'
   playTimeTracker: JobBiotechnicaChief
-  weight: 10
+  weight: 100
   salary: 3000
+  icon: "JobIconBiotechChief"
   startingGear: BiotechnicaChiefGear
   access:
     - Trauma_Command

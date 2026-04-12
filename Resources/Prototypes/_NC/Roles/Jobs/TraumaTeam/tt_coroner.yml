@@ -3,8 +3,9 @@
   name: Коронер Trauma Team
   description: Вскрывает трупы и помогает копам из NCPD понять, почему этот парень стал трупом. Ваше кредо, мертвые не болтают, но их потроха могут рассказать чертовски много
   playTimeTracker: JobTraumaTeamCoroner
-  weight: 20
+  weight: 90
   salary: 600
+  icon: "JobIconTraumaCoroner"
   startingGear: TraumaTeamCoronerGear
   supervisors: Главный врач Trauma Team
   access:
@@ -23,7 +24,6 @@
     jumpsuit: ClothingUniformJumpsuitMedicalGreen
     back: ClothingBackpackMedical
     shoes: ClothingShoesColorWhite
-    ears: ClothingHeadsetMedical
     id: TraumaTeamCoronerPDA
     belt: ClothingBeltMedicalFilled
     outerClothing: ClothingOuterCoatLab

@@ -3,6 +3,7 @@
   name: Житель
   description: job-description-citizen
   playTimeTracker: JobNCCitizen
+  icon: "JobIconCivilCitizen"
   salary: 200
   startingGear: NCCitizenGear
   access:
@@ -15,4 +16,3 @@
     back: ClothingBackpackSatchel
     shoes: ClothingShoesColorBlack
     id: CitizenPDA
-    ears: ClothingHeadsetGrey
