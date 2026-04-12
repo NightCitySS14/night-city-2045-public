@@ -1,6 +1,6 @@
 - type: job
   id: ZhirafaJanitor
-  name: Житель
+  name: Уборщик
   description: job-description-zhirafa_janitor
   playTimeTracker: JobZhirafaJanitor
   salary: 800

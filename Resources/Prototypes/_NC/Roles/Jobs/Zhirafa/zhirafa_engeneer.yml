@@ -1,6 +1,6 @@
 - type: job
   id: ZhirafaEngeneer
-  name: Риппер
+  name: Инженер
   description: job-description-zhirafa_engeneer
   playTimeTracker: JobZhirafaEngeneer
   salary: 1200

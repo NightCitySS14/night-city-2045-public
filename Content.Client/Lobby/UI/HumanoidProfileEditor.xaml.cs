@@ -1150,8 +1150,10 @@ namespace Content.Client.Lobby.UI
                     JobList.AddChild(category);
                 }
 
-                var jobs = department.Roles.Select(jobId => _prototypeManager.Index(jobId))
-                    .Where(job => job.SetPreference)
+                var jobs = department.Roles
+                    .Select(jobId => _prototypeManager.TryIndex<JobPrototype>(jobId, out var job) ? job : null)
+                    .Where(job => job != null && job.SetPreference)
+                    .Cast<JobPrototype>()
                     .ToArray();
 
                 Array.Sort(jobs, JobUIComparer.Instance);
@@ -1175,8 +1177,10 @@ namespace Content.Client.Lobby.UI
                         TextureScale = new(2, 2),
                         VerticalAlignment = VAlignment.Center
                     };
-                    var jobIcon = _prototypeManager.Index(job.Icon);
-                    icon.Texture = jobIcon.Icon.Frame0();
+                    if (_prototypeManager.TryIndex<JobIconPrototype>(job.Icon, out var jobIcon))
+                    {
+                        icon.Texture = jobIcon.Icon.Frame0();
+                    }
                     selector.Setup(items, job.LocalizedName, 200, job.LocalizedDescription, icon, job.Guides);
 
                     // NC START
