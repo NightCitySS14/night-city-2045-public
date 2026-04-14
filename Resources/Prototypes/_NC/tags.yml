@@ -71,6 +71,8 @@
   name: MagazinePistolMarkIII
 
 - type: Tag
+  id: NCBiomonitor
+  name: NCBiomonitor
   id: MagazinePistolCheesemaker
   name: MagazinePistolCheesemaker
 
