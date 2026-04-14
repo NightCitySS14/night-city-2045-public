@@ -1,9 +1,10 @@
 - type: job
   id: Reaper
   name: Риппер
-  description: job-description-reaper
+  description: Частный врач, работает как в своей клинике так и в паре с наемниками
   playTimeTracker: JobReaper
-  salary: 300
+  icon: "JobIconCivilRipper"
+  salary: 200
   access:
     - NC_General
   startingGear: ReaperGear
@@ -15,4 +16,3 @@
     back: ClothingBackpackSatchelMedical
     shoes: ClothingShoesColorWhite
     id: RipperPDA
-    ears: ClothingHeadsetMedical

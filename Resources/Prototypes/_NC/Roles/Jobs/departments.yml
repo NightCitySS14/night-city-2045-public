@@ -11,7 +11,7 @@
 
 - type: department
   id: NCPD
-  name: NCPD
+  name: Night City Police Department
   description: department-NCPD-description
   color: "#1e90ff"
   roles:
@@ -23,10 +23,7 @@
     - NCPDOfficer
     - NCPDWatchAgent
     - MaxTacCommander
-    - MaxTacNetrunner
     - MaxTacEraser
-    - MaxTacPretor
-    - MaxTacInterdictor
 
 - type: department
   id: TraumaTeam
@@ -38,6 +35,29 @@
     - TraumaTeamDoctor
     - TraumaTeamParamedic
     - TraumaTeamOperative
-    - TraumaTeamTech
     - TraumaTeamCoroner
     - TraumaTeamPsych
+
+- type: department
+  id: Biotechnica
+  name: Отделение Biotechnica
+  description: department-Biotechnica-description
+  color: "#2ecc71"
+  roles:
+    - BiotechnicaChief
+    - BiotechnicaOperativeLead
+    - BiotechnicaOperative
+    - BiotechnicaNetrunner
+    - BiotechnicaBotanist
+    - BiotechnicaMedTech
+    - BiotechnicaTech
+    - BiotechnicaParamedic
+
+- type: department
+  id: Jiraff
+  name: Корпорация Zhirafa
+  description: department-Biotechnica-description
+  color: "#2ecc71"
+  roles:
+    - ZhirafaEngeneer
+    - ZhirafaJanitor

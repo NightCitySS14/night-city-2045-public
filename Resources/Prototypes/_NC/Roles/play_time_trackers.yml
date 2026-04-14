@@ -26,13 +26,7 @@
 - type: playTimeTracker
   id: JobMaxTacCommander
 - type: playTimeTracker
-  id: JobMaxTacNetrunner
-- type: playTimeTracker
   id: JobMaxTacEraser
-- type: playTimeTracker
-  id: JobMaxTacPretor
-- type: playTimeTracker
-  id: JobMaxTacInterdictor
 
 # Jobs TraumaTeam
 - type: playTimeTracker
@@ -49,4 +43,29 @@
   id: JobTraumaTeamCoroner
 - type: playTimeTracker
   id: JobTraumaTeamPsych
+- type: playTimeTracker
+  id: JobTraumaTeamTech
 
+# Jobs Biotech
+- type: playTimeTracker
+  id: JobBiotechnicaChief
+- type: playTimeTracker
+  id: JobBiotechnicaOperativeLead
+- type: playTimeTracker
+  id: JobBiotechnicaOperative
+- type: playTimeTracker
+  id: JobBiotechnicaNetrunner
+- type: playTimeTracker
+  id: JobBiotechnicaBotanist
+- type: playTimeTracker
+  id: JobBiotechnicaMedTech
+- type: playTimeTracker
+  id: JobBiotechnicaTech
+- type: playTimeTracker
+  id: JobBiotechnicaParamedic
+
+# Jobs Zhirafa
+- type: playTimeTracker
+  id: JobZhirafaEngeneer
+- type: playTimeTracker
+  id: JobZhirafaJanitor

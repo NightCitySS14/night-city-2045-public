@@ -1,10 +1,11 @@
 - type: job
   id: MaxTacCommander
-  name: Штурм командир Макс-Так
+  name: Штурм командир Max-Tac
   description: job-description-maxtac-commander
   playTimeTracker: JobMaxTacCommander
-  weight: 5
+  weight: 95
   salary: 1800
+  icon: "JobIconMaxTacCommander"
   startingGear: MaxTacCommanderGear
   supervisors: job-supervisors-centcom
   access:
@@ -24,16 +25,17 @@
       color: "#ffaa00"
       icon: /Textures/Interface/VerbIcons/star-solid-yellow.svg.192dpi.png
       visibleInWorld: false
+    - type: TraumaSubscriber
+      tier: Silver
 
 - type: startingGear
   id: MaxTacCommanderGear
   equipment:
-    jumpsuit: ClothingUniformJumpsuitHoS
+    jumpsuit: ClothingUniformNSPDNormisBlack
     back: ClothingBackpackSecurity
     shoes: ClothingShoesBootsCombatFilled
     head: ClothingHeadHelmetHardsuitSecurityRed
     eyes: ClothingEyesGlassesSunglasses
-    ears: ClothingHeadsetAltSecurity
     id: MaxTacCommanderPDA
     belt: ClothingBeltSecurityFilled
-    outerClothing: ClothingOuterHardsuitSecurityRed
+    outerClothing: ClothingOuterHardsuitMilitech

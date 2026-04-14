@@ -31,10 +31,10 @@
   - type: LanguageKnowledge
     speaks:
     - TauCetiBasic
-    - SolCommon
+    # - SolCommon
     understands:
     - TauCetiBasic
-    - SolCommon
+    # - SolCommon
   - type: FootPrints
   - type: Inventory
     femaleDisplacements:

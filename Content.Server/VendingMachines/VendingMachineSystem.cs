@@ -23,6 +23,8 @@ using Content.Shared.Stacks;
 using Content.Shared.Inventory;
 using Content.Shared.Hands.Components;
 using Content.Shared.Hands.EntitySystems;
+using Content.Server._NC.Bank;
+
 
 namespace Content.Server.VendingMachines
 {
@@ -35,6 +37,8 @@ namespace Content.Server.VendingMachines
         [Dependency] private readonly Content.Shared.Hands.EntitySystems.SharedHandsSystem _hands = default!;
         [Dependency] private readonly Content.Shared.Inventory.InventorySystem _inventory = default!;
         [Dependency] private readonly Content.Shared.Stacks.SharedStackSystem _stack = default!;
+        [Dependency] private readonly BankSystem _bank = default!;
+
 
         private const float WallVendEjectDistanceFromWall = 1f;
 
@@ -310,48 +314,11 @@ namespace Content.Server.VendingMachines
 
             if (entry.Price > 0)
             {
-                var totalCash = 0;
-                var cashItems = new List<Entity<StackComponent>>();
-
-                // Scan hands
-                foreach (var item in _hands.EnumerateHeld(sender))
-                {
-                    if (HasComp<CashComponent>(item) && TryComp<StackComponent>(item, out var stack))
-                    {
-                        totalCash += stack.Count;
-                        cashItems.Add((item, stack));
-                    }
-                }
-
-                // Scan inventory
-                if (_inventory.TryGetContainerSlotEnumerator(sender, out var enumerator))
-                {
-                    while (enumerator.MoveNext(out var slot))
-                    {
-                        if (slot.ContainedEntity is { } item && HasComp<CashComponent>(item) && TryComp<StackComponent>(item, out var stack))
-                        {
-                            totalCash += stack.Count;
-                            cashItems.Add((item, stack));
-                        }
-                    }
-                }
-
-                if (totalCash < entry.Price)
+                if (!_bank.TryBankWithdraw(sender, (int) entry.Price))
                 {
                     Popup.PopupEntity(Loc.GetString("vending-machine-component-try-eject-insufficient-funds"), uid, sender, PopupType.Medium);
                     Deny((uid, component), sender);
                     return;
-                }
-
-                // Deduct funds
-                var remainingCost = (int) entry.Price;
-                foreach (var (item, stack) in cashItems)
-                {
-                    if (remainingCost <= 0) break;
-
-                    var take = Math.Min(remainingCost, stack.Count);
-                    _stack.SetCount(item, stack.Count - take, stack);
-                    remainingCost -= take;
                 }
             }
 

@@ -1,13 +1,19 @@
 - type: job
   id: Fixer
   name: Фиксер
-  description: job-description-fixer
+  description: Посредник между заказчиками и исполнителями. Торговец.
   playTimeTracker: JobFixer
-  salary: 0
+  icon: "JobIconCivilFixer"
+  salary: 200
   access:
     - NC_General
     - Fixer
   startingGear: FixerGear
+  special:
+  - !type:AddComponentSpecial
+    components:
+    - type: TraumaSubscriber
+      tier: Silver
 
 - type: startingGear
   id: FixerGear
@@ -16,5 +22,4 @@
     back: ClothingBackpackSatchelLeather
     shoes: ClothingShoesColorBlack
     id: FixerPDA
-    ears: ClothingHeadsetService
     eyes: ClothingEyesGlassesSunglasses

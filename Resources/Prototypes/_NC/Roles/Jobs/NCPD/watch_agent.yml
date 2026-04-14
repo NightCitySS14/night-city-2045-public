@@ -1,10 +1,11 @@
 - type: job
   id: NCPDWatchAgent
   name: Агент Дозора
-  description: 'Вы — цифровой инквизитор, охраняющий человечество от того, что таится за Черным Заслоном. Пока нетраннеры-самоучки ломают торговые автоматы, вы выслеживаете ИскИны и поджариваете мозги тем, кто пытается проковырять дырку в стене между реальностью и цифровым адом. Помните: в Сети нет места состраданию — либо вы держите барьер, либо из вашего терминала полезет то, чему не место в нашем мире'
+  description: Нетраннер при НСПД
   playTimeTracker: JobNCPDWatchAgent
-  weight: 10
+  weight: 50
   salary: 800
+  icon: "JobIconNCPDPolice"
   startingGear: NCPDWatchAgentGear
   supervisors: Начальник департамента полиции
   access:
@@ -19,6 +20,8 @@
       color: "#ffaa00"
       icon: /Textures/Interface/VerbIcons/star-solid-yellow.svg.192dpi.png
       visibleInWorld: false
+    - type: TraumaSubscriber
+      tier: Silver
 
 - type: startingGear
   id: NCPDWatchAgentGear
@@ -27,6 +30,5 @@
     back: ClothingBackpackSatchelSecurity
     shoes: ClothingShoesColorBlack
     head: ClothingHeadHatFedoraBrown
-    ears: ClothingHeadsetSecurity
     id: NCPDWatchAgentPDA
     outerClothing: ClothingOuterCoatDetective

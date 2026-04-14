@@ -1,9 +1,10 @@
 - type: job
   id: EdgeRunnerSolo
   name: Эджраннер
-  description: job-description-edgerunner
+  description: Стандартный наёмник. Ищите нанимателя. Исполняйте заказы защита, убийство, сбор информации, поиск, похищение и многое другое.
   playTimeTracker: JobEdgeRunnerSolo
-  salary: 0
+  icon: "JobIconCivilEdgerunner"
+  salary: 200
   access:
     - NC_General
     - EdgeRunner
@@ -16,6 +17,5 @@
     back: ClothingBackpackSatchelSecurity
     shoes: ClothingShoesBootsCombat
     id: EdgeRunnerPDA
-    ears: ClothingHeadsetAltSecurity
     gloves: ClothingHandsGlovesColorBlack
     outerClothing: ClothingOuterArmorBasic

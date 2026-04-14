@@ -20,6 +20,8 @@
     - state: emergency_unlit
       map: ["enum.DoorVisualLayers.BaseEmergencyAccess"]
       shader: unshaded
+  - type: AccessReader
+    containerAccessProvider: null
 
 
 - type: entity
@@ -27,7 +29,6 @@
   parent: BaseNCAirlock
   name: дверь
   components:
-  - type: Sprite
   - type: AccessReader
     access: [["NC_General"]]
 
@@ -37,7 +38,6 @@
   name: дверь
   suffix: "квартира"
   components:
-  - type: Sprite
   - type: UserInterface
     interfaces:
       enum.DoorInterfaceUiKey.Key:
@@ -47,3 +47,68 @@
     address: "Апартаменты"
   - type: AccessReader
     access: [["NC_General"]]
+
+- type: entity
+  id: NCAirlock1000
+  parent: BaseNCAirlock
+  name: дверь
+  suffix: "квартира люкс класса 1000"
+  components:
+  - type: UserInterface
+    interfaces:
+      enum.DoorInterfaceUiKey.Key:
+        type: DoorInterfaceBoundUserInterface
+  - type: DoorInterface
+    price: 1000
+    address: "Апартаменты Люкс класса"
+  - type: AccessReader
+    access: [["NC_General"]]
+
+- type: entity
+  id: NCAirlock300
+  parent: BaseNCAirlock
+  name: дверь
+  suffix: "квартира 300"
+  components:
+  - type: UserInterface
+    interfaces:
+      enum.DoorInterfaceUiKey.Key:
+        type: DoorInterfaceBoundUserInterface
+  - type: DoorInterface
+    price: 300
+    address: "Апартаменты Эконом класса"
+  - type: AccessReader
+    access: [["NC_General"]]
+
+- type: entity
+  id: NCAirlock500
+  parent: BaseNCAirlock
+  name: дверь
+  suffix: "квартира 500"
+  components:
+  - type: UserInterface
+    interfaces:
+      enum.DoorInterfaceUiKey.Key:
+        type: DoorInterfaceBoundUserInterface
+  - type: DoorInterface
+    price: 500
+    address: "Апартаменты Среднего класса"
+  - type: AccessReader
+    access: [["NC_General"]]
+
+- type: entity
+  id: NCAirlock700
+  parent: BaseNCAirlock
+  name: дверь
+  suffix: "квартира 700"
+  components:
+  - type: UserInterface
+    interfaces:
+      enum.DoorInterfaceUiKey.Key:
+        type: DoorInterfaceBoundUserInterface
+  - type: DoorInterface
+    price: 700
+    address: "Апартаменты Высшего класса"
+  - type: AccessReader
+    access: [["NC_General"]]
+

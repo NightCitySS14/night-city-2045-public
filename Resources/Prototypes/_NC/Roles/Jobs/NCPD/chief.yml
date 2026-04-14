@@ -1,10 +1,11 @@
 - type: job
   id: NCPDChief
   name: Начальник департамента полиции
-  description: 'Вы — лицо закона в городе, где закон продается со скидкой. Ваша задача — балансировать между отчетами для мэрии и интересами корпораций, стараясь, чтобы ваши офицеры не разбежались к наемникам до самой пенсии. Помните: порядок в Найт-Сити — это когда перестрелки идут строго по расписанию'
+  description: Глава NCPD. Отвечает за поддержание порядка в Найт-Сити и координацию действий всех подразделений полиции
   playTimeTracker: JobNCPDChief
-  weight: 10
+  weight: 100
   salary: 1500
+  icon: "JobIconNCPDChief"
   startingGear: NCPDChiefGear
   access:
     - NCPD_Command
@@ -22,6 +23,8 @@
       color: "#ffaa00"
       icon: /Textures/Interface/VerbIcons/star-solid-yellow.svg.192dpi.png
       visibleInWorld: false
+    - type: TraumaSubscriber
+      tier: Platinum
 
 - type: startingGear
   id: NCPDChiefGear
@@ -31,7 +34,6 @@
     shoes: ClothingShoesBootsJack
     head: ClothingHeadHatBeretHoS
     eyes: ClothingEyesGlassesSunglasses
-    ears: ClothingHeadsetAltSecurity
     id: NCPDChiefPDA
     belt: ClothingBeltSecurityFilled
     outerClothing: ClothingOuterCoatHoSTrench

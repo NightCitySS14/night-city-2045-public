@@ -139,8 +139,12 @@ namespace Content.Client.Lobby.UI
 
         private const string Uncategorized = "Uncategorized";
 
+        private static readonly string[] CivilianDepartments = { "Civilian", "CivilianNC" }; // NC
+
         public SpriteView? CharacterSpriteView;
         // WD EDIT END
+
+        private string? _confirmingDepartment; // NC
 
         public HumanoidProfileEditor(
             IClientPreferencesManager preferencesManager,
@@ -475,6 +479,7 @@ namespace Content.Client.Lobby.UI
 
             #region SpawnPriority
 
+            /*
             foreach (var value in Enum.GetValues<SpawnPriorityPreference>())
                 SpawnPriorityButton.AddItem(Loc.GetString($"humanoid-profile-editor-preference-spawn-priority-{value.ToString().ToLower()}"), (int) value);
 
@@ -483,6 +488,7 @@ namespace Content.Client.Lobby.UI
                 SpawnPriorityButton.SelectId(args.Id);
                 SetSpawnPriority((SpawnPriorityPreference) args.Id);
             };
+            */
 
             #endregion SpawnPriority
 
@@ -522,7 +528,7 @@ namespace Content.Client.Lobby.UI
             {
                 PreferenceUnavailableButton.SelectId(args.Id);
                 Profile = Profile?.WithPreferenceUnavailable((PreferenceUnavailableMode) args.Id);
-                IsDirty = true;
+                SetDirty();
             };
 
             _jobCategories = new Dictionary<string, BoxContainer>();
@@ -836,7 +842,7 @@ namespace Content.Client.Lobby.UI
         //             out var reasons))
         //         {
         //             var reason = _characterRequirementsSystem.GetRequirementsText(reasons);
-        //             selector.LockRequirements(reason);
+        //             selector.LockRequirements(FormattedMessage.FromMarkup(reason));
         //             Profile = Profile?.WithAntagPreference(antag.ID, false);
         //             SetDirty();
         //         }
@@ -937,7 +943,7 @@ namespace Content.Client.Lobby.UI
             UpdateClownControls(); // WD EDIT
             UpdateMimeControls(); // WD EDIT
             UpdateSkinColor();
-            UpdateSpawnPriorityControls();
+            // UpdateSpawnPriorityControls();
             UpdateFlavorTextEdit();
             UpdateCustomSpecieNameEdit();
             UpdateAgeEdit();
@@ -1043,13 +1049,91 @@ namespace Content.Client.Lobby.UI
                 ("humanoid-profile-editor-job-priority-high-button", (int) JobPriority.High),
             };
 
+            var employedDept = Profile?.EmployedDepartment; // NC
+
             var firstCategory = true;
             foreach (var department in departments)
             {
                 var departmentName = Loc.GetString(department.Name);
+                var isCivilian = CivilianDepartments.Contains(department.ID); // NC
 
                 if (!_jobCategories.TryGetValue(department.ID, out var category))
                 {
+                    // NC START
+                    var isCurrentlyEmployed = (employedDept == department.ID);
+                    var canEmploy = (employedDept == null);
+
+                    var header = new BoxContainer
+                    {
+                        Orientation = LayoutOrientation.Horizontal,
+                        HorizontalExpand = true,
+                    };
+
+                    header.AddChild(new Label
+                    {
+                        Text = Loc.GetString("humanoid-profile-editor-department-jobs-label",
+                            ("departmentName", departmentName)),
+                        StyleClasses = { StyleBase.StyleClassLabelHeading, },
+                        Margin = new(5f, 0, 0, 0),
+                        HorizontalExpand = true,
+                    });
+
+                    if (!isCivilian)
+                    {
+                        var buttonText = isCurrentlyEmployed ? "Уволиться" : "Устроиться";
+                        if (_confirmingDepartment == department.ID)
+                            buttonText = "Подтвердить";
+
+                        var jobButton = new Button
+                        {
+                            Text = buttonText,
+                            HorizontalAlignment = HAlignment.Right,
+                            Margin = new(0, 0, 5, 0),
+                            Visible = isCurrentlyEmployed || canEmploy
+                        };
+
+                        // NC START - Cooldown logic
+                        if (!isCurrentlyEmployed && canEmploy && Profile != null && Profile.QuittedDepartments.TryGetValue(department.ID, out var quitTime))
+                        {
+                            var cooldownEnd = quitTime.AddMonths(1);
+                            if (DateTime.UtcNow < cooldownEnd)
+                            {
+                                var timeLeft = cooldownEnd - DateTime.UtcNow;
+                                jobButton.Disabled = true;
+                                jobButton.ToolTip = $"Вы уволились из этого департамента. Доступно через {(int)timeLeft.TotalDays} дн.";
+                            }
+                        }
+                        // NC END
+
+                        jobButton.OnPressed += _ =>
+                        {
+                            if (_confirmingDepartment != department.ID)
+                            {
+                                _confirmingDepartment = department.ID;
+                                RefreshJobs();
+                                return;
+                            }
+
+                            _confirmingDepartment = null;
+                            if (isCurrentlyEmployed)
+                            {
+                                var newQuitted = new Dictionary<string, DateTime>(Profile?.QuittedDepartments ?? new());
+                                newQuitted[department.ID] = DateTime.UtcNow;
+                                Profile = Profile?.WithEmployedDepartment(null);
+                                if (Profile != null)
+                                    Profile.QuittedDepartments = newQuitted;
+                            }
+                            else
+                            {
+                                Profile = Profile?.WithEmployedDepartment(department.ID);
+                            }
+                            SetDirty();
+                            RefreshJobs();
+                        };
+                        header.AddChild(jobButton);
+                    }
+                    // NC END
+
                     category = new AlternatingBGContainer
                     {
                         Orientation = LayoutOrientation.Vertical,
@@ -1057,17 +1141,9 @@ namespace Content.Client.Lobby.UI
                         ToolTip = Loc.GetString("humanoid-profile-editor-jobs-amount-in-department-tooltip",
                             ("departmentName", departmentName)),
                         Margin = new(0, firstCategory ? 0 : 20, 0, 0),
-                        Children =
-                        {
-                            new Label
-                            {
-                                Text = Loc.GetString("humanoid-profile-editor-department-jobs-label",
-                                    ("departmentName", departmentName)),
-                                StyleClasses = { StyleBase.StyleClassLabelHeading, },
-                                Margin = new(5f, 0, 0, 0),
-                            },
-                        },
                     };
+
+                    category.AddChild(header); // NC
 
                     firstCategory = false;
                     _jobCategories[department.ID] = category;
@@ -1079,6 +1155,14 @@ namespace Content.Client.Lobby.UI
                     .ToArray();
 
                 Array.Sort(jobs, JobUIComparer.Instance);
+
+                // NC START
+                bool isDeptOpen = false;
+                if (employedDept == null)
+                    isDeptOpen = isCivilian;
+                else
+                    isDeptOpen = (employedDept == department.ID);
+                // NC END
 
                 foreach (var job in jobs)
                 {
@@ -1095,8 +1179,18 @@ namespace Content.Client.Lobby.UI
                     icon.Texture = jobIcon.Icon.Frame0();
                     selector.Setup(items, job.LocalizedName, 200, job.LocalizedDescription, icon, job.Guides);
 
-                    if (!_requirements.CheckJobWhitelist(job, out var reason))
+                    // NC START
+                    if (!isDeptOpen)
+                    {
+                        var deptLockReason = employedDept == null
+                            ? "Вам нужно устроиться в этот департамент"
+                            : "Вы уже работаете в другом департаменте";
+                        selector.LockRequirements(FormattedMessage.FromMarkup(deptLockReason));
+                    }
+                    else if (!_requirements.CheckJobWhitelist(job, out var reason))
+                    {
                         selector.LockRequirements(reason);
+                    }
                     else if (!_characterRequirementsSystem.CheckRequirementsValid(
                         _roleSystem.GetJobRequirement(job) ?? new(),
                         job,
@@ -1730,6 +1824,7 @@ namespace Content.Client.Lobby.UI
         }
         // WD EDIT END
 
+        /*
         private void UpdateSpawnPriorityControls()
         {
             if (Profile == null)
@@ -1737,6 +1832,7 @@ namespace Content.Client.Lobby.UI
 
             SpawnPriorityButton.SelectId((int) Profile.SpawnPriority);
         }
+        */
 
                 private void UpdateHeightWidthSliders()
         {
@@ -2325,6 +2421,10 @@ namespace Content.Client.Lobby.UI
             var tree = new Dictionary<string, object>();
             foreach (var category in cats)
             {
+                // WD EDIT: Hide Psionics and Languages
+                if (category.ID == "Psionics" || category.ID == "Language" || category.ID == "TraitsSpeechLanguages")
+                    continue;
+
                 // If the category is already in the tree, ignore it
                 if (tree.ContainsKey(category.ID))
                     continue;

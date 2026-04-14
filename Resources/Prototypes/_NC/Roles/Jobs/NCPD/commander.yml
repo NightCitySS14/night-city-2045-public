@@ -1,10 +1,11 @@
 - type: job
   id: NCPDCommander
   name: Коммандер
-  description: 'Вы — правая рука закона и левая нога бюрократии. Пока шеф светит лицом на банкетах, вы разгребаете отчеты о расстрелянных патрульных и решаете, на какой район сегодня хватит патронов. Помните: вы уже слишком высоко, чтобы пачкать руки в крови, но все еще недостаточно богаты, чтобы игнорировать звонки из Militech'
+  description: Заместитель шефа полиции. Относится к младшему командному составу.
   playTimeTracker: JobNCPDCommander
-  weight: 20
+  weight: 90
   salary: 1000
+  icon: "JobIconNCPDCommander"
   startingGear: NCPDCommanderGear
   supervisors: Начальник департамента полиции
   access:
@@ -18,6 +19,8 @@
       color: "#ffaa00"
       icon: /Textures/Interface/VerbIcons/star-solid-yellow.svg.192dpi.png
       visibleInWorld: false
+    - type: TraumaSubscriber
+      tier: Silver
 
 - type: startingGear
   id: NCPDCommanderGear
@@ -26,7 +29,6 @@
     back: ClothingBackpackSecurity
     shoes: ClothingShoesBootsJack
     head: ClothingHeadHelmetBasic
-    ears: ClothingHeadsetAltSecurity
     id: NCPDCommanderPDA
     belt: ClothingBeltSecurityFilled
     outerClothing: ClothingOuterArmorBasic
