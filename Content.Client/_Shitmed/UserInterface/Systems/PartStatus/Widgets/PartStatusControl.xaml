@@ -14,6 +14,14 @@
                 SetSize="32 32"
                 ToolTip="Open CitiNet / PDA"/>
 
+            <TextureButton
+                Name="CitiNetMapButton"
+                Access="Public"
+                TexturePath="/Textures/_White/NovaUI/Icons/loopa.png"
+                HorizontalAlignment="Center"
+                SetSize="32 32"
+                ToolTip="Open CitiNet Map"/>
+
             <PanelContainer>
                 <TextureRect
                     Name="DollHead"

@@ -12,6 +12,11 @@ public sealed class OpenCitiNetUiMessage : EntityEventArgs
 {
 }
 
+[Serializable, NetSerializable]
+public sealed class OpenCitiNetMapUiMessage : EntityEventArgs
+{
+}
+
 // ========== Enums ==========
 
 /// <summary>

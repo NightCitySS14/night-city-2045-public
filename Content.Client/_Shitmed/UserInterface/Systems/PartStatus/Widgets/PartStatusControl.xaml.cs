@@ -41,6 +41,7 @@ public sealed partial class PartStatusControl : UIWidget
         };
 
         CitiNetButton.OnPressed += OnCitiNetButtonPressed;
+        CitiNetMapButton.OnPressed += OnCitiNetMapButtonPressed;
     }
 
     private void OnCitiNetButtonPressed(BaseButton.ButtonEventArgs args)
@@ -50,6 +51,15 @@ public sealed partial class PartStatusControl : UIWidget
             return;
 
         _entityManager.RaisePredictiveEvent(new Content.Shared._NC.CitiNet.OpenCitiNetUiMessage());
+    }
+
+    private void OnCitiNetMapButtonPressed(BaseButton.ButtonEventArgs args)
+    {
+        var localPlayer = _playerManager.LocalEntity;
+        if (localPlayer == null)
+            return;
+
+        _entityManager.RaisePredictiveEvent(new Content.Shared._NC.CitiNet.OpenCitiNetMapUiMessage());
     }
 
     public void SetTextures(Dictionary<TargetBodyPart, TargetIntegrity> state)
