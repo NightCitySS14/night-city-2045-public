@@ -52,6 +52,8 @@ public sealed class CitiNetCartridgeSystem : EntitySystem
     {
         base.Initialize();
 
+        SubscribeNetworkEvent<OpenCitiNetUiMessage>(OnOpenCitiNetUiMessage);
+
         SubscribeLocalEvent<CitiNetCartridgeComponent, CartridgeUiReadyEvent>(OnUiReady);
         SubscribeLocalEvent<CitiNetCartridgeComponent, CartridgeMessageEvent>(OnMessage);
         SubscribeLocalEvent<CitiNetCartridgeComponent, CartridgeAddedEvent>(OnAdded);
@@ -62,6 +64,32 @@ public sealed class CitiNetCartridgeSystem : EntitySystem
 
         // Voice Relay
         SubscribeLocalEvent<EntitySpokeEvent>(OnSpeak);
+    }
+
+    private void OnOpenCitiNetUiMessage(OpenCitiNetUiMessage msg, EntitySessionEventArgs args)
+    {
+        var user = args.SenderSession.AttachedEntity;
+        if (user == null)
+            return;
+
+        // Ищем PDA в слоте ID
+        if (!_inventory.TryGetSlotEntity(user.Value, "id", out var pdaUid))
+            return;
+
+        // Убеждаемся что это КПК с установленным CartridgeLoader
+        if (!TryComp<CartridgeLoaderComponent>(pdaUid, out var loader))
+            return;
+
+        // Ищем внутри CitiNetCartridgeComponent
+        if (!_cartridge.TryGetProgram<CitiNetCartridgeComponent>(pdaUid.Value, out var citiNetUid, false, loader))
+            return;
+
+        // Если СитиНет найден, делаем его активной программой
+        if (loader.ActiveProgram != citiNetUid)
+            _cartridge.ActivateProgram(pdaUid.Value, citiNetUid.Value, loader);
+
+        // Открываем UI PDA для игрока
+        _ui.OpenUi(pdaUid.Value, PdaUiKey.Key, user.Value);
     }
 
     // ========== Fix 3: Периодическая проверка Relay ==========

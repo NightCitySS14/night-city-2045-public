@@ -4,6 +4,14 @@ using Robust.Shared.Serialization;
 
 namespace Content.Shared._NC.CitiNet;
 
+/// <summary>
+/// Сообщение от худа клиента для прямого открытия CitiNet картриджа.
+/// </summary>
+[Serializable, NetSerializable]
+public sealed class OpenCitiNetUiMessage : EntityEventArgs
+{
+}
+
 // ========== Enums ==========
 
 /// <summary>
