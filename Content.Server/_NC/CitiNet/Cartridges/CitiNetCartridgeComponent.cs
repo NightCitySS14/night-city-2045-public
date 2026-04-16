@@ -36,6 +36,13 @@ public sealed partial class CitiNetCartridgeComponent : Component
     public EntityUid? IncomingCaller;
 
     /// <summary>
+    /// EntityUid картриджа, с которым идёт активный голосовой вызов.
+    /// Отделено от ActiveChatTarget, чтобы переключение чатов не ломало звонок.
+    /// </summary>
+    [ViewVariables]
+    public EntityUid? ActiveCallPartner;
+
+    /// <summary>
     /// История сообщений P2P-чатов (Key = EntityUid собеседника).
     /// </summary>
     [ViewVariables]
@@ -106,6 +113,13 @@ public sealed partial class CitiNetCartridgeComponent : Component
     [DataField]
     public int MaxMessagesPerChannel = 100;
 
+    /// <summary>
+    /// Каналы, в которые этот агент был приглашён другим агентом (по номеру).
+    /// Позволяет обойти требование access-тегов для видимости и входа.
+    /// </summary>
+    [ViewVariables]
+    public HashSet<string> InvitedToChannels = new();
+
     // ========== Номер Агента ==========
 
     /// <summary>
@@ -115,6 +129,11 @@ public sealed partial class CitiNetCartridgeComponent : Component
     [DataField, ViewVariables(VVAccess.ReadWrite)]
     public string AgentNumber = string.Empty;
 
-
+    /// <summary>
+    /// Какая вкладка сейчас выбрана в UI.
+    /// </summary>
+    [ViewVariables]
+    public Content.Shared._NC.CitiNet.CitiNetTab ActiveTab =
+        Content.Shared._NC.CitiNet.CitiNetTab.BBS;
 }
 

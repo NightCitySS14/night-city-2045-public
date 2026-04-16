@@ -94,12 +94,35 @@ public sealed partial class CitiNetUiFragment : BoxContainer
             }
         };
 
-        SwitchTab(0);
+        SwitchTab(0, false);
     }
 
-    private void SwitchTab(int tab)
+    private int TabToInt(CitiNetTab tab) => tab switch
+    {
+        CitiNetTab.P2P => 0,
+        CitiNetTab.BBS => 1,
+        CitiNetTab.Group => 2,
+        _ => 0
+    };
+
+    private CitiNetTab? IntToTab(int tab) => tab switch
+    {
+        0 => CitiNetTab.P2P,
+        1 => CitiNetTab.BBS,
+        2 => CitiNetTab.Group,
+        _ => null
+    };
+
+    private void SwitchTab(int tab, bool notifyServer = true)
     {
         _currentTab = tab;
+
+        if (notifyServer)
+        {
+            var serverTab = IntToTab(tab);
+            if (serverTab != null)
+                OnSendMessage?.Invoke(CitiNetUiMessageType.SelectTab, null, serverTab.Value.ToString());
+        }
 
         // Visual update for menu buttons
         var activeColor = ColorNeonGreen;
@@ -150,6 +173,15 @@ public sealed partial class CitiNetUiFragment : BoxContainer
 
     public void UpdateState(CitiNetUiState state)
     {
+        if (_lastState == null || _lastState.ActiveTab != state.ActiveTab)
+        {
+            var newTab = TabToInt(state.ActiveTab);
+            if (_currentTab != newTab)
+            {
+                 SwitchTab(newTab, false);
+            }
+        }
+
         _lastState = state;
 
         // --- HEADER ---
@@ -300,7 +332,13 @@ public sealed partial class CitiNetUiFragment : BoxContainer
             else
                 btn.Modulate = channel.Color;
 
-            btn.OnPressed += _ => OnSendMessage?.Invoke(CitiNetUiMessageType.JoinChannel, channel.Id, null);
+            btn.OnPressed += _ => 
+            {
+                if (channel.IsJoined || channel.RequiresPassword)
+                    OnSendMessage?.Invoke(CitiNetUiMessageType.SelectChannel, channel.Id, null);
+                else
+                    OnSendMessage?.Invoke(CitiNetUiMessageType.JoinChannel, channel.Id, null);
+            };
             ListContainer.AddChild(btn);
         }
 
@@ -322,6 +360,27 @@ public sealed partial class CitiNetUiFragment : BoxContainer
                     var escapedMsg = Robust.Shared.Utility.FormattedMessage.EscapeText(msg.Content);
                     var escapedName = Robust.Shared.Utility.FormattedMessage.EscapeText(msg.SenderName);
                     AddMessage($"[color={curChannel.Color.ToHex()}]\\[{msg.Timestamp:hh\\:mm}\\] {escapedName}:[/color] {escapedMsg}");
+                }
+
+                // Показываем кнопку инвайта для каналов с нативным доступом
+                if (curChannel.CanInvite)
+                {
+                    ActionControlsPanel.Visible = true;
+                    ActionInput.Visible = true;
+                    ActionInput.PlaceHolder = "AGENT NUMBER...";
+                    ActionButton.Text = "[INVITE TO CHANNEL]";
+
+                    // Переопределяем действие кнопки для инвайта
+                    ActionButton.OnPressed -= HandleActionButton;
+                    ActionButton.OnPressed += _ =>
+                    {
+                        var input = ActionInput.Text.Trim();
+                        if (!string.IsNullOrEmpty(input))
+                        {
+                            OnSendMessage?.Invoke(CitiNetUiMessageType.InviteToChannel, input, curChannel.Id);
+                            ActionInput.Text = string.Empty;
+                        }
+                    };
                 }
             }
         }

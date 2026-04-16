@@ -11,7 +11,9 @@ citinet-bbs-channel-afterlife = Afterlife
 citinet-bbs-channel-maelstrom = Maelstrom
 citinet-bbs-channel-ncpd = NCPD HQ
 citinet-bbs-channel-maxtac = MaxTac HQ
-citinet-bbs-channel-traumateam = Trauma Team HQ
+citinet-bbs-channel-trauma-general = Trauma Team
+citinet-bbs-channel-trauma-operatives = Field Operatives
+citinet-bbs-channel-trauma-comms = Corporate Comms
 
 # CitiNet Cartridge UI
 citinet-cartridge-name = CitiNet
@@ -48,6 +50,8 @@ citinet-bbs-enter-password = Enter access code:
 citinet-bbs-wrong-password = Access denied — wrong code
 citinet-bbs-no-relay = [color=red]Channel unavailable — CitiNet offline[/color]
 citinet-bbs-anonymous = Anonymous
+citinet-bbs-invite-received = >> You have been granted access to {$channel} by {$inviter}
+citinet-bbs-invite-sent = >> Agent {$target} has been invited to {$channel}
 
 # BurnerChip
 citinet-burner-chip-name = Burner chip
@@ -60,3 +64,8 @@ citinet-burner-chip-destroyed = Burner chip destroyed.
 # CitiNet Relay
 citinet-relay-name = CitiNet Relay
 citinet-relay-description = A local city network relay server. Routes civilian communications — calls and BBS channels. Requires power.
+
+citinet-sender-system = SYSTEM
+citinet-sender-flatline = FLATLINE
+citinet-call-busy = >> TARGET LINE BUSY. TRY AGAIN LATER.
+citinet-call-connection-lost = >> CONNECTION LOST. RELAY SIGNAL DROPPED.

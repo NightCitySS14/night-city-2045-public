@@ -19,11 +19,25 @@ public enum CitiNetCallState : byte
 }
 
 /// <summary>
+/// Активная вкладка в интерфейсе CitiNet.
+/// </summary>
+[Serializable, NetSerializable]
+public enum CitiNetTab : byte
+{
+    P2P,
+    Group,
+    BBS
+}
+
+/// <summary>
 /// Тип UI-сообщения от клиента к серверу.
 /// </summary>
 [Serializable, NetSerializable]
 public enum CitiNetUiMessageType : byte
 {
+    // Общее
+    SelectTab,     // Переключение между P2P, Группой и BBS
+
     // P2P звонки
     StartChat,     // Открывает текстовый чат с агентом
     CloseChat,     // Закрывает текстовый чат
@@ -46,7 +60,8 @@ public enum CitiNetUiMessageType : byte
     JoinChannel,
     LeaveChannel,
     SendBBSMessage,
-    SelectChannel
+    SelectChannel,
+    InviteToChannel  // Пригласить агента в BBS-канал по номеру
 }
 
 // ========== UI Message (Client → Server) ==========
@@ -156,14 +171,16 @@ public struct CitiNetChannelInfo
     public Color Color;
     public bool RequiresPassword;
     public bool IsJoined;
+    public bool CanInvite; // Может ли этот агент приглашать других (нативный доступ по тегам)
 
-    public CitiNetChannelInfo(string id, string name, Color color, bool requiresPassword, bool isJoined)
+    public CitiNetChannelInfo(string id, string name, Color color, bool requiresPassword, bool isJoined, bool canInvite = false)
     {
         Id = id;
         Name = name;
         Color = color;
         RequiresPassword = requiresPassword;
         IsJoined = isJoined;
+        CanInvite = canInvite;
     }
 }
 
@@ -208,6 +225,7 @@ public sealed class CitiNetUiState : BoundUserInterfaceState
     // Общее
     public readonly string OwnNumber;           // Номер этого Агента
     public readonly bool HasRelay;              // Есть ли активный CitiNet Relay
+    public readonly CitiNetTab ActiveTab;       // Какая вкладка сейчас выбрана
 
     // P2P звонки и чаты
     public readonly List<CitiNetContact> Contacts;          // Список открытых P2P чатов
@@ -227,10 +245,13 @@ public sealed class CitiNetUiState : BoundUserInterfaceState
     public readonly string? CurrentChannelId;
     public readonly List<CitiNetBBSMessage> ChannelMessages;
 
+    // Глобальная база агентов
+    public readonly List<CitiNetContact> GlobalDirectory;
 
     public CitiNetUiState(
         string ownNumber,
         bool hasRelay,
+        CitiNetTab activeTab,
         List<CitiNetContact> contacts,
         string? currentContactNumber,
         CitiNetCallState callState,
@@ -242,10 +263,12 @@ public sealed class CitiNetUiState : BoundUserInterfaceState
         List<CitiNetCallMessage> groupMessages,
         List<CitiNetChannelInfo> channels,
         string? currentChannelId,
-        List<CitiNetBBSMessage> channelMessages)
+        List<CitiNetBBSMessage> channelMessages,
+        List<CitiNetContact> globalDirectory)
     {
         OwnNumber = ownNumber;
         HasRelay = hasRelay;
+        ActiveTab = activeTab;
         Contacts = contacts;
         CurrentContactNumber = currentContactNumber;
         CallState = callState;
@@ -258,5 +281,6 @@ public sealed class CitiNetUiState : BoundUserInterfaceState
         Channels = channels;
         CurrentChannelId = currentChannelId;
         ChannelMessages = channelMessages;
+        GlobalDirectory = globalDirectory;
     }
 }

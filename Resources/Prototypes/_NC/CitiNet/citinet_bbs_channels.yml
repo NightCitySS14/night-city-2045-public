@@ -31,10 +31,29 @@
     - MaxTac_General
   isHidden: false
 
+# Trauma Team — общий канал для всех сотрудников
 - type: citiNetChannel
-  id: TraumaTeam_HQ
-  name: citinet-bbs-channel-traumateam
+  id: TraumaTeam_General
+  name: citinet-bbs-channel-trauma-general
   color: "#4bdc99"
   access:
     - Trauma_Medical
+  isHidden: false
+
+# Trauma Operatives — мобильные группы реанимации (оперативники, парамедики, ГВ)
+- type: citiNetChannel
+  id: TraumaTeam_Operatives
+  name: citinet-bbs-channel-trauma-operatives
+  color: "#33b87a"
+  access:
+    - Trauma_Hangar
+  isHidden: false
+
+# Trauma Communications — связь с партнёрами Gold+ и корпорациями (ГВ + кому выдан доступ)
+- type: citiNetChannel
+  id: TraumaTeam_Comms
+  name: citinet-bbs-channel-trauma-comms
+  color: "#ffd700"
+  access:
+    - Trauma_Command
   isHidden: false

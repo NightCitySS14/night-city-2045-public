@@ -11,7 +11,9 @@ citinet-bbs-channel-afterlife = Посмертие
 citinet-bbs-channel-maelstrom = Мальстрём
 citinet-bbs-channel-ncpd = База NCPD
 citinet-bbs-channel-maxtac = Штаб MaxTac
-citinet-bbs-channel-traumateam = Командный центр Trauma Team
+citinet-bbs-channel-trauma-general = Trauma Team
+citinet-bbs-channel-trauma-operatives = Оперативная группа
+citinet-bbs-channel-trauma-comms = Корп. связь Trauma
 
 # CitiNet Cartridge UI
 citinet-cartridge-name = CitiNet
@@ -48,6 +50,8 @@ citinet-bbs-enter-password = Введите код доступа:
 citinet-bbs-wrong-password = Доступ запрещён — неверный код
 citinet-bbs-no-relay = [color=red]Канал недоступен — CitiNet оффлайн[/color]
 citinet-bbs-anonymous = Аноним
+citinet-bbs-invite-received = >> Вы приглашены в канал {$channel} агентом {$inviter}
+citinet-bbs-invite-sent = >> Агент {$target} приглашён в {$channel}
 
 # BurnerChip
 citinet-burner-chip-name = Одноразовый чип
@@ -63,3 +67,5 @@ citinet-relay-description = Локальный городской узел св�
 
 citinet-sender-system = СИСТЕМА
 citinet-sender-flatline = FLATLINE
+citinet-call-busy = >> ЛИНИЯ ЗАНЯТА. ПОВТОРИТЕ ПОЗЖЕ.
+citinet-call-connection-lost = >> ОБРЫВ СВЯЗИ. СИГНАЛ RELAY ПОТЕРЯН.
