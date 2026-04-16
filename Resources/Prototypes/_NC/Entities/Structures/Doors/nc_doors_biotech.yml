@@ -9,15 +9,6 @@
   - type: AccessReader
     access: [["Biotech_Director"]]
 
-# Шлюз руководителей отделов Биотехники
-- type: entity
-  id: BiotechHeadOfDepartmentAirlock
-  parent: BaseNCAirlock
-  name: шлюз руководителя отдела Биотехника
-  components:
-  - type: AccessReader
-    access: [["Biotech_HeadOfDepartment"]]
-
 # Шлюз МедТех Биотехники
 - type: entity
   id: BiotechMedTechAirlock

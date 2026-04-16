@@ -8,11 +8,9 @@
   icon: "JobIconBiotechTechnician"
   startingGear: BiotechnicaTechGear
   access:
-    - Trauma_Command
-    - Trauma_Medical
-    - Trauma_Morgue
-    - Trauma_Hangar
     - NC_General
+    - Biotech_Staff
+    - Biotech_General
   special:
   - !type:AddComponentSpecial
     components:

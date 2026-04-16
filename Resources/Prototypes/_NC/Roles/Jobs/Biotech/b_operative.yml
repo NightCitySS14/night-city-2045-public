@@ -8,11 +8,11 @@
   icon: "JobIconBiotechOfficer"
   startingGear: BiotechnicaOperativeGear
   access:
-    - Trauma_Command
-    - Trauma_Medical
-    - Trauma_Morgue
-    - Trauma_Hangar
     - NC_General
+    - Biotech_MedTech
+    - Biotech_Operative
+    - Biotech_Staff
+    - Biotech_General
   special:
   - !type:AddComponentSpecial
     components:

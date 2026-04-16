@@ -8,11 +8,9 @@
   icon: "JobIconBiotechAgrarian"
   startingGear: BiotechnicaBotanistGear
   access:
-    - Trauma_Command
-    - Trauma_Medical
-    - Trauma_Morgue
-    - Trauma_Hangar
     - NC_General
+    - Biotech_Staff
+    - Biotech_General
 
 - type: startingGear
   id: BiotechnicaBotanistGear
