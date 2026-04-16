@@ -520,9 +520,9 @@
       job: BiotechnicaChief
 
 - type: entity
-  parent: IDCardStandardIDCard
+  parent: IDCardStandard
   id: BiotechnicaBotanist
-  name: идентификационная карта руководителя Биотехники
+  name: идентификационная карта ботаника Биотехники
   components:
     - type: Sprite
       layers:
@@ -543,7 +543,7 @@
 - type: entity
   parent: IDCardStandard
   id: BiotechnicaMedTechIDCard
-  name: идентификационная карта руководителя Биотехники
+  name: идентификационная карта мед-техника Биотехники
   components:
     - type: Sprite
       layers:
@@ -565,7 +565,7 @@
 - type: entity
   parent: IDCardStandard
   id: BiotechnicaNetrunnerIDCard
-  name: идентификационная карта руководителя Биотехники
+  name: идентификационная карта нетранера Биотехники
   components:
     - type: Sprite
       layers:
@@ -588,7 +588,7 @@
 - type: entity
   parent: IDCardStandard
   id: BiotechnicaOperativeLeadIDCard
-  name: идентификационная карта руководителя Биотехники
+  name: идентификационная карта начальника охраны Биотехники
   components:
     - type: Sprite
       layers:
@@ -613,7 +613,7 @@
 - type: entity
   parent: IDCardStandard
   id: BiotechnicaOperativeIDCard
-  name: идентификационная карта руководителя Биотехники
+  name: идентификационная карта оперативника Биотехники
   components:
     - type: Sprite
       layers:
@@ -636,7 +636,7 @@
 - type: entity
   parent: IDCardStandard
   id: BiotechnicaParamedicIDCard
-  name: идентификационная карта руководителя Биотехники
+  name: идентификационная карта парамедика Биотехники
   components:
     - type: Sprite
       layers:
@@ -659,7 +659,7 @@
 - type: entity
   parent: IDCardStandard
   id: BiotechnicaTechIDCard
-  name: идентификационная карта руководителя Биотехники
+  name: идентификационная карта техника Биотехники
   components:
     - type: Sprite
       layers:
