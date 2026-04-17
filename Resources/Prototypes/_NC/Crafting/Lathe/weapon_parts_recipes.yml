@@ -13,6 +13,21 @@
   - NCBlankElectronicsCircuit
   - NCBlankElectronicsNeuro
   - NCBlankDrive
+  - NCRecipeMagazine622mmCaselessEmpty
+  - NCRecipeMagazinePistolStukachEmpty
+  - NCRecipeMagazinePistolOverlordEmpty
+  - NCRecipeMagazinePistolAvengerEmpty
+  - NCRecipeMagazinePistolHelloCutieEmpty
+  - NCRecipeMagazinePistolStreetMasterEmpty
+  - NCRecipeMagazinePistolMarkIIIEmpty
+  - NCRecipeMagazinePistolCheesemakerEmpty
+  - NCRecipeMagazinePistolFederalX9Empty
+  - NCRecipeMagazinePistolBoomerBusterEmpty
+  - NCRecipeMagazineRifleNomadEmpty
+  - NCRecipeMagazineRifleArasakaEmpty
+  - NCRecipeMagazineRifleM04Empty
+  - NCRecipeMagazineRifleNokotaEmpty
+  - NCRecipeMagazineRifleNowakiEmpty
 
 
 # ==========================================
@@ -116,3 +131,127 @@
   materials:
     Plasteel: 1500
     Gold: 500
+
+# ==========================================
+# ПУСТЫЕ МАГАЗИНЫ
+# ==========================================
+
+- type: latheRecipe
+  id: NCRecipeMagazine622mmCaselessEmpty
+  result: Magazine622mmCaselessEmpty
+  comms: true
+  materials:
+    Plastic: 100
+    Metal: 100
+
+- type: latheRecipe
+  id: NCRecipeMagazinePistolStukachEmpty
+  result: MagazinePistolStukachEmpty
+  comms: true
+  materials:
+    Plastic: 100
+    Metal: 100
+
+- type: latheRecipe
+  id: NCRecipeMagazinePistolOverlordEmpty
+  result: MagazinePistolOverlordEmpty
+  comms: true
+  materials:
+    Plastic: 100
+    Metal: 100
+
+- type: latheRecipe
+  id: NCRecipeMagazinePistolAvengerEmpty
+  result: MagazinePistolAvengerEmpty
+  comms: true
+  materials:
+    Plastic: 100
+    Metal: 100
+
+- type: latheRecipe
+  id: NCRecipeMagazinePistolHelloCutieEmpty
+  result: MagazinePistolHelloCutieEmpty
+  comms: true
+  materials:
+    Plastic: 100
+    Metal: 100
+
+- type: latheRecipe
+  id: NCRecipeMagazinePistolStreetMasterEmpty
+  result: MagazinePistolStreetMasterEmpty
+  comms: true
+  materials:
+    Plastic: 100
+    Metal: 100
+
+- type: latheRecipe
+  id: NCRecipeMagazinePistolMarkIIIEmpty
+  result: MagazinePistolMarkIIIEmpty
+  comms: true
+  materials:
+    Plastic: 100
+    Metal: 100
+
+- type: latheRecipe
+  id: NCRecipeMagazinePistolCheesemakerEmpty
+  result: MagazinePistolCheesemakerEmpty
+  comms: true
+  materials:
+    Plastic: 100
+    Metal: 100
+
+- type: latheRecipe
+  id: NCRecipeMagazinePistolFederalX9Empty
+  result: MagazinePistolFederalX9Empty
+  comms: true
+  materials:
+    Plastic: 100
+    Metal: 100
+
+- type: latheRecipe
+  id: NCRecipeMagazinePistolBoomerBusterEmpty
+  result: MagazinePistolBoomerBusterEmpty
+  comms: true
+  materials:
+    Plastic: 100
+    Metal: 100
+
+- type: latheRecipe
+  id: NCRecipeMagazineRifleNomadEmpty
+  result: MagazineRifleNomadEmpty
+  comms: true
+  materials:
+    Plastic: 100
+    Metal: 100
+
+- type: latheRecipe
+  id: NCRecipeMagazineRifleArasakaEmpty
+  result: MagazineRifleArasakaEmpty
+  comms: true
+  materials:
+    Plastic: 100
+    Metal: 100
+
+- type: latheRecipe
+  id: NCRecipeMagazineRifleM04Empty
+  result: MagazineRifleM04Empty
+  comms: true
+  materials:
+    Plastic: 100
+    Metal: 100
+
+- type: latheRecipe
+  id: NCRecipeMagazineRifleNokotaEmpty
+  result: MagazineRifleNokotaEmpty
+  comms: true
+  materials:
+    Plastic: 100
+    Metal: 100
+
+- type: latheRecipe
+  id: NCRecipeMagazineRifleNowakiEmpty
+  result: MagazineRifleNowakiEmpty
+  comms: true
+  materials:
+    Plastic: 100
+    Metal: 100
