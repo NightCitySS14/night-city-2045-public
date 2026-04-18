@@ -1,4 +1,6 @@
 using System.Linq;
+using Robust.Shared.Map;
+using Robust.Shared.Player;
 using Content.Shared.Access.Components;
 using Content.Server.CartridgeLoader;
 using Content.Server.Power.Components;
@@ -22,6 +24,11 @@ using Content.Server._NC.CitiNet.Live;
 using Content.Shared._NC.CitiNet.Live;
 using Content.Server.PowerCell;
 using Content.Shared.Inventory;
+using Content.Server._NC.Ncpd;
+using Content.Server._NC.Trauma;
+using Content.Shared._NC.Ncpd;
+using Content.Shared.Mind.Components;
+using Robust.Server.Player;
 
 namespace Content.Server._NC.CitiNet.Cartridges;
 
@@ -43,10 +50,20 @@ public sealed class CitiNetCartridgeSystem : EntitySystem
     [Dependency] private readonly CitiNetStreamSystem _liveStream = default!;
     [Dependency] private readonly BankSystem _bank = default!;
     [Dependency] private readonly InventorySystem _inventory = default!;
+    [Dependency] private readonly NcpdDispatchSystem _ncpdDispatch = default!;
+    [Dependency] private readonly CitiNetMapSystem _citiNetMap = default!;
+    [Dependency] private readonly IPlayerManager _playerManager = default!;
+    [Dependency] private readonly Content.Server._NC.Dispatch.OverwatchSystem _overwatch = default!;
+
+    // Интервал проверки Relay (в секундах)
+    private const float RelayCheckInterval = 2.0f;
+    private float _relayCheckTimer;
 
     public override void Initialize()
     {
         base.Initialize();
+
+        SubscribeNetworkEvent<OpenCitiNetUiMessage>(OnOpenCitiNetUiMessage);
 
         SubscribeLocalEvent<CitiNetCartridgeComponent, CartridgeUiReadyEvent>(OnUiReady);
         SubscribeLocalEvent<CitiNetCartridgeComponent, CartridgeMessageEvent>(OnMessage);
@@ -58,6 +75,58 @@ public sealed class CitiNetCartridgeSystem : EntitySystem
 
         // Voice Relay
         SubscribeLocalEvent<EntitySpokeEvent>(OnSpeak);
+    }
+
+    private void OnOpenCitiNetUiMessage(OpenCitiNetUiMessage msg, EntitySessionEventArgs args)
+    {
+        var user = args.SenderSession.AttachedEntity;
+        if (user == null)
+            return;
+
+        // Ищем PDA в слоте ID
+        if (!_inventory.TryGetSlotEntity(user.Value, "id", out var pdaUid))
+            return;
+
+        // Убеждаемся что это КПК с установленным CartridgeLoader
+        if (!TryComp<CartridgeLoaderComponent>(pdaUid, out var loader))
+            return;
+
+        // Ищем внутри CitiNetCartridgeComponent
+        if (!_cartridge.TryGetProgram<CitiNetCartridgeComponent>(pdaUid.Value, out var citiNetUid, false, loader))
+            return;
+
+        // Если СитиНет найден, делаем его активной программой
+        if (loader.ActiveProgram != citiNetUid)
+            _cartridge.ActivateProgram(pdaUid.Value, citiNetUid.Value, loader);
+
+        // Открываем UI PDA для игрока
+        _ui.OpenUi(pdaUid.Value, PdaUiKey.Key, user.Value);
+    }
+
+    // ========== Fix 3: Периодическая проверка Relay ==========
+
+    public override void Update(float frameTime)
+    {
+        base.Update(frameTime);
+
+        _relayCheckTimer += frameTime;
+        if (_relayCheckTimer < RelayCheckInterval)
+            return;
+        _relayCheckTimer = 0f;
+
+        // Проверяем все картриджи в активном или исходящем звонке
+        var query = EntityQueryEnumerator<CitiNetCartridgeComponent>();
+        while (query.MoveNext(out var uid, out var comp))
+        {
+            if (comp.CallState == CitiNetCallState.None)
+                continue;
+
+            // Если Relay пропал — принудительно разрываем звонок
+            if (!HasActiveCitiNetRelay((uid, comp)))
+            {
+                ForceDisconnectCall((uid, comp));
+            }
+        }
     }
 
     // ========== Инициализация ==========
@@ -95,6 +164,16 @@ public sealed class CitiNetCartridgeSystem : EntitySystem
         // Проверяем наличие CitiNet Relay для большинства операций
         switch (msg.Type)
         {
+            // Общее
+            case CitiNetUiMessageType.SelectTab:
+                if (Enum.TryParse<CitiNetTab>(msg.Content, out var tab))
+                {
+                    ent.Comp.ActiveTab = tab;
+                    if (tab == CitiNetTab.BBS)
+                        ent.Comp.ActiveChatTarget = null;
+                }
+                break;
+
             // P2P чаты и звонки
             case CitiNetUiMessageType.StartChat:
                 HandleStartChat(ent, msg);
@@ -154,6 +233,17 @@ public sealed class CitiNetCartridgeSystem : EntitySystem
             case CitiNetUiMessageType.SelectChannel:
                 HandleSelectChannel(ent, msg);
                 break;
+            case CitiNetUiMessageType.InviteToChannel:
+                HandleInviteToChannel(ent, msg);
+                break;
+
+            // Экстренные вызовы
+            case CitiNetUiMessageType.CallPolice:
+                HandleCallPolice(ent);
+                break;
+            case CitiNetUiMessageType.CallTrauma:
+                HandleCallTrauma(ent);
+                break;
         }
 
         UpdateUI(ent, loader);
@@ -181,6 +271,7 @@ public sealed class CitiNetCartridgeSystem : EntitySystem
                 ent.Comp.ChatHistories[target.Value.Owner] = new List<CitiNetCallMessage>();
         }
 
+        ent.Comp.ActiveTab = CitiNetTab.P2P;
         UpdateUIForCartridge(ent);
     }
 
@@ -206,13 +297,30 @@ public sealed class CitiNetCartridgeSystem : EntitySystem
         if (!HasActiveCitiNetRelay(target))
             return;
 
-        // Устанавливаем состояние "звоним"
+        // Fix 2: Если цель уже в звонке — отклоняем с уведомлением "Занято"
+        if (targetComp.CallState != CitiNetCallState.None)
+        {
+            var busyMsg = new CitiNetCallMessage(_timing.CurTime, Loc.GetString("citinet-sender-system"),
+                Loc.GetString("citinet-call-busy"), true);
+            AddP2PMessage(ent, targetUid, busyMsg);
+            UpdateUIForCartridge(ent);
+            return;
+        }
+
+        // Устанавливаем состояние "звоним" + фиксируем партнёра звонка
         ent.Comp.CallState = CitiNetCallState.Ringing;
+        ent.Comp.ActiveCallPartner = targetUid;
 
         // У цели — входящий вызов (автоматически открывает чат)
         target.Comp.CallState = CitiNetCallState.Incoming;
         target.Comp.IncomingCaller = ent.Owner;
+        target.Comp.ActiveCallPartner = ent.Owner;
         target.Comp.ActiveChatTarget = ent.Owner;
+        target.Comp.ActiveTab = CitiNetTab.P2P;
+
+        // Инициализируем историю чата у вызываемого, если ещё нет
+        if (!target.Comp.ChatHistories.ContainsKey(ent.Owner))
+            target.Comp.ChatHistories[ent.Owner] = new List<CitiNetCallMessage>();
 
         // Обновляем UI цели и звонящего
         UpdateUIForCartridge(target);
@@ -227,15 +335,19 @@ public sealed class CitiNetCartridgeSystem : EntitySystem
         if (!TryComp<CitiNetCartridgeComponent>(ent.Comp.IncomingCaller, out var callerComp))
             return;
 
+        var callerUid = ent.Comp.IncomingCaller.Value;
+
         // Устанавливаем активный звонок для обеих сторон
         ent.Comp.CallState = CitiNetCallState.Active;
-        ent.Comp.ActiveChatTarget = ent.Comp.IncomingCaller;
+        ent.Comp.ActiveCallPartner = callerUid;
+        ent.Comp.ActiveChatTarget = callerUid;
         ent.Comp.IncomingCaller = null;
 
         callerComp.CallState = CitiNetCallState.Active;
+        callerComp.ActiveCallPartner = ent.Owner;
 
         // Обновляем UI звонящего
-        UpdateUIForCartridge((ent.Comp.ActiveChatTarget.Value, callerComp));
+        UpdateUIForCartridge((callerUid, callerComp));
     }
 
     private void HandleDeclineCall(Entity<CitiNetCartridgeComponent> ent)
@@ -247,27 +359,32 @@ public sealed class CitiNetCartridgeSystem : EntitySystem
         if (TryComp<CitiNetCartridgeComponent>(ent.Comp.IncomingCaller, out var callerComp))
         {
             callerComp.CallState = CitiNetCallState.None;
+            callerComp.ActiveCallPartner = null;
             UpdateUIForCartridge((ent.Comp.IncomingCaller.Value, callerComp));
         }
 
         ent.Comp.CallState = CitiNetCallState.None;
+        ent.Comp.ActiveCallPartner = null;
         ent.Comp.IncomingCaller = null;
     }
 
     private void HandleHangUp(Entity<CitiNetCartridgeComponent> ent)
     {
-        var targetUid = ent.Comp.ActiveChatTarget ?? ent.Comp.IncomingCaller;
+        // Используем ActiveCallPartner для поиска второй стороны, а не ActiveChatTarget
+        var targetUid = ent.Comp.ActiveCallPartner ?? ent.Comp.IncomingCaller;
         if (targetUid != null && TryComp<CitiNetCartridgeComponent>(targetUid, out var targetComp))
         {
             if (targetComp.CallState != CitiNetCallState.None)
             {
                 targetComp.CallState = CitiNetCallState.None;
+                targetComp.ActiveCallPartner = null;
                 targetComp.IncomingCaller = null;
                 UpdateUIForCartridge((targetUid.Value, targetComp));
             }
         }
 
         ent.Comp.CallState = CitiNetCallState.None;
+        ent.Comp.ActiveCallPartner = null;
         ent.Comp.IncomingCaller = null;
         UpdateUIForCartridge(ent);
     }
@@ -385,6 +502,7 @@ public sealed class CitiNetCartridgeSystem : EntitySystem
         ent.Comp.GroupMembers.Clear();
         ent.Comp.GroupMembers.Add(ent.Owner);
         ent.Comp.GroupMessages.Clear();
+        ent.Comp.ActiveTab = CitiNetTab.Group;
 
         UpdateUIForCartridge(ent);
     }
@@ -484,6 +602,82 @@ public sealed class CitiNetCartridgeSystem : EntitySystem
 
     // ========== BBS-каналы ==========
 
+    // ========== Экстренные вызовы ==========
+
+    private void HandleCallPolice(Entity<CitiNetCartridgeComponent> ent)
+    {
+        // Проверяем cooldown
+        var elapsed = _timing.CurTime - ent.Comp.LastPoliceCalled;
+        if (ent.Comp.LastPoliceCalled != TimeSpan.Zero && elapsed.TotalSeconds < ent.Comp.EmergencyCooldownSeconds)
+            return;
+
+        if (!HasActiveCitiNetRelay(ent))
+            return;
+
+        ent.Comp.LastPoliceCalled = _timing.CurTime;
+
+        var callerName = GetOwnerName(ent);
+        var coords = GetPdaCoordinates(ent);
+
+        // Определяем сектор через MapSectorComponent
+        var sector = "Unknown Sector";
+        if (TryComp<CartridgeComponent>(ent, out var cart) && cart.LoaderUid != null)
+        {
+            var loaderXform = Transform(cart.LoaderUid.Value);
+            var loaderPos = _transform.GetWorldPosition(cart.LoaderUid.Value);
+            var sectorQuery = EntityQueryEnumerator<MapSectorComponent>();
+            while (sectorQuery.MoveNext(out _, out var sec))
+            {
+                if (sec.Bounds.Contains(loaderPos))
+                {
+                    sector = sec.SectorName;
+                    break;
+                }
+            }
+        }
+
+        // Получаем сетевые координаты для метки на карте
+        NetCoordinates netCoords = default;
+        if (TryComp<CartridgeComponent>(ent, out var cartComp) && cartComp.LoaderUid != null)
+            netCoords = GetNetCoordinates(Transform(cartComp.LoaderUid.Value).Coordinates);
+
+        _overwatch.AddEntityAlert(ent.Owner, "CIVILIAN SOS", Loc.GetString("citinet-emergency-police-desc", ("caller", callerName)));
+    }
+
+    private void HandleCallTrauma(Entity<CitiNetCartridgeComponent> ent)
+    {
+        var elapsed = _timing.CurTime - ent.Comp.LastTraumaCalled;
+        if (ent.Comp.LastTraumaCalled != TimeSpan.Zero && elapsed.TotalSeconds < ent.Comp.EmergencyCooldownSeconds)
+            return;
+
+        if (!HasActiveCitiNetRelay(ent))
+            return;
+
+        ent.Comp.LastTraumaCalled = _timing.CurTime;
+
+        var callerName = GetOwnerName(ent);
+
+        // Определяем сектор
+        var sector = "Unknown Sector";
+        if (TryComp<CartridgeComponent>(ent, out var cart) && cart.LoaderUid != null)
+        {
+            var loaderPos = _transform.GetWorldPosition(cart.LoaderUid.Value);
+            var sectorQuery = EntityQueryEnumerator<MapSectorComponent>();
+            while (sectorQuery.MoveNext(out _, out var sec))
+            {
+                if (sec.Bounds.Contains(loaderPos))
+                {
+                    sector = sec.SectorName;
+                    break;
+                }
+            }
+        }
+
+        _overwatch.AddEntityAlert(ent.Owner, "TRAUMA SOS", Loc.GetString("citinet-emergency-trauma-desc", ("caller", callerName), ("sector", sector)));
+    }
+
+    // ========== BBS-каналы ==========
+
     private void HandleJoinChannel(Entity<CitiNetCartridgeComponent> ent, CitiNetUiMessageEvent msg)
     {
         if (msg.TargetId == null)
@@ -492,8 +686,9 @@ public sealed class CitiNetCartridgeSystem : EntitySystem
         if (!_prototype.TryIndex<CitiNetBBSChannelPrototype>(msg.TargetId, out var channel))
             return;
 
-        // Проверка доступа по ID-карте
-        if (channel.Access != null && channel.Access.Count > 0)
+        // Проверка доступа по ID-карте (пропускаем если агент приглашён)
+        var isInvited = ent.Comp.InvitedToChannels.Contains(msg.TargetId);
+        if (!isInvited && channel.Access != null && channel.Access.Count > 0)
         {
             HashSet<string> pdaAccess = new();
             if (ent.Comp.LoaderUid != null && TryComp<PdaComponent>(ent.Comp.LoaderUid.Value, out var pda) && pda.ContainedId != null)
@@ -527,9 +722,11 @@ public sealed class CitiNetCartridgeSystem : EntitySystem
 
         ent.Comp.JoinedChannels.Add(msg.TargetId);
 
-        // If it's the first channel, select it automatically
-        if (string.IsNullOrEmpty(ent.Comp.CurrentChannel))
-            ent.Comp.CurrentChannel = msg.TargetId;
+        // Always select it upon joining
+        ent.Comp.CurrentChannel = msg.TargetId;
+            
+        ent.Comp.ActiveTab = CitiNetTab.BBS;
+        ent.Comp.ActiveChatTarget = null;
 
         // Инициализируем кеш сообщений для канала
         if (!ent.Comp.ChannelMessages.ContainsKey(msg.TargetId))
@@ -550,8 +747,71 @@ public sealed class CitiNetCartridgeSystem : EntitySystem
 
     private void HandleSelectChannel(Entity<CitiNetCartridgeComponent> ent, CitiNetUiMessageEvent msg)
     {
-        if (msg.TargetId != null && ent.Comp.JoinedChannels.Contains(msg.TargetId))
+        if (msg.TargetId != null && _prototype.HasIndex<CitiNetBBSChannelPrototype>(msg.TargetId))
+        {
             ent.Comp.CurrentChannel = msg.TargetId;
+            ent.Comp.ActiveTab = CitiNetTab.BBS;
+            ent.Comp.ActiveChatTarget = null;
+        }
+    }
+
+    /// <summary>
+    /// Приглашает агента в BBS-канал по номеру.
+    /// Любой участник закрытого канала может приглашать новых агентов.
+    /// TargetId = номер агента, Content = ID канала.
+    /// </summary>
+    private void HandleInviteToChannel(Entity<CitiNetCartridgeComponent> ent, CitiNetUiMessageEvent msg)
+    {
+        // msg.TargetId = номер агента, msg.Content = ID канала
+        if (msg.TargetId == null || msg.Content == null)
+            return;
+
+        var channelId = msg.Content;
+
+        // Проверяем что канал существует
+        if (!_prototype.TryIndex<CitiNetBBSChannelPrototype>(channelId, out var channel))
+            return;
+
+        // Инвайтер должен быть участником канала
+        if (!ent.Comp.JoinedChannels.Contains(channelId))
+            return;
+
+        // Ищем целевой картридж по номеру Агента
+        var target = FindCartridgeByNumber(msg.TargetId);
+        if (target == null)
+            return;
+
+        // Нельзя приглашать самого себя
+        if (target.Value.Owner == ent.Owner)
+            return;
+
+        // Добавляем приглашение: канал теперь виден и доступен для входа
+        target.Value.Comp.InvitedToChannels.Add(channelId);
+
+        // Автоматически присоединяем и открываем канал у цели
+        target.Value.Comp.JoinedChannels.Add(channelId);
+        if (!target.Value.Comp.ChannelMessages.ContainsKey(channelId))
+            target.Value.Comp.ChannelMessages[channelId] = new List<CitiNetBBSMessage>();
+
+        target.Value.Comp.CurrentChannel = channelId;
+        target.Value.Comp.ActiveTab = CitiNetTab.BBS;
+
+        // Системное уведомление в чат канала для приглашённого
+        var inviterName = GetOwnerName(ent);
+        var sysMsg = new CitiNetBBSMessage(_timing.CurTime, Loc.GetString("citinet-sender-system"),
+            Loc.GetString("citinet-bbs-invite-received", ("inviter", inviterName), ("channel", channel.LocalizedName)),
+            channelId);
+        target.Value.Comp.ChannelMessages[channelId].Add(sysMsg);
+
+        UpdateUIForCartridge(target.Value);
+
+        // Уведомляем инвайтера об успехе
+        var targetName = GetOwnerName(target.Value);
+        var confirmMsg = new CitiNetBBSMessage(_timing.CurTime, Loc.GetString("citinet-sender-system"),
+            Loc.GetString("citinet-bbs-invite-sent", ("target", targetName), ("channel", channel.LocalizedName)),
+            channelId);
+        if (ent.Comp.ChannelMessages.ContainsKey(channelId))
+            ent.Comp.ChannelMessages[channelId].Add(confirmMsg);
     }
 
     private void HandleSendBBSMessage(Entity<CitiNetCartridgeComponent> ent, CitiNetUiMessageEvent msg)
@@ -780,10 +1040,10 @@ public sealed class CitiNetCartridgeSystem : EntitySystem
         var message = args.Message;
         var sourceName = GetOwnerName(ent);
 
-        // P2P звонок
-        if (ent.Comp.CallState == CitiNetCallState.Active && ent.Comp.ActiveChatTarget != null)
+        // P2P звонок — используем ActiveCallPartner вместо ActiveChatTarget
+        if (ent.Comp.CallState == CitiNetCallState.Active && ent.Comp.ActiveCallPartner != null)
         {
-            var targetUid = ent.Comp.ActiveChatTarget.Value;
+            var targetUid = ent.Comp.ActiveCallPartner.Value;
             if (TryComp<CitiNetCartridgeComponent>(targetUid, out var targetComp))
             {
                 var target = new Entity<CitiNetCartridgeComponent>(targetUid, targetComp);
@@ -859,16 +1119,16 @@ public sealed class CitiNetCartridgeSystem : EntitySystem
         string? currentContactNumber = null;
         var currentMessages = new List<CitiNetCallMessage>();
 
-        if (ent.Comp.ActiveChatTarget != null && TryComp<CitiNetCartridgeComponent>(ent.Comp.ActiveChatTarget, out var target))
+        // Определяем текущий контакт для отображения в UI:
+        // Приоритет: открытый чат > входящий звонок > партнёр активного звонка
+        var displayTarget = ent.Comp.ActiveChatTarget
+                            ?? ent.Comp.IncomingCaller
+                            ?? ent.Comp.ActiveCallPartner;
+
+        if (displayTarget != null && TryComp<CitiNetCartridgeComponent>(displayTarget, out var displayComp))
         {
-            currentContactNumber = target.AgentNumber;
-            if (ent.Comp.ChatHistories.TryGetValue(ent.Comp.ActiveChatTarget.Value, out var p2pMsgs))
-                currentMessages = p2pMsgs;
-        }
-        else if (ent.Comp.IncomingCaller != null && TryComp<CitiNetCartridgeComponent>(ent.Comp.IncomingCaller, out var caller))
-        {
-            currentContactNumber = caller.AgentNumber;
-            if (ent.Comp.ChatHistories.TryGetValue(ent.Comp.IncomingCaller.Value, out var p2pMsgs))
+            currentContactNumber = displayComp.AgentNumber;
+            if (ent.Comp.ChatHistories.TryGetValue(displayTarget.Value, out var p2pMsgs))
                 currentMessages = p2pMsgs;
         }
 
@@ -906,23 +1166,24 @@ public sealed class CitiNetCartridgeSystem : EntitySystem
         {
             var isJoined = ent.Comp.JoinedChannels.Contains(proto.ID);
 
-            // Проверка доступа по ID
-            bool hasAccess = true;
+            // Проверка доступа по ID-тегам
+            bool hasNativeAccess = true;
             if (proto.Access != null && proto.Access.Count > 0)
             {
-                hasAccess = false;
+                hasNativeAccess = false;
                 foreach (var requiredTag in proto.Access)
                 {
                     if (pdaAccess.Contains(requiredTag))
                     {
-                        hasAccess = true;
+                        hasNativeAccess = true;
                         break;
                     }
                 }
             }
 
-            // Если доступа нет, канал даже не показывается в списке
-            if (!hasAccess)
+            // Проверяем приглашение: агент видит канал если есть нативный доступ ИЛИ приглашение
+            var isInvited = ent.Comp.InvitedToChannels.Contains(proto.ID);
+            if (!hasNativeAccess && !isInvited)
                 continue;
 
             // Показываем только если мы присоединены, либо если канал не скрыт
@@ -933,7 +1194,8 @@ public sealed class CitiNetCartridgeSystem : EntitySystem
                     proto.LocalizedName,
                     proto.Color,
                     proto.RequiresPassword,
-                    isJoined));
+                    isJoined,
+                    isJoined && proto.Access != null && proto.Access.Count > 0));  // Можно приглашать в любом закрытом канале где ты участник
             }
         }
 
@@ -945,10 +1207,45 @@ public sealed class CitiNetCartridgeSystem : EntitySystem
             channelMessages = msgs;
         }
 
+        // Глобальный справочник всех активных агентов (CitiNet картриджи)
+        var globalDirectory = new List<CitiNetContact>();
+        var agentQuery = EntityQueryEnumerator<CitiNetCartridgeComponent>();
+        while (agentQuery.MoveNext(out var agUid, out var agComp))
+        {
+            if (string.IsNullOrEmpty(agComp.AgentNumber))
+                continue;
+
+            var agentName = GetOwnerName((agUid, agComp));
+            globalDirectory.Add(new CitiNetContact(agComp.AgentNumber, agentName));
+        }
+
+        // Все подключённые игроки (для вкладки Contacts) — через ActorComponent
+        var allPlayers = new List<CitiNetContact>();
+        var actorQuery = EntityQueryEnumerator<ActorComponent, MetaDataComponent>();
+        while (actorQuery.MoveNext(out var actorUid, out var actor, out var meta))
+        {
+            // Ищем CitiNet номер этого игрока, если есть
+            var citiNumber = "N/A";
+            var citiCart = FindCartridgeByOwner(actorUid);
+            if (citiCart != null && !string.IsNullOrEmpty(citiCart.Value.Comp.AgentNumber))
+                citiNumber = citiCart.Value.Comp.AgentNumber;
+
+            allPlayers.Add(new CitiNetContact(citiNumber, meta.EntityName));
+        }
+
+        // Рассчитываем оставшийся cooldown для кнопок экстренных вызовов
+        var now = _timing.CurTime;
+        var policeCd = ent.Comp.LastPoliceCalled == TimeSpan.Zero
+            ? 0f
+            : (float)Math.Max(0, ent.Comp.EmergencyCooldownSeconds - (now - ent.Comp.LastPoliceCalled).TotalSeconds);
+        var traumaCd = ent.Comp.LastTraumaCalled == TimeSpan.Zero
+            ? 0f
+            : (float)Math.Max(0, ent.Comp.EmergencyCooldownSeconds - (now - ent.Comp.LastTraumaCalled).TotalSeconds);
 
         var state = new CitiNetUiState(
             ent.Comp.AgentNumber,
             hasRelay,
+            ent.Comp.ActiveTab,
             contacts,
             currentContactNumber,
             ent.Comp.CallState,
@@ -960,9 +1257,53 @@ public sealed class CitiNetCartridgeSystem : EntitySystem
             ent.Comp.GroupMessages,
             channels,
             ent.Comp.CurrentChannel,
-            channelMessages);
+            channelMessages,
+            globalDirectory,
+            allPlayers,
+            policeCd,
+            traumaCd);
 
         _cartridge.UpdateCartridgeUiState(loader, state);
+    }
+
+    // ========== Fix 3: Принудительный разрыв звонка при потере Relay ==========
+
+    /// <summary>
+    /// Разрывает активный/входящий/исходящий звонок с системным уведомлением.
+    /// Вызывается при потере CitiNet Relay.
+    /// </summary>
+    private void ForceDisconnectCall(Entity<CitiNetCartridgeComponent> ent)
+    {
+        var partnerUid = ent.Comp.ActiveCallPartner ?? ent.Comp.IncomingCaller;
+
+        // Уведомляем вторую сторону
+        if (partnerUid != null && TryComp<CitiNetCartridgeComponent>(partnerUid, out var partnerComp))
+        {
+            if (partnerComp.CallState != CitiNetCallState.None)
+            {
+                var disconnectMsg = new CitiNetCallMessage(_timing.CurTime, Loc.GetString("citinet-sender-system"),
+                    Loc.GetString("citinet-call-connection-lost"), true);
+                AddP2PMessage((partnerUid.Value, partnerComp), ent.Owner, disconnectMsg);
+
+                partnerComp.CallState = CitiNetCallState.None;
+                partnerComp.ActiveCallPartner = null;
+                partnerComp.IncomingCaller = null;
+                UpdateUIForCartridge((partnerUid.Value, partnerComp));
+            }
+        }
+
+        // Уведомляем себя
+        if (partnerUid != null)
+        {
+            var selfMsg = new CitiNetCallMessage(_timing.CurTime, Loc.GetString("citinet-sender-system"),
+                Loc.GetString("citinet-call-connection-lost"), true);
+            AddP2PMessage(ent, partnerUid.Value, selfMsg);
+        }
+
+        ent.Comp.CallState = CitiNetCallState.None;
+        ent.Comp.ActiveCallPartner = null;
+        ent.Comp.IncomingCaller = null;
+        UpdateUIForCartridge(ent);
     }
 
 }

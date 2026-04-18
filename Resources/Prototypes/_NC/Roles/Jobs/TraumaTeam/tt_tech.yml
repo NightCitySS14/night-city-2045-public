@@ -4,7 +4,7 @@
   description: Вы — инженерный специалист. Вы следите за тем, чтобы лампочки горели, оборудование не сбоило, а техника Травмы работала, как часы. Чините механизмы, а не людей.
   playTimeTracker: JobTraumaTeamTech
   weight: 40
-  salary: 450
+  salary: 250
   icon: "JobIconTraumaTech"
   startingGear: TraumaTeamTechGear
   supervisors: Главный врач Trauma Team
@@ -17,8 +17,11 @@
   special:
   - !type:AddComponentSpecial
     components:
-    - type: TraumaSubscriber
-      tier: Silver
+    - type: MapBeacon
+      group: TraumaTeam
+      color: "#4bdc99"
+      icon: /Textures/_NC/Interface/Misc/job_icons.rsi/trauma.png
+      visibleInWorld: false
 
 - type: startingGear
   id: TraumaTeamTechGear

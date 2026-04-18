@@ -4,7 +4,7 @@
   description: Исполняет должность детектива
   playTimeTracker: JobNCPDInspector
   weight: 80
-  salary: 800
+  salary: 200
   icon: "JobIconNCPDInspector"
   startingGear: NCPDInspectorGear
   supervisors: Коммандер
@@ -12,6 +12,7 @@
     - NCPD_Patrol
     - NCPD_Armory
     - NCPD_Detective
+    - NCPD_Command
     - NC_General
   special:
   - !type:AddComponentSpecial

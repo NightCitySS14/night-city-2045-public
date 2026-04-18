@@ -4,13 +4,12 @@
   description: Опытный патрульный, который повидал многое на улицах Найт-Сити. Знает, как обращаться с бандитами и как не попасть в передрягу
   playTimeTracker: JobNCPDSergeant
   weight: 45
-  salary: 600
+  salary: 160
   icon: "JobIconNCPDPolice"
   startingGear: NCPDSergeantGear
   supervisors: Лейтенант
   access:
     - NCPD_Patrol
-    - NCPD_Armory
     - NC_General
   special:
   - !type:AddComponentSpecial

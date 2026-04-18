@@ -23,11 +23,42 @@ public sealed class CitiNetMapCartridgeSystem : EntitySystem
     private float _updateTimer = 0f;
     private const float UpdateInterval = 2.0f; 
 
+    [Dependency] private readonly Content.Shared.Inventory.InventorySystem _inventory = default!;
+
     public override void Initialize()
     {
         base.Initialize();
+        
+        SubscribeNetworkEvent<OpenCitiNetMapUiMessage>(OnOpenCitiNetMapUiMessage);
+
         SubscribeLocalEvent<CitiNetMapCartridgeComponent, CartridgeUiReadyEvent>(OnUiReady);
         SubscribeLocalEvent<CitiNetMapCartridgeComponent, CartridgeMessageEvent>(OnMessage);
+    }
+
+    private void OnOpenCitiNetMapUiMessage(OpenCitiNetMapUiMessage msg, EntitySessionEventArgs args)
+    {
+        var user = args.SenderSession.AttachedEntity;
+        if (user == null)
+            return;
+
+        // Ищем PDA в слоте ID
+        if (!_inventory.TryGetSlotEntity(user.Value, "id", out var pdaUid))
+            return;
+
+        // Убеждаемся что это КПК с установленным CartridgeLoader
+        if (!TryComp<CartridgeLoaderComponent>(pdaUid, out var loader))
+            return;
+
+        // Ищем внутри CitiNetMapCartridgeComponent
+        if (!_cartridge.TryGetProgram<CitiNetMapCartridgeComponent>(pdaUid.Value, out var mapUid, false, loader))
+            return;
+
+        // Если Карта найдена, делаем ее активной программой
+        if (loader.ActiveProgram != mapUid)
+            _cartridge.ActivateProgram(pdaUid.Value, mapUid.Value, loader);
+
+        // Открываем UI PDA для игрока
+        _uiSystem.OpenUi(pdaUid.Value, Content.Shared.PDA.PdaUiKey.Key, user.Value);
     }
 
     public override void Update(float frameTime)

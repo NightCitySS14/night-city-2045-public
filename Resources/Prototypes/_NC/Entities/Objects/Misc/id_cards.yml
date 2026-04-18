@@ -513,3 +513,179 @@
         - Ripper
     - type: PresetIdCard
       job: Reaper
+
+- type: entity
+  parent: IDCardStandard
+  id: BiotechHeadIDCard
+  name: идентификационная карта руководителя Биотехники
+  components:
+    - type: Sprite
+      layers:
+        - state: default
+        - state: department
+          color: '#5b97bc'
+        - state: subdepartment
+          color: '#aaffcc'
+    - type: Access
+      tags:
+        - NC_General
+        - Biotech_Director
+        - Biotech_HeadOfDepartment
+        - Biotech_MedTech
+        - Biotech_Operative
+        - Biotech_Staff
+        - Biotech_General
+    - type: PresetIdCard
+      job: BiotechnicaChief
+
+- type: entity
+  parent: IDCardStandard
+  id: BiotechnicaBotanistIDCard
+  name: идентификационная карта ботаника Биотехники
+  components:
+    - type: Sprite
+      layers:
+        - state: default
+        - state: department
+          color: '#5b97bc'
+        - state: subdepartment
+          color: '#aaffcc'
+    - type: Access
+      tags:
+        - NC_General
+        - Biotech_Staff
+        - Biotech_General
+    - type: PresetIdCard
+      job: BiotechnicaBotanist
+
+- type: entity
+  parent: IDCardStandard
+  id: BiotechnicaMedTechIDCard
+  name: идентификационная карта мед-техника Биотехники
+  components:
+    - type: Sprite
+      layers:
+        - state: default
+        - state: department
+          color: '#5b97bc'
+        - state: subdepartment
+          color: '#aaffcc'
+    - type: Access
+      tags:
+        - NC_General
+        - Biotech_MedTech
+        - Biotech_Staff
+        - Biotech_General
+    - type: PresetIdCard
+      job: BiotechnicaMedTech
+
+- type: entity
+  parent: IDCardStandard
+  id: BiotechnicaNetrunnerIDCard
+  name: идентификационная карта нетранера Биотехники
+  components:
+    - type: Sprite
+      layers:
+        - state: default
+        - state: department
+          color: '#5b97bc'
+        - state: subdepartment
+          color: '#aaffcc'
+    - type: Access
+      tags:
+        - NC_General
+        - Biotech_MedTech
+        - Biotech_Operative
+        - Biotech_Staff
+        - Biotech_General
+    - type: PresetIdCard
+      job: BiotechnicaNetrunner
+
+- type: entity
+  parent: IDCardStandard
+  id: BiotechnicaOperativeLeadIDCard
+  name: идентификационная карта начальника охраны Биотехники
+  components:
+    - type: Sprite
+      layers:
+        - state: default
+        - state: department
+          color: '#5b97bc'
+        - state: subdepartment
+          color: '#aaffcc'
+    - type: Access
+      tags:
+        - NC_General
+        - Biotech_Director
+        - Biotech_HeadOfDepartment
+        - Biotech_MedTech
+        - Biotech_Operative
+        - Biotech_Staff
+        - Biotech_General
+    - type: PresetIdCard
+      job: BiotechnicaOperativeLead
+
+- type: entity
+  parent: IDCardStandard
+  id: BiotechnicaOperativeIDCard
+  name: идентификационная карта оперативника Биотехники
+  components:
+    - type: Sprite
+      layers:
+        - state: default
+        - state: department
+          color: '#5b97bc'
+        - state: subdepartment
+          color: '#aaffcc'
+    - type: Access
+      tags:
+        - NC_General
+        - Biotech_MedTech
+        - Biotech_Operative
+        - Biotech_Staff
+        - Biotech_General
+    - type: PresetIdCard
+      job: BiotechnicaOperative
+
+- type: entity
+  parent: IDCardStandard
+  id: BiotechnicaParamedicIDCard
+  name: идентификационная карта парамедика Биотехники
+  components:
+    - type: Sprite
+      layers:
+        - state: default
+        - state: department
+          color: '#5b97bc'
+        - state: subdepartment
+          color: '#aaffcc'
+    - type: Access
+      tags:
+        - NC_General
+        - Biotech_MedTech
+        - Biotech_Operative
+        - Biotech_Staff
+        - Biotech_General
+    - type: PresetIdCard
+      job: BiotechnicaParamedic
+
+- type: entity
+  parent: IDCardStandard
+  id: BiotechnicaTechIDCard
+  name: идентификационная карта техника Биотехники
+  components:
+    - type: Sprite
+      layers:
+        - state: default
+        - state: department
+          color: '#5b97bc'
+        - state: subdepartment
+          color: '#aaffcc'
+    - type: Access
+      tags:
+        - NC_General
+        - Biotech_Staff
+        - Biotech_General
+    - type: PresetIdCard
+      job: BiotechnicaTech
+

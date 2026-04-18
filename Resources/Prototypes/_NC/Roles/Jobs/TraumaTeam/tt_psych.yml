@@ -4,7 +4,7 @@
   description: Вы — высококвалифицированный специалист с высшим образованием и дипломом психолога...или так всем кажется. Лечите от киберпсихоза при помощи терапии, прописывайте шизам лекарства, а так же утверждайте, что синие человечки - это нормально.
   playTimeTracker: JobTraumaTeamPsych
   weight: 80
-  salary: 800
+  salary: 320
   icon: "JobIconTraumaPsiholog"
   startingGear: TraumaTeamPsychGear
   supervisors: Главный врач Trauma Team
@@ -15,8 +15,11 @@
   special:
   - !type:AddComponentSpecial
     components:
-    - type: TraumaSubscriber
-      tier: Silver
+    - type: MapBeacon
+      group: TraumaTeam
+      color: "#4bdc99"
+      icon: /Textures/_NC/Interface/Misc/job_icons.rsi/trauma.png
+      visibleInWorld: false
 
 - type: startingGear
   id: TraumaTeamPsychGear

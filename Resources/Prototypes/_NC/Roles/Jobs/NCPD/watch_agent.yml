@@ -4,7 +4,7 @@
   description: Нетраннер при НСПД
   playTimeTracker: JobNCPDWatchAgent
   weight: 50
-  salary: 800
+  salary: 200
   icon: "JobIconNCPDPolice"
   startingGear: NCPDWatchAgentGear
   supervisors: Начальник департамента полиции
@@ -21,12 +21,26 @@
       icon: /Textures/Interface/VerbIcons/star-solid-yellow.svg.192dpi.png
       visibleInWorld: false
 
+
 - type: startingGear
   id: NCPDWatchAgentGear
   equipment:
     jumpsuit: ClothingUniformJumpsuitDetective
-    back: ClothingBackpackSatchelSecurity
+    back: ClothingBackpackWatchAgentFilled
     shoes: ClothingShoesColorBlack
     head: ClothingHeadHatFedoraBrown
     id: NCPDWatchAgentPDA
     outerClothing: ClothingOuterCoatDetective
+
+
+- type: entity
+  parent: ClothingBackpackSatchelSecurity
+  id: ClothingBackpackWatchAgentFilled
+  name: Рюкзак Агента Дозора
+  components:
+  - type: StorageFill
+    contents:
+    - id: NCCyberdeck
+    - id: NCProgramHighJack
+    - id: NCProgramPing
+    - id: NCProgramShock

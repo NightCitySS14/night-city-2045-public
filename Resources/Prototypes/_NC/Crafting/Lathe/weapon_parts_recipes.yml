@@ -13,6 +13,21 @@
   - NCBlankElectronicsCircuit
   - NCBlankElectronicsNeuro
   - NCBlankDrive
+  - NCRecipeMagazinePistolStukach
+  - NCRecipeMagazinePistolOverlord
+  - NCRecipeMagazinePistolAvenger
+  - NCRecipeMagazinePistolHelloCutie
+  - NCRecipeMagazinePistolStreetMaster
+  - NCRecipeMagazinePistolMarkIII
+  - NCRecipeMagazinePistolCheesemaker
+  - NCRecipeMagazinePistolFederalX9
+  - NCRecipeMagazinePistolBoomerBuster
+  - NCRecipeMagazineRifleNomad
+  - NCRecipeMagazineRifleArasaka
+  - NCRecipeMagazineRifleM04
+  - NCRecipeMagazineRifleNokota
+  - NCRecipeMagazineRifleNowaki
+  - NCRecipeMagazine622mmCaseless
 
 
 # ==========================================
@@ -116,3 +131,129 @@
   materials:
     Plasteel: 1500
     Gold: 500
+
+
+# ==========================================
+# МАГАЗИНЫ (MAGAZINES)
+# ==========================================
+
+
+- type: latheRecipe
+  id: NCRecipeMagazinePistolStukach
+  result: MagazinePistolStukach
+  comms: true
+  materials:
+    Plastic: 100
+    Metal: 100
+
+- type: latheRecipe
+  id: NCRecipeMagazinePistolOverlord
+  result: MagazinePistolOverlord
+  comms: true
+  materials:
+    Plastic: 100
+    Metal: 100
+
+- type: latheRecipe
+  id: NCRecipeMagazinePistolAvenger
+  result: MagazinePistolAvenger
+  comms: true
+  materials:
+    Plastic: 100
+    Metal: 100
+
+- type: latheRecipe
+  id: NCRecipeMagazinePistolHelloCutie
+  result: MagazinePistolHelloCutie
+  comms: true
+  materials:
+    Plastic: 100
+    Metal: 100
+
+- type: latheRecipe
+  id: NCRecipeMagazinePistolStreetMaster
+  result: MagazinePistolStreetMaster
+  comms: true
+  materials:
+    Plastic: 100
+    Metal: 100
+
+- type: latheRecipe
+  id: NCRecipeMagazinePistolMarkIII
+  result: MagazinePistolMarkIII
+  comms: true
+  materials:
+    Plastic: 100
+    Metal: 100
+
+- type: latheRecipe
+  id: NCRecipeMagazinePistolCheesemaker
+  result: MagazinePistolCheesemaker
+  comms: true
+  materials:
+    Plastic: 100
+    Metal: 100
+
+- type: latheRecipe
+  id: NCRecipeMagazinePistolFederalX9
+  result: MagazinePistolFederalX9
+  comms: true
+  materials:
+    Plastic: 100
+    Metal: 100
+
+- type: latheRecipe
+  id: NCRecipeMagazinePistolBoomerBuster
+  result: MagazinePistolBoomerBuster
+  comms: true
+  materials:
+    Plastic: 100
+    Metal: 100
+
+- type: latheRecipe
+  id: NCRecipeMagazineRifleNomad
+  result: MagazineRifleNomad
+  comms: true
+  materials:
+    Plastic: 100
+    Metal: 100
+
+- type: latheRecipe
+  id: NCRecipeMagazineRifleArasaka
+  result: MagazineRifleArasaka
+  comms: true
+  materials:
+    Plastic: 100
+    Metal: 100
+
+- type: latheRecipe
+  id: NCRecipeMagazineRifleM04
+  result: MagazineRifleM04
+  comms: true
+  materials:
+    Plastic: 100
+    Metal: 100
+
+- type: latheRecipe
+  id: NCRecipeMagazineRifleNokota
+  result: MagazineRifleNokota
+  comms: true
+  materials:
+    Plastic: 100
+    Metal: 100
+
+- type: latheRecipe
+  id: NCRecipeMagazineRifleNowaki
+  result: MagazineRifleNowaki
+  comms: true
+  materials:
+    Plastic: 100
+    Metal: 100
+
+- type: latheRecipe
+  id: NCRecipeMagazine622mmCaseless
+  result: Magazine622mmCaseless
+  comms: true
+  materials:
+    Plastic: 100
+    Metal: 100

@@ -4,7 +4,7 @@
   description: job-description-maxtac-commander
   playTimeTracker: JobMaxTacCommander
   weight: 95
-  salary: 1800
+  salary: 500
   icon: "JobIconMaxTacCommander"
   startingGear: MaxTacCommanderGear
   supervisors: job-supervisors-centcom
@@ -27,6 +27,13 @@
       visibleInWorld: false
     - type: TraumaSubscriber
       tier: Silver
+  - !type:AddCyberwareSpecial
+    loseHum: false
+    cyberware:
+    - CyberwareExternalReactiveSublayer
+    - CyberwareNeuroKerenzikovMaxTac
+    - CyberwareNeuroTacticalSpartan
+    - CyberwareNeuroSandevistanMaxTac
 
 - type: startingGear
   id: MaxTacCommanderGear

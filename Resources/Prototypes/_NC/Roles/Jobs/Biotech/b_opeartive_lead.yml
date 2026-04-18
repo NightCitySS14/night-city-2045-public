@@ -4,7 +4,7 @@
   description: 'Относится к Офицерскому составу корпорации Биотехника. Руководит оперативниками, парамедиками и нетраннерами.'
   playTimeTracker: JobBiotechnicaOperativeLead
   weight: 80
-  salary: 2000
+  salary: 350
   icon: "JobIconBiotechOfficer"
   startingGear: BiotechnicaOperativeLeadGear
   access:
