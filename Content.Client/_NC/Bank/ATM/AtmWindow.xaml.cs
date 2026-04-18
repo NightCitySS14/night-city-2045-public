@@ -18,9 +18,18 @@ namespace Content.Client._NC.Bank.ATM
         private readonly Button _withdrawButton;
         private readonly Button _depositButton;
         private readonly LineEdit _withdrawEdit;
+        
+        private readonly BoxContainer _loginContainer;
+        private readonly BoxContainer _accountContainer;
+        private readonly LineEdit _accountNumberEdit;
+        private readonly LineEdit _pinEdit;
+        private readonly Button _loginButton;
+        private readonly Button _logoutButton;
 
         public Action<int>? OnWithdraw;
         public Action? OnDeposit;
+        public Action<string, string>? OnLogin;
+        public Action? OnLogout;
 
         public AtmWindow()
         {
@@ -33,6 +42,13 @@ namespace Content.Client._NC.Bank.ATM
             _withdrawButton = FindControl<Button>("WithdrawButton");
             _depositButton = FindControl<Button>("DepositButton");
             _withdrawEdit = FindControl<LineEdit>("WithdrawEdit");
+            
+            _loginContainer = FindControl<BoxContainer>("LoginContainer");
+            _accountContainer = FindControl<BoxContainer>("AccountContainer");
+            _accountNumberEdit = FindControl<LineEdit>("AccountNumberEdit");
+            _pinEdit = FindControl<LineEdit>("PinEdit");
+            _loginButton = FindControl<Button>("LoginButton");
+            _logoutButton = FindControl<Button>("LogoutButton");
 
             _withdrawButton.OnPressed += _ =>
             {
@@ -41,30 +57,48 @@ namespace Content.Client._NC.Bank.ATM
             };
 
             _depositButton.OnPressed += _ => OnDeposit?.Invoke();
+            
+            _loginButton.OnPressed += _ =>
+            {
+                if (!string.IsNullOrWhiteSpace(_accountNumberEdit.Text) && !string.IsNullOrWhiteSpace(_pinEdit.Text))
+                {
+                    OnLogin?.Invoke(_accountNumberEdit.Text, _pinEdit.Text);
+                }
+            };
+            
+            _logoutButton.OnPressed += _ => OnLogout?.Invoke();
         }
 
         public void UpdateState(AtmBoundUserInterfaceState state)
         {
-            if (state.IsCardInserted)
+            if (state.IsLoggedIn)
             {
-                _statusLabel.Text = $"Карта: {state.AccountName}";
+                _statusLabel.Text = $"Счет: {state.AccountName}";
                 _statusLabel.FontColorOverride = Color.Green;
                 _balanceLabel.Text = $"{state.BankBalance} кредитов";
                 _withdrawButton.Disabled = false;
                 _withdrawEdit.Editable = true;
+                
+                _loginContainer.Visible = false;
+                _accountContainer.Visible = true;
+                _accountNumberEdit.Text = string.Empty;
+                _pinEdit.Text = string.Empty;
             }
             else
             {
-                _statusLabel.Text = "Вставьте ID карту";
+                _statusLabel.Text = "Не авторизован";
                 _statusLabel.FontColorOverride = Color.Red;
                 _balanceLabel.Text = "---";
                 _withdrawButton.Disabled = true;
                 _withdrawEdit.Editable = false;
+                
+                _loginContainer.Visible = true;
+                _accountContainer.Visible = false;
             }
 
             _taxLabel.Text = $"{state.TaxRate * 100:0}%"; 
             _depositLabel.Text = $"{state.DepositAmount} кредитов";
-            _depositButton.Disabled = !state.IsCardInserted || state.DepositAmount <= 0;
+            _depositButton.Disabled = !state.IsLoggedIn || state.DepositAmount <= 0;
         }
     }
 }

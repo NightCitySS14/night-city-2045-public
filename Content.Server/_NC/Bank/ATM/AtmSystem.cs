@@ -14,6 +14,7 @@ using Robust.Shared.Prototypes;
 using System.Linq;
 using System.Runtime.InteropServices;
 using Robust.Shared.Localization;
+using System.Collections.Generic;
 
 namespace Content.Server._NC.Bank.ATM
 {
@@ -30,6 +31,9 @@ namespace Content.Server._NC.Bank.ATM
 
         private const string CurrencyPrototypeId = "SpaceCash";
         private const string CurrencyStackId = "Credit";
+        
+        // Маппинг Player -> AccountEntity
+        private readonly Dictionary<EntityUid, EntityUid> _atmSessions = new();
 
         public override void Initialize()
         {
@@ -40,6 +44,44 @@ namespace Content.Server._NC.Bank.ATM
             SubscribeLocalEvent<AtmComponent, AtmWithdrawMessage>(OnWithdraw);
             SubscribeLocalEvent<AtmComponent, AtmDepositMessage>(OnDeposit);
             SubscribeLocalEvent<AtmComponent, BoundUIOpenedEvent>(OnUiOpened);
+            SubscribeLocalEvent<AtmComponent, BoundUIClosedEvent>(OnUiClosed);
+            SubscribeLocalEvent<AtmComponent, AtmLoginMessage>(OnLogin);
+            SubscribeLocalEvent<AtmComponent, AtmLogoutMessage>(OnLogout);
+        }
+        
+        private void OnUiClosed(EntityUid uid, AtmComponent component, BoundUIClosedEvent args)
+        {
+            if (args.Actor is { Valid: true } player)
+            {
+                _atmSessions.Remove(player);
+            }
+        }
+        
+        private void OnLogin(EntityUid uid, AtmComponent component, AtmLoginMessage args)
+        {
+            if (args.Actor is not { Valid: true } player) return;
+            
+            var query = EntityQueryEnumerator<BankAccountComponent>();
+            while (query.MoveNext(out var accUid, out var accnt))
+            {
+                if (accnt.AccountNumber == args.AccountNumber && accnt.PIN == args.PIN)
+                {
+                    _atmSessions[player] = accUid;
+                    UpdateUiForUser(uid, component, player);
+                    return;
+                }
+            }
+            
+            _popupSystem.PopupEntity("Неверный номер счета или ПИН-код", uid, player);
+        }
+        
+        private void OnLogout(EntityUid uid, AtmComponent component, AtmLogoutMessage args)
+        {
+            if (args.Actor is { Valid: true } player)
+            {
+                _atmSessions.Remove(player);
+                UpdateUiForUser(uid, component, player);
+            }
         }
 
         // === ВСТАВКА ДЕНЕГ РУКАМИ ===
@@ -67,15 +109,14 @@ namespace Content.Server._NC.Bank.ATM
             if (args.Actor is not { Valid: true } player) return;
             if (args.Amount <= 0) return;
 
-            // 1. Просто проверяем, что карта есть (как ключ)
-            if (!IsIdCardInserted(uid))
+            if (!IsLoggedIn(player, out var accountUid))
             {
                 _popupSystem.PopupEntity(Loc.GetString("atm-popup-insert-card-auth"), uid, player);
                 return;
             }
 
-            // 2. Списываем деньги у ИГРОКА (args.Actor) через BankSystem
-            if (_bankSystem.TryBankWithdraw(player, args.Amount))
+            // 2. Списываем деньги у ВЛАДЕЛЬЦА СЧЕТА через BankSystem
+            if (_bankSystem.TryBankWithdraw(accountUid, args.Amount))
             {
                 var cash = Spawn(CurrencyPrototypeId, Transform(uid).Coordinates);
                 _stackSystem.SetCount(cash, args.Amount);
@@ -94,8 +135,7 @@ namespace Content.Server._NC.Bank.ATM
         {
             if (args.Actor is not { Valid: true } player) return;
 
-            // 1. Проверяем наличие карты
-            if (!IsIdCardInserted(uid))
+            if (!IsLoggedIn(player, out var accountUid))
             {
                 _popupSystem.PopupEntity(Loc.GetString("atm-popup-insert-card"), uid, player);
                 return;
@@ -119,8 +159,8 @@ namespace Content.Server._NC.Bank.ATM
                 return;
             }
 
-            // 4. Зачисляем ИГРОКУ (args.Actor)
-            if (_bankSystem.TryBankDeposit(player, finalDeposit))
+            // 4. Зачисляем ВЛАДЕЛЬЦУ СЧЕТА
+            if (_bankSystem.TryBankDeposit(accountUid, finalDeposit))
             {
                 PayTaxToStation(uid, tax);
 
@@ -156,19 +196,18 @@ namespace Content.Server._NC.Bank.ATM
 
         private void UpdateUiForUser(EntityUid uid, AtmComponent component, EntityUid user)
         {
-            string accountName = Loc.GetString("atm-ui-no-card");
+            string accountName = "Не авторизован";
             int balance = 0;
-            bool isCardInserted = false;
+            bool isLoggedIn = false;
             int depositAmount = 0;
 
-            if (IsIdCardInserted(uid))
+            if (IsLoggedIn(user, out var accountUid) && TryComp<BankAccountComponent>(accountUid, out var bankAcc))
             {
-                isCardInserted = true;
-                if (TryGetIdCardEntity(uid, out var cardEntity))
-                    accountName = Name(cardEntity);
+                isLoggedIn = true;
+                accountName = bankAcc.AccountNumber;
 
-                // ВАЖНО: Получаем баланс из BankSystem (из профиля игрока)
-                balance = _bankSystem.GetBalance(user);
+                // Получаем баланс из BankSystem для владельца счета
+                balance = _bankSystem.GetBalance(accountUid);
             }
 
             if (_containerSystem.TryGetContainer(uid, AtmComponent.CashSlotId, out var cashContainer) &&
@@ -185,7 +224,7 @@ namespace Content.Server._NC.Bank.ATM
             var state = new AtmBoundUserInterfaceState(
                 balance,
                 accountName,
-                isCardInserted,
+                isLoggedIn,
                 component.TaxRate,
                 depositAmount
             );
@@ -193,18 +232,9 @@ namespace Content.Server._NC.Bank.ATM
             _uiSystem.SetUiState(uid, AtmUiKey.Key, state);
         }
 
-        private bool IsIdCardInserted(EntityUid uid) => TryGetIdCardEntity(uid, out _);
-
-        private bool TryGetIdCardEntity(EntityUid uid, out EntityUid card)
+        private bool IsLoggedIn(EntityUid user, out EntityUid accountUid)
         {
-            card = EntityUid.Invalid;
-            if (_containerSystem.TryGetContainer(uid, AtmComponent.IdSlotId, out var container) &&
-                container.ContainedEntities.Count > 0)
-            {
-                card = container.ContainedEntities[0];
-                return true;
-            }
-            return false;
+            return _atmSessions.TryGetValue(user, out accountUid);
         }
     }
 }

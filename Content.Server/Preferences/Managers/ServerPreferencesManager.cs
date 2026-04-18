@@ -107,6 +107,19 @@ namespace Content.Server.Preferences.Managers
 
             profile.EnsureValid(session, _dependencies);
 
+            if (profile is Content.Shared.Preferences.HumanoidCharacterProfile newHumanoid)
+            {
+                if (curPrefs.Characters.TryGetValue(slot, out var existingProfile) &&
+                    existingProfile is Content.Shared.Preferences.HumanoidCharacterProfile oldHumanoid)
+                {
+                    profile = newHumanoid.WithBankBalance(oldHumanoid.BankBalance);
+                }
+                else
+                {
+                    profile = newHumanoid.WithBankBalance(3000);
+                }
+            }
+
             var profiles = new Dictionary<int, ICharacterProfile>(curPrefs.Characters)
             {
                 [slot] = profile

@@ -13,5 +13,11 @@ namespace Content.Shared._NC.Bank.Components
         /// </summary>
         [DataField, AutoNetworkedField]
         public int Balance = 300;
+
+        [DataField, AutoNetworkedField]
+        public string AccountNumber = string.Empty;
+
+        [DataField, AutoNetworkedField]
+        public string PIN = string.Empty;
     }
 }

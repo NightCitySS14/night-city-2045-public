@@ -31,6 +31,7 @@ namespace Content.Server._NC.Bank
         [Dependency] private readonly SharedJobSystem _jobSystem = default!;
         [Dependency] private readonly SharedMindSystem _mindSystem = default!; // Добавлено для получения MindId
         [Dependency] private readonly PopupSystem _popupSystem = default!;
+        [Dependency] private readonly Robust.Shared.Random.IRobustRandom _random = default!;
 
         private ISawmill _log = default!;
 
@@ -51,6 +52,23 @@ namespace Content.Server._NC.Bank
 
             SubscribeLocalEvent<StationBankComponent, MapInitEvent>(OnStationBankInit);
             SubscribeLocalEvent<PlayerSpawnCompleteEvent>(OnPlayerSpawn);
+            
+            // Добавим verb для просмотра реквизитов счета
+            SubscribeLocalEvent<BankAccountComponent, Content.Shared.Verbs.GetVerbsEvent<Content.Shared.Verbs.ActivationVerb>>(OnGetVerbs);
+        }
+        
+        private void OnGetVerbs(EntityUid uid, BankAccountComponent component, Content.Shared.Verbs.GetVerbsEvent<Content.Shared.Verbs.ActivationVerb> args)
+        {
+            if (args.User != uid) return;
+
+            args.Verbs.Add(new Content.Shared.Verbs.ActivationVerb
+            {
+                Text = "Реквизиты счета",
+                Act = () =>
+                {
+                    _popupSystem.PopupEntity($"Счет: {component.AccountNumber} | ПИН: {component.PIN}", uid, uid);
+                }
+            });
         }
 
         private void OnStationBankInit(EntityUid uid, StationBankComponent component, MapInitEvent args)
@@ -66,7 +84,16 @@ namespace Content.Server._NC.Bank
             var balance = GetBalance(ev.Mob);
             var bankComp = EnsureComp<BankAccountComponent>(ev.Mob);
             bankComp.Balance = balance;
+            
+            if (string.IsNullOrEmpty(bankComp.AccountNumber))
+            {
+                bankComp.AccountNumber = $"NC-{_random.Next(100000, 999999)}";
+                bankComp.PIN = _random.Next(1000, 9999).ToString();
+            }
+            
             Dirty(ev.Mob, bankComp);
+            
+            _chatManager.DispatchServerMessage(ev.Player, $"Ваш банковский счет: {bankComp.AccountNumber}, ПИН-код: {bankComp.PIN}. Никому не сообщайте эти данные.");
         }
 
         public StationBankComponent EnsureStationBank(EntityUid stationUid)

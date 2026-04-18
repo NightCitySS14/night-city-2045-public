@@ -20,13 +20,11 @@ namespace Content.Shared._NC.Bank.ATM
         {
             // Регистрируем слоты.
             // Теперь ItemSlotsSystem сам сделает всю работу (Eject/Insert).
-            _itemSlotsSystem.AddItemSlot(uid, AtmComponent.IdSlotId, component.IdSlot);
             _itemSlotsSystem.AddItemSlot(uid, AtmComponent.CashSlotId, component.CashSlot);
         }
 
         private void OnComponentRemove(EntityUid uid, AtmComponent component, ComponentRemove args)
         {
-            _itemSlotsSystem.RemoveItemSlot(uid, component.IdSlot);
             _itemSlotsSystem.RemoveItemSlot(uid, component.CashSlot);
         }
     }

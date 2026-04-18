@@ -19,6 +19,8 @@ namespace Content.Client._NC.Bank.ATM
             
             _window.OnWithdraw += amount => SendMessage(new AtmWithdrawMessage(amount));
             _window.OnDeposit += () => SendMessage(new AtmDepositMessage());
+            _window.OnLogin += (account, pin) => SendMessage(new AtmLoginMessage(account, pin));
+            _window.OnLogout += () => SendMessage(new AtmLogoutMessage());
 
             _window.OpenCentered();
         }

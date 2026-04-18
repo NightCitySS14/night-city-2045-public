@@ -14,19 +14,6 @@ namespace Content.Shared._NC.Bank.Components
         [DataField("taxRate")]
         public float TaxRate = 0.1f;
 
-        // === 1. Слот для ID Карты ===
-        public const string IdSlotId = "atm_id_slot";
-
-        [DataField("idSlot")]
-        public ItemSlot IdSlot = new()
-        {
-            Name = "ID карта",
-            Whitelist = new EntityWhitelist
-            {
-                Components = new[] { "IdCard" }
-            }
-        };
-
         // === 2. Слот для Денег ===
         public const string CashSlotId = "atm_cash_slot";
 
@@ -34,11 +21,9 @@ namespace Content.Shared._NC.Bank.Components
         public ItemSlot CashSlot = new()
         {
             Name = "Приемник купюр",
-            // Locked = true, <--- УБРАЛИ (Теперь можно достать деньги руками)
             Whitelist = new EntityWhitelist
             {
                 Components = new[] { "Stack" },
-                // Исправили тип списка для тэгов:
                 Tags = new List<ProtoId<TagPrototype>> { "SpaceCash" }
             }
         };
@@ -52,19 +37,34 @@ namespace Content.Shared._NC.Bank.Components
     {
         public readonly int BankBalance;
         public readonly string AccountName;
-        public readonly bool IsCardInserted;
+        public readonly bool IsLoggedIn;
         public readonly float TaxRate;
         public readonly int DepositAmount;
 
-        public AtmBoundUserInterfaceState(int bankBalance, string accountName, bool isCardInserted, float taxRate, int depositAmount)
+        public AtmBoundUserInterfaceState(int bankBalance, string accountName, bool isLoggedIn, float taxRate, int depositAmount)
         {
             BankBalance = bankBalance;
             AccountName = accountName;
-            IsCardInserted = isCardInserted;
+            IsLoggedIn = isLoggedIn;
             TaxRate = taxRate;
             DepositAmount = depositAmount;
         }
     }
+
+    [Serializable, NetSerializable]
+    public sealed class AtmLoginMessage : BoundUserInterfaceMessage
+    {
+        public readonly string AccountNumber;
+        public readonly string PIN;
+        public AtmLoginMessage(string accNum, string pin)
+        {
+            AccountNumber = accNum;
+            PIN = pin;
+        }
+    }
+
+    [Serializable, NetSerializable]
+    public sealed class AtmLogoutMessage : BoundUserInterfaceMessage { }
 
     [Serializable, NetSerializable]
     public sealed class AtmWithdrawMessage : BoundUserInterfaceMessage
