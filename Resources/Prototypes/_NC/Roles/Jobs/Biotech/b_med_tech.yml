@@ -8,16 +8,11 @@
   icon: "JobIconBiotechMedTech"
   startingGear: BiotechnicaMedTechGear
   access:
-    - Trauma_Command
-    - Trauma_Medical
-    - Trauma_Morgue
-    - Trauma_Hangar
+    - Biotech_MedTech
+    - Biotech_Staff
+    - Biotech_Lab
+    - Biotech_General
     - NC_General
-  special:
-  - !type:AddComponentSpecial
-    components:
-    - type: TraumaSubscriber
-      tier: Silver
 
 - type: startingGear
   id: BiotechnicaMedTechGear

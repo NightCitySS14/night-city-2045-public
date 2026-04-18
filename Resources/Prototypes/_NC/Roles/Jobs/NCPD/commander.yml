@@ -10,6 +10,9 @@
   supervisors: Начальник департамента полиции
   access:
     - NCPD_Patrol
+    - NCPD_Armory
+    - NCPD_Detective
+    - NCPD_Command
     - NC_General
   special:
   - !type:AddComponentSpecial
@@ -19,8 +22,6 @@
       color: "#ffaa00"
       icon: /Textures/Interface/VerbIcons/star-solid-yellow.svg.192dpi.png
       visibleInWorld: false
-    - type: TraumaSubscriber
-      tier: Silver
 
 - type: startingGear
   id: NCPDCommanderGear

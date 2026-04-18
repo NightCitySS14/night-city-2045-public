@@ -128,9 +128,6 @@
   - Biotech_Operative
   - Biotech_Staff
   - Biotech_General
-- type: accessLevel
-  id: Biotech_General
-  name: access-level-biotech-general
 
 - type: accessLevel
   id: Biotech_Lab

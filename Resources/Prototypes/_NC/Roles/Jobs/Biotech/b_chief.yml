@@ -8,10 +8,15 @@
   icon: "JobIconBiotechChief"
   startingGear: BiotechnicaChiefGear
   access:
-    - Trauma_Command
-    - Trauma_Medical
-    - Trauma_Morgue
-    - Trauma_Hangar
+    - Biotech_Director
+    - Biotech_HeadOfDepartment
+    - Biotech_MedTech
+    - Biotech_Operative
+    - Biotech_Staff
+    - Biotech_General
+    - Biotech_Lab
+    - Biotech_Security
+    - Biotech_Command
     - NC_General
   special:
   - !type:AddComponentSpecial
