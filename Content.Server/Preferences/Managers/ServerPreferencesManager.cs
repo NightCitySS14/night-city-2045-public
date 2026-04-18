@@ -3,6 +3,7 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Content.Server.Database;
+using Content.Shared._NC.Bank.Components;
 using Content.Shared._White.CustomGhostSystem;
 using Content.Shared.CCVar;
 using Content.Shared.Preferences;
@@ -116,7 +117,7 @@ namespace Content.Server.Preferences.Managers
                 }
                 else
                 {
-                    profile = newHumanoid.WithBankBalance(3000);
+                    profile = newHumanoid.WithBankBalance(BankAccountComponent.StartingBalance);
                 }
             }
 

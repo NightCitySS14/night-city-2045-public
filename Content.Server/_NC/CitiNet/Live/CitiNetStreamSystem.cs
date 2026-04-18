@@ -1,5 +1,6 @@
 using Content.Server._NC.Bank;
 using Content.Server.CartridgeLoader;
+using System.Threading.Tasks;
 using Content.Server.Popups;
 using Content.Server.PowerCell;
 using Content.Server.SurveillanceCamera;
@@ -190,7 +191,7 @@ public sealed class CitiNetStreamSystem : EntitySystem
     /// Перевести донат от зрителя к стримеру.
     /// Снимает со счёта зрителя, кладёт стримеру, вызывает попап.
     /// </summary>
-    public bool SendDonation(EntityUid viewer, EntityUid cam, int amount, string message,
+    public async Task<bool> SendDonation(EntityUid viewer, EntityUid cam, int amount, string message,
         StreamCamComponent? comp = null)
     {
         if (!Resolve(cam, ref comp, false) || !comp.IsStreaming)
@@ -200,12 +201,12 @@ public sealed class CitiNetStreamSystem : EntitySystem
             return false;
 
         // Списать у зрителя
-        if (!_bank.TryBankWithdraw(viewer, amount))
+        if (!await _bank.TryBankWithdraw(viewer, amount))
             return false;
 
         // Начислить стримеру (владельцу камеры)
         if (comp.HolderUid.HasValue)
-            _bank.TryBankDeposit(comp.HolderUid.Value, amount);
+            await _bank.TryBankDeposit(comp.HolderUid.Value, amount);
 
         // Уведомление стримеру (экранируем спецсимволы markup)
         var escapedMessage = Robust.Shared.Utility.FormattedMessage.EscapeText(message);

@@ -1,3 +1,4 @@
+using System.Threading.Tasks;
 using System.Linq;
 using Content.Server.Station.Systems;
 using Content.Shared._NC.Bank;
@@ -11,7 +12,7 @@ using Robust.Shared.Enums;
 using Content.Shared.Roles;
 using Robust.Shared.Prototypes;
 using Content.Shared.Roles.Jobs;
-using Content.Shared.Mind; // Необходим для работы с MindSystem
+using Content.Shared.Mind;
 using Content.Shared.Ghost;
 using Content.Server.Popups;
 using Robust.Shared.Localization;
@@ -29,21 +30,16 @@ namespace Content.Server._NC.Bank
         [Dependency] private readonly IChatManager _chatManager = default!;
         [Dependency] private readonly IPrototypeManager _protoManager = default!;
         [Dependency] private readonly SharedJobSystem _jobSystem = default!;
-        [Dependency] private readonly SharedMindSystem _mindSystem = default!; // Добавлено для получения MindId
+        [Dependency] private readonly SharedMindSystem _mindSystem = default!;
         [Dependency] private readonly PopupSystem _popupSystem = default!;
         [Dependency] private readonly Robust.Shared.Random.IRobustRandom _random = default!;
 
         private ISawmill _log = default!;
 
         // === НАСТРОЙКИ ТАЙМЕРА ===
-        // Интервал зарплаты (30 минут = 1800 секунд).
         private const float PaydayInterval = 1800.0f;
         private float _paydayTimer = 0.0f;
 
-
-        // ==========================================
-        //      РАБОТА СО СЧЕТАМИ ФРАКЦИЙ (StationBank)
-        // ==========================================
 
         public override void Initialize()
         {
@@ -52,8 +48,6 @@ namespace Content.Server._NC.Bank
 
             SubscribeLocalEvent<StationBankComponent, MapInitEvent>(OnStationBankInit);
             SubscribeLocalEvent<PlayerSpawnCompleteEvent>(OnPlayerSpawn);
-            
-            // Добавим verb для просмотра реквизитов счета
             SubscribeLocalEvent<BankAccountComponent, Content.Shared.Verbs.GetVerbsEvent<Content.Shared.Verbs.ActivationVerb>>(OnGetVerbs);
         }
         
@@ -111,6 +105,7 @@ namespace Content.Server._NC.Bank
             EnsureAccount(component, SectorBankAccount.Biotechnica, 15000, 6);
             EnsureAccount(component, SectorBankAccount.Ncpd, 5000, 0);
         }
+
         private void EnsureAccount(StationBankComponent component, SectorBankAccount account, int defaultBalance, int defaultIncrease)
         {
             if (!component.Accounts.ContainsKey(account))
@@ -122,14 +117,11 @@ namespace Content.Server._NC.Bank
                 };
             }
         }
-        /// <summary>
-        /// Выполняется каждый тик. Отсчитывает время до зарплаты и начисляет доход фракциям.
-        /// </summary>
+
         public override void Update(float frameTime)
         {
             base.Update(frameTime);
 
-            // 1. Зарплата игрокам
             _paydayTimer += frameTime;
             if (_paydayTimer >= PaydayInterval)
             {
@@ -137,7 +129,6 @@ namespace Content.Server._NC.Bank
                 ProcessPayday();
             }
 
-            // 2. Пассивный доход фракций
             var query = EntityQueryEnumerator<StationBankComponent>();
             while (query.MoveNext(out var uid, out var bank))
             {
@@ -162,9 +153,6 @@ namespace Content.Server._NC.Bank
             }
         }
 
-        /// <summary>
-        /// Попытка списать средства со счета фракции.
-        /// </summary>
         public bool TryFactionWithdraw(EntityUid stationUid, SectorBankAccount accountType, int amount)
         {
             if (amount <= 0) return false;
@@ -179,9 +167,6 @@ namespace Content.Server._NC.Bank
             return true;
         }
 
-        /// <summary>
-        /// Попытка зачислить средства на счет фракции.
-        /// </summary>
         public bool TryFactionDeposit(EntityUid stationUid, SectorBankAccount accountType, int amount)
         {
             if (amount <= 0) return false;
@@ -195,7 +180,7 @@ namespace Content.Server._NC.Bank
             return true;
         }
 
-        private void ProcessPayday()
+        private async void ProcessPayday()
         {
             _log.Info("PAYDAY: Начало начисления зарплат...");
             int count = 0;
@@ -210,7 +195,7 @@ namespace Content.Server._NC.Bank
 
                 int salary = GetSalaryForPlayer(playerUid);
 
-                if (TryBankDeposit(playerUid, salary))
+                if (await TryBankDeposit(playerUid, salary))
                 {
                     count++;
 
@@ -221,93 +206,82 @@ namespace Content.Server._NC.Bank
             _log.Info($"PAYDAY: Зарплата выдана {count} игрокам.");
         }
 
-        /// <summary>
-        /// Определяет сумму зарплаты, читая поле 'salary' из прототипа работы.
-        /// </summary>
         private int GetSalaryForPlayer(EntityUid uid)
         {
-            // 1. Получаем MindId
             if (!_mindSystem.TryGetMind(uid, out var mindId, out _))
                 return 50;
 
-            // 2. Получаем Прототип работы напрямую
             if (_jobSystem.MindTryGetJob(mindId, out var jobProto))
             {
                 return jobProto.Salary;
             }
 
-            return 50; // Дефолт, если работа не найдена
+            return 50;
         }
 
         // ==========================================
-        //      РАБОТА С БАЗОЙ ДАННЫХ (Ваш код)
+        //      РАБОТА С БАЗОЙ ДАННЫХ
         // ==========================================
 
         public int GetBalance(EntityUid mobUid)
         {
-            if (!_playerManager.TryGetSessionByEntity(mobUid, out var session)) return 0;
+            // ПРИОРИТЕТ 1: Если игрок в раунде, берем данные из его компонента
+            if (TryComp<BankAccountComponent>(mobUid, out var bankComp))
+            {
+                return bankComp.Balance;
+            }
 
+            // ПРИОРИТЕТ 2: Если компонента нет, лезем в профиль (БД)
+            if (!_playerManager.TryGetSessionByEntity(mobUid, out var session)) return 0;
             var prefs = _prefsManager.GetPreferences(session.UserId);
             if (prefs.SelectedCharacter is not HumanoidCharacterProfile profile) return 0;
 
             return profile.BankBalance;
         }
 
-        public bool TryBankWithdraw(EntityUid mobUid, int amount)
+        public async Task<bool> TryBankWithdraw(EntityUid mobUid, int amount)
         {
             if (amount <= 0) return false;
-            return ModifyBalance(mobUid, -amount);
+            return await ModifyBalance(mobUid, -amount);
         }
 
-        public bool TryBankDeposit(EntityUid mobUid, int amount)
+        public async Task<bool> TryBankDeposit(EntityUid mobUid, int amount)
         {
             if (amount <= 0) return false;
-            return ModifyBalance(mobUid, amount);
+            return await ModifyBalance(mobUid, amount);
         }
 
-        /// <summary>
-        /// Изменяет баланс и сохраняет профиль в БД.
-        /// </summary>
-        private bool ModifyBalance(EntityUid mobUid, int delta)
+        private async Task<bool> ModifyBalance(EntityUid mobUid, int delta)
         {
-            // 1. Получаем сессию
-            if (!_playerManager.TryGetSessionByEntity(mobUid, out var session))
+            if (!TryComp<BankAccountComponent>(mobUid, out var bankComp))
             {
-                _log.Error($"Session not found for entity {mobUid}");
+                _log.Error($"BankAccountComponent not found on entity {mobUid}");
                 return false;
             }
 
-            // 2. Получаем настройки (Preferences)
-            var prefs = _prefsManager.GetPreferences(session.UserId);
-            if (prefs.SelectedCharacter is not HumanoidCharacterProfile profile)
+            // 1. Проверка на баланс (работаем с компонентом!)
+            if (delta < 0 && bankComp.Balance < -delta)
             {
-                _log.Error($"Profile is not Humanoid for user {session.Name}");
                 return false;
             }
 
-            // 3. Проверка на минус
-            if (delta < 0 && profile.BankBalance < -delta)
+            // 2. Обновляем значение в компоненте МГНОВЕННО
+            bankComp.Balance += delta;
+            Dirty(mobUid, bankComp);
+
+            // 3. Сохраняем в БД (фоново/асинхронно)
+            if (_playerManager.TryGetSessionByEntity(mobUid, out var session))
             {
-                return false; // Недостаточно средств
+                var prefs = _prefsManager.GetPreferences(session.UserId);
+                if (prefs.SelectedCharacter is HumanoidCharacterProfile profile)
+                {
+                    var newProfile = profile.WithBankBalance(bankComp.Balance);
+                    await _prefsManager.SetProfile(session.UserId, prefs.SelectedCharacterIndex, newProfile);
+                }
             }
 
-            // 4. Вычисляем новый баланс
-            var newBalance = profile.BankBalance + delta;
-
-            // 5. Создаем новый профиль с обновленным балансом
-            var newProfile = profile.WithBankBalance(newBalance);
-
-            // 6. СОХРАНЯЕМ В БД
-            // Используем SelectedCharacterIndex для надежности
-            _prefsManager.SetProfile(session.UserId, prefs.SelectedCharacterIndex, newProfile);
-
-            _log.Info($"User {session.Name} balance updated: {profile.BankBalance} -> {newBalance}. Saved to DB.");
+            _log.Info($"User balance updated via component: {bankComp.Balance} (delta {delta}). Saved to DB.");
             return true;
         }
     }
 }
-
-
-
-
-

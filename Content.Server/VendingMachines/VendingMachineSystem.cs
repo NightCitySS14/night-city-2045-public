@@ -1,5 +1,6 @@
 using System.Linq;
 using System.Numerics;
+using System.Threading.Tasks;
 using Content.Server.Cargo.Systems;
 using Content.Server.Emp;
 using Content.Server.Power.Components;
@@ -306,7 +307,7 @@ namespace Content.Server.VendingMachines
 
             args.Price += priceSets.Max();
         }
-        public override void AuthorizedVend(EntityUid uid, EntityUid sender, InventoryType type, string itemId, VendingMachineComponent component)
+        public override async void AuthorizedVend(EntityUid uid, EntityUid sender, InventoryType type, string itemId, VendingMachineComponent component)
         {
             var entry = GetEntry(uid, itemId, type, component);
             if (entry == null)
@@ -314,7 +315,7 @@ namespace Content.Server.VendingMachines
 
             if (entry.Price > 0)
             {
-                if (!_bank.TryBankWithdraw(sender, (int) entry.Price))
+                if (!await _bank.TryBankWithdraw(sender, (int) entry.Price))
                 {
                     Popup.PopupEntity(Loc.GetString("vending-machine-component-try-eject-insufficient-funds"), uid, sender, PopupType.Medium);
                     Deny((uid, component), sender);

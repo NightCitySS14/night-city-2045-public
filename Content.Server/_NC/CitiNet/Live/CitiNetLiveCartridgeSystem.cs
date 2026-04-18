@@ -9,6 +9,7 @@ using Content.Shared._NC.CitiNet.Live;
 using Content.Shared.CartridgeLoader;
 using Content.Shared.Inventory;
 using Robust.Shared.Timing;
+using System.Threading.Tasks;
 
 using Content.Shared._NC.Cyberware.Components;
 
@@ -112,8 +113,9 @@ public sealed class CitiNetLiveCartridgeSystem : EntitySystem
                 if (msg.Content == null || !ent.Comp.WatchedCamUid.HasValue) return;
                 var parts = msg.Content.Split('|', 2);
                 if (parts.Length != 2 || !int.TryParse(parts[0], out var amount)) return;
-                _liveStream.SendDonation(ownerUid.Value, ent.Comp.WatchedCamUid.Value, amount, parts[1]);
-                UpdateAllLiveUIs();
+                
+                // Вызываем асинхронную обработку отдельно, чтобы не ломать ref
+                ProcessDonationAsync(ownerUid.Value, ent.Comp.WatchedCamUid.Value, amount, parts[1]);
                 break;
 
             case CitiNetLiveMessageType.SendChat:
@@ -132,6 +134,12 @@ public sealed class CitiNetLiveCartridgeSystem : EntitySystem
                 UpdateAllLiveUIs();
                 break;
         }
+    }
+
+    private async void ProcessDonationAsync(EntityUid owner, EntityUid cam, int amount, string message)
+    {
+        await _liveStream.SendDonation(owner, cam, amount, message);
+        UpdateAllLiveUIs();
     }
 
     // ===================== UI =====================

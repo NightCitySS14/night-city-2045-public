@@ -8,11 +8,16 @@ namespace Content.Shared._NC.Bank.Components
     public sealed partial class BankAccountComponent : Component
     {
         /// <summary>
+        /// Баланс, который выдается новому персонажу.
+        /// Измените это число здесь, чтобы поменять его во всем проекте.
+        /// </summary>
+        public const int StartingBalance = 500;
+
+        /// <summary>
         /// Текущий баланс.
-        /// Атрибут AutoNetworkedField сам отправит значение клиенту, когда мы изменим его на сервере.
         /// </summary>
         [DataField, AutoNetworkedField]
-        public int Balance = 300;
+        public int Balance = 0;
 
         [DataField, AutoNetworkedField]
         public string AccountNumber = string.Empty;

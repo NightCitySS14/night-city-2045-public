@@ -1,5 +1,6 @@
 using Content.Server._NC.Bank;
 using Content.Shared._NC.Doors.Components;
+using System.Threading.Tasks;
 using Content.Shared._NC.Doors;
 using Content.Shared.Doors.Components;
 using Content.Shared.Doors.Systems;
@@ -151,7 +152,7 @@ public sealed class DoorInterfaceSystem : EntitySystem
         }
     }
 
-    private void OnBuy(EntityUid uid, DoorInterfaceComponent component, DoorInterfaceBuyMessage args)
+    private async void OnBuy(EntityUid uid, DoorInterfaceComponent component, DoorInterfaceBuyMessage args)
     {
         if (args.Actor is not { Valid: true } user)
             return;
@@ -161,7 +162,7 @@ public sealed class DoorInterfaceSystem : EntitySystem
 
         if (component.OwnerId != null) return;
 
-        if (_bankSystem.TryBankWithdraw(user, component.Price))
+        if (await _bankSystem.TryBankWithdraw(user, component.Price))
         {
             component.OwnerId = session.UserId;
             component.OwnerName = Name(user);
@@ -185,7 +186,7 @@ public sealed class DoorInterfaceSystem : EntitySystem
         }
     }
 
-    private void OnSell(EntityUid uid, DoorInterfaceComponent component, DoorInterfaceSellMessage args)
+    private async void OnSell(EntityUid uid, DoorInterfaceComponent component, DoorInterfaceSellMessage args)
     {
         if (args.Actor is not { Valid: true } user)
             return;
@@ -195,7 +196,7 @@ public sealed class DoorInterfaceSystem : EntitySystem
 
         if (component.OwnerId != session.UserId) return;
 
-        if (_bankSystem.TryBankDeposit(user, component.Price))
+        if (await _bankSystem.TryBankDeposit(user, component.Price))
         {
             component.OwnerId = null;
             component.OwnerName = null;

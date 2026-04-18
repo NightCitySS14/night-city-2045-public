@@ -1,5 +1,6 @@
 using System.Linq;
 using System.Text.RegularExpressions;
+using Content.Shared._NC.Bank.Components;
 using Content.Shared._White.Bark;
 using Content.Shared._White.Bark.Systems;
 using Content.Shared._White.TTS;
@@ -97,7 +98,7 @@ public sealed partial class HumanoidCharacterProfile : ICharacterProfile
     public Sex Sex { get; private set; } = Sex.Male;
 
     [DataField]
-    public int BankBalance { get; set; } = 3000;
+    public int BankBalance { get; set; } = BankAccountComponent.StartingBalance;
 
     [DataField]
     public string? EmployedDepartment { get; set; } // NC

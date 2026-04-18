@@ -1,5 +1,6 @@
 using Content.Server.Popups;
 using Content.Server.Station.Systems;
+using System.Threading.Tasks;
 using Content.Shared.DoAfter;
 using Content.Shared.Interaction;
 using Content.Shared.Roles.Jobs;
@@ -190,7 +191,7 @@ public sealed class CitationSystem : EntitySystem
         }
     }
 
-    private void OnTargetResponse(CitationTargetResponseMessage ev, EntitySessionEventArgs args)
+    private async void OnTargetResponse(CitationTargetResponseMessage ev, EntitySessionEventArgs args)
     {
         if (args.SenderSession.AttachedEntity is not { Valid: true } target)
             return;
@@ -214,10 +215,10 @@ public sealed class CitationSystem : EntitySystem
             return;
         }
 
-        ProcessPayment(uid, component, target, component.RequestedAmount);
+        await ProcessPayment(uid, component, target, component.RequestedAmount);
     }
 
-    private void OnForceDoAfter(EntityUid uid, CitationDeviceComponent component, CitationForceDoAfterEvent args)
+    private async void OnForceDoAfter(EntityUid uid, CitationDeviceComponent component, CitationForceDoAfterEvent args)
     {
         if (args.Handled || args.Cancelled)
             return;
@@ -249,17 +250,17 @@ public sealed class CitationSystem : EntitySystem
         }
 
         _popupSystem.PopupEntity(Loc.GetString("citation-popup-pin-cracked"), uid, args.Args.User);
-        ProcessPayment(uid, component, cardOwner.Value, args.Amount, true);
+        await ProcessPayment(uid, component, cardOwner.Value, args.Amount, true);
         
         args.Handled = true;
     }
 
-    private void ProcessPayment(EntityUid terminalUid, CitationDeviceComponent component, EntityUid targetUid, int amount, bool isForced = false)
+    private async Task ProcessPayment(EntityUid terminalUid, CitationDeviceComponent component, EntityUid targetUid, int amount, bool isForced = false)
     {
         var cop = component.ActiveOfficer;
         if (cop == null) return;
 
-        if (!_bankSystem.TryBankWithdraw(targetUid, amount))
+        if (!await _bankSystem.TryBankWithdraw(targetUid, amount))
         {
             _popupSystem.PopupEntity(Loc.GetString("citation-popup-insufficient-funds-cop"), terminalUid, cop.Value);
             if (cop != targetUid)
@@ -271,7 +272,7 @@ public sealed class CitationSystem : EntitySystem
         int copShare = (int)(amount * component.CommissionRate);
         int deptShare = amount - copShare;
 
-        _bankSystem.TryBankDeposit(cop.Value, copShare);
+        await _bankSystem.TryBankDeposit(cop.Value, copShare);
 
         var stationUid = GetStation(terminalUid, cop.Value);
 

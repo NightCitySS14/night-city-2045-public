@@ -9,8 +9,11 @@ using Content.Server.Station.Systems;
 using Robust.Server.GameObjects;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
+using Robust.Shared.GameStates;
 using Robust.Shared.IoC;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Player;
+using Robust.Server.Player;
 using System.Linq;
 using System.Runtime.InteropServices;
 using Robust.Shared.Localization;
@@ -25,6 +28,7 @@ namespace Content.Server._NC.Bank.ATM
         [Dependency] private readonly PopupSystem _popupSystem = default!;
         [Dependency] private readonly UserInterfaceSystem _uiSystem = default!;
         [Dependency] private readonly StationSystem _stationSystem = default!;
+        [Dependency] private readonly IPlayerManager _playerManager = default!;
 
         // Работаем с вашей системой БД
         [Dependency] private readonly BankSystem _bankSystem = default!;
@@ -32,12 +36,18 @@ namespace Content.Server._NC.Bank.ATM
         private const string CurrencyPrototypeId = "SpaceCash";
         private const string CurrencyStackId = "Credit";
         
-        // Маппинг Player -> AccountEntity
+        private ISawmill _log = default!;
+        
+        // Маппинг Player -> AccountEntity (кто авторизован в банкомате)
         private readonly Dictionary<EntityUid, EntityUid> _atmSessions = new();
+        
+        // Маппинг ATM -> Player (кто сейчас занял терминал)
+        private readonly Dictionary<EntityUid, EntityUid> _atmOccupiedBy = new();
 
         public override void Initialize()
         {
             base.Initialize();
+            _log = Logger.GetSawmill("bank.atm");
             SubscribeLocalEvent<AtmComponent, InteractUsingEvent>(OnInteractUsing);
             SubscribeLocalEvent<AtmComponent, EntInsertedIntoContainerMessage>(OnContainerModified);
             SubscribeLocalEvent<AtmComponent, EntRemovedFromContainerMessage>(OnContainerModified);
@@ -48,12 +58,16 @@ namespace Content.Server._NC.Bank.ATM
             SubscribeLocalEvent<AtmComponent, AtmLoginMessage>(OnLogin);
             SubscribeLocalEvent<AtmComponent, AtmLogoutMessage>(OnLogout);
         }
-        
+
         private void OnUiClosed(EntityUid uid, AtmComponent component, BoundUIClosedEvent args)
         {
-            if (args.Actor is { Valid: true } player)
+            if (args.Actor is not { Valid: true } player) return;
+
+            if (_atmOccupiedBy.TryGetValue(uid, out var occupant) && occupant == player)
             {
+                _atmOccupiedBy.Remove(uid);
                 _atmSessions.Remove(player);
+                _log.Info($"ATM {uid} released by {player}");
             }
         }
         
@@ -61,13 +75,21 @@ namespace Content.Server._NC.Bank.ATM
         {
             if (args.Actor is not { Valid: true } player) return;
             
+            if (_atmOccupiedBy.TryGetValue(uid, out var occupant) && occupant != player)
+            {
+                _popupSystem.PopupEntity("Банкомат уже занят другим пользователем", uid, player);
+                _uiSystem.CloseUi(uid, AtmUiKey.Key, player);
+                return;
+            }
+
             var query = EntityQueryEnumerator<BankAccountComponent>();
             while (query.MoveNext(out var accUid, out var accnt))
             {
                 if (accnt.AccountNumber == args.AccountNumber && accnt.PIN == args.PIN)
                 {
                     _atmSessions[player] = accUid;
-                    UpdateUiForUser(uid, component, player);
+                    _atmOccupiedBy[uid] = player; // Занимаем банкомат
+                    UpdateUi(uid, component);
                     return;
                 }
             }
@@ -77,16 +99,25 @@ namespace Content.Server._NC.Bank.ATM
         
         private void OnLogout(EntityUid uid, AtmComponent component, AtmLogoutMessage args)
         {
-            if (args.Actor is { Valid: true } player)
+            if (args.Actor is not { Valid: true } player) return;
+
+            if (_atmOccupiedBy.TryGetValue(uid, out var occupant) && occupant == player)
             {
                 _atmSessions.Remove(player);
-                UpdateUiForUser(uid, component, player);
+                _atmOccupiedBy.Remove(uid);
+                UpdateUi(uid, component);
             }
         }
 
         // === ВСТАВКА ДЕНЕГ РУКАМИ ===
         private void OnInteractUsing(EntityUid uid, AtmComponent component, InteractUsingEvent args)
         {
+            if (_atmOccupiedBy.TryGetValue(uid, out var occupant) && occupant != args.User)
+            {
+                _popupSystem.PopupEntity("Банкомат занят", uid, args.User);
+                return;
+            }
+
             if (!TryComp<StackComponent>(args.Used, out var stack) ||
                 stack.StackTypeId != CurrencyStackId) return;
 
@@ -101,10 +132,24 @@ namespace Content.Server._NC.Bank.ATM
         }
 
         private void OnContainerModified(EntityUid uid, AtmComponent component, ContainerModifiedMessage args) => UpdateUi(uid, component);
-        private void OnUiOpened(EntityUid uid, AtmComponent component, BoundUIOpenedEvent args) => UpdateUi(uid, component);
+        
+        private void OnUiOpened(EntityUid uid, AtmComponent component, BoundUIOpenedEvent args)
+        {
+            if (args.Actor is not { Valid: true } player) return;
+
+            // Если банкомат занят кем-то другим — закрываем UI для наглеца
+            if (_atmOccupiedBy.TryGetValue(uid, out var occupant) && occupant != player)
+            {
+                _popupSystem.PopupEntity("Банкомат уже занят другим пользователем", uid, player);
+                _uiSystem.CloseUi(uid, AtmUiKey.Key, player);
+                return;
+            }
+
+            UpdateUi(uid, component);
+        }
 
         // === СНЯТИЕ (ИЗ БД ИГРОКА) ===
-        private void OnWithdraw(EntityUid uid, AtmComponent component, AtmWithdrawMessage args)
+        private async void OnWithdraw(EntityUid uid, AtmComponent component, AtmWithdrawMessage args)
         {
             if (args.Actor is not { Valid: true } player) return;
             if (args.Amount <= 0) return;
@@ -115,8 +160,7 @@ namespace Content.Server._NC.Bank.ATM
                 return;
             }
 
-            // 2. Списываем деньги у ВЛАДЕЛЬЦА СЧЕТА через BankSystem
-            if (_bankSystem.TryBankWithdraw(accountUid, args.Amount))
+            if (await _bankSystem.TryBankWithdraw(accountUid, args.Amount))
             {
                 var cash = Spawn(CurrencyPrototypeId, Transform(uid).Coordinates);
                 _stackSystem.SetCount(cash, args.Amount);
@@ -131,7 +175,7 @@ namespace Content.Server._NC.Bank.ATM
         }
 
         // === ВНЕСЕНИЕ (В БД ИГРОКА) ===
-        private void OnDeposit(EntityUid uid, AtmComponent component, AtmDepositMessage args)
+        private async void OnDeposit(EntityUid uid, AtmComponent component, AtmDepositMessage args)
         {
             if (args.Actor is not { Valid: true } player) return;
 
@@ -141,14 +185,12 @@ namespace Content.Server._NC.Bank.ATM
                 return;
             }
 
-            // 2. Берем деньги из лотка
             if (!_containerSystem.TryGetContainer(uid, AtmComponent.CashSlotId, out var cashContainer) ||
                 cashContainer.ContainedEntities.Count == 0) return;
 
             var item = cashContainer.ContainedEntities[0];
             if (!TryComp<StackComponent>(item, out var stack)) return;
 
-            // 3. Считаем
             int totalAmount = _stackSystem.GetCount(item, stack);
             int tax = (int) (totalAmount * component.TaxRate);
             int finalDeposit = totalAmount - tax;
@@ -159,8 +201,7 @@ namespace Content.Server._NC.Bank.ATM
                 return;
             }
 
-            // 4. Зачисляем ВЛАДЕЛЬЦУ СЧЕТА
-            if (_bankSystem.TryBankDeposit(accountUid, finalDeposit))
+            if (await _bankSystem.TryBankDeposit(accountUid, finalDeposit))
             {
                 PayTaxToStation(uid, tax);
 
@@ -188,26 +229,19 @@ namespace Content.Server._NC.Bank.ATM
 
         private void UpdateUi(EntityUid uid, AtmComponent component)
         {
-            var user = _uiSystem.GetActors(uid, AtmUiKey.Key).FirstOrDefault();
-            if (user == default) return;
-
-            UpdateUiForUser(uid, component, user);
-        }
-
-        private void UpdateUiForUser(EntityUid uid, AtmComponent component, EntityUid user)
-        {
             string accountName = "Не авторизован";
             int balance = 0;
             bool isLoggedIn = false;
             int depositAmount = 0;
 
-            if (IsLoggedIn(user, out var accountUid) && TryComp<BankAccountComponent>(accountUid, out var bankAcc))
+            // Берем того, кто сейчас занял банкомат
+            if (_atmOccupiedBy.TryGetValue(uid, out var user) && IsLoggedIn(user, out var accountUid) && TryComp<BankAccountComponent>(accountUid, out var bankAcc))
             {
                 isLoggedIn = true;
                 accountName = bankAcc.AccountNumber;
-
-                // Получаем баланс из BankSystem для владельца счета
-                balance = _bankSystem.GetBalance(accountUid);
+                
+                // ЧИТАЕМ ПРЯМО ИЗ КОМПОНЕНТА (который мы обновили в BankSystem)
+                balance = bankAcc.Balance;
             }
 
             if (_containerSystem.TryGetContainer(uid, AtmComponent.CashSlotId, out var cashContainer) &&

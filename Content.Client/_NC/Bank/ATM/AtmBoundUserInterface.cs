@@ -25,6 +25,11 @@ namespace Content.Client._NC.Bank.ATM
             _window.OpenCentered();
         }
 
+        protected override void ReceiveMessage(BoundUserInterfaceMessage message)
+        {
+            base.ReceiveMessage(message);
+        }
+
         protected override void UpdateState(BoundUserInterfaceState state)
         {
             base.UpdateState(state);
