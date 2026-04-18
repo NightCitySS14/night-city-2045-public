@@ -45,6 +45,7 @@ namespace Content.Server.Database
                 try
                 {
                     await ctx.Database.MigrateAsync();
+                    await EnsureBankBalanceColumn(ctx); // NC EDIT: Manual migration
                 }
                 finally
                 {
@@ -56,6 +57,25 @@ namespace Content.Server.Database
 
             InitNotificationListener(connectionString);
         }
+
+        // NC EDIT START
+        private async Task EnsureBankBalanceColumn(PostgresServerDbContext db)
+        {
+            try
+            {
+                await db.Database.ExecuteSqlRawAsync("ALTER TABLE profile ADD COLUMN IF NOT EXISTS bank_balance INTEGER NOT NULL DEFAULT 0;");
+                _opsLog.Info("Database: Checked/Added BankBalance column to profile table.");
+            }
+            catch (Exception) { }
+            
+            try
+            {
+                await db.Database.ExecuteSqlRawAsync("ALTER TABLE profile ADD COLUMN IF NOT EXISTS employed_department TEXT;");
+                _opsLog.Info("Database: Checked/Added EmployedDepartment column to profile table.");
+            }
+            catch (Exception) { }
+        }
+        // NC EDIT END
 
         #region Ban
         public override async Task<ServerBanDef?> GetServerBanAsync(int id)

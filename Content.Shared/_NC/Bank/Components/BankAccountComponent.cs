@@ -24,5 +24,12 @@ namespace Content.Shared._NC.Bank.Components
 
         [DataField, AutoNetworkedField]
         public string PIN = string.Empty;
+
+        /// <summary>
+        /// Индекс слота персонажа в базе данных.
+        /// Нужно, чтобы сохранять баланс именно тому персонажу, за которого мы играем.
+        /// </summary>
+        [DataField]
+        public int ProfileSlot = -1;
     }
 }

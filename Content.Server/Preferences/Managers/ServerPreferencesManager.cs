@@ -87,9 +87,31 @@ namespace Content.Server.Preferences.Managers
 
             // ReSharper disable once ConditionIsAlwaysTrueOrFalseAccordingToNullableAPIContract
             if (message.Profile == null)
+            {
                 _sawmill.Error($"User {userId} sent a {nameof(MsgUpdateCharacter)} with a null profile in slot {message.Slot}.");
-            else
-                await SetProfile(userId, message.Slot, message.Profile);
+                return;
+            }
+
+            var profile = message.Profile;
+
+            // NC EDIT: Защита баланса от подмены клиентом
+            if (profile is Content.Shared.Preferences.HumanoidCharacterProfile newHumanoid)
+            {
+                if (_cachedPlayerPrefs.TryGetValue(userId, out var prefsData) &&
+                    prefsData.Prefs?.Characters.TryGetValue(message.Slot, out var existingProfile) == true &&
+                    existingProfile is Content.Shared.Preferences.HumanoidCharacterProfile oldHumanoid)
+                {
+                    // Если персонаж уже существует, берем его текущий баланс с сервера
+                    profile = newHumanoid.WithBankBalance(oldHumanoid.BankBalance);
+                }
+                else
+                {
+                    // Если это новый слот, выдаем стартовый баланс
+                    profile = newHumanoid.WithBankBalance(BankAccountComponent.StartingBalance);
+                }
+            }
+
+            await SetProfile(userId, message.Slot, profile);
         }
 
         public async Task SetProfile(NetUserId userId, int slot, ICharacterProfile profile)
@@ -107,19 +129,6 @@ namespace Content.Server.Preferences.Managers
             var session = _playerManager.GetSessionById(userId);
 
             profile.EnsureValid(session, _dependencies);
-
-            if (profile is Content.Shared.Preferences.HumanoidCharacterProfile newHumanoid)
-            {
-                if (curPrefs.Characters.TryGetValue(slot, out var existingProfile) &&
-                    existingProfile is Content.Shared.Preferences.HumanoidCharacterProfile oldHumanoid)
-                {
-                    profile = newHumanoid.WithBankBalance(oldHumanoid.BankBalance);
-                }
-                else
-                {
-                    profile = newHumanoid.WithBankBalance(BankAccountComponent.StartingBalance);
-                }
-            }
 
             var profiles = new Dictionary<int, ICharacterProfile>(curPrefs.Characters)
             {

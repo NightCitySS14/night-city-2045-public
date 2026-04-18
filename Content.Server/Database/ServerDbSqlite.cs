@@ -50,6 +50,7 @@ namespace Content.Server.Database
             if (synchronous)
             {
                 prefsCtx.Database.Migrate();
+                EnsureBankBalanceColumn(prefsCtx); // NC EDIT: Manual migration
                 _dbReadyTask = Task.CompletedTask;
                 prefsCtx.Dispose();
             }
@@ -58,12 +59,35 @@ namespace Content.Server.Database
                 _dbReadyTask = Task.Run(() =>
                 {
                     prefsCtx.Database.Migrate();
+                    EnsureBankBalanceColumn(prefsCtx); // NC EDIT: Manual migration
                     prefsCtx.Dispose();
                 });
             }
 
             cfg.OnValueChanged(CCVars.DatabaseSqliteDelay, v => _msDelay = v, true);
         }
+
+        // NC EDIT START
+        private void EnsureBankBalanceColumn(SqliteServerDbContext db)
+        {
+            try
+            {
+                db.Database.ExecuteSqlRaw("ALTER TABLE Profile ADD COLUMN BankBalance INTEGER NOT NULL DEFAULT 0;");
+                _opsLog.Info("Database: Added missing BankBalance column to Profile table.");
+            }
+            catch (Exception)
+            {
+                // Если колонка уже есть, SQL выдаст ошибку, которую мы просто игнорируем.
+            }
+            
+            try
+            {
+                db.Database.ExecuteSqlRaw("ALTER TABLE Profile ADD COLUMN EmployedDepartment TEXT;");
+                _opsLog.Info("Database: Added missing EmployedDepartment column to Profile table.");
+            }
+            catch (Exception) { }
+        }
+        // NC EDIT END
 
         #region Ban
         public override async Task<ServerBanDef?> GetServerBanAsync(int id)

@@ -270,17 +270,24 @@ namespace Content.Server._NC.Bank
             Dirty(mobUid, bankComp);
 
             // 3. Сохраняем в БД (фоново/асинхронно)
-            if (_playerManager.TryGetSessionByEntity(mobUid, out var session))
+            if (_playerManager.TryGetSessionByEntity(mobUid, out var session) && bankComp.ProfileSlot != -1)
             {
                 var prefs = _prefsManager.GetPreferences(session.UserId);
-                if (prefs.SelectedCharacter is HumanoidCharacterProfile profile)
+                // Находим профиль именно в том слоте, за который мы играем
+                if (prefs.Characters.TryGetValue(bankComp.ProfileSlot, out var iProfile) && 
+                    iProfile is HumanoidCharacterProfile profile)
                 {
                     var newProfile = profile.WithBankBalance(bankComp.Balance);
-                    await _prefsManager.SetProfile(session.UserId, prefs.SelectedCharacterIndex, newProfile);
+                    await _prefsManager.SetProfile(session.UserId, bankComp.ProfileSlot, newProfile);
                 }
             }
 
             _log.Info($"User balance updated via component: {bankComp.Balance} (delta {delta}). Saved to DB.");
+            return true;
+        }
+    }
+}
+}). Saved to DB.");
             return true;
         }
     }
