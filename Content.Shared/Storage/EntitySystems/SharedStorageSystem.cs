@@ -361,7 +361,7 @@ public abstract class SharedStorageSystem : EntitySystem
             var doAfterArgs = new DoAfterArgs(EntityManager, entity, storageComp.OpenDelay, new StorageOpenDoAfterEvent(), uid, target: uid)
             {
                 BreakOnDamage = true,
-                BreakOnMove = true,
+                BreakOnMove = false,
                 NeedHand = true
             };
 

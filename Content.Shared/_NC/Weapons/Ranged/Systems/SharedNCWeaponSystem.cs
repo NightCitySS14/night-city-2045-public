@@ -154,7 +154,7 @@ public sealed class SharedNCWeaponSystem : EntitySystem
             uid,       // target
             uid)       // used
         {
-            BreakOnMove = true,
+            BreakOnMove = false,
             BreakOnDamage = true,
             NeedHand = true,
             DuplicateCondition = DuplicateConditions.SameEvent,
