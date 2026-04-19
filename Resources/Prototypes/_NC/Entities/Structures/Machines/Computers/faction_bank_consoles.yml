@@ -54,7 +54,7 @@
     - map: ["computerLayerKeys"]
       state: generic_keys
   - type: AccessReader
-    access: [["TraumaTeam"]]
+    access: [["Trauma_Command"]]
 
 - type: entity
   id: NCConsoleMilitech
@@ -94,4 +94,4 @@
     - map: ["computerLayerKeys"]
       state: generic_keys
   - type: AccessReader
-    access: [["Research"]]
+    access: [["Biotech_Director"]]

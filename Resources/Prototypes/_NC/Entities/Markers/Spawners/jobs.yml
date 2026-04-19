@@ -313,4 +313,15 @@
     layers:
       - state: green
 
+# Late Join
+- type: entity
+  id: SpawnPointNCLateJoin
+  parent: SpawnPointJobBase
+  name: latejoin spawn point
+  components:
+  - type: SpawnPoint
+    spawn_type: LateJoin
+  - type: Sprite
+    layers:
+      - state: green
 

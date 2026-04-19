@@ -28,7 +28,7 @@ namespace Content.Server.Database
 {
     public abstract class ServerDbBase
     {
-        private readonly ISawmill _opsLog;
+        protected readonly ISawmill _opsLog;
 
         public event Action<DatabaseNotification>? OnNotificationReceived;
 

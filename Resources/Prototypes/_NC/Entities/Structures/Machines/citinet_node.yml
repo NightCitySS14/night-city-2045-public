@@ -13,10 +13,10 @@
       shader: unshaded
       color: "#00FF00" # Зеленый по умолчанию (Idle)
   - type: CitiNetNode
-    downloadDuration: 240
-    cooldownDuration: 300
+    downloadDuration: 120
+    cooldownDuration: 60
     idlePower: 1000
-    activePower: 50000
+    activePower: 5000
 
     # --- Настройки взаимодействия ---
     connectDelay: 5.0 # Время в секундах на подключение диска

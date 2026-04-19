@@ -25,4 +25,4 @@
       enum.NcpdCaptainConsoleUiKey.Key:
         type: NcpdCaptainConsoleBoundUserInterface
   - type: AccessReader
-    access: [["Captain"]] # Или специфичный доступ Chief of Police, для примера Captain
+    access: [["NCPD_Command"]] 

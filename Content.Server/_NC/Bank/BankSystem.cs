@@ -287,8 +287,3 @@ namespace Content.Server._NC.Bank
         }
     }
 }
-}). Saved to DB.");
-            return true;
-        }
-    }
-}
