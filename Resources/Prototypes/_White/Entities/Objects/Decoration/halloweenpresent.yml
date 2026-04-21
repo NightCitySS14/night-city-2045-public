@@ -764,6 +764,8 @@
         orGroup: GiftPoolUniform
       - id: ClothingUniformMartialGi
         orGroup: GiftPoolUniform
+      - id: UniformJabroni
+        orGroup: GiftPoolUniform
       - id: ClothingUniformJumpsuitKilt
         orGroup: GiftPoolUniform
       - id: ClothingUniformJumpsuitSuitBrownMob
@@ -793,6 +795,8 @@
       - id: UniformGeisha
         orGroup: GiftPoolUniform
       - id: ClothingUniformMartialGi
+        orGroup: GiftPoolUniform
+      - id: UniformJabroni
         orGroup: GiftPoolUniform
       - id: ClothingUniformJumpsuitKilt
         orGroup: GiftPoolUniform
