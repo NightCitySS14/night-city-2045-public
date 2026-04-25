@@ -5,7 +5,7 @@
   playTimeTracker: JobNCPDSergeant
   weight: 45
   salary: 160
-  icon: "JobIconNCPDPolice"
+  icon: "JobIconNCPDPoliceSerg"
   startingGear: NCPDSergeantGear
   supervisors: Лейтенант
   access:

@@ -5,7 +5,7 @@
   playTimeTracker: JobNCPDWatchAgent
   weight: 50
   salary: 200
-  icon: "JobIconNCPDPolice"
+  icon: "JobIconWatchAgent"
   startingGear: NCPDWatchAgentGear
   supervisors: Начальник департамента полиции
   access:
