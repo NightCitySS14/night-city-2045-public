@@ -23,6 +23,14 @@
     CyberwareImplantInfraredVision: 5
     CyberwareImplantMicroVideo: 3
     CyberwareImplantMicroOptics: 3
+    # Human Organs
+    OrganHumanHeart: 2
+    OrganHumanLungs: 2
+    OrganHumanLiver: 2
+    OrganHumanKidneys: 2
+    OrganHumanEyes: 2
+    OrganHumanBrain: 1
+
 
 
   startingItemPrices:
@@ -48,3 +56,11 @@
     CyberwareImplantInfraredVision: 500
     CyberwareImplantMicroVideo: 100
     CyberwareImplantMicroOptics: 250
+    # Human Organs
+    OrganHumanHeart: 150
+    OrganHumanLungs: 100
+    OrganHumanLiver: 100
+    OrganHumanKidneys: 100
+    OrganHumanEyes: 50
+    OrganHumanBrain: 200
+
