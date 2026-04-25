@@ -214,21 +214,6 @@
   - proto: Syringe
     price: 10
     count: 30
-  - proto: PillCanisterBicaridine
-    price: 150
-    count: 4
-  - proto: PillCanisterKelotane
-    price: 150
-    count: 4
-  - proto: PillCanisterDylovene
-    price: 200
-    count: 3
-  - proto: PillCanisterDexalin
-    price: 250
-    count: 3
-  - proto: PillCanisterTricordrazine
-    price: 300
-    count: 2
 
 - type: storeCategoryStructured
   id: NightMarket_BotanyEquipment
@@ -246,19 +231,19 @@
   name: "Пром. Оборудование"
   entries:
   - proto: WeaponWorkbenchFlatpack
-    price: 1200
+    price: 600
     count: 2
   - proto: ConsoleCompilerFlatpack
-    price: 1000
+    price: 500
     count: 2
   - proto: Civil3DPrinterFlatpack
-    price: 1500
+    price: 750
     count: 2
   - proto: ChemDispenserFlatpack
-    price: 2000
+    price: 1000
     count: 2
   - proto: ReagentGrinderFlatpack
-    price: 600
+    price: 300
     count: 2
 
 - type: storeCategoryStructured
@@ -295,19 +280,16 @@
   name: "Нетраннинг и Софт"
   entries:
   - proto: NCCyberdeck
-    price: 3500
-    count: 3
-  - proto: NCProgramPing
-    price: 300
+    price: 700
     count: 3
   - proto: NCProgramShock
-    price: 800
+    price: 150
     count: 3
-  - proto: NCProgramSword
-    price: 1200
+  - proto: NCProgramDrop
+    price: 100
     count: 3
-  - proto: NCProgramBreach
-    price: 1000
+  - proto: NCProgramBlind
+    price: 250
     count: 3
   - proto: NeuralLinkCable
     price: 150
@@ -321,7 +303,7 @@
   name: "Техника и Сборка"
   entries:
   - proto: NCNetVisor
-    price: 800
+    price: 400
     count: 2
   - proto: Multitool
     price: 250
@@ -445,6 +427,41 @@
     price: 14000
     count: 1
 
+- type: storeCategoryStructured
+  id: NightMarket_Tools
+  name: "Инструменты"
+  entries:
+  - proto: Dropper
+    price: 15
+    count: 5
+  - proto: PlantAnalyzer
+    price: 150
+    count: 2
+  - proto: HydroponicsToolHatchet
+    price: 80
+    count: 2
+  - proto: HydroponicsToolClippers
+    price: 60
+    count: 3
+  - proto: HydroponicsToolScythe
+    price: 120
+    count: 2
+  - proto: HydroponicsToolSpade
+    price: 50
+    count: 3
+  - proto: HydroponicsToolMiniHoe
+    price: 50
+    count: 3
+  - proto: Bucket
+    price: 30
+    count: 5
+  - proto: BoxMouthSwab
+    price: 40
+    count: 2
+  - proto: PlantBag
+    price: 100
+    count: 2
+
 - type: storePresetStructured
   id: NightMarket_Buy
   currency: Credit
@@ -460,5 +477,6 @@
   - NightMarket_Hacking
   - NightMarket_TechGear
   - NightMarket_Seeds
+  - NightMarket_Tools
   - NightMarket_Cyberware
 

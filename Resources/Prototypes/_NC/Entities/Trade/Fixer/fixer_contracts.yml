@@ -70,7 +70,7 @@
   rewards:
   - type: Currency
     id: Credit
-    amount: { min: 800, max: 1500 }
+    amount: { min: 80, max: 150 }
   - type: Pool
     amount: { min: 1, max: 2 }
     options:
@@ -88,7 +88,7 @@
   rewards:
   - type: Currency
     id: Credit
-    amount: { min: 1000, max: 1800 }
+    amount: { min: 100, max: 180 }
   - type: Pool
     amount: { min: 1, max: 2 }
     options:
@@ -106,7 +106,7 @@
   rewards:
   - type: Currency
     id: Credit
-    amount: { min: 600, max: 1200 }
+    amount: { min: 60, max: 120 }
   - type: Pool
     amount: 1
     options:
@@ -124,7 +124,7 @@
   rewards:
   - type: Currency
     id: Credit
-    amount: { min: 800, max: 1400 }
+    amount: { min: 80, max: 150 }
   - type: Pool
     amount: 1
     options:
@@ -144,7 +144,7 @@
   rewards:
   - type: Currency
     id: Credit
-    amount: { min: 1000, max: 1800 }
+    amount: { min: 100, max: 200 }
   - type: Pool
     amount: { min: 1, max: 2 }
     options:
@@ -166,7 +166,7 @@
   rewards:
   - type: Currency
     id: Credit
-    amount: { min: 3000, max: 5000 }
+    amount: { min: 350, max: 600 }
   - type: Pool
     amount: { min: 1, max: 2 }
     options:
@@ -184,7 +184,7 @@
   rewards:
   - type: Currency
     id: Credit
-    amount: { min: 4000, max: 7000 }
+    amount: { min: 400, max: 800 }
   - type: Pool
     amount: { min: 1, max: 2 }
     options:
@@ -202,7 +202,7 @@
   rewards:
   - type: Currency
     id: Credit
-    amount: { min: 3500, max: 5500 }
+    amount: { min: 300, max: 550 }
   - type: Pool
     amount: 1
     options:
@@ -220,7 +220,7 @@
   rewards:
   - type: Currency
     id: Credit
-    amount: { min: 5000, max: 8000 }
+    amount: { min: 500, max: 900 }
   - type: Pool
     amount: { min: 1, max: 2 }
     options:
@@ -240,7 +240,7 @@
   rewards:
   - type: Currency
     id: Credit
-    amount: { min: 5000, max: 8000 }
+    amount: { min: 600, max: 1200 }
   - type: Pool
     amount: { min: 1, max: 2 }
     options:
@@ -264,7 +264,7 @@
   rewards:
   - type: Currency
     id: Credit
-    amount: { min: 15000, max: 25000 }
+    amount: { min: 1500, max: 3000 }
   - type: Pool
     amount: { min: 2, max: 3 }
     options:
@@ -284,7 +284,7 @@
   rewards:
   - type: Currency
     id: Credit
-    amount: { min: 20000, max: 30000 }
+    amount: { min: 2000, max: 4000 }
   - type: Pool
     amount: { min: 2, max: 3 }
     options:
@@ -302,7 +302,7 @@
   rewards:
   - type: Currency
     id: Credit
-    amount: { min: 12000, max: 18000 }
+    amount: { min: 1200, max: 2500 }
   - type: Pool
     amount: { min: 2, max: 3 }
     options:
@@ -322,7 +322,7 @@
   rewards:
   - type: Currency
     id: Credit
-    amount: { min: 15000, max: 22000 }
+    amount: { min: 1500, max: 3000 }
   - type: Pool
     amount: { min: 2, max: 3 }
     options:
@@ -342,7 +342,7 @@
   rewards:
   - type: Currency
     id: Credit
-    amount: { min: 6000, max: 9000 }
+    amount: { min: 500, max: 1000 }
   - type: Pool
     amount: { min: 1, max: 2 }
     options:
@@ -360,7 +360,7 @@
   rewards:
   - type: Currency
     id: Credit
-    amount: { min: 16000, max: 24000 }
+    amount: { min: 2000, max: 4500 }
   - type: Pool
     amount: { min: 2, max: 3 }
     options:
