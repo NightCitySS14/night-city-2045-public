@@ -33,7 +33,7 @@
     back: ClothingBackpackSatchelSecurity
     shoes: ClothingShoesBootsJack
     head: ClothingHeadHatBeretHoS
-    eyes: ClothingEyesGlassesSecurityVisor
+    eyes: ClothingEyesGlassesSecurity
     id: NCPDChiefPDA
     belt: ClothingBeltSecurityFilled
     outerClothing: ClothingOuterCoatHoSTrench
