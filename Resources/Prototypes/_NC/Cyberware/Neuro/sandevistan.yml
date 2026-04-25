@@ -69,7 +69,7 @@
     attackSpeedMultiplier: 3.0
     maxDuration: 3.0
     activationHumanityCost: 0
-    staminaDrainPerSecond: 10.0
+    staminaDrainPerSecond: 20.0
     humanityLossPerInterval: 0
     overloadStunDuration: 6.0
     overloadDamage:

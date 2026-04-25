@@ -1,0 +1,16 @@
+- type: job
+  id: NCBooster
+  name: Бустер
+  description: Один из сотен членов уличных банд. Твоя жизнь дешевле твоего хрома. РОЛЬ ДЛЯ НАКАЗАНИЯ, ИГРАТЬ НА СВОЙ СТРАХ И РИСК.
+  playTimeTracker: JobNCBooster
+  icon: "JobIconCivilCitizen"
+  salary: 40
+  startingGear: NCBoosterGear
+  access:
+    - NC_General
+
+- type: startingGear
+  id: NCBoosterGear
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitColorGrey
+    shoes: ClothingShoesColorBlack

@@ -22,7 +22,7 @@
   components:
   - type: CyberwareImplant
     category: Neuroport
-    humanityCost: 3
+    humanityCost: 7
     cyberFamily: Neuroport
   - type: MovementSpeedModifier
     baseWalkSpeed: 1.15
@@ -39,7 +39,7 @@
   components:
   - type: CyberwareImplant
     category: Neuroport
-    humanityCost: 3
+    humanityCost: 14
     cyberFamily: Neuroport
   - type: MovementSpeedModifier
     baseWalkSpeed: 1.25

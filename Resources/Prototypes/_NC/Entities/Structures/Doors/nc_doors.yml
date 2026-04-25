@@ -28,9 +28,6 @@
   id: NCAirlockGeneral
   parent: BaseNCAirlock
   name: дверь
-  components:
-  - type: AccessReader
-    access: [["NC_General"]]
 
 - type: entity
   id: NCAirlock
@@ -43,10 +40,8 @@
       enum.DoorInterfaceUiKey.Key:
         type: DoorInterfaceBoundUserInterface
   - type: DoorInterface
-    price: 1500
+    price: 1000
     address: "Апартаменты"
-  - type: AccessReader
-    access: [["NC_General"]]
 
 - type: entity
   id: NCAirlock1000
@@ -61,8 +56,6 @@
   - type: DoorInterface
     price: 1000
     address: "Апартаменты Люкс класса"
-  - type: AccessReader
-    access: [["NC_General"]]
 
 - type: entity
   id: NCAirlock300
@@ -75,10 +68,8 @@
       enum.DoorInterfaceUiKey.Key:
         type: DoorInterfaceBoundUserInterface
   - type: DoorInterface
-    price: 300
+    price: 150
     address: "Апартаменты Эконом класса"
-  - type: AccessReader
-    access: [["NC_General"]]
 
 - type: entity
   id: NCAirlock500
@@ -91,10 +82,8 @@
       enum.DoorInterfaceUiKey.Key:
         type: DoorInterfaceBoundUserInterface
   - type: DoorInterface
-    price: 500
+    price: 250
     address: "Апартаменты Среднего класса"
-  - type: AccessReader
-    access: [["NC_General"]]
 
 - type: entity
   id: NCAirlock700
@@ -107,8 +96,5 @@
       enum.DoorInterfaceUiKey.Key:
         type: DoorInterfaceBoundUserInterface
   - type: DoorInterface
-    price: 700
+    price: 350
     address: "Апартаменты Высшего класса"
-  - type: AccessReader
-    access: [["NC_General"]]
-

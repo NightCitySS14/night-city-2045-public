@@ -30,6 +30,10 @@
     soundEmpty:
       path: /Audio/Weapons/Guns/Empty/empty.ogg
     fireOnDropChance: 0.2
+  - type: SlowOnShoot
+    walkModifier: 0.5
+    sprintModifier: 0.5
+    duration: 0.5
     # WD EDIT START
     angleIncrease: 15
     maxAngle: 75
