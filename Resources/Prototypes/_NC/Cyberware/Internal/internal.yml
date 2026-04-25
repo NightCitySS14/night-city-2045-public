@@ -38,7 +38,8 @@
   - type: Armor
     modifiers:
       coefficients:
-        Blunt: 0.8 # Исправлено на снижение урона (было 0.2)
+        Blunt: 0.85
+        Shock: 1.1
 
 # --- TITANIUM REINFORCEMENT TIER 2 ---
 - type: entity
@@ -54,7 +55,8 @@
   - type: Armor
     modifiers:
       coefficients:
-        Blunt: 0.6 # Исправлено (было 0.4)
+        Blunt: 0.75
+        Shock: 1.25
   - type: NoSlip
 
 # --- ARMY ENDOSKELETON TIER 3 ---
@@ -71,9 +73,10 @@
   - type: Armor
     modifiers:
       coefficients:
-        Blunt: 0.5
-        Slash: 0.6
-        Piercing: 0.6
+        Blunt: 0.65
+        Slash: 0.75
+        Piercing: 0.8
+        Shock: 1.5
   - type: CritModifier
     critThresholdModifier: 50
     deadThresholdModifier: 100

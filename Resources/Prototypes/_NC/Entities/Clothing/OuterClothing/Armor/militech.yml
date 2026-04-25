@@ -11,9 +11,13 @@
   - type: Armor
     modifiers:
       flatReductions:
-        Piercing: 4
+        Piercing: 6
       coefficients:
-        Blunt: 0.95
-        Slash: 0.95
-        Piercing: 0.5
+        Blunt: 0.9
+        Slash: 0.9
+        Piercing: 0.45
         Heat: 0.95
+        Shock: 1.2
+  - type: ClothingSpeedModifier
+    walkModifier: 0.9
+    sprintModifier: 0.8
