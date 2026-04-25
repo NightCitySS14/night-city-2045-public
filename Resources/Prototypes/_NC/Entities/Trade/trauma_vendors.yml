@@ -1,0 +1,66 @@
+# ----------------------------
+# Trauma Team Cyberware Categories
+# ----------------------------
+
+- type: storeCategoryStructured
+  id: Cat_Trauma_Cyberware
+  name: "Кибердека и Импланты"
+  entries:
+  - proto: CyberwareExternalKevlarSublayer
+    price: 800
+    count: 5
+  - proto: CyberwareExternalThermoplasticArmor
+    price: 1500
+    count: 3
+  - proto: CyberwareExternalReactiveSublayer
+    price: 3000
+    count: 2
+  - proto: CyberwareInternalPolymerSkeleton
+    price: 1200
+    count: 5
+  - proto: CyberwareInternalTitaniumReinforcement
+    price: 2500
+    count: 3
+  - proto: CyberwareInternalArmyEndoskeleton
+    price: 5000
+    count: 1
+  - proto: CyberwareInternalNasalFilters
+    price: 400
+    count: 5
+  - proto: CyberwareInternalEnhancedAntibodies
+    price: 1800
+    count: 3
+
+# ----------------------------
+# Trauma Team Cyberware Preset
+# ----------------------------
+
+- type: storePresetStructured
+  id: TradeTrauma_Cyberware_Buy
+  currency: Credit
+  categories:
+  - Cat_Trauma_Cyberware
+
+# ----------------------------
+# Trauma Team Cyberware Machine
+# ----------------------------
+
+- type: entity
+  id: TrademachineTraumaCyberware
+  parent: Trademachine
+  name: автомат с имплантами Trauma Team
+  description: Высокотехнологичный торговый автомат для авторизованной продажи кибернетических имплантов сотрудникам Trauma Team.
+  components:
+  - type: NcStore
+    buyPresets:
+    - TradeTrauma_Cyberware_Buy
+  - type: Sprite
+    sprite: Structures/Machines/VendingMachines/medical.rsi
+    layers:
+    - state: "off"
+      map: ["enum.VendingMachineVisualLayers.Base"]
+    - state: "normal-unshaded"
+      map: ["enum.VendingMachineVisualLayers.BaseUnshaded"]
+      shader: unshaded
+  - type: AccessReader
+    access: [["Trauma_Medical"]]

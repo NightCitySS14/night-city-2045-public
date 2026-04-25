@@ -25,32 +25,6 @@
         Toxin: 10
         Blunt: 5
 
-# --- SANDEVISTAN TIER 2 (Max-Tac) ---
-- type: entity
-  id: CyberwareNeuroSandevistanMaxTac
-  parent: BaseCyberwareImplant
-  name: "Militech 'Max-Tac' Sandevistan"
-  description: "Ускоритель для элитного отряда. Позволяет двигаться быстрее молнии ценой колоссальной нагрузки на разум."
-  components:
-  - type: CyberwareImplant
-    category: Neuroport
-    humanityCost: 20
-    cyberFamily: Sandevistan
-  - type: CyberwareAction
-    actionId: ActionToggleSandevistan
-  - type: Sandevistan
-    speedMultiplier: 2.0
-    attackSpeedMultiplier: 2.0
-    maxDuration: 5.0
-    activationHumanityCost: 5.0
-    staminaDrainPerSecond: 10.0
-    humanityLossPerInterval: 1.0
-    overloadStunDuration: 6.0
-    overloadDamage:
-      types:
-        Toxin: 30
-        Blunt: 20
-
 # --- SANDEVISTAN TIER 3 (APOGEE) ---
 - type: entity
   id: CyberwareNeuroSandevistanApogee
@@ -71,6 +45,32 @@
     activationHumanityCost: 15.0
     staminaDrainPerSecond: 20.0
     humanityLossPerInterval: 3.0
+    overloadStunDuration: 6.0
+    overloadDamage:
+      types:
+        Toxin: 30
+        Blunt: 20
+
+# --- SANDEVISTAN TIER 4 (Max-Tac) ---
+- type: entity
+  id: CyberwareNeuroSandevistanMaxTac
+  parent: BaseCyberwareImplant
+  name: "Militech 'Max-Tac' Sandevistan"
+  description: "Ускоритель для элитного отряда. Позволяет двигаться быстрее молнии ценой колоссальной нагрузки на разум."
+  components:
+  - type: CyberwareImplant
+    category: Neuroport
+    humanityCost: 20
+    cyberFamily: Sandevistan
+  - type: CyberwareAction
+    actionId: ActionToggleSandevistan
+  - type: Sandevistan
+    speedMultiplier: 3.0
+    attackSpeedMultiplier: 3.0
+    maxDuration: 3.0
+    activationHumanityCost: 0
+    staminaDrainPerSecond: 20.0
+    humanityLossPerInterval: 0
     overloadStunDuration: 6.0
     overloadDamage:
       types:
