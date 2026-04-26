@@ -1,7 +1,7 @@
 - type: gameMap
   id: Aldente
   mapName: 'New Aldenteе'
-  mapPath: /Maps/_NC/aldente_fix.yml
+  mapPath: /Maps/_NC/aldente_remap.yml
   maxRandomOffset: 0
   randomPainting: false
   minPlayers: 0 
@@ -17,7 +17,7 @@
           # === Гражданские (CivilianNC) ===
           NCCitizen: [-1, -1]
           EdgeRunnerSolo: [5, 5]
-          Fixer: [2, 2]
+          Fixer: [3, 3]
           Reaper: [2, 2]
           # === NCPD ===
           NCPDChief: [1, 1]
@@ -26,7 +26,7 @@
           NCPDInspector: [1, 1]
           NCPDSergeant: [5, 5]
           NCPDOfficer: [5, 5]
-          NCPDWatchAgent: [3, 3]
+          NCPDWatchAgent: [2, 2]
           # === NCPD MaxTac ===
           MaxTacCommander: [1, 1]
           MaxTacEraser: [2, 2]
@@ -37,7 +37,6 @@
           TraumaTeamOperative: [4, 4]
           TraumaTeamCoroner: [1, 1]
           TraumaTeamPsych: [1, 1]
-          TraumaTeamTech: [3, 3]
           TraumaTeamIntern: [5, 5]
           # === Biotechnica ===
           BiotechnicaChief: [1, 1]
