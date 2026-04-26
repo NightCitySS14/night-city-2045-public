@@ -75,15 +75,13 @@ namespace Content.Server._NC.Bank
             if (ev.Mob == EntityUid.Invalid)
                 return;
 
-            var balance = GetBalance(ev.Mob);
             var bankComp = EnsureComp<BankAccountComponent>(ev.Mob);
-            bankComp.Balance = balance;
+            
+            // Берем баланс напрямую из профиля, загруженного при спавне
+            bankComp.Balance = ev.Profile.BankBalance;
 
-            if (_playerManager.TryGetSessionByEntity(ev.Mob, out var session))
-            {
-                var prefs = _prefsManager.GetPreferences(session.UserId);
-                bankComp.ProfileSlot = prefs.SelectedCharacterIndex;
-            }
+            // Устанавливаем индекс слота персонажа для корректного сохранения в БД
+            bankComp.ProfileSlot = _prefsManager.GetPreferences(ev.Player.UserId).SelectedCharacterIndex;
             
             if (string.IsNullOrEmpty(bankComp.AccountNumber))
             {
@@ -261,11 +259,11 @@ namespace Content.Server._NC.Bank
         {
             if (!TryComp<BankAccountComponent>(mobUid, out var bankComp))
             {
-                _log.Error($"BankAccountComponent not found on entity {mobUid}");
+                _log.Error($"[BANK] Ошибка: Компонент BankAccountComponent не найден на {mobUid}");
                 return false;
             }
 
-            // 1. Проверка на баланс (работаем с компонентом!)
+            // 1. Проверка на баланс
             if (delta < 0 && bankComp.Balance < -delta)
             {
                 return false;
@@ -275,11 +273,28 @@ namespace Content.Server._NC.Bank
             bankComp.Balance += delta;
             Dirty(mobUid, bankComp);
 
-            // 3. Сохраняем в БД (фоново/асинхронно)
-            if (_playerManager.TryGetSessionByEntity(mobUid, out var session) && bankComp.ProfileSlot != -1)
+            // 3. Сохранение в БД
+            // Ищем сессию игрока. Сначала по сущности, потом по номеру счета во всем мире.
+            if (!_playerManager.TryGetSessionByEntity(mobUid, out var session))
+            {
+                // Если сущность не привязана к сессии (например, это карта или банкомат), 
+                // ищем живого игрока с таким же номером счета.
+                foreach (var s in _playerManager.Sessions)
+                {
+                    if (s.AttachedEntity is { Valid: true } attached &&
+                        TryComp<BankAccountComponent>(attached, out var otherBank) &&
+                        otherBank.AccountNumber == bankComp.AccountNumber)
+                    {
+                        session = s;
+                        bankComp.ProfileSlot = otherBank.ProfileSlot;
+                        break;
+                    }
+                }
+            }
+
+            if (session != null && bankComp.ProfileSlot != -1)
             {
                 var prefs = _prefsManager.GetPreferences(session.UserId);
-                // Находим профиль именно в том слоте, за который мы играем
                 if (prefs.Characters.TryGetValue(bankComp.ProfileSlot, out var iProfile) && 
                     iProfile is HumanoidCharacterProfile profile)
                 {
@@ -288,7 +303,6 @@ namespace Content.Server._NC.Bank
                 }
             }
 
-            _log.Info($"User balance updated via component: {bankComp.Balance} (delta {delta}). Saved to DB.");
             return true;
         }
     }

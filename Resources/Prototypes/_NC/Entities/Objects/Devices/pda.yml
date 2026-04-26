@@ -372,3 +372,147 @@
       borderColor: '#1a1a1a'
       accentHColor: '#aaffcc'
       accentVColor: '#aaffcc'
+
+- type: entity
+  parent: BasePDA
+  id: BiotechnicaChiefPDA
+  name: КПК руководителя Biotechnica
+  description: Устройство связи руководителя объекта Biotechnica. Пахнет свежескошенной травой и корпоративным шпионажем.
+  components:
+    - type: Pda
+      id: BiotechHeadIDCard
+    - type: Sprite
+      sprite: _White/Objects/Devices/Pda/pda.rsi
+      color: '#3d9e3d'
+    - type: PdaBorderColor
+      borderColor: '#1e3d1e'
+      accentHColor: '#7cfc00'
+      accentVColor: '#7cfc00'
+
+- type: entity
+  parent: BasePDA
+  id: BiotechnicaBotanistPDA
+  name: КПК ботаника Biotechnica
+  description: КПК со встроенным датчиком влажности и анализатором почвы.
+  components:
+    - type: Pda
+      id: BiotechnicaBotanistIDCard
+    - type: Sprite
+      sprite: _White/Objects/Devices/Pda/pda.rsi
+      color: '#228b22'
+    - type: PdaBorderColor
+      borderColor: '#006400'
+      accentHColor: '#adff2f'
+      accentVColor: '#adff2f'
+
+- type: entity
+  parent: BaseMedicalPDA
+  id: BiotechnicaMedTechPDA
+  name: КПК медтеха Biotechnica
+  description: Медицинский КПК с расширенной базой данных по биомодификациям.
+  components:
+    - type: Pda
+      id: BiotechnicaMedTechIDCard
+    - type: Sprite
+      sprite: _White/Objects/Devices/Pda/medical.rsi
+      color: '#aaffcc'
+    - type: PdaBorderColor
+      borderColor: '#006400'
+      accentHColor: '#00ff7f'
+      accentVColor: '#00ff7f'
+
+- type: entity
+  parent: BasePDA
+  id: BiotechnicaNetrunnerPDA
+  name: КПК нетраннера Biotechnica
+  description: Оптимизированное устройство для работы в сетях биотехнологических узлов.
+  components:
+    - type: Pda
+      id: BiotechnicaNetrunnerIDCard
+    - type: Sprite
+      sprite: _White/Objects/Devices/Pda/pda.rsi
+      color: '#1a1a1a'
+    - type: PdaBorderColor
+      borderColor: '#00ff00'
+      accentHColor: '#008000'
+      accentVColor: '#008000'
+
+- type: entity
+  parent: BasePDA
+  id: BiotechnicaOperativeLeadPDA
+  name: КПК лидера оперативников Biotechnica
+  description: Устройство связи командира службы безопасности Biotechnica.
+  components:
+    - type: Pda
+      id: BiotechnicaOperativeLeadIDCard
+    - type: Sprite
+      sprite: _White/Objects/Devices/Pda/security.rsi
+      color: '#4b5320'
+    - type: PdaBorderColor
+      borderColor: '#252910'
+      accentHColor: '#adff2f'
+      accentVColor: '#adff2f'
+
+- type: entity
+  parent: BasePDA
+  id: BiotechnicaOperativePDA
+  name: КПК оперативника Biotechnica
+  description: Стандартное устройство связи службы безопасности Biotechnica.
+  components:
+    - type: Pda
+      id: BiotechnicaOperativeIDCard
+    - type: Sprite
+      sprite: _White/Objects/Devices/Pda/security.rsi
+      color: '#4b5320'
+    - type: PdaBorderColor
+      borderColor: '#252910'
+      accentHColor: '#adff2f'
+      accentVColor: '#adff2f'
+
+- type: entity
+  parent: BaseMedicalPDA
+  id: BiotechnicaParamedicPDA
+  name: КПК парамедика Biotechnica
+  description: Мобильное медицинское устройство для экстренного реагирования.
+  components:
+    - type: Pda
+      id: BiotechnicaParamedicIDCard
+    - type: Sprite
+      sprite: _White/Objects/Devices/Pda/medical.rsi
+      color: '#e6fffa'
+    - type: PdaBorderColor
+      borderColor: '#008b8b'
+      accentHColor: '#00ced1'
+      accentVColor: '#00ced1'
+
+- type: entity
+  parent: BasePDA
+  id: BiotechnicaTechPDA
+  name: КПК техника Biotechnica
+  description: КПК со встроенным вольтметром и диагностическими утилитами.
+  components:
+    - type: Pda
+      id: BiotechnicaTechIDCard
+    - type: Sprite
+      sprite: _White/Objects/Devices/Pda/pda.rsi
+      color: '#b0c4de'
+    - type: PdaBorderColor
+      borderColor: '#4682b4'
+      accentHColor: '#00fa9a'
+      accentVColor: '#00fa9a'
+
+- type: entity
+  parent: BasePDA
+  id: BiotechnicaOperativePDA
+  name: КПК оперативника Biotechnica
+  description: Стандартное устройство связи службы безопасности Biotechnica.
+  components:
+    - type: Pda
+      id: BiotechnicaOperativeIDCard
+    - type: Sprite
+      sprite: _White/Objects/Devices/Pda/pda.rsi
+      color: '#b0c4de'
+    - type: PdaBorderColor
+      borderColor: '#4682b4'
+      accentHColor: '#00fa9a'
+      accentVColor: '#00fa9a'

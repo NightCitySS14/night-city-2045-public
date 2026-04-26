@@ -25,7 +25,6 @@
         Heat: 0.3
         Radiation: 0.3
         Caustic: 0.3
-        Shock: 2.5 # Critical vulnerability to EMP and High-Voltage
   - type: ClothingSpeedModifier
     walkModifier: 0.65
     sprintModifier: 0.55

@@ -163,16 +163,26 @@ namespace Content.Server._NC.Bank.ATM
 
             if (await _bankSystem.TryBankWithdraw(accountUid, args.Amount))
             {
-                var cash = Spawn(CurrencyPrototypeId, Transform(uid).Coordinates);
-                _stackSystem.SetCount(cash, args.Amount);
+                try
+                {
+                    var coords = Transform(uid).Coordinates;
+                    _stackSystem.SpawnMultiple(CurrencyPrototypeId, args.Amount, coords);
+                }
+                catch (Exception e)
+                {
+                    _log.Error($"[ATM] КРИТИЧЕСКАЯ ОШИБКА СПАВНА ДЕНЕГ: {e}");
+                    _popupSystem.PopupEntity("Ошибка выдачи наличности (битый прототип!)", uid, player);
+                }
 
                 _popupSystem.PopupEntity(Loc.GetString("atm-popup-withdraw-success", ("amount", args.Amount)), uid, player);
-                UpdateUi(uid, component);
             }
             else
             {
                 _popupSystem.PopupEntity(Loc.GetString("atm-popup-insufficient-funds"), uid, player);
             }
+
+            // ОБНОВЛЯЕМ UI В ЛЮБОМ СЛУЧАЕ
+            UpdateUi(uid, component);
         }
 
         // === ВНЕСЕНИЕ (В БД ИГРОКА) ===

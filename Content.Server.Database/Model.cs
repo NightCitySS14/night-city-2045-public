@@ -89,6 +89,16 @@ namespace Content.Server.Database
                 .HasIndex(q => new { q.ProfileId, q.DepartmentId })
                 .IsUnique();
 
+            // NC EDIT START
+            modelBuilder.Entity<Profile>()
+                .Property(p => p.BankBalance)
+                .HasColumnName("bank_balance");
+
+            modelBuilder.Entity<Profile>()
+                .Property(p => p.EmployedDepartment)
+                .HasColumnName("employed_department");
+            // NC EDIT END
+
             modelBuilder.Entity<AssignedUserId>()
                 .HasIndex(p => p.UserName)
                 .IsUnique();
@@ -452,6 +462,7 @@ namespace Content.Server.Database
         public DbJobPriority Priority { get; set; }
     }
 
+    [Table("quitted_department")]
     public class QuittedDepartment
     {
         public int Id { get; set; }

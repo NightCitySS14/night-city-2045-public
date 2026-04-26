@@ -181,13 +181,13 @@
     weight: 1
   - type: Item
     id: CyberwareNeuroKerenzikovMk3
-    weight: 0.5
+    weight: 1
   - type: Item
     id: CyberwareNeuroSandevistanApogee
-    weight: 0.2
+    weight: 1
   - type: Item
     id: CyberwareInternalArmyEndoskeleton
-    weight: 0.5
+    weight: 1
   - type: Item
     id: CyberwareNeuroTacticalSpartan
     weight: 1

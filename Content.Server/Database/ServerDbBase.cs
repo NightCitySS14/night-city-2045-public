@@ -101,6 +101,7 @@ namespace Content.Server.Database
                 .Include(p => p.Antags)
                 .Include(p => p.Traits)
                 .Include(p => p.Loadouts)
+                .Include(p => p.QuittedDepartments) // NC
                 .AsSplitQuery()
                 .SingleOrDefault(h => h.Slot == slot);
 

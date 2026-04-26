@@ -13,7 +13,7 @@
     size: Large
   - type: Cyberdeck
     maxRam: 100
-    recoverySpeed: 10
+    recoverySpeed: 5
     scanRadius: 20
     range: 30
   - type: Wieldable
