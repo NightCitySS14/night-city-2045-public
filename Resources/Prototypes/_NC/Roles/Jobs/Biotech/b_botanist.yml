@@ -11,7 +11,8 @@
     - Biotech_Staff
     - Biotech_Lab
     - Biotech_General
-
+    - NC_General
+    
 - type: startingGear
   id: BiotechnicaBotanistGear
   equipment:

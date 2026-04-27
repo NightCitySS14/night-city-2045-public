@@ -26,7 +26,6 @@
           NCPDInspector: [1, 1]
           NCPDSergeant: [5, 5]
           NCPDOfficer: [5, 5]
-          NCPDWatchAgent: [3, 3]
           # === NCPD MaxTac ===
           MaxTacCommander: [1, 1]
           MaxTacEraser: [2, 2]
@@ -37,18 +36,13 @@
           TraumaTeamOperative: [4, 4]
           TraumaTeamCoroner: [1, 1]
           TraumaTeamPsych: [1, 1]
-          TraumaTeamTech: [3, 3]
           TraumaTeamIntern: [5, 5]
           # === Biotechnica ===
           BiotechnicaChief: [1, 1]
           BiotechnicaOperativeLead: [1, 1]
-          BiotechnicaSecurityLead: [1, 1]
           BiotechnicaOperative: [3, 3]
           BiotechnicaMedTech: [2, 2]
-          BiotechnicaNetrunner: [1, 1]
-          BiotechnicaParamedic: [2, 2]
           BiotechnicaTech: [2, 2]
           BiotechnicaBotanist: [2, 2]
           # === Zhirafa ===
-          ZhirafaEngeneer: [1, 1]
-          ZhirafaJanitor: [2, 2]
+          ZhirafaJanitor: [3, 3]

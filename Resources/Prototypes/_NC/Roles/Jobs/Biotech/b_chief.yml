@@ -17,6 +17,7 @@
     - Biotech_Lab
     - Biotech_Security
     - Biotech_Command
+    - NC_General
   special:
   - !type:AddComponentSpecial
     components:
