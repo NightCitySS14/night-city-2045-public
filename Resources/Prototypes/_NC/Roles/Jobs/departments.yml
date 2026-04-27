@@ -5,7 +5,6 @@
   color: "#999999"
   roles:
     - NCCitizen
-    - NCBooster
     - Reaper
     - Fixer
     - EdgeRunnerSolo
