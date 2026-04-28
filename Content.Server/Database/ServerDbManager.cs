@@ -362,6 +362,17 @@ namespace Content.Server.Database
         /// <param name="notification">The notification to send.</param>
         Task SendNotification(DatabaseNotification notification);
 
+        // NC EDIT START
+        Task<int> GetNightCoinsBalanceAsync(NetUserId userId, CancellationToken cancel = default);
+        Task AddNightCoinsAsync(NetUserId userId, int amount, CancellationToken cancel = default);
+        Task<bool> TryDeductNightCoinsAsync(NetUserId userId, int amount, CancellationToken cancel = default);
+        
+        Task<List<NCMetaInventoryRecord>> GetMetaInventoryAsync(NetUserId userId, CancellationToken cancel = default);
+        Task AddToMetaInventoryAsync(NetUserId userId, string itemPrototype, int quantity = 1, CancellationToken cancel = default);
+        Task<bool> TryRemoveFromMetaInventoryAsync(NetUserId userId, string itemPrototype, int quantity = 1, CancellationToken cancel = default);
+        Task SetMetaInventoryItemSelectedAsync(int itemId, bool selected, CancellationToken cancel = default);
+        // NC EDIT END
+
         #endregion
     }
 
@@ -1070,6 +1081,50 @@ namespace Content.Server.Database
             DbWriteOpsMetric.Inc();
             return RunDbCommand(() => _db.SendNotification(notification));
         }
+
+        // NC EDIT START
+        public Task<int> GetNightCoinsBalanceAsync(NetUserId userId, CancellationToken cancel = default)
+        {
+            DbReadOpsMetric.Inc();
+            return RunDbCommand(() => _db.GetNightCoinsBalanceAsync(userId.UserId, cancel));
+        }
+
+        public Task AddNightCoinsAsync(NetUserId userId, int amount, CancellationToken cancel = default)
+        {
+            DbWriteOpsMetric.Inc();
+            return RunDbCommand(() => _db.AddNightCoinsAsync(userId.UserId, amount, cancel));
+        }
+
+        public Task<bool> TryDeductNightCoinsAsync(NetUserId userId, int amount, CancellationToken cancel = default)
+        {
+            DbWriteOpsMetric.Inc();
+            return RunDbCommand(() => _db.TryDeductNightCoinsAsync(userId.UserId, amount, cancel));
+        }
+
+        public Task<List<NCMetaInventoryRecord>> GetMetaInventoryAsync(NetUserId userId, CancellationToken cancel = default)
+        {
+            DbReadOpsMetric.Inc();
+            return RunDbCommand(() => _db.GetMetaInventoryAsync(userId.UserId, cancel));
+        }
+
+        public Task AddToMetaInventoryAsync(NetUserId userId, string itemPrototype, int quantity = 1, CancellationToken cancel = default)
+        {
+            DbWriteOpsMetric.Inc();
+            return RunDbCommand(() => _db.AddToMetaInventoryAsync(userId.UserId, itemPrototype, quantity, cancel));
+        }
+
+        public Task<bool> TryRemoveFromMetaInventoryAsync(NetUserId userId, string itemPrototype, int quantity = 1, CancellationToken cancel = default)
+        {
+            DbWriteOpsMetric.Inc();
+            return RunDbCommand(() => _db.TryRemoveFromMetaInventoryAsync(userId.UserId, itemPrototype, quantity, cancel));
+        }
+
+        public Task SetMetaInventoryItemSelectedAsync(int itemId, bool selected, CancellationToken cancel = default)
+        {
+            DbWriteOpsMetric.Inc();
+            return RunDbCommand(() => _db.SetMetaInventoryItemSelectedAsync(itemId, selected, cancel));
+        }
+        // NC EDIT END
 
         private async void HandleDatabaseNotification(DatabaseNotification notification)
         {

@@ -125,3 +125,9 @@ public sealed record PlayerRecord(
 public sealed record RoundRecord(int Id, DateTimeOffset? StartDate, ServerRecord Server);
 
 public sealed record ServerRecord(int Id, string Name);
+
+// NC EDIT START
+public sealed record NCPlayerEconomyRecord(Guid UserId, int NightCoinsBalance);
+
+public sealed record NCMetaInventoryRecord(int Id, Guid UserId, string ItemPrototype, int Quantity, bool Selected);
+// NC EDIT END

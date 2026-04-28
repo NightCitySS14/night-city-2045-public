@@ -51,6 +51,11 @@ namespace Content.Server.Database
         public DbSet<BanTemplate> BanTemplate { get; set; } = null!;
         public DbSet<IPIntelCache> IPIntelCache { get; set; } = null!;
 
+        // NC EDIT START
+        public DbSet<NCPlayerEconomy> NCPlayerEconomy { get; set; } = null!;
+        public DbSet<NCMetaInventory> NCMetaInventory { get; set; } = null!;
+        // NC EDIT END
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Preference>()
@@ -60,6 +65,14 @@ namespace Content.Server.Database
             modelBuilder.Entity<Profile>()
                 .HasIndex(p => new { p.Slot, PrefsId = p.PreferenceId })
                 .IsUnique();
+
+            // NC EDIT START
+            modelBuilder.Entity<NCPlayerEconomy>()
+                .HasKey(p => p.UserId);
+
+            modelBuilder.Entity<NCMetaInventory>()
+                .HasIndex(p => p.UserId);
+            // NC EDIT END
 
             modelBuilder.Entity<Antag>()
                 .HasIndex(p => new { HumanoidProfileId = p.ProfileId, p.AntagName })
@@ -1318,4 +1331,25 @@ namespace Content.Server.Database
         /// </summary>
         public float Score { get; set; }
     }
+
+    // NC EDIT START
+    [Table("nc_player_economy")]
+    public class NCPlayerEconomy
+    {
+        [Key]
+        public Guid UserId { get; set; }
+        public int NightCoinsBalance { get; set; } = 0;
+    }
+
+    [Table("nc_meta_inventory")]
+    public class NCMetaInventory
+    {
+        [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public int Id { get; set; }
+        public Guid UserId { get; set; }
+        public string ItemPrototype { get; set; } = string.Empty;
+        public int Quantity { get; set; } = 1;
+        public bool Selected { get; set; } = false;
+    }
+    // NC EDIT END
 }

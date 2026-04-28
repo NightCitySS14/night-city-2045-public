@@ -1851,6 +1851,101 @@ INSERT INTO player_round (players_id, rounds_id) VALUES ({players[player]}, {id}
             OnNotificationReceived?.Invoke(notification);
         }
 
+        // NC EDIT START
+        public virtual async Task<int> GetNightCoinsBalanceAsync(Guid userId, CancellationToken cancel = default)
+        {
+            await using var db = await GetDb(cancel);
+            var record = await db.DbContext.NCPlayerEconomy.SingleOrDefaultAsync(x => x.UserId == userId, cancel);
+            return record?.NightCoinsBalance ?? 0;
+        }
+
+        public virtual async Task AddNightCoinsAsync(Guid userId, int amount, CancellationToken cancel = default)
+        {
+            await using var db = await GetDb(cancel);
+            var record = await db.DbContext.NCPlayerEconomy.SingleOrDefaultAsync(x => x.UserId == userId, cancel);
+            if (record == null)
+            {
+                record = new NCPlayerEconomy { UserId = userId, NightCoinsBalance = amount };
+                db.DbContext.NCPlayerEconomy.Add(record);
+            }
+            else
+            {
+                record.NightCoinsBalance += amount;
+            }
+            await db.DbContext.SaveChangesAsync(cancel);
+        }
+
+        public virtual async Task<bool> TryDeductNightCoinsAsync(Guid userId, int amount, CancellationToken cancel = default)
+        {
+            await using var db = await GetDb(cancel);
+            var record = await db.DbContext.NCPlayerEconomy.SingleOrDefaultAsync(x => x.UserId == userId, cancel);
+            if (record == null || record.NightCoinsBalance < amount)
+                return false;
+
+            record.NightCoinsBalance -= amount;
+            await db.DbContext.SaveChangesAsync(cancel);
+            return true;
+        }
+        
+        public virtual async Task<List<NCMetaInventoryRecord>> GetMetaInventoryAsync(Guid userId, CancellationToken cancel = default)
+        {
+            await using var db = await GetDb(cancel);
+            var items = await db.DbContext.NCMetaInventory
+                .Where(x => x.UserId == userId)
+                .ToListAsync(cancel);
+            
+            return items.Select(x => new NCMetaInventoryRecord(x.Id, x.UserId, x.ItemPrototype, x.Quantity, x.Selected)).ToList();
+        }
+
+        public virtual async Task AddToMetaInventoryAsync(Guid userId, string itemPrototype, int quantity = 1, CancellationToken cancel = default)
+        {
+            await using var db = await GetDb(cancel);
+            var record = await db.DbContext.NCMetaInventory
+                .SingleOrDefaultAsync(x => x.UserId == userId && x.ItemPrototype == itemPrototype, cancel);
+                
+            if (record == null)
+            {
+                record = new NCMetaInventory { UserId = userId, ItemPrototype = itemPrototype, Quantity = quantity };
+                db.DbContext.NCMetaInventory.Add(record);
+            }
+            else
+            {
+                record.Quantity += quantity;
+            }
+            await db.DbContext.SaveChangesAsync(cancel);
+        }
+
+        public virtual async Task<bool> TryRemoveFromMetaInventoryAsync(Guid userId, string itemPrototype, int quantity = 1, CancellationToken cancel = default)
+        {
+            await using var db = await GetDb(cancel);
+            var record = await db.DbContext.NCMetaInventory
+                .SingleOrDefaultAsync(x => x.UserId == userId && x.ItemPrototype == itemPrototype, cancel);
+                
+            if (record == null || record.Quantity < quantity)
+                return false;
+
+            record.Quantity -= quantity;
+            if (record.Quantity <= 0)
+            {
+                db.DbContext.NCMetaInventory.Remove(record);
+            }
+            
+            await db.DbContext.SaveChangesAsync(cancel);
+            return true;
+        }
+
+        public virtual async Task SetMetaInventoryItemSelectedAsync(int itemId, bool selected, CancellationToken cancel = default)
+        {
+            await using var db = await GetDb(cancel);
+            var record = await db.DbContext.NCMetaInventory.SingleOrDefaultAsync(x => x.Id == itemId, cancel);
+            if (record != null)
+            {
+                record.Selected = selected;
+                await db.DbContext.SaveChangesAsync(cancel);
+            }
+        }
+        // NC EDIT END
+
         public virtual void Shutdown()
         {
 
