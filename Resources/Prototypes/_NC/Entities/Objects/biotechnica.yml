@@ -193,9 +193,9 @@
   suffix: Biotechnica, Гидропоника, Ботаника
   components:
   - type: Sprite
-    sprite: Clothing/Uniforms/Envirosuits/hydroponics.rsi
+    sprite: _NC/Clothing/Uniforms/Envirosuits/biotechnica.rsi
   - type: Clothing
-    sprite: Clothing/Uniforms/Envirosuits/hydroponics.rsi
+    sprite: _NC/Clothing/Uniforms/Envirosuits/biotechnica.rsi
 
 - type: entity
   parent: [ClothingHeadEnvirohelmHydroponics, BiotechnicaContraband]
@@ -205,9 +205,9 @@
   suffix: Biotechnica, Гидропоника, Ботаника
   components:
   - type: Sprite
-    sprite: Clothing/Head/Envirohelms/hydroponics.rsi
+    sprite: _NC/Clothing/Head/Envirohelms/biotechnica.rsi
   - type: Clothing
-    sprite: Clothing/Head/Envirohelms/hydroponics.rsi
+    sprite: _NC/Clothing/Head/Envirohelms/biotechnica.rsi
 
 - type: entity
   parent: [ClothingHandsGlovesEnviroglovesLeather, BiotechnicaContraband]
@@ -299,7 +299,7 @@
   suffix: Biotechnica
   components:
   - type: Sprite
-    sprite: _NC/Clothing/Back/Backpacks/hydroponics.rsi
+    sprite: _NC/Clothing/Back/Backpacks/biotechnica.rsi
 
 - type: entity
   parent: [ClothingBackpackSatchelHydroponics, BiotechnicaContraband]
@@ -309,7 +309,7 @@
   suffix: Biotechnica
   components:
   - type: Sprite
-    sprite: _NC/Clothing/Back/Satchels/hydroponics.rsi
+    sprite: _NC/Clothing/Back/Satchels/biotechnica.rsi
 
 - type: entity
   parent: [ClothingBackpackDuffelHydroponics, BiotechnicaContraband]
@@ -319,4 +319,4 @@
   suffix: Biotechnica
   components:
     - type: Sprite
-      sprite: _NC/Clothing/Back/Duffels/hydroponics.rsi
+      sprite: _NC/Clothing/Back/Duffels/biotechnica.rsi

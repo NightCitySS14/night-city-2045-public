@@ -17,7 +17,7 @@
   id: BiotechnicaBotanistGear
   equipment:
     jumpsuit: ClothingUniformJumpsuitBiotechnica
-    back: ClothingBackpackSatchelBiotechnica
+    back: ClothingBackpackBiotechnica
     shoes: ClothingShoesColorWhite
     mask: ClothingMaskSterile
     gloves: ClothingHandsGlovesEnviroglovesBiotechnicaBotany

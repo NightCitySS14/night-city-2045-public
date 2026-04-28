@@ -18,7 +18,7 @@
   id: BiotechnicaMedTechGear
   equipment:
     jumpsuit: ClothingUniformJumpsuitBiotechnica
-    back: ClothingBackpackSatchelMedical
+    back: ClothingBackpackBiotechnica
     shoes: ClothingShoesColorWhite
     head: ClothingHeadHatBeretSeniorPhysician
     eyes: ClothingEyesGlassesSunglasses
