@@ -24,7 +24,7 @@ public sealed partial class AllyCombatTargetPrecondition : HTNPrecondition
         foreach (var ally in lookup.GetEntitiesInRange(owner, Range))
         {
             if (ally == owner) continue;
-            if (!factionSystem.IsFriendly(owner, ally)) continue;
+            if (!factionSystem.IsEntityFriendly(owner, ally)) continue;
 
             EntityUid? target = null;
             if (_entManager.TryGetComponent<NPCRangedCombatComponent>(ally, out var ranged))
