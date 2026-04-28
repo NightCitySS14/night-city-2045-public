@@ -27,3 +27,81 @@
     - tasks:
         - !type:HTNPrimitiveTask
           operator: !type:NPCUseInHandOperator
+
+- type: htnCompound
+  id: NCBanditTier2CombatCompound
+  branches:
+    - preconditions:
+        - !type:GunAmmoPrecondition
+          minPercent: 0.001
+      tasks:
+        - !type:HTNCompoundTask
+          task: RangedCombatCompound
+    - preconditions:
+        - !type:GunAmmoPrecondition
+          maxPercent: 0.001
+      tasks:
+        - !type:HTNCompoundTask
+          task: PickupAmmoCompound
+    - tasks:
+        - !type:HTNCompoundTask
+          task: RangedCombatCompound
+    - tasks:
+        - !type:HTNCompoundTask
+          task: MeleeCombatCompound
+
+- type: htnCompound
+  id: NCBanditTier2RootCompound
+  branches:
+    - tasks:
+        - !type:HTNCompoundTask
+          task: RackGunCompound
+      preconditions:
+        - !type:NCWeaponMaintenancePrecondition
+    - tasks:
+        - !type:HTNCompoundTask
+          task: NCBanditTier2CombatCompound
+    - tasks:
+        - !type:HTNCompoundTask
+          task: IdleCompound
+
+- type: htnCompound
+  id: NCBanditMilitechCombatCompound
+  branches:
+    - preconditions:
+        - !type:ActiveHandComponentPrecondition
+          components:
+            - type: Gun
+      tasks:
+        - !type:HTNCompoundTask
+          task: GunCombatCompound
+    - preconditions:
+        - !type:GunAmmoPrecondition
+          maxPercent: 0.001
+      tasks:
+        - !type:HTNCompoundTask
+          task: PickupAmmoCompound
+    - tasks:
+        - !type:HTNCompoundTask
+          task: RangedCombatCompound
+    - tasks:
+        - !type:HTNCompoundTask
+          task: MeleeCombatCompound
+
+- type: htnCompound
+  id: NCBanditTier3RootCompound
+  branches:
+    - tasks:
+        - !type:HTNCompoundTask
+          task: RackGunCompound
+      preconditions:
+        - !type:NCWeaponMaintenancePrecondition
+    - tasks:
+        - !type:HTNCompoundTask
+          task: NCBanditMilitechCombatCompound
+    - tasks:
+        - !type:HTNCompoundTask
+          task: MeleeCombatCompound
+    - tasks:
+        - !type:HTNCompoundTask
+          task: IdleCompound

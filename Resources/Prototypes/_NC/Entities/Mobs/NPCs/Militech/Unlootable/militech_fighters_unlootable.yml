@@ -8,10 +8,11 @@
   id: MobNCMilitechUnlootable
   description: Опытный боец Militech, наёмник из частной армии корпорации.
   abstract: true
+  IdleRange: !type:Single 10
   components:
   - type: HTN
     rootTask:
-      task: NCBanditRootCompound
+      task: NCBanditTier3RootCompound
   - type: NPCAutoReload
   - type: InputMover
   - type: MobMover

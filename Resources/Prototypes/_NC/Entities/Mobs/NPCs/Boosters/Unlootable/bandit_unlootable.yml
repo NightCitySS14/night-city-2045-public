@@ -8,6 +8,7 @@
   id: MobNCBanditUnlootable
   description: Обычный уличный бандит, вооружившийся корпо-снаряжением с черного рынка.
   abstract: true
+  IdleRange: !type:Single 6
   components:
   - type: NpcFactionMember
     factions:

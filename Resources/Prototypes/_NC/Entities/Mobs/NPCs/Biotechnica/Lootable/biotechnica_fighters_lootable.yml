@@ -66,10 +66,11 @@
   id: MobNCBiotechnicaLootable
   description: Наёмник Biotechnica, сочетает броню и компактное вооружение для городской работы.
   abstract: true
+  IdleRange: !type:Single 8
   components:
   - type: HTN
     rootTask:
-      task: NCBanditRootCompound
+      task: NCBanditTier2RootCompound
   - type: NPCAutoReload
   - type: InputMover
   - type: MobMover
