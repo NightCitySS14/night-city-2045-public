@@ -64,7 +64,7 @@
         priority: 1
         whitelist:
           tags:
-          - Cartridge9mm
+          - Cartridge9x19
 
 - type: entity
   name: Militech Saratoga
