@@ -10,6 +10,7 @@ using Robust.Shared.Physics.Components;
 using Robust.Shared.Physics.Systems;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
+using Robust.Shared.Maths;
 
 namespace Content.Server._NC.NPC.Systems;
 
@@ -58,7 +59,7 @@ public sealed class NCTacticalMovementSystem : EntitySystem
             var circleDir = new Vector2(-toTarget.Y, toTarget.X).Normalized();
             
             // Randomize direction based on UID
-            if (uid.Id % 2 == 0)
+            if (((int) uid) % 2 == 0)
                 circleDir = -circleDir;
 
             ApplyInterest(ref args, circleDir);

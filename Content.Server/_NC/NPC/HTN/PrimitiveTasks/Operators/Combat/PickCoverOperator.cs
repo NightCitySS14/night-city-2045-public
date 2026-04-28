@@ -59,11 +59,9 @@ public sealed partial class PickCoverOperator : HTNOperator
             var hidePos = coverPos - toTarget * 1.5f; 
 
             // Check if hidePos is actually hidden from target
-            // This is a bit expensive but we're doing it in an operator update (which runs once if we finish immediately)
-            // Wait, HTN operators Update runs every tick if they return Continuing.
-            // Pickers usually return Finished/Failed immediately.
+            var mapCoords = new MapCoordinates(hidePos, ownerXform.MapID);
             
-            if (!examine.InRangeUnOccluded(targetPos, hidePos, Range * 2, null))
+            if (!examine.InRangeUnOccluded(target, mapCoords, Range * 2, null))
             {
                 var dist = (hidePos - ownerPos).Length();
                 if (dist < bestDist)

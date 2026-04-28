@@ -15,7 +15,7 @@ public sealed partial class FleeOperator : HTNOperator, IHtnConditionalShutdown
     public float FleeDistance = 15f;
 
     [DataField("shutdownState")]
-    public HTNPlanState ShutdownState { get; private set; } = HTNPlanState.PlanFinished;
+    public HTNPlanState ShutdownState { get; set; } = HTNPlanState.PlanFinished;
 
     public override void Startup(NPCBlackboard blackboard)
     {

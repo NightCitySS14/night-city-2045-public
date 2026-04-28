@@ -26,7 +26,7 @@ public sealed partial class HealthPrecondition : HTNPrecondition
         if (!thresholdSystem.TryGetIncapPercentage(owner, damageable.TotalDamage, out var percentage))
             return false;
 
-        var health = 1.0f - (float) percentage.Value;
+        var health = 1.0f - percentage.Value.Float();
 
         return health >= MinThreshold && health <= MaxThreshold;
     }
