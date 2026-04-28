@@ -28,7 +28,7 @@
 
   # Gun — основные параметры стрельбы (будут меняться при переключении режима)
   - type: Gun
-    fireRate: 4
+    fireRate: 3
     selectedMode: SemiAuto
     availableModes:
     - SemiAuto
@@ -64,7 +64,7 @@
   - type: DualAmmoProvider
     currentMode: 0
     modes:
-    - prototype: Cartridge127mm
+    - prototype: CartridgePistol
       usesMagazine: true
       modeName: dual-ammo-mode-pistol
       fireRate: 4

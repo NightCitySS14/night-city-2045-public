@@ -48,11 +48,11 @@
           - MagazineRifleNokota
       gun_chamber:
         name: Chamber
-        startingItem: Cartridge622mmCaseless
+        startingItem: Cartridge556x45CL
         priority: 1
         whitelist:
           tags:
-          - Cartridge622mmCaseless
+          - Cartridge556x45CL
   - type: ContainerContainer
     containers:
       gun_magazine: !type:ContainerSlot

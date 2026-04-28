@@ -4,7 +4,7 @@
   description: Вы — начальное звено пищевой цепочки Травмы. Ваша работа — быть человеком на побегушках, подчиняться старшим, выносить утки, слушать жалобы пациентов на ресепшене и учиться, как быть хорошим корпоративным врачём. Подчиняйтесь.
   playTimeTracker: JobTraumaTeamIntern
   weight: 20
-  salary: 370
+  salary: 170
   icon: "JobIconTraumaIntern"
   startingGear: TraumaTeamInternGear
   supervisors: Главный врач Trauma Team, Ваш наставник и прочие сотрудники Trauma Team

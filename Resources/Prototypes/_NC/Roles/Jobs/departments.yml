@@ -5,7 +5,6 @@
   color: "#999999"
   roles:
     - NCCitizen
-    - NCBooster
     - Reaper
     - Fixer
     - EdgeRunnerSolo
@@ -22,7 +21,6 @@
     - NCPDLieutenant
     - NCPDSergeant
     - NCPDOfficer
-    - NCPDWatchAgent
     - MaxTacCommander
     - MaxTacEraser
 
@@ -38,6 +36,7 @@
     - TraumaTeamOperative
     - TraumaTeamCoroner
     - TraumaTeamPsych
+    - TraumaTeamIntern
 
 - type: department
   id: Biotechnica
@@ -48,7 +47,6 @@
     - BiotechnicaChief
     - BiotechnicaOperativeLead
     - BiotechnicaOperative
-    - BiotechnicaNetrunner
     - BiotechnicaBotanist
     - BiotechnicaMedTech
     - BiotechnicaTech
@@ -60,5 +58,4 @@
   description: department-Biotechnica-description
   color: "#2ecc71"
   roles:
-    - ZhirafaEngeneer
     - ZhirafaJanitor

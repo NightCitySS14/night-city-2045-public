@@ -64,7 +64,7 @@
   - type: DualAmmoProvider
     currentMode: 0
     modes:
-    - prototype: Cartridge622mmCaseless
+    - prototype: Cartridge556x45CL
       usesMagazine: true
       modeName: dual-ammo-mode-rifle
       fireRate: 5
