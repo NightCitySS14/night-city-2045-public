@@ -134,16 +134,14 @@ namespace Content.Client.VendingMachines.UI
 
                 var itemName = Identity.Name(dummy, _entityManager);
 
-                // NightCity edit start: This duplicates the label in vending machines.
-                // const string labelCompName = "Label";
-                // if (prototype.Components.TryGetValue(labelCompName, out var labelCompData)
-                //     && labelCompData.Component is LabelComponent labelComponent)
-                // {
-                //     var itemLabel = labelComponent.CurrentLabel;
-                //     if (!string.IsNullOrEmpty(itemLabel))
-                //         itemName += $" ({Loc.GetString(itemLabel)})";
-                // }
-                // NightCity edit end
+                const string labelCompName = "Label";
+                if (prototype.Components.TryGetValue(labelCompName, out var labelCompData)
+                    && labelCompData.Component is LabelComponent labelComponent)
+                {
+                    var itemLabel = labelComponent.CurrentLabel;
+                    if (!string.IsNullOrEmpty(itemLabel))
+                        itemName += $" ({Loc.GetString(itemLabel)})";
+                }
 
                 var itemText = $"{itemName} [{entry.Amount}]";
                 _amounts[entry.ID] = entry.Amount;

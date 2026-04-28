@@ -18,42 +18,24 @@ ent-BluespaceBeaker = блюспейс мензурка
     .desc = Работает на экспериментальной блюспейс технологии.
     .suffix = { "" }
 
-ent-BaseBeakerMetallic = "металлическая мензурка"
-    .desc = { ent-Beaker.desc }
-    .suffix = { "" }
-
-ent-CryoxadoneBeakerSmall = стакан криоксадона
-    .desc = Заполнен реагентом, используемым в криогенных пробирках.
-    .suffix = { "" }
-
 ent-Dropper = пипетка
     .desc = Используется для перемещения небольших объемов реагентов между емкостями.
     .suffix = { "" }
 
-# Syringes
-
 ent-BaseSyringe = шприц
     .desc = Используется для забора образцов крови у существ, или для введения им реагентов.
-    .suffix = НЕ МАППИТЬ
+    .suffix = { "" }
 
 ent-Syringe = { ent-BaseSyringe }
     .desc = { ent-BaseSyringe.desc }
     .suffix = { "" }
 
-ent-PrefilledSyringe = { ent-BaseSyringe }
-    .desc = { ent-BaseSyringe.desc }
-    .suffix = НЕ МАППИТЬ, Заполненный
-
-ent-MiniSyringe = мини-шприц
-    .desc = Обычный шприц, переделанный чтобы помещаться внутрь оружия.
+ent-Pill = таблетка
+    .desc = Это не свеча.
     .suffix = { "" }
 
-ent-SyringeCognizine = шприц с когнизином
-    .desc = { ent-BaseSyringe.desc }
-    .suffix = { "" }
-
-ent-SyringeOpporozidone = шприц с оппорозидоном
-    .desc = { ent-BaseSyringe.desc }
+ent-PillCanister = баночка для таблеток
+    .desc = Вмещает до 10 таблеток.
     .suffix = { "" }
 
 ent-DisposableSyringe = одноразовый шприц
@@ -62,28 +44,4 @@ ent-DisposableSyringe = одноразовый шприц
 
 ent-SyringeCryostasis = криостазисный шприц
     .desc = Шприц для хранения химикатов и растворов без протекания реакции.
-    .suffix = { "" }
-
-ent-SyringeSigynate = шприц с сигинатом
-    .desc = { ent-BaseSyringe.desc }
-    .suffix = { "" }
-
-ent-SyringeEthylredoxrazine = шприц с этилредоксразином
-    .desc = { ent-BaseSyringe.desc }
-    .suffix = { "" }
-
-ent-SyringePhalanximine = шприц с фаланксамином
-    .desc = { ent-BaseSyringe.desc }
-    .suffix = { "" }
-
-ent-SyringeSaline = шприц с физиораствором
-    .desc = { ent-BaseSyringe.desc }
-    .suffix = { "" }
-
-ent-SyringeStimulants = шприц со стимуляторами
-    .desc = { ent-BaseSyringe.desc }
-    .suffix = { "" }
-
-ent-SyringeBluespace = блюспейс шприц
-    .desc = Внедрение передовой технологии bluespace.
     .suffix = { "" }
