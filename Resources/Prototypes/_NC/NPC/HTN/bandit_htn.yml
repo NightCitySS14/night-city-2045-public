@@ -16,7 +16,7 @@
       preconditions:
         - !type:NCWeaponMaintenancePrecondition
 
-    # Priority 3: Tactical Combatю
+    # Priority 3: Tactical Combat
     - tasks:
         - !type:HTNCompoundTask
           task: SimpleHumanoidHostileCompound
