@@ -1,4 +1,4 @@
-# Biotechnica fighter NPCs for Night City
+# Biotechnica fighter NPCs for Night City (Lootable)
 
 # --- Gear Sets ---
 
@@ -63,7 +63,7 @@
 - type: entity
   name: Biotechnica operative
   parent: BaseMobHuman
-  id: MobNCBiotechnica
+  id: MobNCBiotechnicaLootable
   description: Наёмник Biotechnica, сочетает броню и компактное вооружение для городской работы.
   abstract: true
   components:
@@ -75,8 +75,8 @@
   - type: MobMover
 
 - type: entity
-  parent: MobNCBiotechnica
-  id: MobNCBiotechnicaAvenger
+  parent: MobNCBiotechnicaLootable
+  id: MobNCBiotechnicaAvengerLootable
   suffix: Biotechnica Avenger
   components:
   - type: Loadout
@@ -89,11 +89,10 @@
     - CyberwareInternalEnhancedAntibodies
     - CyberwareInternalNasalFilters
     - CyberwareImplantMicroOptics
-  - type: NpcUnlootable
 
 - type: entity
-  parent: MobNCBiotechnica
-  id: MobNCBiotechnicaBoomerBuster
+  parent: MobNCBiotechnicaLootable
+  id: MobNCBiotechnicaBoomerBusterLootable
   suffix: Biotechnica Boomer
   components:
   - type: Loadout
@@ -106,11 +105,10 @@
     - CyberwareExternalThermoplasticArmor
     - CyberwareInternalNasalFilters
     - CyberwareImplantInfraredVision
-  - type: NpcUnlootable
 
 - type: entity
-  parent: MobNCBiotechnica
-  id: MobNCBiotechnicaSaratoga
+  parent: MobNCBiotechnicaLootable
+  id: MobNCBiotechnicaSaratogaLootable
   suffix: Biotechnica Saratoga
   components:
   - type: Loadout
@@ -123,11 +121,10 @@
     - CyberwareInternalEnhancedAntibodies
     - CyberwareExternalThermoplasticArmor
     - CyberwareImplantMicroOptics
-  - type: NpcUnlootable
 
 - type: entity
-  parent: MobNCBiotechnica
-  id: MobNCBiotechnicaCrusher
+  parent: MobNCBiotechnicaLootable
+  id: MobNCBiotechnicaCrusherLootable
   suffix: Biotechnica Crusher
   components:
   - type: Loadout
@@ -140,4 +137,3 @@
     - CyberwareInternalEnhancedAntibodies
     - CyberwareNeuroBioInhibitorStoic
     - CyberwareImplantInfraredVision
-  - type: NpcUnlootable

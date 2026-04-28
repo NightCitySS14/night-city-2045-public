@@ -1,8 +1,8 @@
 - type: entity
-  name: Militech Spawner
+  name: Militech Spawner (Lootable)
   parent: MarkerBase
-  id: SpawnMobNCMilitech
-  suffix: NC Militech
+  id: SpawnMobNCMilitechLootable
+  suffix: NC Militech Lootable
   components:
   - type: Sprite
     layers:
@@ -13,22 +13,22 @@
   - type: RandomSpawner
     # Simulation of weights (4:3:2:1)
     prototypes:
-    - MobNCMilitechAvenger
-    - MobNCMilitechAvenger
-    - MobNCMilitechAvenger
-    - MobNCMilitechAvenger
-    - MobNCMilitechBoomer
-    - MobNCMilitechBoomer
-    - MobNCMilitechBoomer
-    - MobNCMilitechSaratoga
-    - MobNCMilitechSaratoga
-    - MobNCMilitechCrusher
+    - MobNCMilitechAvengerLootable
+    - MobNCMilitechAvengerLootable
+    - MobNCMilitechAvengerLootable
+    - MobNCMilitechAvengerLootable
+    - MobNCMilitechBoomerLootable
+    - MobNCMilitechBoomerLootable
+    - MobNCMilitechBoomerLootable
+    - MobNCMilitechSaratogaLootable
+    - MobNCMilitechSaratogaLootable
+    - MobNCMilitechCrusherLootable
 
 - type: entity
-  name: Militech Spawner (Avenger)
+  name: Militech Spawner (Avenger Lootable)
   parent: MarkerBase
-  id: SpawnMobNCMilitechAvenger
-  suffix: NC Militech Avenger
+  id: SpawnMobNCMilitechAvengerLootable
+  suffix: NC Militech Avenger Lootable
   components:
   - type: Sprite
     layers:
@@ -38,13 +38,13 @@
     - state: ai
   - type: RandomSpawner
     prototypes:
-    - MobNCMilitechAvenger
+    - MobNCMilitechAvengerLootable
 
 - type: entity
-  name: Militech Spawner (Boomer)
+  name: Militech Spawner (Boomer Lootable)
   parent: MarkerBase
-  id: SpawnMobNCMilitechBoomer
-  suffix: NC Militech Boomer
+  id: SpawnMobNCMilitechBoomerLootable
+  suffix: NC Militech Boomer Lootable
   components:
   - type: Sprite
     layers:
@@ -54,13 +54,13 @@
     - state: ai
   - type: RandomSpawner
     prototypes:
-    - MobNCMilitechBoomer
+    - MobNCMilitechBoomerLootable
 
 - type: entity
-  name: Militech Spawner (Saratoga)
+  name: Militech Spawner (Saratoga Lootable)
   parent: MarkerBase
-  id: SpawnMobNCMilitechSaratoga
-  suffix: NC Militech Saratoga
+  id: SpawnMobNCMilitechSaratogaLootable
+  suffix: NC Militech Saratoga Lootable
   components:
   - type: Sprite
     layers:
@@ -70,13 +70,13 @@
     - state: ai
   - type: RandomSpawner
     prototypes:
-    - MobNCMilitechSaratoga
+    - MobNCMilitechSaratogaLootable
 
 - type: entity
-  name: Militech Spawner (Crusher)
+  name: Militech Spawner (Crusher Lootable)
   parent: MarkerBase
-  id: SpawnMobNCMilitechCrusher
-  suffix: NC Militech Crusher
+  id: SpawnMobNCMilitechCrusherLootable
+  suffix: NC Militech Crusher Lootable
   components:
   - type: Sprite
     layers:
@@ -86,4 +86,94 @@
     - state: ai
   - type: RandomSpawner
     prototypes:
-    - MobNCMilitechCrusher
+    - MobNCMilitechCrusherLootable
+
+- type: entity
+  name: Militech Spawner (Unlootable)
+  parent: MarkerBase
+  id: SpawnMobNCMilitechUnlootable
+  suffix: NC Militech Unlootable
+  components:
+  - type: Sprite
+    layers:
+    - state: red
+    - sprite: Mobs/Aliens/Xenos/burrower.rsi
+      state: walking
+    - state: ai
+  - type: RandomSpawner
+    # Simulation of weights (4:3:2:1)
+    prototypes:
+    - MobNCMilitechAvengerUnlootable
+    - MobNCMilitechAvengerUnlootable
+    - MobNCMilitechAvengerUnlootable
+    - MobNCMilitechAvengerUnlootable
+    - MobNCMilitechBoomerUnlootable
+    - MobNCMilitechBoomerUnlootable
+    - MobNCMilitechBoomerUnlootable
+    - MobNCMilitechSaratogaUnlootable
+    - MobNCMilitechSaratogaUnlootable
+    - MobNCMilitechCrusherUnlootable
+
+- type: entity
+  name: Militech Spawner (Avenger Unlootable)
+  parent: MarkerBase
+  id: SpawnMobNCMilitechAvengerUnlootable
+  suffix: NC Militech Avenger Unlootable
+  components:
+  - type: Sprite
+    layers:
+    - state: red
+    - sprite: Mobs/Aliens/Xenos/burrower.rsi
+      state: walking
+    - state: ai
+  - type: RandomSpawner
+    prototypes:
+    - MobNCMilitechAvengerUnlootable
+
+- type: entity
+  name: Militech Spawner (Boomer Unlootable)
+  parent: MarkerBase
+  id: SpawnMobNCMilitechBoomerUnlootable
+  suffix: NC Militech Boomer Unlootable
+  components:
+  - type: Sprite
+    layers:
+    - state: red
+    - sprite: Mobs/Aliens/Xenos/burrower.rsi
+      state: walking
+    - state: ai
+  - type: RandomSpawner
+    prototypes:
+    - MobNCMilitechBoomerUnlootable
+
+- type: entity
+  name: Militech Spawner (Saratoga Unlootable)
+  parent: MarkerBase
+  id: SpawnMobNCMilitechSaratogaUnlootable
+  suffix: NC Militech Saratoga Unlootable
+  components:
+  - type: Sprite
+    layers:
+    - state: red
+    - sprite: Mobs/Aliens/Xenos/burrower.rsi
+      state: walking
+    - state: ai
+  - type: RandomSpawner
+    prototypes:
+    - MobNCMilitechSaratogaUnlootable
+
+- type: entity
+  name: Militech Spawner (Crusher Unlootable)
+  parent: MarkerBase
+  id: SpawnMobNCMilitechCrusherUnlootable
+  suffix: NC Militech Crusher Unlootable
+  components:
+  - type: Sprite
+    layers:
+    - state: red
+    - sprite: Mobs/Aliens/Xenos/burrower.rsi
+      state: walking
+    - state: ai
+  - type: RandomSpawner
+    prototypes:
+    - MobNCMilitechCrusherUnlootable

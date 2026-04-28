@@ -1,4 +1,4 @@
-# Militech fighter NPCs for Night City
+# Militech fighter NPCs for Night City (Lootable)
 
 # --- Gear Sets ---
 
@@ -63,7 +63,7 @@
 - type: entity
   name: Militech operative
   parent: BaseMobHuman
-  id: MobNCMilitech
+  id: MobNCMilitechLootable
   description: Опытный боец Militech, наёмник из частной армии корпорации.
   abstract: true
   components:
@@ -75,8 +75,8 @@
   - type: MobMover
 
 - type: entity
-  parent: MobNCMilitech
-  id: MobNCMilitechAvenger
+  parent: MobNCMilitechLootable
+  id: MobNCMilitechAvengerLootable
   suffix: Militech Avenger
   components:
   - type: Loadout
@@ -88,11 +88,10 @@
     - CyberwareNeuroKerenzikovMk1
     - CyberwareExternalKevlarSublayer
     - CyberwareInternalNasalFilters
-  - type: NpcUnlootable
 
 - type: entity
-  parent: MobNCMilitech
-  id: MobNCMilitechBoomer
+  parent: MobNCMilitechLootable
+  id: MobNCMilitechBoomerLootable
   suffix: Militech Boomer
   components:
   - type: Loadout
@@ -105,11 +104,10 @@
     - CyberwareExternalKevlarSublayer
     - CyberwareInternalEnhancedAntibodies
     - CyberwareInternalNasalFilters
-  - type: NpcUnlootable
 
 - type: entity
-  parent: MobNCMilitech
-  id: MobNCMilitechSaratoga
+  parent: MobNCMilitechLootable
+  id: MobNCMilitechSaratogaLootable
   suffix: Militech Saratoga
   components:
   - type: Loadout
@@ -122,11 +120,10 @@
     - CyberwareExternalThermoplasticArmor
     - CyberwareImplantMicroOptics
     - CyberwareInternalNasalFilters
-  - type: NpcUnlootable
 
 - type: entity
-  parent: MobNCMilitech
-  id: MobNCMilitechCrusher
+  parent: MobNCMilitechLootable
+  id: MobNCMilitechCrusherLootable
   suffix: Militech Crusher
   components:
   - type: Loadout
@@ -139,4 +136,3 @@
     - CyberwareExternalReactiveSublayer
     - CyberwareNeuroTacticalSpartan
     - CyberwareInternalNasalFilters
-  - type: NpcUnlootable

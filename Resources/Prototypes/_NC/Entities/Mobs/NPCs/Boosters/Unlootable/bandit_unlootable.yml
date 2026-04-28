@@ -1,0 +1,90 @@
+# Bandit NPC for Night City (Unlootable)
+
+# --- Bandit Variations ---
+
+- type: entity
+  name: бандит
+  parent: BaseMobHuman
+  id: MobNCBanditUnlootable
+  description: Обычный уличный бандит, вооружившийся корпо-снаряжением с черного рынка.
+  abstract: true
+  components:
+  - type: NpcFactionMember
+    factions:
+    - Syndicate
+  - type: HTN
+    rootTask:
+      task: NCBanditRootCompound
+  - type: NPCAutoReload
+  - type: InputMover
+  - type: MobMover
+
+- type: entity
+  parent: MobNCBanditUnlootable
+  id: MobNCBanditPistolUnlootable
+  suffix: NC Pistol noLoot
+  components:
+  - type: Loadout
+    prototypes: [NCBanditGearPistol]
+  - type: NpcUnlootable
+
+- type: entity
+  parent: MobNCBanditUnlootable
+  id: MobNCBanditRifleUnlootable
+  suffix: NC Rifle noLoot
+  components:
+  - type: Loadout
+    prototypes: [NCBanditGearRifle]
+  - type: NpcUnlootable
+
+- type: entity
+  parent: MobNCBanditUnlootable
+  id: MobNCBanditBossUnlootable
+  suffix: NC Boss noLoot
+  components:
+  - type: Loadout
+    prototypes: [NCBanditGearBoss]
+  - type: Cyberware
+  - type: StartingCyberware
+    loseHum: false
+    cyberware:
+    - CyberwareNeuroKerenzikovMk3
+    - CyberwareNeuroTacticalSpartan
+    - CyberwareInternalEnhancedAntibodies
+  - type: NpcUnlootable
+
+- type: entity
+  parent: MobNCBanditUnlootable
+  id: MobNCBanditCrusherUnlootable
+  suffix: NC Crusher noLoot
+  components:
+  - type: Loadout
+    prototypes: [NCBanditGearCrusher]
+  - type: NpcUnlootable
+
+- type: entity
+  parent: MobNCBanditUnlootable
+  id: MobNCBanditMeleeSledgeUnlootable
+  suffix: NC Sledge noLoot
+  components:
+  - type: Loadout
+    prototypes: [NCBanditGearMeleeSledge]
+  - type: NpcUnlootable
+
+- type: entity
+  parent: MobNCBanditUnlootable
+  id: MobNCBanditMeleeChainsawUnlootable
+  suffix: NC Chainsaw noLoot
+  components:
+  - type: Loadout
+    prototypes: [NCBanditGearMeleeChainsaw]
+  - type: NpcUnlootable
+
+- type: entity
+  parent: MobNCBanditUnlootable
+  id: MobNCBanditMeleeFireAxeUnlootable
+  suffix: NC Fireaxe noLoot
+  components:
+  - type: Loadout
+    prototypes: [NCBanditGearMeleeFireAxe]
+  - type: NpcUnlootable

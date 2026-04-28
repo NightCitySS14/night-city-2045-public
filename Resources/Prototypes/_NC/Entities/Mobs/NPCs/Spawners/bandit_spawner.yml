@@ -1,8 +1,8 @@
 - type: entity
-  name: Bandit Spawner
+  name: Bandit Spawner (Lootable)
   parent: MarkerBase
-  id: SpawnMobNCBandit
-  suffix: NC Random
+  id: SpawnMobNCBanditLootable
+  suffix: NC Random Lootable
   components:
   - type: Sprite
     layers:
@@ -13,23 +13,23 @@
   - type: RandomSpawner
     # Simulation of weights (4:3:2:1)
     prototypes:
-    - MobNCBanditPistol
-    - MobNCBanditPistol
-    - MobNCBanditPistol
-    - MobNCBanditPistol
-    - MobNCBanditPistol
-    - MobNCBanditPistol
-    - MobNCBanditPistol
-    - MobNCBanditRifle
-    - MobNCBanditRifle
-    - MobNCBanditRifle
-    - MobNCBanditBoss
+    - MobNCBanditPistolLootable
+    - MobNCBanditPistolLootable
+    - MobNCBanditPistolLootable
+    - MobNCBanditPistolLootable
+    - MobNCBanditPistolLootable
+    - MobNCBanditPistolLootable
+    - MobNCBanditPistolLootable
+    - MobNCBanditRifleLootable
+    - MobNCBanditRifleLootable
+    - MobNCBanditRifleLootable
+    - MobNCBanditBossLootable
 
 - type: entity
-  name: Bandit Spawner (Pistol)
+  name: Bandit Spawner (Pistol Lootable)
   parent: MarkerBase
-  id: SpawnMobNCBanditPistol
-  suffix: NC Pistol
+  id: SpawnMobNCBanditPistolLootable
+  suffix: NC Pistol Lootable
   components:
   - type: Sprite
     layers:
@@ -39,13 +39,13 @@
     - state: ai
   - type: RandomSpawner
     prototypes:
-    - MobNCBanditPistol
+    - MobNCBanditPistolLootable
 
 - type: entity
-  name: Bandit Spawner (Rifle)
+  name: Bandit Spawner (Rifle Lootable)
   parent: MarkerBase
-  id: SpawnMobNCBanditRifle
-  suffix: NC Rifle
+  id: SpawnMobNCBanditRifleLootable
+  suffix: NC Rifle Lootable
   components:
   - type: Sprite
     layers:
@@ -55,13 +55,13 @@
     - state: ai
   - type: RandomSpawner
     prototypes:
-    - MobNCBanditRifle
+    - MobNCBanditRifleLootable
 
 - type: entity
-  name: Bandit Spawner (Boss)
+  name: Bandit Spawner (Boss Lootable)
   parent: MarkerBase
-  id: SpawnMobNCBanditBoss
-  suffix: NC Boss
+  id: SpawnMobNCBanditBossLootable
+  suffix: NC Boss Lootable
   components:
   - type: Sprite
     layers:
@@ -71,4 +71,79 @@
     - state: ai
   - type: RandomSpawner
     prototypes:
-    - MobNCBanditBoss
+    - MobNCBanditBossLootable
+
+- type: entity
+  name: Bandit Spawner (Unlootable)
+  parent: MarkerBase
+  id: SpawnMobNCBanditUnlootable
+  suffix: NC Random Unlootable
+  components:
+  - type: Sprite
+    layers:
+    - state: red
+    - sprite: Mobs/Aliens/Xenos/burrower.rsi
+      state: walking
+    - state: ai
+  - type: RandomSpawner
+    # Simulation of weights (4:3:2:1)
+    prototypes:
+    - MobNCBanditPistolUnlootable
+    - MobNCBanditPistolUnlootable
+    - MobNCBanditPistolUnlootable
+    - MobNCBanditPistolUnlootable
+    - MobNCBanditPistolUnlootable
+    - MobNCBanditPistolUnlootable
+    - MobNCBanditPistolUnlootable
+    - MobNCBanditRifleUnlootable
+    - MobNCBanditRifleUnlootable
+    - MobNCBanditRifleUnlootable
+    - MobNCBanditBossUnlootable
+
+- type: entity
+  name: Bandit Spawner (Pistol Unlootable)
+  parent: MarkerBase
+  id: SpawnMobNCBanditPistolUnlootable
+  suffix: NC Pistol Unlootable
+  components:
+  - type: Sprite
+    layers:
+    - state: red
+    - sprite: Mobs/Aliens/Xenos/burrower.rsi
+      state: walking
+    - state: ai
+  - type: RandomSpawner
+    prototypes:
+    - MobNCBanditPistolUnlootable
+
+- type: entity
+  name: Bandit Spawner (Rifle Unlootable)
+  parent: MarkerBase
+  id: SpawnMobNCBanditRifleUnlootable
+  suffix: NC Rifle Unlootable
+  components:
+  - type: Sprite
+    layers:
+    - state: red
+    - sprite: Mobs/Aliens/Xenos/burrower.rsi
+      state: walking
+    - state: ai
+  - type: RandomSpawner
+    prototypes:
+    - MobNCBanditRifleUnlootable
+
+- type: entity
+  name: Bandit Spawner (Boss Unlootable)
+  parent: MarkerBase
+  id: SpawnMobNCBanditBossUnlootable
+  suffix: NC Boss Unlootable
+  components:
+  - type: Sprite
+    layers:
+    - state: red
+    - sprite: Mobs/Aliens/Xenos/burrower.rsi
+      state: walking
+    - state: ai
+  - type: RandomSpawner
+    prototypes:
+    - MobNCBanditBossUnlootable

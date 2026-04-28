@@ -1,4 +1,4 @@
-# Bandit NPC for Night City
+# Bandit NPC for Night City (Lootable)
 
 # --- Gear Sets ---
 
@@ -78,7 +78,7 @@
 - type: entity
   name: бандит
   parent: BaseMobHuman
-  id: MobNCBandit
+  id: MobNCBanditLootable
   description: Обычный уличный бандит, вооружившийся корпо-снаряжением с черного рынка.
   abstract: true
   components:
@@ -93,26 +93,24 @@
   - type: MobMover
 
 - type: entity
-  parent: MobNCBandit
-  id: MobNCBanditPistol
+  parent: MobNCBanditLootable
+  id: MobNCBanditPistolLootable
   suffix: NC Pistol
   components:
   - type: Loadout
     prototypes: [NCBanditGearPistol]
-  - type: NpcUnlootable
 
 - type: entity
-  parent: MobNCBandit
-  id: MobNCBanditRifle
+  parent: MobNCBanditLootable
+  id: MobNCBanditRifleLootable
   suffix: NC Rifle
   components:
   - type: Loadout
     prototypes: [NCBanditGearRifle]
-  - type: NpcUnlootable
 
 - type: entity
-  parent: MobNCBandit
-  id: MobNCBanditBoss
+  parent: MobNCBanditLootable
+  id: MobNCBanditBossLootable
   suffix: NC Boss
   components:
   - type: Loadout
@@ -126,37 +124,33 @@
     - CyberwareInternalEnhancedAntibodies
 
 - type: entity
-  parent: MobNCBandit
-  id: MobNCBanditCrusher
+  parent: MobNCBanditLootable
+  id: MobNCBanditCrusherLootable
   suffix: NC Crusher
   components:
   - type: Loadout
     prototypes: [NCBanditGearCrusher]
-  - type: NpcUnlootable
 
 - type: entity
-  parent: MobNCBandit
-  id: MobNCBanditMeleeSledge
+  parent: MobNCBanditLootable
+  id: MobNCBanditMeleeSledgeLootable
   suffix: NC Sledge
   components:
   - type: Loadout
     prototypes: [NCBanditGearMeleeSledge]
-  - type: NpcUnlootable
 
 - type: entity
-  parent: MobNCBandit
-  id: MobNCBanditMeleeChainsaw
+  parent: MobNCBanditLootable
+  id: MobNCBanditMeleeChainsawLootable
   suffix: NC Chainsaw
   components:
   - type: Loadout
     prototypes: [NCBanditGearMeleeChainsaw]
-  - type: NpcUnlootable
 
 - type: entity
-  parent: MobNCBandit
-  id: MobNCBanditMeleeFireAxe
+  parent: MobNCBanditLootable
+  id: MobNCBanditMeleeFireAxeLootable
   suffix: NC Fireaxe
   components:
   - type: Loadout
     prototypes: [NCBanditGearMeleeFireAxe]
-  - type: NpcUnlootable
