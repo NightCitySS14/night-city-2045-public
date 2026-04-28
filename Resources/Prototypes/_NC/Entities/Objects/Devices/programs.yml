@@ -69,7 +69,7 @@
     quickhackType: Damage
     ramCost: 50
     uploadTime: 2.0
-    damage: 30
+    damage: 20
     stunDuration: 10.0
     beamColor: "#0000FF"
 

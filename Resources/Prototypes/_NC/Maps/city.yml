@@ -16,8 +16,9 @@
         availableJobs:
           # === Гражданские (CivilianNC) ===
           NCCitizen: [-1, -1]
+          NCBooster: [-1, -1]
           EdgeRunnerSolo: [5, 5]
-          Fixer: [2, 2]
+          Fixer: [3, 3]
           Reaper: [2, 2]
           # === NCPD ===
           NCPDChief: [1, 1]

@@ -50,7 +50,7 @@ namespace Content.Server.Database
             if (synchronous)
             {
                 prefsCtx.Database.Migrate();
-                EnsureBankBalanceColumn(prefsCtx); // NC EDIT: Manual migration
+                EnsureBankBalanceColumn(prefsCtx); // NC EDIT: Manual migration / Protection
                 _dbReadyTask = Task.CompletedTask;
                 prefsCtx.Dispose();
             }
@@ -59,7 +59,7 @@ namespace Content.Server.Database
                 _dbReadyTask = Task.Run(() =>
                 {
                     prefsCtx.Database.Migrate();
-                    EnsureBankBalanceColumn(prefsCtx); // NC EDIT: Manual migration
+                    EnsureBankBalanceColumn(prefsCtx); // NC EDIT: Manual migration / Protection
                     prefsCtx.Dispose();
                 });
             }
@@ -70,20 +70,31 @@ namespace Content.Server.Database
         // NC EDIT START
         private void EnsureBankBalanceColumn(SqliteServerDbContext db)
         {
+            // 1. Создаем колонки, если их нет (защита)
             try
             {
-                db.Database.ExecuteSqlRaw("ALTER TABLE Profile ADD COLUMN BankBalance INTEGER NOT NULL DEFAULT 0;");
-                _opsLog.Info("Database: Added missing BankBalance column to Profile table.");
+                db.Database.ExecuteSqlRaw("ALTER TABLE Profile ADD COLUMN bank_balance INTEGER NOT NULL DEFAULT 0;");
             }
-            catch (Exception)
-            {
-                // Если колонка уже есть, SQL выдаст ошибку, которую мы просто игнорируем.
-            }
+            catch (Exception) { }
             
             try
             {
-                db.Database.ExecuteSqlRaw("ALTER TABLE Profile ADD COLUMN EmployedDepartment TEXT;");
-                _opsLog.Info("Database: Added missing EmployedDepartment column to Profile table.");
+                db.Database.ExecuteSqlRaw("ALTER TABLE Profile ADD COLUMN employed_department TEXT;");
+            }
+            catch (Exception) { }
+
+            // 2. МИГРАЦИЯ ДАННЫХ: Переносим из старых колонок в новые
+            try
+            {
+                db.Database.ExecuteSqlRaw("UPDATE Profile SET bank_balance = BankBalance WHERE bank_balance = 0 AND BankBalance != 0;");
+                _opsLog.Info("Database Migration: Recovered BankBalance data to bank_balance.");
+            }
+            catch (Exception) { }
+
+            try
+            {
+                db.Database.ExecuteSqlRaw("UPDATE Profile SET employed_department = EmployedDepartment WHERE employed_department IS NULL AND EmployedDepartment IS NOT NULL;");
+                _opsLog.Info("Database Migration: Recovered EmployedDepartment data to employed_department.");
             }
             catch (Exception) { }
         }
