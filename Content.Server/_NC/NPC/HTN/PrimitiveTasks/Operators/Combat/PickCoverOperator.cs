@@ -4,6 +4,7 @@ using Content.Shared.Examine;
 using Content.Shared.Physics;
 using Robust.Shared.Map;
 using Robust.Shared.Physics.Components;
+using Content.Server.NPC.HTN;
 
 namespace Content.Server.NPC.HTN.PrimitiveTasks.Operators.Combat;
 

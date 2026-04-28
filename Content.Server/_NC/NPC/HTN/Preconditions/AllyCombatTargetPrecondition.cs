@@ -1,6 +1,7 @@
 using Content.Server.NPC.Components;
 using Content.Shared.NPC;
 using Content.Shared.NPC.Systems;
+using Content.Server.NPC.HTN;
 
 namespace Content.Server.NPC.HTN.Preconditions;
 

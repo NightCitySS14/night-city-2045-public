@@ -1,6 +1,7 @@
 using Content.Shared.Damage;
 using Content.Shared.FixedPoint;
 using Content.Shared.Mobs.Systems;
+using Content.Server.NPC.HTN;
 
 namespace Content.Server.NPC.HTN.Preconditions;
 

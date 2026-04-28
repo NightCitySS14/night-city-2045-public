@@ -1,5 +1,6 @@
 using Content.Server._NC.NPC.Components;
 using Content.Shared.NPC;
+using Content.Server.NPC.HTN;
 
 namespace Content.Server.NPC.HTN.PrimitiveTasks.Operators.Combat;
 

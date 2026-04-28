@@ -1,5 +1,6 @@
 using Content.Server._NC.NPC.Components;
 using Content.Shared.NPC;
+using Content.Server.NPC.HTN;
 
 namespace Content.Server.NPC.HTN.PrimitiveTasks.Operators.Combat;
 
@@ -18,6 +19,9 @@ public sealed partial class CirclingOperator : HTNOperator, IHtnConditionalShutd
 
     [DataField("idealDistance")]
     public float IdealDistance = 6f;
+
+    [DataField("shutdownState")]
+    public HTNPlanState ShutdownState { get; private set; } = HTNPlanState.PlanFinished;
 
     private float _timer = 0f;
 
