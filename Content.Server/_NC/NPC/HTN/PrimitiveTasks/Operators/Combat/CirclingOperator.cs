@@ -21,7 +21,7 @@ public sealed partial class CirclingOperator : HTNOperator, IHtnConditionalShutd
     public float IdealDistance = 6f;
 
     [DataField("shutdownState")]
-    public HTNPlanState ShutdownState { get; private set; } = HTNPlanState.PlanFinished;
+    public HTNPlanState ShutdownState { get; set; } = HTNPlanState.PlanFinished;
 
     private float _timer = 0f;
 
