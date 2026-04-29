@@ -356,7 +356,7 @@
       borderColor: '#4d4d4d'
       accentHColor: '#b18644'
       accentVColor: '#b18644'
-      
+
 - type: entity
   parent: BaseMedicalPDA
   id: RipperPDA
@@ -493,22 +493,6 @@
   components:
     - type: Pda
       id: BiotechnicaTechIDCard
-    - type: Sprite
-      sprite: _White/Objects/Devices/Pda/pda.rsi
-      color: '#b0c4de'
-    - type: PdaBorderColor
-      borderColor: '#4682b4'
-      accentHColor: '#00fa9a'
-      accentVColor: '#00fa9a'
-
-- type: entity
-  parent: BasePDA
-  id: BiotechnicaOperativePDA
-  name: КПК оперативника Biotechnica
-  description: Стандартное устройство связи службы безопасности Biotechnica.
-  components:
-    - type: Pda
-      id: BiotechnicaOperativeIDCard
     - type: Sprite
       sprite: _White/Objects/Devices/Pda/pda.rsi
       color: '#b0c4de'
