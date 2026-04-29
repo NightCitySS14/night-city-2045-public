@@ -29,7 +29,7 @@
     - state: datadisk_base
     - state: datadisk_label
   - type: DecryptionTechnology
-    tier: Advanced
+    tier: Excellent
     modulePrototype: NCBlueprintSaratoga
     recipePrototype: NCRecipePaperSaratoga
     moduleCost: 150
