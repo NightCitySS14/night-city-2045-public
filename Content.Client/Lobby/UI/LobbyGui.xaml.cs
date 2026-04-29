@@ -24,6 +24,7 @@ namespace Content.Client.Lobby.UI
 
             OptionsButton.OnPressed += _ => UserInterfaceManager.GetUIController<OptionsUIController>().ToggleWindow();
             // White Edit Start
+            RewardsButton.OnPressed += _ => _consoleHost.ExecuteCommand("lobbyrewards");
             /*DiscordButton.OnPressed += _ => _stalinManager.RequestUri();*/
             ChangelogButton.OnPressed += _ => UserInterfaceManager.GetUIController<ChangelogUIController>().ToggleWindow();
             QuitButton.OnPressed += _ => _consoleHost.ExecuteCommand("disconnect");

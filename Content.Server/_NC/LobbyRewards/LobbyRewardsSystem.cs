@@ -1,101 +1,47 @@
+using System.Linq;
 using Content.Server.Database;
+using Content.Server.EUI;
+using Content.Server.Hands.Systems;
 using Content.Shared._NC.LobbyRewards;
 using Content.Shared.GameTicking;
-using Robust.Shared.Asynchronous;
-using Robust.Shared.Network;
 using Robust.Shared.Player;
+using Robust.Shared.Prototypes;
 
 namespace Content.Server._NC.LobbyRewards;
 
 public sealed class LobbyRewardsSystem : EntitySystem
 {
-    [Dependency] private readonly IServerDbManager _db = default!;
-    [Dependency] private readonly ITaskManager _taskManager = default!;
-    [Dependency] private readonly SharedTransformSystem _transform = default!;
+    [Dependency] private readonly EuiManager _euiManager = default!;
+    [Dependency] private readonly IServerDbManager _dbManager = default!;
+    [Dependency] private readonly HandsSystem _handsSystem = default!;
+    [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
 
     public override void Initialize()
     {
         base.Initialize();
-
-        SubscribeNetworkEvent<RequestLobbyRewardsMessage>(OnRequestRewards);
-        SubscribeNetworkEvent<ToggleLobbyRewardMessage>(OnToggleReward);
-        
-        SubscribeLocalEvent<PlayerSpawnCompleteEvent>(OnPlayerSpawnComplete);
+        SubscribeLocalEvent<PlayerSpawnCompleteEvent>(OnPlayerSpawned);
     }
 
-    private void OnRequestRewards(RequestLobbyRewardsMessage msg, EntitySessionEventArgs args)
+    private async void OnPlayerSpawned(PlayerSpawnCompleteEvent ev)
     {
-        var session = args.SenderSession;
-        var userId = session.UserId;
+        var inventory = await _dbManager.GetMetaInventoryAsync(ev.Player.UserId);
+        var selectedItems = inventory.Where(x => x.Selected).ToList();
 
-        _taskManager.TaskOnMainThread(async () =>
+        foreach (var item in selectedItems)
         {
-            var balance = await _db.GetNightCoinsBalanceAsync(userId);
-            var records = await _db.GetMetaInventoryAsync(userId);
+            if (!_prototypeManager.HasIndex<EntityPrototype>(item.ItemPrototype))
+                continue;
 
-            var items = new List<LobbyRewardItem>();
-            foreach (var record in records)
+            for (var i = 0; i < item.Quantity; i++)
             {
-                items.Add(new LobbyRewardItem(record.Id, record.ItemPrototype, record.Quantity, record.Selected));
+                var entity = Spawn(item.ItemPrototype, Transform(ev.Mob).Coordinates);
+                _handsSystem.TryPickupAnyHand(ev.Mob, entity);
             }
-
-            RaiseNetworkEvent(new LobbyRewardsDataMessage(balance, items), session.Channel);
-        });
+        }
     }
 
-    private void OnToggleReward(ToggleLobbyRewardMessage msg, EntitySessionEventArgs args)
+    public void OpenEui(ICommonSession session)
     {
-        var session = args.SenderSession;
-
-        _taskManager.TaskOnMainThread(async () =>
-        {
-            // Update the selection state in the DB.
-            await _db.SetMetaInventoryItemSelectedAsync(msg.ItemId, msg.Selected);
-            
-            // Re-fetch and send the updated list.
-            var balance = await _db.GetNightCoinsBalanceAsync(session.UserId);
-            var records = await _db.GetMetaInventoryAsync(session.UserId);
-
-            var items = new List<LobbyRewardItem>();
-            foreach (var record in records)
-            {
-                items.Add(new LobbyRewardItem(record.Id, record.ItemPrototype, record.Quantity, record.Selected));
-            }
-
-            RaiseNetworkEvent(new LobbyRewardsDataMessage(balance, items), session.Channel);
-        });
-    }
-
-    private void OnPlayerSpawnComplete(PlayerSpawnCompleteEvent args)
-    {
-        if (args.Mob == EntityUid.Invalid || Deleted(args.Mob))
-            return;
-
-        var userId = args.Player.UserId;
-        var mob = args.Mob;
-
-        // Fetch records asynchronously, then spawn items on the main thread
-        _taskManager.TaskOnMainThread(async () =>
-        {
-            var records = await _db.GetMetaInventoryAsync(userId);
-            
-            // We are back on the main thread after await. Check if mob is still valid.
-            if (Deleted(mob))
-                return;
-
-            var spawnCoords = _transform.GetMapCoordinates(mob);
-            
-            foreach (var record in records)
-            {
-                if (record.Selected && record.Quantity > 0)
-                {
-                    // Spawn the item at the player's feet
-                    Spawn(record.ItemPrototype, spawnCoords);
-                    
-                    // Deduct from the database
-                    await _db.TryRemoveFromMetaInventoryAsync(userId, record.ItemPrototype, 1);
-                }
-            }
-        });
+        _euiManager.OpenEui(new LobbyRewardsEui(), session);
     }
 }
