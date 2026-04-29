@@ -747,6 +747,57 @@ namespace Content.Server.Database.Migrations.Postgres
                     b.ToTable("loadout", (string)null);
                 });
 
+            modelBuilder.Entity("Content.Server.Database.NCMetaInventory", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasColumnName("nc_meta_inventory_id");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("ItemPrototype")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("item_prototype");
+
+                    b.Property<int>("Quantity")
+                        .HasColumnType("integer")
+                        .HasColumnName("quantity");
+
+                    b.Property<bool>("Selected")
+                        .HasColumnType("boolean")
+                        .HasColumnName("selected");
+
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uuid")
+                        .HasColumnName("user_id");
+
+                    b.HasKey("Id")
+                        .HasName("PK_nc_meta_inventory");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("nc_meta_inventory", (string)null);
+                });
+
+            modelBuilder.Entity("Content.Server.Database.NCPlayerEconomy", b =>
+                {
+                    b.Property<Guid>("UserId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid")
+                        .HasColumnName("user_id");
+
+                    b.Property<int>("NightCoinsBalance")
+                        .HasColumnType("integer")
+                        .HasColumnName("night_coins_balance");
+
+                    b.HasKey("UserId")
+                        .HasName("PK_nc_player_economy");
+
+                    b.ToTable("nc_player_economy", (string)null);
+                });
+
             modelBuilder.Entity("Content.Server.Database.PlayTime", b =>
                 {
                     b.Property<int>("Id")
