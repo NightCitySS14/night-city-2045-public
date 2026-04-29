@@ -1,6 +1,7 @@
 using Content.Server.Administration;
 using Content.Server.Database;
 using Content.Shared.Administration;
+using Robust.Server.Player;
 using Robust.Shared.Console;
 
 namespace Content.Server._NC.LobbyRewards;
@@ -40,6 +41,16 @@ public sealed class AddNightCoinsCommand : IConsoleCommand
         await db.AddNightCoinsAsync(located.UserId, amount);
         shell.WriteLine($"Added {amount} Night Coins to {located.Username}.");
     }
+
+    public CompletionResult GetCompletion(IConsoleShell shell, string[] args)
+    {
+        if (args.Length == 1)
+        {
+            return CompletionResult.FromHintOptions(CompletionHelper.SessionNames(), "Player name");
+        }
+
+        return CompletionResult.Empty;
+    }
 }
 
 [AdminCommand(AdminFlags.Admin)]
@@ -78,6 +89,16 @@ public sealed class SetNightCoinsCommand : IConsoleCommand
         var current = await db.GetNightCoinsBalanceAsync(located.UserId);
         await db.AddNightCoinsAsync(located.UserId, amount - current);
         shell.WriteLine($"Set Night Coins balance for {located.Username} to {amount}.");
+    }
+
+    public CompletionResult GetCompletion(IConsoleShell shell, string[] args)
+    {
+        if (args.Length == 1)
+        {
+            return CompletionResult.FromHintOptions(CompletionHelper.SessionNames(), "Player name");
+        }
+
+        return CompletionResult.Empty;
     }
 }
 
@@ -125,6 +146,16 @@ public sealed class ViewNightCoinsCommand : IConsoleCommand
             }
         }
     }
+
+    public CompletionResult GetCompletion(IConsoleShell shell, string[] args)
+    {
+        if (args.Length == 1)
+        {
+            return CompletionResult.FromHintOptions(CompletionHelper.SessionNames(), "Player name");
+        }
+
+        return CompletionResult.Empty;
+    }
 }
 
 [AdminCommand(AdminFlags.Admin)]
@@ -164,6 +195,16 @@ public sealed class AddMetaItemCommand : IConsoleCommand
 
         await db.AddToMetaInventoryAsync(located.UserId, protoId, quantity);
         shell.WriteLine($"Added {quantity}x {protoId} to {located.Username}'s meta-inventory.");
+    }
+
+    public CompletionResult GetCompletion(IConsoleShell shell, string[] args)
+    {
+        if (args.Length == 1)
+        {
+            return CompletionResult.FromHintOptions(CompletionHelper.SessionNames(), "Player name");
+        }
+
+        return CompletionResult.Empty;
     }
 }
 
@@ -207,5 +248,15 @@ public sealed class RemoveMetaItemCommand : IConsoleCommand
             shell.WriteLine($"Removed {quantity}x {protoId} from {located.Username}'s meta-inventory.");
         else
             shell.WriteError($"Failed to remove {quantity}x {protoId} from {located.Username}'s meta-inventory (insufficient quantity or item not found).");
+    }
+
+    public CompletionResult GetCompletion(IConsoleShell shell, string[] args)
+    {
+        if (args.Length == 1)
+        {
+            return CompletionResult.FromHintOptions(CompletionHelper.SessionNames(), "Player name");
+        }
+
+        return CompletionResult.Empty;
     }
 }
