@@ -11,6 +11,8 @@ public sealed class LobbyRewardsEui : BaseEui
 {
     [Dependency] private readonly IServerDbManager _dbManager = default!;
 
+    public event Action? OnClose;
+
     private int _balance;
     private List<LobbyRewardItem> _inventory = new();
 
@@ -28,6 +30,12 @@ public sealed class LobbyRewardsEui : BaseEui
     {
         base.Opened();
         await RefreshData();
+    }
+
+    public override void Closed()
+    {
+        base.Closed();
+        OnClose?.Invoke();
     }
 
     private async Task RefreshData()

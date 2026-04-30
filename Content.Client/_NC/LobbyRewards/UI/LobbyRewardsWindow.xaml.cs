@@ -81,16 +81,14 @@ public sealed partial class LobbyRewardsWindow : FancyWindow
         {
             Text = name.ToUpper(),
             StyleClasses = { "LabelHeading" },
-            FontColorOverride = Color.FromHex("#00ffff"),
-            FontSize = 14
+            FontColorOverride = Color.FromHex("#00ffff")
         });
 
         textContainer.AddChild(new Label
         {
             Text = description,
             StyleClasses = { "LabelSubtext" },
-            FontColorOverride = Color.FromHex("#bbbbbb"),
-            FontSize = 10
+            FontColorOverride = Color.FromHex("#bbbbbb")
         });
 
         var rightBox = new BoxContainer

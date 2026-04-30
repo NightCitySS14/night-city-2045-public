@@ -11,8 +11,8 @@
                 <BoxContainer Orientation="Vertical" HorizontalExpand="True" SeparationOverride="4">
                     <Label Text="CRYPTO-WALLET STATUS: AUTHORIZED" StyleClasses="LabelSubtext" FontColorOverride="#66ffff"/>
                     <BoxContainer Orientation="Horizontal" SeparationOverride="12">
-                        <Label Text="BALANCE:" StyleClasses="LabelHeading" FontSize="20"/>
-                        <Label Name="BalanceLabel" Text="---" StyleClasses="LabelHeading" FontSize="24" FontColorOverride="#00ffff"/>
+                        <Label Text="BALANCE:" StyleClasses="LabelHeading"/>
+                        <Label Name="BalanceLabel" Text="---" StyleClasses="LabelHeading" FontColorOverride="#00ffff"/>
                         <Label Text="NC" StyleClasses="LabelSubtext" VerticalAlignment="Bottom" Margin="0 0 0 4"/>
                     </BoxContainer>
                 </BoxContainer>
@@ -27,9 +27,9 @@
         <!-- MAIN SECTION: LIST -->
         <BoxContainer Orientation="Vertical" VerticalExpand="True" SeparationOverride="10">
             <BoxContainer Orientation="Horizontal" SeparationOverride="5">
-                <Label Text="> STORAGE MANIFEST" StyleClasses="LabelHeading" FontSize="16"/>
+                <Label Text="> STORAGE MANIFEST" StyleClasses="LabelHeading"/>
                 <PanelContainer VerticalAlignment="Center" HorizontalExpand="True">
-                    <PanelContainer StyleClasses="LowDivider" Height="2"/>
+                    <PanelContainer StyleClasses="LowDivider" MinHeight="2"/>
                 </PanelContainer>
             </BoxContainer>
 
