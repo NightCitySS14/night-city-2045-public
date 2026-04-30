@@ -16,11 +16,14 @@ public sealed partial class LobbyRewardsWindow : FancyWindow
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
 
     public event Action<int, bool>? OnItemSelected;
+    public event Action? OnRefreshRequested;
 
     public LobbyRewardsWindow()
     {
         RobustXamlLoader.Load(this);
         IoCManager.InjectDependencies(this);
+
+        RefreshButton.OnPressed += _ => OnRefreshRequested?.Invoke();
     }
 
     public void UpdateState(LobbyRewardsEuiState state)
@@ -28,6 +31,19 @@ public sealed partial class LobbyRewardsWindow : FancyWindow
         BalanceLabel.Text = state.NightCoinsBalance.ToString();
 
         InventoryContainer.DisposeAllChildren();
+
+        if (state.Inventory.Count == 0)
+        {
+            var emptyLabel = new Label
+            {
+                Text = "--- [ DATABASE SCAN COMPLETE: NO META-ITEMS FOUND ] ---",
+                FontColorOverride = Color.FromHex("#ff3333"),
+                HorizontalAlignment = HAlignment.Center,
+                Margin = new Thickness(0, 40)
+            };
+            InventoryContainer.AddChild(emptyLabel);
+            return;
+        }
 
         foreach (var item in state.Inventory)
         {
@@ -41,22 +57,55 @@ public sealed partial class LobbyRewardsWindow : FancyWindow
         var box = new BoxContainer
         {
             Orientation = BoxContainer.LayoutOrientation.Horizontal,
-            Margin = new Thickness(5),
-            SeparationOverride = 10
+            Margin = new Thickness(12, 8),
+            SeparationOverride = 20
         };
 
         var name = item.PrototypeId;
+        var description = "SECURE_DATA: Missing description.";
+        
         if (_prototypeManager.TryIndex<EntityPrototype>(item.PrototypeId, out var proto))
         {
             name = proto.Name;
+            description = proto.Description;
         }
 
-        var label = new Label
+        var textContainer = new BoxContainer
         {
-            Text = $"{name} (x{item.Quantity})",
+            Orientation = BoxContainer.LayoutOrientation.Vertical,
             HorizontalExpand = true,
+            SeparationOverride = 2
+        };
+
+        textContainer.AddChild(new Label
+        {
+            Text = name.ToUpper(),
+            StyleClasses = { "LabelHeading" },
+            FontColorOverride = Color.FromHex("#00ffff"),
+            FontSize = 14
+        });
+
+        textContainer.AddChild(new Label
+        {
+            Text = description,
+            StyleClasses = { "LabelSubtext" },
+            FontColorOverride = Color.FromHex("#bbbbbb"),
+            FontSize = 10
+        });
+
+        var rightBox = new BoxContainer
+        {
+            Orientation = BoxContainer.LayoutOrientation.Horizontal,
+            SeparationOverride = 15,
             VerticalAlignment = Control.VAlignment.Center
         };
+
+        rightBox.AddChild(new Label
+        {
+            Text = $"QTY: {item.Quantity}",
+            FontColorOverride = Color.FromHex("#66ffff"),
+            MinWidth = 50
+        });
 
         var checkBox = new CheckBox
         {
@@ -70,12 +119,14 @@ public sealed partial class LobbyRewardsWindow : FancyWindow
             OnItemSelected?.Invoke(item.Id, args.Pressed);
         };
 
-        box.AddChild(label);
-        box.AddChild(checkBox);
+        rightBox.AddChild(checkBox);
+        box.AddChild(textContainer);
+        box.AddChild(rightBox);
 
         var panel = new PanelContainer
         {
-            StyleClasses = { "MenuMapInfo" }
+            StyleClasses = { "MenuMapInfo" },
+            Margin = new Thickness(0, 2)
         };
         panel.AddChild(box);
 

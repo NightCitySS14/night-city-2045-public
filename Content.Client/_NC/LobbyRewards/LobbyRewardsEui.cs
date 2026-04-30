@@ -19,6 +19,11 @@ public sealed class LobbyRewardsEui : BaseEui
             SendMessage(new LobbyRewardSelectMessage(itemId, selected));
         };
 
+        _window.OnRefreshRequested += () =>
+        {
+            SendMessage(new LobbyRewardRefreshMessage());
+        };
+
         _window.OnClose += () =>
         {
             SendMessage(new CloseEuiMessage());

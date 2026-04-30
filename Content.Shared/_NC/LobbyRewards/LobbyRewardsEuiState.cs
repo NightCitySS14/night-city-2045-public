@@ -45,3 +45,8 @@ public sealed class LobbyRewardSelectMessage : EuiMessageBase
         Selected = selected;
     }
 }
+
+[Serializable, NetSerializable]
+public sealed class LobbyRewardRefreshMessage : EuiMessageBase
+{
+}

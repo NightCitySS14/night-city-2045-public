@@ -33,8 +33,8 @@ public sealed class LobbyRewardsEui : BaseEui
     private async Task RefreshData()
     {
         _balance = await _dbManager.GetNightCoinsBalanceAsync(Player.UserId);
+        
         var inventoryRecords = await _dbManager.GetMetaInventoryAsync(Player.UserId);
-
         _inventory = inventoryRecords.Select(x =>
             new LobbyRewardItem(x.Id, x.ItemPrototype, x.Quantity, x.Selected)).ToList();
 
@@ -48,6 +48,10 @@ public sealed class LobbyRewardsEui : BaseEui
         if (msg is LobbyRewardSelectMessage selectMsg)
         {
             await _dbManager.SetMetaInventoryItemSelectedAsync(selectMsg.ItemId, selectMsg.Selected);
+            await RefreshData();
+        }
+        else if (msg is LobbyRewardRefreshMessage)
+        {
             await RefreshData();
         }
     }

@@ -38,8 +38,15 @@ public sealed class AddNightCoinsCommand : IConsoleCommand
             return;
         }
 
-        await db.AddNightCoinsAsync(located.UserId, amount);
-        shell.WriteLine($"Added {amount} Night Coins to {located.Username}.");
+        try 
+        {
+            await db.AddNightCoinsAsync(located.UserId, amount);
+            shell.WriteLine($"Successfully added {amount} Night Coins to {located.Username}.");
+        }
+        catch (Exception e)
+        {
+            shell.WriteError($"Database error: {e.Message}");
+        }
     }
 
     public CompletionResult GetCompletion(IConsoleShell shell, string[] args)
@@ -48,7 +55,6 @@ public sealed class AddNightCoinsCommand : IConsoleCommand
         {
             return CompletionResult.FromHintOptions(CompletionHelper.SessionNames(), "Player name");
         }
-
         return CompletionResult.Empty;
     }
 }
@@ -85,10 +91,16 @@ public sealed class SetNightCoinsCommand : IConsoleCommand
             return;
         }
 
-        // To set balance, we first get current and then add the difference
-        var current = await db.GetNightCoinsBalanceAsync(located.UserId);
-        await db.AddNightCoinsAsync(located.UserId, amount - current);
-        shell.WriteLine($"Set Night Coins balance for {located.Username} to {amount}.");
+        try
+        {
+            var current = await db.GetNightCoinsBalanceAsync(located.UserId);
+            await db.AddNightCoinsAsync(located.UserId, amount - current);
+            shell.WriteLine($"Set Night Coins balance for {located.Username} to {amount}.");
+        }
+        catch (Exception e)
+        {
+            shell.WriteError($"Database error: {e.Message}");
+        }
     }
 
     public CompletionResult GetCompletion(IConsoleShell shell, string[] args)
@@ -97,7 +109,6 @@ public sealed class SetNightCoinsCommand : IConsoleCommand
         {
             return CompletionResult.FromHintOptions(CompletionHelper.SessionNames(), "Player name");
         }
-
         return CompletionResult.Empty;
     }
 }
@@ -128,22 +139,29 @@ public sealed class ViewNightCoinsCommand : IConsoleCommand
             return;
         }
 
-        var balance = await db.GetNightCoinsBalanceAsync(located.UserId);
-        var inventory = await db.GetMetaInventoryAsync(located.UserId);
+        try
+        {
+            var balance = await db.GetNightCoinsBalanceAsync(located.UserId);
+            var inventory = await db.GetMetaInventoryAsync(located.UserId);
 
-        shell.WriteLine($"Player: {located.Username} ({located.UserId})");
-        shell.WriteLine($"Balance: {balance} Night Coins");
-        shell.WriteLine("Meta-Inventory:");
-        if (inventory.Count == 0)
-        {
-            shell.WriteLine("  (empty)");
-        }
-        else
-        {
-            foreach (var item in inventory)
+            shell.WriteLine($"Player: {located.Username} ({located.UserId})");
+            shell.WriteLine($"Balance: {balance} Night Coins");
+            shell.WriteLine("Meta-Inventory:");
+            if (inventory.Count == 0)
             {
-                shell.WriteLine($"  - {item.ItemPrototype} (x{item.Quantity}) [Selected: {item.Selected}] (ID: {item.Id})");
+                shell.WriteLine("  (empty)");
             }
+            else
+            {
+                foreach (var item in inventory)
+                {
+                    shell.WriteLine($"  - {item.ItemPrototype} (x{item.Quantity}) [Selected: {item.Selected}] (ID: {item.Id})");
+                }
+            }
+        }
+        catch (Exception e)
+        {
+            shell.WriteError($"Database error: {e.Message}");
         }
     }
 
@@ -153,7 +171,6 @@ public sealed class ViewNightCoinsCommand : IConsoleCommand
         {
             return CompletionResult.FromHintOptions(CompletionHelper.SessionNames(), "Player name");
         }
-
         return CompletionResult.Empty;
     }
 }
@@ -193,8 +210,15 @@ public sealed class AddMetaItemCommand : IConsoleCommand
             return;
         }
 
-        await db.AddToMetaInventoryAsync(located.UserId, protoId, quantity);
-        shell.WriteLine($"Added {quantity}x {protoId} to {located.Username}'s meta-inventory.");
+        try
+        {
+            await db.AddToMetaInventoryAsync(located.UserId, protoId, quantity);
+            shell.WriteLine($"Added {quantity}x {protoId} to {located.Username}'s meta-inventory.");
+        }
+        catch (Exception e)
+        {
+            shell.WriteError($"Database error: {e.Message}");
+        }
     }
 
     public CompletionResult GetCompletion(IConsoleShell shell, string[] args)
@@ -203,7 +227,6 @@ public sealed class AddMetaItemCommand : IConsoleCommand
         {
             return CompletionResult.FromHintOptions(CompletionHelper.SessionNames(), "Player name");
         }
-
         return CompletionResult.Empty;
     }
 }
@@ -243,11 +266,18 @@ public sealed class RemoveMetaItemCommand : IConsoleCommand
             return;
         }
 
-        var success = await db.TryRemoveFromMetaInventoryAsync(located.UserId, protoId, quantity);
-        if (success)
-            shell.WriteLine($"Removed {quantity}x {protoId} from {located.Username}'s meta-inventory.");
-        else
-            shell.WriteError($"Failed to remove {quantity}x {protoId} from {located.Username}'s meta-inventory (insufficient quantity or item not found).");
+        try
+        {
+            var success = await db.TryRemoveFromMetaInventoryAsync(located.UserId, protoId, quantity);
+            if (success)
+                shell.WriteLine($"Removed {quantity}x {protoId} from {located.Username}'s meta-inventory.");
+            else
+                shell.WriteError($"Failed to remove {quantity}x {protoId} from {located.Username}'s meta-inventory (insufficient quantity or item not found).");
+        }
+        catch (Exception e)
+        {
+            shell.WriteError($"Database error: {e.Message}");
+        }
     }
 
     public CompletionResult GetCompletion(IConsoleShell shell, string[] args)
@@ -256,7 +286,6 @@ public sealed class RemoveMetaItemCommand : IConsoleCommand
         {
             return CompletionResult.FromHintOptions(CompletionHelper.SessionNames(), "Player name");
         }
-
         return CompletionResult.Empty;
     }
 }

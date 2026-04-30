@@ -16,6 +16,8 @@ public sealed class LobbyRewardsSystem : EntitySystem
     [Dependency] private readonly HandsSystem _handsSystem = default!;
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
 
+    private readonly Dictionary<ICommonSession, LobbyRewardsEui> _activeUis = new();
+
     public override void Initialize()
     {
         base.Initialize();
@@ -42,6 +44,16 @@ public sealed class LobbyRewardsSystem : EntitySystem
 
     public void OpenEui(ICommonSession session)
     {
-        _euiManager.OpenEui(new LobbyRewardsEui(), session);
+        if (_activeUis.TryGetValue(session, out var existingEui))
+        {
+            existingEui.StateDirty();
+            return;
+        }
+
+        var eui = new LobbyRewardsEui();
+        _euiManager.OpenEui(eui, session);
+        _activeUis[session] = eui;
+        
+        eui.OnClose += () => _activeUis.Remove(session);
     }
 }

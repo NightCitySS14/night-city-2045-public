@@ -1,29 +1,53 @@
 <controls:FancyWindow xmlns="https://spacestation14.io"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
-        Title="META-VAULT TERMINAL"
-        MinWidth="600" MinHeight="450">
-    <BoxContainer Orientation="Vertical" Margin="10" SeparationOverride="10">
-        <!-- Header / Balance -->
-        <PanelContainer StyleClasses="LowDivider">
-            <BoxContainer Orientation="Horizontal" HorizontalExpand="True" Margin="5">
-                <Label Text="NIGHT COINS:" StyleClasses="LabelHeading" VerticalAlignment="Center"/>
-                <Control MinSize="10 0"/>
-                <Label Name="BalanceLabel" Text="0" StyleClasses="LabelHeading" FontColorOverride="#00ffff" VerticalAlignment="Center"/>
-                <Control HorizontalExpand="True"/>
-                <Label Text="SYSTEM STATUS: ONLINE" StyleClasses="LabelSubtext" FontColorOverride="#00ff00" VerticalAlignment="Center"/>
+        Title="[ NIGHT-CITY META-VAULT ]"
+        MinWidth="750" MinHeight="550">
+    <BoxContainer Orientation="Vertical" Margin="15" SeparationOverride="15">
+        
+        <!-- TOP PANEL: ACC BALANCE & REFRESH -->
+        <PanelContainer StyleClasses="Inset">
+            <BoxContainer Orientation="Horizontal" HorizontalExpand="True" Margin="10">
+                <BoxContainer Orientation="Vertical" HorizontalExpand="True" SeparationOverride="4">
+                    <Label Text="CRYPTO-WALLET STATUS: AUTHORIZED" StyleClasses="LabelSubtext" FontColorOverride="#66ffff"/>
+                    <BoxContainer Orientation="Horizontal" SeparationOverride="12">
+                        <Label Text="BALANCE:" StyleClasses="LabelHeading" FontSize="20"/>
+                        <Label Name="BalanceLabel" Text="---" StyleClasses="LabelHeading" FontSize="24" FontColorOverride="#00ffff"/>
+                        <Label Text="NC" StyleClasses="LabelSubtext" VerticalAlignment="Bottom" Margin="0 0 0 4"/>
+                    </BoxContainer>
+                </BoxContainer>
+                
+                <BoxContainer Orientation="Vertical" HorizontalAlignment="Right" SeparationOverride="5">
+                    <Button Name="RefreshButton" Text="SYNC DATA" StyleClasses="OpenBoth"/>
+                    <Label Text="LATENCY: 14ms" StyleClasses="LabelSubtext" FontColorOverride="#00ff00" HorizontalAlignment="Right"/>
+                </BoxContainer>
             </BoxContainer>
         </PanelContainer>
 
-        <!-- Inventory List -->
-        <ScrollContainer VerticalExpand="True">
-            <BoxContainer Name="InventoryContainer" Orientation="Vertical" SeparationOverride="5"/>
-        </ScrollContainer>
+        <!-- MAIN SECTION: LIST -->
+        <BoxContainer Orientation="Vertical" VerticalExpand="True" SeparationOverride="10">
+            <BoxContainer Orientation="Horizontal" SeparationOverride="5">
+                <Label Text="> STORAGE MANIFEST" StyleClasses="LabelHeading" FontSize="16"/>
+                <PanelContainer VerticalAlignment="Center" HorizontalExpand="True">
+                    <PanelContainer StyleClasses="LowDivider" Height="2"/>
+                </PanelContainer>
+            </BoxContainer>
 
-        <!-- Footer / Instructions -->
+            <PanelContainer StyleClasses="Inset" VerticalExpand="True">
+                <ScrollContainer VerticalExpand="True" Margin="5">
+                    <BoxContainer Name="InventoryContainer" Orientation="Vertical" SeparationOverride="10" Margin="5"/>
+                </ScrollContainer>
+            </PanelContainer>
+        </BoxContainer>
+
+        <!-- FOOTER: STATUS & LOGS -->
         <PanelContainer StyleClasses="LowDivider">
-            <Label Text="SELECT ITEMS TO PREPARE FOR DEPLOYMENT. ALL SELECTIONS ARE SAVED AUTOMATICALLY." 
-                   StyleClasses="LabelSubtext" HorizontalAlignment="Center" Margin="5"/>
+            <BoxContainer Orientation="Horizontal" HorizontalExpand="True" Margin="5">
+                <Label Text="[ SYSTEM ] SELECTIONS ARE AUTOMATICALLY STORED IN ENCRYPTED DATABASE." 
+                       StyleClasses="LabelSubtext" FontColorOverride="#aaaaaa" VerticalAlignment="Center"/>
+                <Control HorizontalExpand="True"/>
+                <Label Text="v2.5.0-NC" StyleClasses="LabelSubtext" FontColorOverride="#444444" VerticalAlignment="Center"/>
+            </BoxContainer>
         </PanelContainer>
     </BoxContainer>
 </controls:FancyWindow>
