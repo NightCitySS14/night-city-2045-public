@@ -18,6 +18,17 @@ using Robust.Shared.Random;
 using Robust.Shared.Timing;
 using Robust.Shared.Prototypes;
 using System.Linq;
+using Content.Server.Administration.Logs;
+using Content.Server.Ghost;
+using Content.Server.NPC.HTN;
+using Content.Server.NPC.Systems;
+using Content.Shared.Database;
+using Content.Shared.NPC.Components;
+using Content.Shared.NPC.Systems;
+using Content.Shared.Players;
+using Robust.Shared.Player;
+using Content.Server.NPC;
+using Content.Shared.NPC.Prototypes;
 
 namespace Content.Server._NC.Cyberware.Systems;
 
@@ -35,6 +46,11 @@ public sealed class CyberpsychosisSystem : EntitySystem
     [Dependency] private readonly SharedRoleSystem _roleSystem = default!;
     [Dependency] private readonly IChatManager _chatManager = default!;
     [Dependency] private readonly OverwatchSystem _overwatchSystem = default!;
+    [Dependency] private readonly GhostSystem _ghostSystem = default!;
+    [Dependency] private readonly HTNSystem _htn = default!;
+    [Dependency] private readonly NPCSystem _npc = default!;
+    [Dependency] private readonly NpcFactionSystem _npcFaction = default!;
+    [Dependency] private readonly IAdminLogManager _adminLog = default!;
 
     public override void Initialize()
     {
@@ -106,6 +122,7 @@ public sealed class CyberpsychosisSystem : EntitySystem
     private void TriggerStage3Antag(EntityUid uid)
     {
         EnsureComp<CyberpsychoRoleComponent>(uid);
+        var psycho = EnsureComp<CyberpsychosisComponent>(uid);
         Log.Info($"CYBERPSYCHOSIS: Stage 3 triggered for {ToPrettyString(uid)}");
 
         if (_mindSystem.TryGetMind(uid, out var mindId, out var mind))
@@ -118,8 +135,31 @@ public sealed class CyberpsychosisSystem : EntitySystem
                 _chatManager.DispatchServerMessage(session, "УБИТЬ ВСЕХ. ПЛОТЬ СЛАБА. ХРОМ ТРЕБУЕТ ЖЕРТВ.");
                 _popupSystem.PopupEntity("ТВОЙ РАЗУМ ПОГАС. ОСТАЛСЯ ТОЛЬКО ХРОМ. УБИВАЙ.", uid, uid, PopupType.LargeCaution);
             }
+
+            // NPC Takeover logic (similar to CursedMaskSystem)
+            if (TryComp<ActorComponent>(uid, out var actor))
+            {
+                if (_ghostSystem.OnGhostAttempt(mindId, false, mind: mind))
+                {
+                    psycho.StolenMind = mindId;
+                }
+            }
         }
 
+        // Faction change
+        var npcFaction = EnsureComp<NpcFactionMemberComponent>(uid);
+        psycho.OldFactions = new HashSet<ProtoId<NpcFactionPrototype>>(npcFaction.Factions);
+        _npcFaction.ClearFactions((uid, npcFaction), false);
+        _npcFaction.AddFaction((uid, npcFaction), "SimpleHostile");
+
+        // Add AI
+        psycho.HasNpc = !EnsureComp<HTNComponent>(uid, out var htn);
+        htn.RootTask = new HTNCompoundTask { Task = "SimpleHostileCompound" };
+        htn.Blackboard.SetValue(NPCBlackboard.Owner, uid);
+        _npc.WakeNPC(uid, htn);
+        _htn.Replan(htn);
+
+        _adminLog.Add(LogType.Action, LogImpact.Extreme, $"{ToPrettyString(uid)} has succumbed to cyberpsychosis and was taken over by AI.");
         _overwatchSystem.AddAlert(uid, "КРИТИЧЕСКИЙ СБОЙ: КИБЕРПСИХОЗ", "НЕИЗВЕСТНЫЙ СЕКТОР", true);
     }
 
@@ -127,6 +167,26 @@ public sealed class CyberpsychosisSystem : EntitySystem
     {
         RemComp<CyberpsychoRoleComponent>(uid);
         Log.Info($"CYBERPSYCHOSIS: Stage 3 removed for {ToPrettyString(uid)}");
+
+        if (TryComp<CyberpsychosisComponent>(uid, out var psycho))
+        {
+            if (psycho.HasNpc)
+                RemComp<HTNComponent>(uid);
+
+            var npcFaction = EnsureComp<NpcFactionMemberComponent>(uid);
+            _npcFaction.RemoveFaction((uid, npcFaction), "SimpleHostile", false);
+            _npcFaction.AddFactions((uid, npcFaction), psycho.OldFactions);
+
+            if (Exists(psycho.StolenMind))
+            {
+                _mindSystem.TransferTo(psycho.StolenMind.Value, uid);
+                _adminLog.Add(LogType.Action, LogImpact.Extreme, $"{ToPrettyString(uid)} was restored to their body after cyberpsychosis was cured.");
+                psycho.StolenMind = null;
+            }
+
+            psycho.HasNpc = false;
+            psycho.OldFactions.Clear();
+        }
 
         if (_mindSystem.TryGetMind(uid, out var mindId, out var mind))
         {
