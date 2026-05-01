@@ -154,7 +154,7 @@ public sealed class CyberpsychosisSystem : EntitySystem
 
         // Add AI
         psycho.HasNpc = !EnsureComp<HTNComponent>(uid, out var htn);
-        htn.RootTask = new HTNCompoundTask { Task = "SimpleHostileCompound" };
+        htn.RootTask = new HTNCompoundTask { Task = "NCBanditTier3RootCompound" };
         htn.Blackboard.SetValue(NPCBlackboard.Owner, uid);
         _npc.WakeNPC(uid, htn);
         _htn.Replan(htn);
