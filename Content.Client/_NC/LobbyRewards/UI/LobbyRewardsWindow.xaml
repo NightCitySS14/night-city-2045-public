@@ -1,53 +1,128 @@
 <controls:FancyWindow xmlns="https://spacestation14.io"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
-        Title="[ NIGHT-CITY META-VAULT ]"
-        MinWidth="750" MinHeight="550">
-    <BoxContainer Orientation="Vertical" Margin="15" SeparationOverride="15">
-        
-        <!-- TOP PANEL: ACC BALANCE & REFRESH -->
-        <PanelContainer StyleClasses="Inset">
-            <BoxContainer Orientation="Horizontal" HorizontalExpand="True" Margin="10">
-                <BoxContainer Orientation="Vertical" HorizontalExpand="True" SeparationOverride="4">
-                    <Label Text="CRYPTO-WALLET STATUS: AUTHORIZED" StyleClasses="LabelSubtext" FontColorOverride="#66ffff"/>
-                    <BoxContainer Orientation="Horizontal" SeparationOverride="12">
-                        <Label Text="BALANCE:" StyleClasses="LabelHeading"/>
-                        <Label Name="BalanceLabel" Text="---" StyleClasses="LabelHeading" FontColorOverride="#00ffff"/>
-                        <Label Text="NC" StyleClasses="LabelSubtext" VerticalAlignment="Bottom" Margin="0 0 0 4"/>
+        xmlns:gfx="clr-namespace:Robust.Client.Graphics;assembly=Robust.Client"
+        Title="[ NIGHT-CITY META-VAULT INTERFACE ]"
+        MinWidth="950" MinHeight="700">
+    
+    <LayoutContainer Name="MainLayout">
+        <!-- LAYER 0: THE ABYSS (BACKGROUND) -->
+        <PanelContainer LayoutContainer.AnchorRight="1" LayoutContainer.AnchorBottom="1">
+            <PanelContainer.PanelOverride>
+                <gfx:StyleBoxFlat BackgroundColor="#0A0A0F"/>
+            </PanelContainer.PanelOverride>
+        </PanelContainer>
+
+        <!-- LAYER 1: DYNAMIC GRID -->
+        <TextureRect Name="BackgroundGrid" 
+                     LayoutContainer.AnchorRight="1" LayoutContainer.AnchorBottom="1"
+                     Stretch="Tile" Modulate="#1500FF9D"/>
+
+        <!-- LAYER 2: HUD ORNAMENTS (Moved to extreme edges to avoid overlap) -->
+        <LayoutContainer LayoutContainer.AnchorRight="1" LayoutContainer.AnchorBottom="1">
+            <Label Text="SYS_META_VAULT [BOOT_SUCCESS]" StyleClasses="LabelSubtext" Modulate="#6000FF9D"
+                   LayoutContainer.AnchorLeft="0" LayoutContainer.AnchorTop="0" Margin="5"/>
+            <Label Text="TERMINAL_ID: NC-405-RED" StyleClasses="LabelSubtext" Modulate="#6000FF9D"
+                   LayoutContainer.AnchorLeft="1" LayoutContainer.AnchorTop="0" Margin="-150 5 0 0"/>
+            
+            <Label Text="ACCESS_LEVEL: 04 (STREET_RAT)" StyleClasses="LabelSubtext" Modulate="#6000FF9D"
+                   LayoutContainer.AnchorLeft="0" LayoutContainer.AnchorTop="1" Margin="5 -20 0 0"/>
+            <Label Name="TimeLabel" Text="2045-05-02 12:44:02" StyleClasses="LabelSubtext" Modulate="#6000FF9D"
+                   LayoutContainer.AnchorLeft="1" LayoutContainer.AnchorTop="1" Margin="-150 -20 0 0"/>
+        </LayoutContainer>
+
+        <!-- LAYER 3: MAIN CONTENT -->
+        <BoxContainer Orientation="Vertical" Margin="25 40 25 25" SeparationOverride="15"
+                      LayoutContainer.AnchorRight="1" LayoutContainer.AnchorBottom="1">
+            
+            <!-- HEADER -->
+            <BoxContainer Orientation="Horizontal" HorizontalExpand="True">
+                <BoxContainer Orientation="Vertical" HorizontalExpand="True" SeparationOverride="2">
+                    <Label Text="CONNECTION STATUS: STABLE // ENCRYPTION: AES-256-NC" 
+                           StyleClasses="LabelSubtext" FontColorOverride="#B200ff9d"/>
+                    <BoxContainer Orientation="Horizontal" SeparationOverride="15">
+                        <Label Text="CRYPTO-WALLET:" StyleClasses="LabelHeading" VerticalAlignment="Center"/>
+                        <Label Name="BalanceLabel" Text="000,000" StyleClasses="LabelHeading" 
+                               FontColorOverride="#00ffff"/>
+                        <Label Text="NC" StyleClasses="LabelSubtext" VerticalAlignment="Bottom" Margin="0 0 0 5"/>
                     </BoxContainer>
                 </BoxContainer>
                 
-                <BoxContainer Orientation="Vertical" HorizontalAlignment="Right" SeparationOverride="5">
-                    <Button Name="RefreshButton" Text="SYNC DATA" StyleClasses="OpenBoth"/>
-                    <Label Text="LATENCY: 14ms" StyleClasses="LabelSubtext" FontColorOverride="#00ff00" HorizontalAlignment="Right"/>
+                <BoxContainer Orientation="Vertical" HorizontalAlignment="Right" SeparationOverride="8">
+                    <Button Name="RefreshButton" Text="RESYNC DATABASE" StyleClasses="OpenBoth" MinWidth="150"/>
+                    <ProgressBar Name="SyncProgress" Value="100" MinHeight="4" HorizontalExpand="True">
+                        <ProgressBar.ForegroundStyleBoxOverride>
+                            <gfx:StyleBoxFlat BackgroundColor="#00ff9d"/>
+                        </ProgressBar.ForegroundStyleBoxOverride>
+                    </ProgressBar>
                 </BoxContainer>
             </BoxContainer>
-        </PanelContainer>
 
-        <!-- MAIN SECTION: LIST -->
-        <BoxContainer Orientation="Vertical" VerticalExpand="True" SeparationOverride="10">
-            <BoxContainer Orientation="Horizontal" SeparationOverride="5">
-                <Label Text="> STORAGE MANIFEST" StyleClasses="LabelHeading"/>
-                <PanelContainer VerticalAlignment="Center" HorizontalExpand="True">
-                    <PanelContainer StyleClasses="LowDivider" MinHeight="2"/>
-                </PanelContainer>
-            </BoxContainer>
+            <!-- TABS -->
+            <TabContainer Name="MainTabs" VerticalExpand="True">
+                <!-- INVENTORY TAB -->
+                <BoxContainer Name="InventoryTab" Orientation="Horizontal" VerticalExpand="True" SeparationOverride="15" 
+                              Margin="5">
+                    <BoxContainer Orientation="Vertical" HorizontalExpand="True" SeparationOverride="10">
+                        <Label Text="> STORAGE MANIFEST" StyleClasses="LabelHeading"/>
+                        <PanelContainer StyleClasses="Inset" VerticalExpand="True">
+                            <ScrollContainer VerticalExpand="True" Margin="5" HorizontalExpand="True">
+                                <GridContainer Name="InventoryGrid" Columns="3" HorizontalExpand="True" 
+                                               HSeparationOverride="15" VSeparationOverride="15" Margin="5"/>
+                            </ScrollContainer>
+                        </PanelContainer>
+                    </BoxContainer>
+                </BoxContainer>
 
-            <PanelContainer StyleClasses="Inset" VerticalExpand="True">
-                <ScrollContainer VerticalExpand="True" Margin="5">
-                    <BoxContainer Name="InventoryContainer" Orientation="Vertical" SeparationOverride="10" Margin="5"/>
-                </ScrollContainer>
+                <!-- MARKET TAB -->
+                <BoxContainer Name="MarketTab" Orientation="Horizontal" VerticalExpand="True" SeparationOverride="15" 
+                              Margin="5">
+                    <BoxContainer Orientation="Vertical" HorizontalExpand="True" SeparationOverride="10">
+                        <Label Text="> NIGHT-MARKET LISTINGS" StyleClasses="LabelHeading"/>
+                        <PanelContainer StyleClasses="Inset" VerticalExpand="True">
+                            <ScrollContainer VerticalExpand="True" Margin="5" HorizontalExpand="True">
+                                <GridContainer Name="MarketGrid" Columns="3" HorizontalExpand="True" 
+                                               HSeparationOverride="15" VSeparationOverride="15" Margin="5"/>
+                            </ScrollContainer>
+                        </PanelContainer>
+                    </BoxContainer>
+                </BoxContainer>
+            </TabContainer>
+
+            <!-- FOOTER -->
+            <PanelContainer StyleClasses="LowDivider">
+                <BoxContainer Orientation="Horizontal" HorizontalExpand="True" Margin="5">
+                    <Label Text="WARNING: META-REWARDS ARE NON-REFUNDABLE ONCE DEPLOYED." 
+                           StyleClasses="LabelSubtext" FontColorOverride="#ff3333" Modulate="#CCFFFFFF"/>
+                    <Control HorizontalExpand="True"/>
+                    <Label Text="NC_META_VAULT_OS v2.7.5" StyleClasses="LabelSubtext" Modulate="#66FFFFFF"/>
+                </BoxContainer>
             </PanelContainer>
         </BoxContainer>
 
-        <!-- FOOTER: STATUS & LOGS -->
-        <PanelContainer StyleClasses="LowDivider">
-            <BoxContainer Orientation="Horizontal" HorizontalExpand="True" Margin="5">
-                <Label Text="[ SYSTEM ] SELECTIONS ARE AUTOMATICALLY STORED IN ENCRYPTED DATABASE." 
-                       StyleClasses="LabelSubtext" FontColorOverride="#aaaaaa" VerticalAlignment="Center"/>
-                <Control HorizontalExpand="True"/>
-                <Label Text="v2.5.0-NC" StyleClasses="LabelSubtext" FontColorOverride="#444444" VerticalAlignment="Center"/>
-            </BoxContainer>
+        <!-- LAYER 4: SCANLINES -->
+        <TextureRect Name="Scanlines" 
+                     LayoutContainer.AnchorRight="1" LayoutContainer.AnchorBottom="1"
+                     Stretch="Tile" Modulate="#15FFFFFF" MouseFilter="Ignore"/>
+        
+        <PanelContainer Name="GlitchOverlay" 
+                        LayoutContainer.AnchorRight="1" LayoutContainer.AnchorBottom="1"
+                        Visible="False" MouseFilter="Ignore">
+            <PanelContainer.PanelOverride>
+                <gfx:StyleBoxFlat BackgroundColor="#2500ffff"/>
+            </PanelContainer.PanelOverride>
         </PanelContainer>
-    </BoxContainer>
+
+        <!-- SIDE INSPECTOR -->
+        <BoxContainer Name="InspectorPanel" Orientation="Vertical" MinWidth="320" Margin="10"
+                      LayoutContainer.AnchorLeft="1" LayoutContainer.AnchorTop="0"
+                      LayoutContainer.MarginLeft="-360" LayoutContainer.MarginTop="120">
+            <PanelContainer StyleClasses="Inset" MinHeight="400">
+                <BoxContainer Name="PreviewContainer" Orientation="Vertical" Margin="15" SeparationOverride="12">
+                    <Label Text="[ NO_ACTIVE_SCAN ]" StyleClasses="LabelHeading" HorizontalAlignment="Center" Modulate="#80FFFFFF"/>
+                    <PanelContainer StyleClasses="LowDivider" MinHeight="2"/>
+                </BoxContainer>
+            </PanelContainer>
+        </BoxContainer>
+    </LayoutContainer>
 </controls:FancyWindow>

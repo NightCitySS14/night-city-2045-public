@@ -9,3 +9,6 @@
   - type: Clothing
     sprite: Clothing/Eyes/Glasses/3d.rsi
   - type: NetVisor
+  - type: NcRewardMetadata
+    rarity: RARE
+    marketPrice: 3500

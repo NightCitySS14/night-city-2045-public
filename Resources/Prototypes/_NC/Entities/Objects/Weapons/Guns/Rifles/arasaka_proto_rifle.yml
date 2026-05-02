@@ -90,6 +90,8 @@
 
   - type: StaticPrice
     price: 15000
+  - type: NcRewardMetadata
+    rarity: ICONIC
 
 - type: Tag
   id: CartridgeArasakaRailgun

@@ -8,11 +8,13 @@ public sealed class LobbyRewardsEuiState : EuiStateBase
 {
     public int NightCoinsBalance;
     public List<LobbyRewardItem> Inventory;
+    public List<LobbyMarketItem> MarketItems;
 
-    public LobbyRewardsEuiState(int nightCoinsBalance, List<LobbyRewardItem> inventory)
+    public LobbyRewardsEuiState(int nightCoinsBalance, List<LobbyRewardItem> inventory, List<LobbyMarketItem> marketItems)
     {
         NightCoinsBalance = nightCoinsBalance;
         Inventory = inventory;
+        MarketItems = marketItems;
     }
 }
 
@@ -34,6 +36,19 @@ public sealed class LobbyRewardItem
 }
 
 [Serializable, NetSerializable]
+public sealed class LobbyMarketItem
+{
+    public string PrototypeId;
+    public int Price;
+
+    public LobbyMarketItem(string prototypeId, int price)
+    {
+        PrototypeId = prototypeId;
+        Price = price;
+    }
+}
+
+[Serializable, NetSerializable]
 public sealed class LobbyRewardSelectMessage : EuiMessageBase
 {
     public int ItemId;
@@ -43,6 +58,17 @@ public sealed class LobbyRewardSelectMessage : EuiMessageBase
     {
         ItemId = itemId;
         Selected = selected;
+    }
+}
+
+[Serializable, NetSerializable]
+public sealed class LobbyRewardPurchaseMessage : EuiMessageBase
+{
+    public string PrototypeId;
+
+    public LobbyRewardPurchaseMessage(string prototypeId)
+    {
+        PrototypeId = prototypeId;
     }
 }
 

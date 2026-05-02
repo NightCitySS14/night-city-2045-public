@@ -14,9 +14,15 @@ public sealed class LobbyRewardsEui : BaseEui
     public LobbyRewardsEui()
     {
         _window = new LobbyRewardsWindow();
+        
         _window.OnItemSelected += (itemId, selected) =>
         {
             SendMessage(new LobbyRewardSelectMessage(itemId, selected));
+        };
+
+        _window.OnItemPurchase += (protoId) =>
+        {
+            SendMessage(new LobbyRewardPurchaseMessage(protoId));
         };
 
         _window.OnRefreshRequested += () =>

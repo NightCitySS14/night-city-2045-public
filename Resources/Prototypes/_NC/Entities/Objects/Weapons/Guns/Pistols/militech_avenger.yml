@@ -44,6 +44,8 @@
     soundGunshot:
       path: /Audio/Weapons/Guns/Gunshots/pistol.ogg
     fireOnDropChance: 0.3
+  - type: NcRewardMetadata
+    rarity: RARE
 
 
 # Пустой вариант для лута
