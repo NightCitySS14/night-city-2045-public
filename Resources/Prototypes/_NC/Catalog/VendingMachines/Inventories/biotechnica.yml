@@ -332,6 +332,7 @@
     PowerDrill: 2
     FlashlightLantern: 2
     NetworkConfigurator: 2
+    Multitool: 2
     PowerCellSmall: 2
     PowerCellMedium: 2
     PowerCellHigh: 2
@@ -347,6 +348,7 @@
     PowerDrill: 240
     FlashlightLantern: 40
     NetworkConfigurator: 40
+    Multitool: 560
     PowerCellSmall: 80
     PowerCellMedium: 180
     PowerCellHigh: 380
@@ -355,7 +357,6 @@
     GasAnalyzer: 2
     HandheldGPSBasic: 2
     AccessConfigurator: 2
-    Multitool: 2
     trayScanner: 1
     RemoteSignaller: 1
     WelderIndustrialAdvanced: 1
@@ -366,7 +367,6 @@
     GasAnalyzer: 280
     HandheldGPSBasic: 360
     AccessConfigurator: 520
-    Multitool: 560
     trayScanner: 320
     RemoteSignaller: 340
     WelderIndustrialAdvanced: 480
