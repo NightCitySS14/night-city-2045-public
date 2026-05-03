@@ -70,11 +70,6 @@
   result: GeigerCounter
 
 - type: latheRecipe
-  parent: BaseBigToolRecipe
-  id: FlashlightLantern
-  result: FlashlightLantern
-
-- type: latheRecipe
   parent: FlashlightLantern
   id: FlashlightEmp
   result: FlashlightEmp
