@@ -14,13 +14,13 @@ public sealed class LobbyRewardsEui : BaseEui
     public LobbyRewardsEui()
     {
         _window = new LobbyRewardsWindow();
-        
+
         _window.OnItemSelected += (itemId, selected) =>
         {
             SendMessage(new LobbyRewardSelectMessage(itemId, selected));
         };
 
-        _window.OnItemPurchase += (protoId) =>
+        _window.OnItemPurchase += protoId =>
         {
             SendMessage(new LobbyRewardPurchaseMessage(protoId));
         };
@@ -28,6 +28,11 @@ public sealed class LobbyRewardsEui : BaseEui
         _window.OnRefreshRequested += () =>
         {
             SendMessage(new LobbyRewardRefreshMessage());
+        };
+
+        _window.OnResetLoadout += () =>
+        {
+            SendMessage(new LobbyRewardResetLoadoutMessage());
         };
 
         _window.OnClose += () =>

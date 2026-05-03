@@ -27,4 +27,25 @@ public sealed partial class NcRewardMetadataComponent : Component
     /// </summary>
     [DataField]
     public int? MarketPrice;
+
+    /// <summary>
+    ///     Cost in "Start Points" for the round loadout budget system.
+    ///     If zero or unset, the item costs nothing to deploy.
+    /// </summary>
+    [DataField]
+    public int PointsCost;
+
+    /// <summary>
+    ///     Category for UI filtering in the vault/market.
+    ///     Examples: "Armor", "Weapons", "Medicine", "Upgrades", "Skins".
+    /// </summary>
+    [DataField]
+    public string Category = "Misc";
+
+    /// <summary>
+    ///     Sub-category for more granular filtering in the market tabs.
+    ///     Examples: "Items", "Upgrades", "Skins".
+    /// </summary>
+    [DataField]
+    public string MarketTab = "Items";
 }

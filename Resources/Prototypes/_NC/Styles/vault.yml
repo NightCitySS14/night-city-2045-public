@@ -1,0 +1,83 @@
+- type: styleSheet
+  id: vault
+  typeDefinition:
+    PanelContainer: "Robust.Client.UserInterface.Controls.PanelContainer"
+    ContainerButton: "Robust.Client.UserInterface.Controls.ContainerButton"
+    Button: "Robust.Client.UserInterface.Controls.Button"
+  styles:
+    # Vault card panels — dark background with subtle border
+    PanelContainer.VaultCard:
+      panel:
+        valueType: Robust.Client.Graphics.StyleBoxFlat
+        value:
+          backgroundColor: "#161B22"
+          borderColor: "#30363D"
+          borderThickness: 1,1,1,1
+      modulate-self: "#FFFFFF"
+
+    PanelContainer.VaultCard:hover:
+      panel:
+        valueType: Robust.Client.Graphics.StyleBoxFlat
+        value:
+          backgroundColor: "#1C2333"
+          borderColor: "#00FF9D"
+          borderThickness: 1,1,1,1
+
+    # Selected card with neon green glow
+    PanelContainer.VaultCardSelected:
+      panel:
+        valueType: Robust.Client.Graphics.StyleBoxFlat
+        value:
+          backgroundColor: "#161B22"
+          borderColor: "#00FF9D"
+          borderThickness: 2,2,2,2
+
+    # Category sidebar button
+    ContainerButton.VaultCategory:
+      stylebox:
+        valueType: Robust.Client.Graphics.StyleBoxFlat
+        value:
+          backgroundColor: "#0D1117"
+          borderColor: "#30363D"
+          borderThickness: 0,0,0,1
+      modulate-self: "#8B949E"
+
+    ContainerButton.VaultCategory:hover:
+      modulate-self: "#C9D1D9"
+
+    ContainerButton.VaultCategory:pressed:
+      stylebox:
+        valueType: Robust.Client.Graphics.StyleBoxFlat
+        value:
+          backgroundColor: "#161B22"
+          borderColor: "#00FF9D"
+          borderThickness: 0,0,2,1
+      modulate-self: "#00FF9D"
+
+    # Vault labels
+    .VaultHeading:
+      font:
+        valueType: Content.StyleSheetify.Client.Font.FontSpecifier
+        value:
+          font:
+          - "/Fonts/NotoSans/NK57-Monospace-Cd-Bd.otf"
+          size: 14
+      font-color: "#C9D1D9"
+
+    .VaultSubtext:
+      font:
+        valueType: Content.StyleSheetify.Client.Font.FontSpecifier
+        value:
+          font:
+          - "/Fonts/NotoSans/NK57-Monospace-Cd-Rg.otf"
+          size: 10
+      font-color: "#8B949E"
+
+    .VaultNeonLabel:
+      font:
+        valueType: Content.StyleSheetify.Client.Font.FontSpecifier
+        value:
+          font:
+          - "/Fonts/NotoSans/NK57-Monospace-Cd-Bd.otf"
+          size: 12
+      font-color: "#00FF9D"
