@@ -8,6 +8,7 @@ using Content.Shared.Mobs.Systems;
 using Robust.Server.GameObjects;
 using Robust.Shared.Prototypes;
 using System.Collections.Generic;
+using System.Numerics;
 
 namespace Content.Server._NC.CitiNet.Cartridges;
 
@@ -19,6 +20,7 @@ public sealed class CitiNetMapCartridgeSystem : EntitySystem
     [Dependency] private readonly MobStateSystem _mobState = default!;
     [Dependency] private readonly CitiNetMapSystem _citiNet = default!;
     [Dependency] private readonly UserInterfaceSystem _uiSystem = default!;
+    [Dependency] private readonly SharedTransformSystem _transform = default!;
 
     private float _updateTimer = 0f;
     private const float UpdateInterval = 2.0f; 
@@ -141,12 +143,13 @@ public sealed class CitiNetMapCartridgeSystem : EntitySystem
             // 2. Add SELF (Viewer) manually if they are on the grid
             if (viewer != null && TryComp<TransformComponent>(viewer.Value, out var viewerXform) && viewerXform.GridUid == gridUid)
             {
+                var viewerPos = Vector2.Transform(_transform.GetWorldPosition(viewer.Value), _transform.GetInvWorldMatrix(gridUid.Value));
                 beacons.Add(new CitiNetMapBeaconData(
                     GetNetEntity(viewer.Value),
                     "YOU",
                     null,
                     Color.FromHex("#00f2ff"),
-                    viewerXform.LocalPosition,
+                    viewerPos,
                     12,
                     false,
                     true
@@ -158,7 +161,9 @@ public sealed class CitiNetMapCartridgeSystem : EntitySystem
             while (sectorQuery.MoveNext(out var sUid, out var sector, out var sXform))
             {
                 if (sXform.GridUid != gridUid) continue;
-                sectors.Add(new CitiNetMapSectorData(sector.SectorName, sector.Color, sector.Bounds, sector.FontSize));
+
+                var sectorPos = Vector2.Transform(_transform.GetWorldPosition(sUid), _transform.GetInvWorldMatrix(gridUid.Value));
+                sectors.Add(new CitiNetMapSectorData(sector.SectorName, sector.Color, sector.Bounds.Translated(sectorPos), sector.FontSize));
             }
 
             // 4. Scan for Beacons
@@ -180,13 +185,14 @@ public sealed class CitiNetMapCartridgeSystem : EntitySystem
                 }
 
                 var label = string.IsNullOrWhiteSpace(beacon.Label) ? MetaData(bUid).EntityName : beacon.Label;
+                var beaconPos = Vector2.Transform(_transform.GetWorldPosition(bUid), _transform.GetInvWorldMatrix(gridUid.Value));
 
                 beacons.Add(new CitiNetMapBeaconData(
                     GetNetEntity(bUid),
                     label,
                     beacon.Icon,
                     beacon.Color,
-                    bXform.LocalPosition,
+                    beaconPos,
                     beacon.FontSize,
                     isDead,
                     false
