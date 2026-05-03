@@ -27,7 +27,7 @@
       min: 7200
     - !type:CharacterTraitRequirement
       inverted: true
-      traits:
+      traits: []
         # - Foreigner
         # - ForeignerLight
     - !type:CharacterEmployerRequirement
