@@ -58932,7 +58932,7 @@ entities:
       pos: -73.5,-87.5
       parent: 2
     - type: MapBeacon
-      fontSize: 24
+      fontSize: 18
       color: '#FFFFFFFF'
       label: Biotechnica
   - uid: 8266
@@ -58941,7 +58941,7 @@ entities:
       pos: 10.5,-50.5
       parent: 2
     - type: MapBeacon
-      fontSize: 24
+      fontSize: 18
       visibleInWorld: False
       color: '#FFFFFFFF'
       label: NCPD
@@ -58960,7 +58960,7 @@ entities:
       pos: -126.5,-75.5
       parent: 2
     - type: MapBeacon
-      fontSize: 24
+      fontSize: 18
       visibleInWorld: False
       color: '#FC1303FF'
       label: Trauma Team Клиника
@@ -58970,7 +58970,7 @@ entities:
       pos: -154.5,10.5
       parent: 2
     - type: MapBeacon
-      fontSize: 16
+      fontSize: 18
       visibleInWorld: False
       label: Шахта
   - uid: 8270
