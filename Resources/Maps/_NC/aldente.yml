@@ -11293,10 +11293,6 @@ entities:
         1,-12: 9187201950435737471
         -9,-13: 9187201402835828736
         -9,-12: 9187201950435737471
-    - type: GridAtmosphere
-      version: 2
-      data:
-        chunkSize: 4
   - uid: 4
     mapInit: true
     paused: true
