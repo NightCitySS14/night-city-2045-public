@@ -48633,10 +48633,6 @@ entities:
       rot: -1.5707963267948966 rad
       pos: -45.63917,-31.951237
       parent: 2
-- proto: MindRoleObserver
-  entities:
-  - uid: 20553
-    mapInit: true
 - proto: Mirror
   entities:
   - uid: 6551
@@ -58913,11 +58909,11 @@ entities:
       - stampedColor: '#2F4F4FFF'
         stampedName: Остин Стюарт
       content: >-
-        Доски синдерева 2 шт. 
+        Доски синдерева 2 шт.
 
-        Цена 3999 евродолларов 
+        Цена 3999 евродолларов
 
-        Дата покупки 12/03/2036 
+        Дата покупки 12/03/2036
 
         Произведено компанией БиоСинк™
 
