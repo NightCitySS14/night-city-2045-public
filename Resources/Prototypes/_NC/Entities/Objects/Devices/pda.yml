@@ -312,6 +312,38 @@
 
 - type: entity
   parent: BasePDA
+  id: CafeOwnerPDA
+  name: КПК владельца кафе
+  description: Компактный терминал с логотипом кофейного зерна.
+  components:
+    - type: Pda
+      id: CafeOwnerIDCard
+    - type: Sprite
+      sprite: _White/Objects/Devices/Pda/pda.rsi
+      color: '#6f4e37'
+    - type: PdaBorderColor
+      borderColor: '#3e2723'
+      accentHColor: '#6f4e37'
+      accentVColor: '#6f4e37'
+
+- type: entity
+  parent: BasePDA
+  id: RestaurantOwnerPDA
+  name: КПК владельца ресторана
+  description: Элегантный терминал с золотистой отделкой.
+  components:
+    - type: Pda
+      id: RestaurantOwnerIDCard
+    - type: Sprite
+      sprite: _White/Objects/Devices/Pda/pda.rsi
+      color: '#ffd700'
+    - type: PdaBorderColor
+      borderColor: '#b8860b'
+      accentHColor: '#ffd700'
+      accentVColor: '#ffd700'
+
+- type: entity
+  parent: BasePDA
   id: CitizenPDA
   name: КПК жителя
   description: Обычный чип-терминал жителя Найт-Сити.

@@ -16,4 +16,6 @@ access-level-nc-general = Житель Найт-Сити
 access-level-edgerunner = Эджраннер
 access-level-fixer = Фиксер
 access-level-ripper = Рипер
+access-level-cafe = Кафе
+access-level-restaurant = Ресторан
 
