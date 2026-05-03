@@ -42,6 +42,52 @@
     layers:
       - state: green
 
+- type: entity
+  id: SpawnPointCafeOwner
+  parent: SpawnPointJobBase
+  name: cafe owner spawn point
+  components:
+  - type: SpawnPoint
+    job_id: CafeOwner
+  - type: Sprite
+    layers:
+      - state: green
+
+- type: entity
+  id: SpawnPointCafeOwnerLateJoin
+  parent: SpawnPointJobBase
+  name: cafe owner latejoin spawn point
+  components:
+  - type: SpawnPoint
+    job_id: CafeOwner
+    spawn_type: LateJoin
+  - type: Sprite
+    layers:
+      - state: green
+
+- type: entity
+  id: SpawnPointRestaurantOwner
+  parent: SpawnPointJobBase
+  name: restaurant owner spawn point
+  components:
+  - type: SpawnPoint
+    job_id: RestaurantOwner
+  - type: Sprite
+    layers:
+      - state: green
+
+- type: entity
+  id: SpawnPointRestaurantOwnerLateJoin
+  parent: SpawnPointJobBase
+  name: restaurant owner latejoin spawn point
+  components:
+  - type: SpawnPoint
+    job_id: RestaurantOwner
+    spawn_type: LateJoin
+  - type: Sprite
+    layers:
+      - state: green
+
 # NCPD
 
 - type: entity

@@ -58,8 +58,6 @@
     - TradeCity_Buy
     sellPresets:
     - TradeCity_Sell
-    contractPresets:
-    - PresetBazar
 
 - type: entity
   id: TrademachineTickets

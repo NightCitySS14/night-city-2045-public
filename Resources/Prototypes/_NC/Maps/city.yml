@@ -1,7 +1,7 @@
 - type: gameMap
   id: Aldente
   mapName: 'New Aldente'
-  mapPath: /Maps/_NC/aldente_remap.yml
+  mapPath: /Maps/_NC/aldente.yml
   maxRandomOffset: 0
   randomPainting: false
   minPlayers: 0 
@@ -20,6 +20,8 @@
           EdgeRunnerSolo: [5, 5]
           Fixer: [3, 3]
           Reaper: [2, 2]
+          CafeOwner: [1, 1]
+          RestaurantOwner: [1, 1]
           # === NCPD ===
           NCPDChief: [1, 1]
           NCPDCommander: [1, 1]

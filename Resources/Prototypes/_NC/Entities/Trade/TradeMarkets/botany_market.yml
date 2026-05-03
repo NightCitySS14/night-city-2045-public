@@ -10,8 +10,6 @@
     - TradeBotany_Buy
     sellPresets:
     - TradeBotany_Sell
-    contractPresets:
-    - PresetBotany
   - type: AccessReader
     access: [["NC_General"]]
 

@@ -1,0 +1,37 @@
+- type: job
+  id: CafeOwner
+  name: Владелец кафе
+  description: Управляйте своим уютным заведением, подавайте лучший кофе в городе и следите за тем, чтобы клиенты уходили довольными.
+  playTimeTracker: JobCafeOwner
+  icon: "JobIconCivilCitizen"
+  salary: 70
+  startingGear: CafeOwnerGear
+  access:
+    - NC_General
+
+- type: job
+  id: RestaurantOwner
+  name: Владелец ресторана
+  description: Вы - лицо высокой кухни в Найт-Сити. Обеспечьте изысканный сервис, качественную еду и процветание вашего ресторана.
+  playTimeTracker: JobRestaurantOwner
+  icon: "JobIconCivilCitizen"
+  salary: 100
+  startingGear: RestaurantOwnerGear
+  access:
+    - NC_General
+
+- type: startingGear
+  id: CafeOwnerGear
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitBartender
+    back: ClothingBackpackSatchel
+    shoes: ClothingShoesColorBlack
+    id: CafeOwnerPDA
+
+- type: startingGear
+  id: RestaurantOwnerGear
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitChef
+    back: ClothingBackpackSatchelLeather
+    shoes: ClothingShoesColorBlack
+    id: RestaurantOwnerPDA

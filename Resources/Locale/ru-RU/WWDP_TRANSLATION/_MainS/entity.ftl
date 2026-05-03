@@ -13965,6 +13965,7 @@ ent-N14FloraLog1 = полено
 
 
 ent-N14MaterialCircuitry = микросхемы
+    .desc = Простые микросхемы общего назначения.
 
 ent-N14IngotLead = свинцовый слиток
 

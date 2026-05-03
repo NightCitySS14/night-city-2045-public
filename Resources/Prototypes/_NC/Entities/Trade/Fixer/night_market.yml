@@ -394,62 +394,62 @@
   name: "Кибер-Импланты"
   entries:
   - proto: CyberwareImplantAntiglare
-    price: 800
-    count: 2
+    price: 150
+    count: 5
   - proto: CyberwareImplantInfraredVision
-    price: 1500
-    count: 1
+    price: 150
+    count: 4
   - proto: CyberwareImplantMicroVideo
-    price: 400
-    count: 2
+    price: 40
+    count: 6
   - proto: CyberwareImplantMicroOptics
-    price: 2000
-    count: 1
+    price: 200
+    count: 4
   - proto: CyberwareNeuroKerenzikovMk1
-    price: 3500
-    count: 1
+    price: 350
+    count: 4
   - proto: CyberwareNeuroKerenzikovMk2
-    price: 7000
-    count: 1
+    price: 500
+    count: 3
   - proto: CyberwareNeuroKerenzikovMk3
-    price: 15000
-    count: 1
+    price: 700
+    count: 2
   - proto: CyberwareNeuroBioInhibitorStoic
+    price: 180
+    count: 5
+  - proto: CyberwareNeuroBlockerAegis
+    price: 300
+    count: 6
+  - proto: CyberwareNeuroTacticalSpartan
+    price: 1200
+    count: 4
+  - proto: CyberwareNeuroSandevistanMk1
+    price: 800
+    count: 3
+  - proto: CyberwareInternalPolymerSkeleton
+    price: 250
+    count: 5
+  - proto: CyberwareInternalTitaniumReinforcement
+    price: 800
+    count: 3
+  - proto: CyberwareInternalArmyEndoskeleton
     price: 1800
     count: 2
-  - proto: CyberwareNeuroBlockerAegis
-    price: 3000
-    count: 1
-  - proto: CyberwareNeuroTacticalSpartan
-    price: 12000
-    count: 1
-  - proto: CyberwareNeuroSandevistanMk1
-    price: 8000
-    count: 1
-  - proto: CyberwareInternalPolymerSkeleton
-    price: 2500
-    count: 1
-  - proto: CyberwareInternalTitaniumReinforcement
-    price: 8000
-    count: 1
-  - proto: CyberwareInternalArmyEndoskeleton
-    price: 18000
-    count: 1
   - proto: CyberwareInternalNasalFilters
-    price: 1200
-    count: 2
+    price: 120
+    count: 7
   - proto: CyberwareInternalEnhancedAntibodies
-    price: 3500
-    count: 1
+    price: 350
+    count: 5
   - proto: CyberwareExternalKevlarSublayer
-    price: 2000
-    count: 1
+    price: 200
+    count: 8
   - proto: CyberwareExternalThermoplasticArmor
-    price: 6000
-    count: 1
+    price: 600
+    count: 4
   - proto: CyberwareExternalReactiveSublayer
-    price: 14000
-    count: 1
+    price: 1400
+    count: 2
 
 - type: storeCategoryStructured
   id: NightMarket_Tools

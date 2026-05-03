@@ -1,5 +1,39 @@
 - type: entity
   parent: IDCardStandard
+  id: CafeOwnerIDCard
+  name: идентификационная карта владельца кафе
+  components:
+    - type: Sprite
+      layers:
+        - state: default
+        - state: department
+          color: '#ffda1a'
+        - state: subdepartment
+          color: '#000000'
+        - state: assistant
+    - type: Access
+      tags:
+        - NC_General
+
+- type: entity
+  parent: IDCardStandard
+  id: RestaurantOwnerIDCard
+  name: идентификационная карта владельца ресторана
+  components:
+    - type: Sprite
+      layers:
+        - state: default
+        - state: department
+          color: '#ffda1a'
+        - state: subdepartment
+          color: '#000000'
+        - state: assistant
+    - type: Access
+      tags:
+        - NC_General
+
+- type: entity
+  parent: IDCardStandard
   id: NCPDChiefIDCard
   name: идентификационная карта шефа NCPD
   components:
