@@ -13,9 +13,6 @@ ent-SeniorSalvagePDA = ПДА охотника карго
 ent-PinpointerUniversal = универсальный пинпоинтер
    .desc = Портативное устройство слежения, которое фиксируется на любом физическом объекте в выключенном состоянии.
 
-ent-HandheldStationMap = карта станции
-   .desc = Отображает показания текущей станции.
-
 ent-StationRecordsComputerCircuitboard = компьютерная плата записей станции
    .desc = Компьютерная печатная плата для компьютера, записывающего станцию.
 
@@ -30,9 +27,6 @@ ent-SalvageShuttleConsoleCircuitboard = консоль управления ут
 
 ent-ComputerMassMediaCircuitboard = консольная плата СМИ
    .desc = Напишите свое послание миру!
-
-ent-StationMapCircuitboard = печатная плата карты станции
-   .desc = Электронная плата, используемая в картах станций.
 
 ent-MachineParticleAcceleratorEmitterStarboardCircuitboard = печатная плата левого эмиттера УЧ
    .desc = Машинная плата для левого излучателя ускорителя частиц
