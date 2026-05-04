@@ -34,7 +34,7 @@
       state: icon
     - map: ["computerLayerScreen"]
       state: unshaded
-      shader: unshaded 
+      shader: unshaded
       visible: false
   - type: GenericVisualizer
     visuals:
@@ -47,13 +47,13 @@
 
   - type: ActivatableUI
     key: enum.AtmUiKey.Key
-    inHands: false 
+    inHandsOnly: false
     singleUser: true
 
   - type: UserInterface
     interfaces:
-      enum.AtmUiKey.Key:             
-        type: AtmBoundUserInterface 
+      enum.AtmUiKey.Key:
+        type: AtmBoundUserInterface
 
   - type: ContainerContainer
     containers:

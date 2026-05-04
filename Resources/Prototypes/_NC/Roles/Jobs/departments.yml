@@ -1,7 +1,7 @@
 - type: department
   id: CivilianNC
-  name: Гражданские
-  description: department-CivilianNC-description
+  name: department-name-CivilianNC
+  description: department-desc-CivilianNC
   color: "#999999"
   roles:
     - NCCitizen
@@ -13,8 +13,8 @@
 
 - type: department
   id: NCPD
-  name: Night City Police Department
-  description: department-NCPD-description
+  name: department-name-NCPD
+  description: department-desc-NCPD
   color: "#1e90ff"
   roles:
     - NCPDChief
@@ -28,8 +28,8 @@
 
 - type: department
   id: TraumaTeam
-  name: Отдление TraumaTeam
-  description: department-TraumaTeam-description
+  name: department-name-TraumaTeam
+  description: department-desc-TraumaTeam
   color: "#e74c3c"
   roles:
     - TraumaTeamChief
@@ -42,8 +42,8 @@
 
 - type: department
   id: Biotechnica
-  name: Отделение Biotechnica
-  description: department-Biotechnica-description
+  name: department-name-Biotechnica
+  description: department-desc-Biotechnica
   color: "#2ecc71"
   roles:
     - BiotechnicaChief
@@ -56,8 +56,8 @@
 
 - type: department
   id: Jiraff
-  name: Корпорация Zhirafa
-  description: department-Biotechnica-description
+  name: department-name-Jiraff
+  description: department-desc-Jiraff
   color: "#2ecc71"
   roles:
     - ZhirafaJanitor

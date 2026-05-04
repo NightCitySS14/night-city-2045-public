@@ -1,5 +1,7 @@
 # Jobs CivilianNC
 - type: playTimeTracker
+  id: JobNCBooster
+- type: playTimeTracker
   id: JobNCCitizen
 - type: playTimeTracker
   id: JobReaper

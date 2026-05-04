@@ -23,7 +23,7 @@
     activeIceLegendaryOnly: false
   - type: ActivatableUI
     key: enum.DecryptionUiKey.Key
-    inHands: false
+    inHandsOnly: false
     singleUser: true
   - type: ActivatableUIRequiresPower
   - type: UserInterface
