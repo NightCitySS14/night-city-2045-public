@@ -10,7 +10,7 @@
   access:
     - Biotech_MedTech
     - Biotech_Staff
-    - Biotech_Lab
+    # - Biotech_Lab
     - Biotech_General
     - NC_General
 
