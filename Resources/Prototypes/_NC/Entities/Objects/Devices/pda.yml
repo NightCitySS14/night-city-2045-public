@@ -1,3 +1,5 @@
+# region NCPD
+
 - type: entity
   parent: BasePDA
   id: NCPDChiefPDA
@@ -102,6 +104,8 @@
       accentHColor: '#2f5c9e'
       accentVColor: '#2f5c9e'
 
+# region MaxTac
+
 - type: entity
   parent: BasePDA
   id: MaxTacCommanderPDA
@@ -181,6 +185,8 @@
       borderColor: '#182c4d'
       accentHColor: '#0f1c30'
       accentVColor: '#0f1c30'
+
+# region Trauma Team
 
 - type: entity
   parent: BaseMedicalPDA
@@ -310,6 +316,8 @@
       accentHColor: '#4bdc99'
       accentVColor: '#4bdc99'
 
+# region Citizen
+
 - type: entity
   parent: BasePDA
   id: CafeOwnerPDA
@@ -404,6 +412,8 @@
       borderColor: '#1a1a1a'
       accentHColor: '#aaffcc'
       accentVColor: '#aaffcc'
+
+# region Biotechnica
 
 - type: entity
   parent: BasePDA

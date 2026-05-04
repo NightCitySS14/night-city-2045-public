@@ -22,21 +22,8 @@
   components:
   - type: VendingMachine
     pack: BiotechnicaBotanyInventory
-    offState: off
-    brokenState: broken
-    normalState: normal-unshaded
-    ejectState: eject-unshaded
-    denyState: deny-unshaded
   - type: Sprite
     sprite: _NC/Structures/Machines/Biotechnica/botany.rsi
-    layers:
-    - state: "off"
-      map: ["enum.VendingMachineVisualLayers.Base"]
-    - state: "off"
-      map: ["enum.VendingMachineVisualLayers.BaseUnshaded"]
-      shader: unshaded
-    - state: panel
-      map: ["enum.WiresVisualLayers.MaintenancePanel"]
   - type: AccessReader
     access: [ [ "Biotech_Botany" ] ]
 
@@ -49,19 +36,8 @@
   components:
   - type: VendingMachine
     pack: BiotechnicaBotanyDrobeInventory
-    offState: off
-    brokenState: broken
-    normalState: normal-unshaded
   - type: Sprite
     sprite: _NC/Structures/Machines/Biotechnica/botany_drobe.rsi
-    layers:
-    - state: "off"
-      map: ["enum.VendingMachineVisualLayers.Base"]
-    - state: "off"
-      map: ["enum.VendingMachineVisualLayers.BaseUnshaded"]
-      shader: unshaded
-    - state: panel
-      map: ["enum.WiresVisualLayers.MaintenancePanel"]
   - type: AccessReader
     access: [ [ "Biotech_Botany" ] ]
 
@@ -74,21 +50,8 @@
   components:
   - type: VendingMachine
     pack: BiotechnicaSeedsInventory
-    offState: off
-    brokenState: broken
-    normalState: normal-unshaded
-    ejectState: eject-unshaded
-    denyState: deny-unshaded
   - type: Sprite
     sprite: _NC/Structures/Machines/Biotechnica/seeds.rsi
-    layers:
-    - state: "off"
-      map: ["enum.VendingMachineVisualLayers.Base"]
-    - state: "off"
-      map: ["enum.VendingMachineVisualLayers.BaseUnshaded"]
-      shader: unshaded
-    - state: panel
-      map: ["enum.WiresVisualLayers.MaintenancePanel"]
   - type: AccessReader
     access: [ [ "Biotech_Botany" ] ]
 
@@ -103,21 +66,8 @@
   components:
   - type: VendingMachine
     pack: BiotechnicaMedTechInventory
-    offState: off
-    brokenState: broken
-    normalState: normal-unshaded
-    ejectState: eject-unshaded
-    denyState: deny-unshaded
   - type: Sprite
     sprite: _NC/Structures/Machines/Biotechnica/med_tech.rsi
-    layers:
-    - state: "off"
-      map: ["enum.VendingMachineVisualLayers.Base"]
-    - state: "off"
-      map: ["enum.VendingMachineVisualLayers.BaseUnshaded"]
-      shader: unshaded
-    - state: panel
-      map: ["enum.WiresVisualLayers.MaintenancePanel"]
   - type: AccessReader
     access: [ [ "Biotech_MedTech" ] ]
 
@@ -130,19 +80,8 @@
   components:
   - type: VendingMachine
     pack: BiotechnicaMedTechDrobeInventory
-    offState: off
-    brokenState: broken
-    normalState: normal-unshaded
   - type: Sprite
     sprite: _NC/Structures/Machines/Biotechnica/med_tech_drobe.rsi
-    layers:
-    - state: "off"
-      map: ["enum.VendingMachineVisualLayers.Base"]
-    - state: "off"
-      map: ["enum.VendingMachineVisualLayers.BaseUnshaded"]
-      shader: unshaded
-    - state: panel
-      map: ["enum.WiresVisualLayers.MaintenancePanel"]
   - type: AccessReader
     access: [ [ "Biotech_MedTech" ] ]
 
@@ -167,21 +106,8 @@
   components:
   - type: VendingMachine
     pack: BiotechnicaTechInventory
-    offState: off
-    brokenState: broken
-    normalState: normal-unshaded
-    ejectState: eject-unshaded
-    denyState: deny-unshaded
   - type: Sprite
     sprite: _NC/Structures/Machines/Biotechnica/tech.rsi
-    layers:
-    - state: "off"
-      map: ["enum.VendingMachineVisualLayers.Base"]
-    - state: "off"
-      map: ["enum.VendingMachineVisualLayers.BaseUnshaded"]
-      shader: unshaded
-    - state: panel
-      map: ["enum.WiresVisualLayers.MaintenancePanel"]
   - type: AccessReader
     access: [ [ "Biotech_Tech" ] ]
 
@@ -194,18 +120,23 @@
   components:
   - type: VendingMachine
     pack: BiotechnicaTechDrobeInventory
-    offState: off
-    brokenState: broken
-    normalState: normal-unshaded
   - type: Sprite
     sprite: _NC/Structures/Machines/Biotechnica/tech_drobe.rsi
-    layers:
-    - state: "off"
-      map: ["enum.VendingMachineVisualLayers.Base"]
-    - state: "off"
-      map: ["enum.VendingMachineVisualLayers.BaseUnshaded"]
-      shader: unshaded
-    - state: panel
-      map: ["enum.WiresVisualLayers.MaintenancePanel"]
   - type: AccessReader
     access: [ [ "Biotech_Tech" ] ]
+
+# region Chief
+
+- type: entity
+  parent: VendingMachineCart
+  id: VendingMachineBiotechnicaPDA
+  name: ПДАмат Biotechnica
+  description: Вендомат, выдающий заготовленные ПДА Biotechnica.
+  suffix: Глава
+  components:
+  - type: VendingMachine
+    pack: BiotechnicaPDAInventory
+  - type: Sprite
+    sprite: Structures/Machines/VendingMachines/laptop.rsi
+  - type: AccessReader
+    access: [ [ "Biotech_Director" ], [ "Biotech_HeadOfDepartment" ] ]

@@ -236,19 +236,21 @@
   contrabandInventory:
     BiotechnicaAppraisalTool: 1
     PowerCellPotato: 1
-    AnomalyScanner: 1
-    NodeScanner: 1
+    SyringeBluespace: 1
+    BluespaceBeaker: 1
   contrabandItemPrices:
     BiotechnicaAppraisalTool: 40
     PowerCellPotato: 40
-    AnomalyScanner: 80
-    NodeScanner: 80
-  emaggedInventory:
-    SyringeBluespace: 1
-    BluespaceBeaker: 1
-  emaggedItemPrices:
     SyringeBluespace: 600
     BluespaceBeaker: 600
+  emaggedInventory:
+    AnomalyScanner: 1
+    NodeScanner: 1
+    HandHeldMassScanner: 1
+  emaggedItemPrices:
+    AnomalyScanner: 80
+    NodeScanner: 80
+    HandHeldMassScanner: 800
 
 - type: vendingMachineInventory
   id: BiotechnicaMedTechDrobeInventory
@@ -375,10 +377,12 @@
   emaggedInventory:
     PowerCellHyper: 1
     RemoteSignallerAdvanced: 1
+    ScrewdriverAbductor: 1
     WelderAbductor: 1
   emaggedItemPrices:
     PowerCellHyper: 800
     RemoteSignallerAdvanced: 720
+    ScrewdriverAbductor: 1000
     WelderAbductor: 1200
 
 - type: vendingMachineInventory
@@ -438,3 +442,34 @@
     ClothingOuterWinterChem: 100
   emaggedItemPrices:
     ClothingEyesHudBeer: 600
+
+# region Chief
+
+- type: vendingMachineInventory
+  id: BiotechnicaPDAInventory
+  startingInventory:
+    BiotechnicaChiefPDA: 1
+    BiotechnicaBotanistPDA: 2
+    BiotechnicaMedTechPDA: 2
+    BiotechnicaNetrunnerPDA: 2
+    BiotechnicaOperativeLeadPDA: 1
+    BiotechnicaOperativePDA: 4
+    BiotechnicaParamedicPDA: 2
+    BiotechnicaTechPDA: 2
+    RubberStampApproved: 1
+    RubberStampDenied: 1
+    Paper: 10
+    Envelope: 10
+  startingItemPrices:
+    BiotechnicaChiefPDA: 80
+    BiotechnicaBotanistPDA: 50
+    BiotechnicaMedTechPDA: 50
+    BiotechnicaNetrunnerPDA: 50
+    BiotechnicaOperativeLeadPDA: 80
+    BiotechnicaOperativePDA: 50
+    BiotechnicaParamedicPDA: 50
+    BiotechnicaTechPDA: 50
+    RubberStampApproved: 20
+    RubberStampDenied: 20
+    Paper: 5
+    Envelope: 5
