@@ -187,7 +187,7 @@
 
       # Overdose - if taken at extremely high rates.
       - !type:Emote
-        emote: Cry
+        emote: Crying
         showInChat: true
         probability: 0.1
         conditions:
@@ -273,11 +273,10 @@
 - type: entity
   parent: [Pill, BaseMinorContraband]
   id: PillStardust
-  flavor: stardust
   components:
   - type: Sprite
     sprite: _NC/Objects/Misc/stardust.rsi
-    state: item_pill
+    state: pill1
   - type: Label
     currentLabel: reagent-name-stardust-pill
   - type: Produce
@@ -428,8 +427,6 @@
     sprite: _NC/Objects/Misc/stardust.rsi
     state: item_powder
   - type: Item
-    sprite: _NC/Objects/Misc/stardust.rsi
-    state: item_powder
     size: Tiny
   - type: Material
   - type: Produce  # So we can put it in a plant bag
@@ -447,7 +444,7 @@
     softness: 1
     color: "#5000c0"
   - type: Construction
-    graph: MaterialStardust
+    graph: RecipeStardust
     node: ground
   - type: Tag
     tags:
@@ -488,7 +485,7 @@
   id: JointStardust
   components:
   - type: Construction
-    graph: JointStardust
+    graph: RecipeJointStardust
     node: end
   - type: SolutionContainerManager
     solutions:

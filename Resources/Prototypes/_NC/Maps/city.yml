@@ -3,8 +3,8 @@
   mapName: 'New Aldente'
   mapPath: /Maps/_NC/aldente.yml
   maxRandomOffset: 0
-  randomPainting: false
-  minPlayers: 0 
+  # randomPainting: false
+  minPlayers: 0
   maxPlayers: 90
   stations:
     City:

@@ -1,0 +1,10 @@
+department-name-CivilianNC = Гражданские
+department-desc-CivilianNC = department-CivilianNC-description
+department-name-NCPD = Night City Police Department
+department-desc-NCPD = department-NCPD-description
+department-name-TraumaTeam = Отделение TraumaTeam
+department-desc-TraumaTeam = department-TraumaTeam-description
+department-name-Biotechnica = Отделение Biotechnica
+department-desc-Biotechnica = department-Biotechnica-description
+department-name-Jiraff = Корпорация Zhirafa
+department-desc-Jiraff = department-Biotechnica-description
