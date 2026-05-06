@@ -26,7 +26,7 @@
                     <!-- Vertical Padding -->
                     <Control VerticalExpand="True" />
                     <RichTextLabel Name="ServerName" Access="Public" HorizontalAlignment="Left"
-                                   VerticalAlignment="Center" Margin="20 0 0 420" />
+                                   VerticalAlignment="Center" Margin="20 0 0 470" />
                     <!-- Left Bot Panel -->
                     <PanelContainer Name="BottomLeftPanel" HorizontalAlignment="Left" VerticalAlignment="Bottom">
                         <BoxContainer Orientation="Vertical" SeparationOverride="4" Margin="2">

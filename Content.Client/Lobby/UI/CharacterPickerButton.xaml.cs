@@ -54,6 +54,9 @@ public sealed partial class CharacterPickerButton : ContainerButton
                 var jobName = prototypeManager.Index(highPriorityJob).LocalizedName;
                 description = $"{description}\n{jobName}";
             }
+
+            // NC: Show bank balance in character picker
+            description = $"{description}\n€$ {humanoid.BankBalance:N0}";
         }
 
         Pressed = isSelected;
