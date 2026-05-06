@@ -6,7 +6,7 @@ Night City 2045 форк билда WWDP в мире настольной вер
 
 ## Ссылки
 
-[Steam](https://store.steampowered.com/app/3731580/Space_Station_Beyond/) | [Клиент без Steam](https://github.com/Simple-Station/SimpleStationLauncher/releases/latest) | [Основной репозиторий](https://github.com/Simple-Station/Einstein-Engines) | [Discord](https://discord.gg/vu5VT7ETDX)
+[Discord](https://discord.gg/vu5VT7ETDX)
 
 ## Контрибуция
 
