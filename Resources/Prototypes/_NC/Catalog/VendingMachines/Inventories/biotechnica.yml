@@ -473,3 +473,46 @@
     RubberStampDenied: 20
     Paper: 5
     Envelope: 5
+
+# region Commercial
+
+- type: vendingMachineInventory
+  id: BiotechnicaVendingInventory
+  startingInventory:
+    Syringe: 10
+    Beaker: 5
+    LargeBeaker: 3
+    PillCanister: 10
+    ChemistryEmptyBottle01: 15
+    BaseChemistryEmptyVial: 15
+    Gauze: 8
+    BiotechnicaDropper: 5
+    BiotechnicaLabeler: 2
+    BoxMouthSwab: 2
+  startingItemPrices:
+    Syringe: 20
+    Beaker: 20
+    LargeBeaker: 35
+    PillCanister: 10
+    ChemistryEmptyBottle01: 10
+    BaseChemistryEmptyVial: 10
+    Gauze: 40
+    BiotechnicaDropper: 10
+    BiotechnicaLabeler: 140
+    BoxMouthSwab: 200
+
+- type: entity
+  parent: BaseVendingMachineRestock
+  id: BiotechnicaVendingRestock
+  name: набор пополнения Biotechnica
+  description: Коробка с полным запасом для торговых автоматов с напитками Biotechnica.
+  components:
+  - type: VendingMachineRestock
+    canRestock:
+    - BiotechnicaVendingInventory
+  - type: Sprite
+    layers:
+    - state: base
+    - state: green_bit
+      shader: unshaded
+    - state: refill_chinese

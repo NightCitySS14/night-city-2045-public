@@ -245,7 +245,7 @@
   materials:
     Cloth: 500
     Plastic: 200
-    Aluminium: 200
+    Aluminum: 200
     Plasma: 200
 
 - type: latheRecipe
