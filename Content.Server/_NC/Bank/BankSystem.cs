@@ -1,6 +1,4 @@
 using System.Threading.Tasks;
-using System.Linq;
-using Content.Server.Station.Systems;
 using Content.Shared._NC.Bank;
 using Content.Shared._NC.Bank.Components;
 using Content.Server.Preferences.Managers;
@@ -10,13 +8,10 @@ using Robust.Shared.Player;
 using Content.Shared.GameTicking;
 using Content.Server.Chat.Managers;
 using Robust.Shared.Enums;
-using Content.Shared.Roles;
-using Robust.Shared.Prototypes;
 using Content.Shared.Roles.Jobs;
 using Content.Shared.Mind;
 using Content.Shared.Ghost;
 using Content.Server.Popups;
-using Robust.Shared.Localization;
 
 namespace Content.Server._NC.Bank
 {
@@ -30,7 +25,6 @@ namespace Content.Server._NC.Bank
         [Dependency] private readonly IServerDbManager _db = default!;
         [Dependency] private readonly ISharedPlayerManager _playerManager = default!;
         [Dependency] private readonly IChatManager _chatManager = default!;
-        [Dependency] private readonly IPrototypeManager _protoManager = default!;
         [Dependency] private readonly SharedJobSystem _jobSystem = default!;
         [Dependency] private readonly SharedMindSystem _mindSystem = default!;
         [Dependency] private readonly PopupSystem _popupSystem = default!;
@@ -52,7 +46,7 @@ namespace Content.Server._NC.Bank
             SubscribeLocalEvent<PlayerSpawnCompleteEvent>(OnPlayerSpawn);
             SubscribeLocalEvent<BankAccountComponent, Content.Shared.Verbs.GetVerbsEvent<Content.Shared.Verbs.ActivationVerb>>(OnGetVerbs);
         }
-        
+
         private void OnGetVerbs(EntityUid uid, BankAccountComponent component, Content.Shared.Verbs.GetVerbsEvent<Content.Shared.Verbs.ActivationVerb> args)
         {
             if (args.User != uid) return;
@@ -60,10 +54,7 @@ namespace Content.Server._NC.Bank
             args.Verbs.Add(new Content.Shared.Verbs.ActivationVerb
             {
                 Text = "Реквизиты счета",
-                Act = () =>
-                {
-                    _popupSystem.PopupEntity($"Счет: {component.AccountNumber} | ПИН: {component.PIN}", uid, uid);
-                }
+                Act = () => _popupSystem.PopupEntity($"Счет: {component.AccountNumber} | ПИН: {component.PIN}", uid, uid)
             });
         }
 
@@ -78,21 +69,21 @@ namespace Content.Server._NC.Bank
                 return;
 
             var bankComp = EnsureComp<BankAccountComponent>(ev.Mob);
-            
+
             // Берем баланс напрямую из профиля, загруженного при спавне
             bankComp.Balance = ev.Profile.BankBalance;
 
             // Устанавливаем индекс слота персонажа для корректного сохранения в БД
             bankComp.ProfileSlot = _prefsManager.GetPreferences(ev.Player.UserId).SelectedCharacterIndex;
-            
+
             if (string.IsNullOrEmpty(bankComp.AccountNumber))
             {
                 bankComp.AccountNumber = $"NC-{_random.Next(100000, 999999)}";
                 bankComp.PIN = _random.Next(1000, 9999).ToString();
             }
-            
+
             Dirty(ev.Mob, bankComp);
-            
+
             _chatManager.DispatchServerMessage(ev.Player, $"Ваш банковский счет: {bankComp.AccountNumber}, ПИН-код: {bankComp.PIN}. Никому не сообщайте эти данные.");
         }
 
@@ -279,7 +270,7 @@ namespace Content.Server._NC.Bank
             // Ищем сессию игрока. Сначала по сущности, потом по номеру счета во всем мире.
             if (!_playerManager.TryGetSessionByEntity(mobUid, out var session))
             {
-                // Если сущность не привязана к сессии (например, это карта или банкомат), 
+                // Если сущность не привязана к сессии (например, это карта или банкомат),
                 // ищем живого игрока с таким же номером счета.
                 foreach (var s in _playerManager.Sessions)
                 {
@@ -297,7 +288,7 @@ namespace Content.Server._NC.Bank
             if (session != null && bankComp.ProfileSlot != -1)
             {
                 var prefs = _prefsManager.GetPreferences(session.UserId);
-                if (prefs.Characters.TryGetValue(bankComp.ProfileSlot, out var iProfile) && 
+                if (prefs.Characters.TryGetValue(bankComp.ProfileSlot, out var iProfile) &&
                     iProfile is HumanoidCharacterProfile profile)
                 {
                     var newProfile = profile.WithBankBalance(bankComp.Balance);

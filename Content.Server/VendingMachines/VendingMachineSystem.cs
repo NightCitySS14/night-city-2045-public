@@ -25,6 +25,8 @@ using Content.Shared.Inventory;
 using Content.Shared.Hands.Components;
 using Content.Shared.Hands.EntitySystems;
 using Content.Server._NC.Bank;
+using Content.Server._NC.VendingMachines;  // NC edit: Profitable vending
+using Content.Shared._NC.VendingMachines;  // NC edit: Profitable vending
 
 
 namespace Content.Server.VendingMachines
@@ -39,7 +41,7 @@ namespace Content.Server.VendingMachines
         [Dependency] private readonly Content.Shared.Inventory.InventorySystem _inventory = default!;
         [Dependency] private readonly Content.Shared.Stacks.SharedStackSystem _stack = default!;
         [Dependency] private readonly BankSystem _bank = default!;
-
+        [Dependency] private readonly MoneyCollectorSystem _moneyCollector = default!;
 
         private const float WallVendEjectDistanceFromWall = 1f;
 
@@ -321,6 +323,13 @@ namespace Content.Server.VendingMachines
                     Deny((uid, component), sender);
                     return;
                 }
+
+                // NC edit start: Profitable vending - collect money if the component exists
+                if (TryComp<MoneyCollectorComponent>(uid, out var collector))
+                {
+                    _moneyCollector.CollectMoney(uid, collector, entry.Price);
+                }
+                // NC edit end: Profitable vending
             }
 
             base.AuthorizedVend(uid, sender, type, itemId, component);
