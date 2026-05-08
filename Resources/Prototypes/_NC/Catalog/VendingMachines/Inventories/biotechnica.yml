@@ -500,19 +500,3 @@
     BiotechnicaDropper: 10
     BiotechnicaLabeler: 140
     BoxMouthSwab: 200
-
-- type: entity
-  parent: BaseVendingMachineRestock
-  id: BiotechnicaVendingRestock
-  name: набор пополнения Biotechnica
-  description: Коробка с полным запасом для торговых автоматов с напитками Biotechnica.
-  components:
-  - type: VendingMachineRestock
-    canRestock:
-    - BiotechnicaVendingInventory
-  - type: Sprite
-    layers:
-    - state: base
-    - state: green_bit
-      shader: unshaded
-    - state: refill_chinese
