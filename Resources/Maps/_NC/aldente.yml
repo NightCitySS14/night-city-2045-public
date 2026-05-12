@@ -16556,7 +16556,7 @@ entities:
       playLandSound: True
       landTime: 16662.8984891
       thrownTime: 16662.316671
-      thrower: invalid
+      thrower: null
 - proto: Brutepack
   entities:
   - uid: 726
@@ -48163,8 +48163,7 @@ entities:
       pos: -108.5,-80.5
       parent: 2
     - type: DeviceNetwork
-      configurators:
-      - invalid
+      configurators: []
   - uid: 6856
     components:
     - type: Transform
@@ -48172,8 +48171,7 @@ entities:
       pos: -108.5,-65.5
       parent: 2
     - type: DeviceNetwork
-      configurators:
-      - invalid
+      configurators: []
 - proto: ComputerCriminalRecords
   entities:
   - uid: 6857
@@ -49508,16 +49506,14 @@ entities:
       pos: 25.5,-28.5
       parent: 2
     - type: DeviceNetwork
-      configurators:
-      - invalid
+      configurators: []
   - uid: 7091
     components:
     - type: Transform
       pos: 26.5,-27.5
       parent: 2
     - type: DeviceNetwork
-      configurators:
-      - invalid
+      configurators: []
 - proto: Crowbar
   entities:
   - uid: 7093
@@ -55212,8 +55208,7 @@ entities:
         entity_storage: !type:Container
           showEnts: False
           occludes: True
-          ents:
-          - invalid
+          ents: []
         paper_label: !type:ContainerSlot
           showEnts: False
           occludes: True
@@ -56451,7 +56446,7 @@ entities:
       playLandSound: True
       landTime: 16744.3535796
       thrownTime: 16744.2165891
-      thrower: invalid
+      thrower: null
 - proto: LightPostSmall
   entities:
   - uid: 7993
@@ -62668,8 +62663,7 @@ entities:
         entity_storage: !type:Container
           showEnts: False
           occludes: True
-          ents:
-          - invalid
+          ents: []
         paper_label: !type:ContainerSlot
           showEnts: False
           occludes: True
@@ -77270,8 +77264,7 @@ entities:
         - Fichty bq
     - type: UserInterface
       actors:
-        enum.PaperUiKey.Key:
-        - invalid
+        enum.PaperUiKey.Key: []
     - type: ActiveUserInterface
   - uid: 11206
     components:
@@ -78713,7 +78706,7 @@ entities:
       pos: -32.59087,-29.436928
       parent: 2
     - type: PAI
-      lastUser: invalid
+      lastUser: null
     - type: Physics
       angularDamping: 0
       linearDamping: 0
@@ -148828,7 +148821,7 @@ entities:
       landed: True
       landTime: 20096.6617221
       thrownTime: 20096.0799039
-      thrower: invalid
+      thrower: null
 - proto: WelderMini
   entities:
   - uid: 6664
