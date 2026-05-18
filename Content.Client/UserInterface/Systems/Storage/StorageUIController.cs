@@ -54,7 +54,7 @@ public sealed class StorageUIController : UIController, IOnSystemChanged<Storage
     public Angle DraggingRotation = Angle.Zero;
     public bool StaticStorageUIEnabled;
     public bool OpaqueStorageWindow;
-    private int _openStorageLimit = -1;
+    private int _openStorageLimit = -3;
 
     public bool IsDragging => _menuDragHelper.IsDragging;
     public ItemGridPiece? CurrentlyDragging => _menuDragHelper.Dragged;
