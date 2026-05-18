@@ -240,6 +240,14 @@ namespace Content.Server._NC.Bank.ATM
 
         private void UpdateUi(EntityUid uid, AtmComponent component)
         {
+            // NC Edit Start: Close UI if power is lost during interaction
+            if (!_powerReceiver.IsPowered(uid))
+            {
+                _uiSystem.CloseAll(uid, AtmUiKey.Key);
+                return;
+            }
+            // NC Edit End
+
             string accountName = "Не авторизован";
             int balance = 0;
             bool isLoggedIn = false;
@@ -291,5 +299,7 @@ namespace Content.Server._NC.Bank.ATM
         {
             return _atmSessions.TryGetValue(user, out accountUid);
         }
+    }
+}
     }
 }
