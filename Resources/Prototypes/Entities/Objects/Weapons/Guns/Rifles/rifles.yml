@@ -23,8 +23,8 @@
   # - type: AmmoCounter - WD EDIT
   - type: Gun
     # WD EDIT START
-    angleIncrease: 6
-    angleDecay: 10
+    angleIncrease: 1.5
+    angleDecay: 1.0
     defaultDirection: 1, 0
     # WD EDIT END
     fireRate: 5

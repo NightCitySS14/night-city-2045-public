@@ -25,12 +25,12 @@
   - type: AmmoCounter
   - type: Gun
     bonusAngleIncreaseTurn: 0.2   # wwdp
-    bonusAngleDecay: 50           # wwdp
+    bonusAngleDecay: 10           # wwdp
     maxBonusAngle: 10             # wwdp
-    minAngle: 2 # WWDP
+    minAngle: 1 # WWDP
     maxAngle: 10 # WWDP
-    angleIncrease: 8 # WWDP
-    angleDecay: 10 # WWDP
+    angleIncrease: 1.5 # WWDP
+    angleDecay: 1.0 # WWDP
     selectedMode: SemiAuto
     fireRate: 1.5
     defaultDirection: 1, 0 # wwdp

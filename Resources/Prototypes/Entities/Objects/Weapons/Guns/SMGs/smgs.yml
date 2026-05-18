@@ -18,17 +18,17 @@
   # - type: AmmoCounter - WD EDIT
   - type: Gun
     # WD EDIT START
-    bonusAngleIncreaseTurn: 0.3
-    bonusAngleDecay: 50
-    maxBonusAngle: 15
-    minAngle: 13
-    maxAngle: 30
+    bonusAngleIncreaseTurn: 0.2
+    bonusAngleDecay: 10
+    maxBonusAngle: 10
+    minAngle: 1
+    maxAngle: 10
     # WD EDIT END
     fireRate: 8
     burstFireRate: 8
     # WD EDIT START
-    angleIncrease: 4
-    angleDecay: 10
+    angleIncrease: 1.5
+    angleDecay: 1.0
     # WD EDIT END
     selectedMode: FullAuto
     availableModes:
@@ -99,8 +99,8 @@
     sound:
       collection: RiflesDrop
   - type: GunWieldBonus
-    minAngle: -10
-    maxAngle: -10
+    minAngle: 1
+    maxAngle: 10
   - type: DisarmMalus
     malus: 0.3
   # WD EDIT END
@@ -152,13 +152,13 @@
   # WD EDIT START
   # - type: Wieldable
   # - type: GunWieldBonus
-  #   minAngle: -19
-  #   maxAngle: -16
+  #   minAngle: 1
+  #   maxAngle: 10
   # WD EDIT END
   - type: Gun
     # WD EDIT START
-    # minAngle: 21
-    # maxAngle: 32
+    # minAngle: 1
+    # maxAngle: 10
     # WD EDIT END
     fireRate: 10
     shotsPerBurst: 5
@@ -236,12 +236,12 @@
   # - type: Wieldable
   #   unwieldOnUse: false
   # - type: GunWieldBonus
-  #   minAngle: -19
-  #   maxAngle: -16
+  #   minAngle: 1
+  #   maxAngle: 10
   # WD EDIT END
   - type: Gun
-    # minAngle: 21 - WD EDIT
-    # maxAngle: 32 - WD EDIT
+    # minAngle: 1 - WD EDIT
+    # maxAngle: 10 - WD EDIT
     fireRate: 6
     soundGunshot:
       path: /Audio/Weapons/Guns/Gunshots/atreides.ogg
@@ -306,9 +306,9 @@
     fireRate: 7
     # WD EDIT START
     # minAngle: 1
-    # maxAngle: 6
+    # maxAngle: 10
     # angleIncrease: 1.5
-    # angleDecay: 6
+    # angleDecay: 1.0
     # WD EDIT END
     selectedMode: FullAuto
     shotsPerBurst: 5

@@ -158,8 +158,8 @@
   # WD EDIT START
   - type: Gun
     bonusAngleIncreaseTurn: 0.2
-    bonusAngleDecay: 50
-    maxBonusAngle: 15
+    bonusAngleDecay: 10
+    maxBonusAngle: 10
   # WD EDIT END
 
 - type: entity
@@ -188,9 +188,9 @@
     staminaCost: 5
   # WD EDIT END
   - type: Gun
-    bonusAngleIncreaseMove: 20
-    bonusAngleIncreaseTurn: 0.4
-    bonusAngleDecay: 80
+    bonusAngleIncreaseMove: 10
+    bonusAngleIncreaseTurn: 0.2
+    bonusAngleDecay: 10
     maxBonusAngle: 10
   # WD EDIT END
 
@@ -855,13 +855,13 @@
       shader: unshaded
   - type: Gun
     # WD EDIT START
-    bonusAngleIncreaseTurn: 0.3
-    bonusAngleDecay: 50
+    bonusAngleIncreaseTurn: 0.2
+    bonusAngleDecay: 10
     maxBonusAngle: 10
-    minAngle: 13
-    maxAngle: 30
-    angleIncrease: 4
-    angleDecay: 6
+    minAngle: 1
+    maxAngle: 10
+    angleIncrease: 1.5
+    angleDecay: 1.0
     # WD EDIT END
     selectedMode: FullAuto
     fireRate: 4.5
@@ -888,8 +888,8 @@
     wideAnimationRotation: 180
   # WD EDIT START
   - type: GunWieldBonus
-    minAngle: -10
-    maxAngle: -10
+    minAngle: 1
+    maxAngle: 10
   - type: Battery
     maxCharge: 2500
     startingCharge: 2500

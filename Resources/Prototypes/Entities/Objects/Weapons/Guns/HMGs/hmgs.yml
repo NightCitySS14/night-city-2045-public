@@ -18,10 +18,10 @@
     soundEmpty:
       path: /Audio/Weapons/Guns/Empty/lmg_empty.ogg
     # WD EDIT START
-    bonusAngleIncreaseMove: 60
-    bonusAngleIncreaseTurn: 1.5
-    bonusAngleDecay: 30
-    maxBonusAngle: 30
+    bonusAngleIncreaseMove: 10
+    bonusAngleIncreaseTurn: 0.2
+    bonusAngleDecay: 10
+    maxBonusAngle: 10
     defaultDirection: 1, 0
     # WD EDIT END
   - type: SlowOnShoot
