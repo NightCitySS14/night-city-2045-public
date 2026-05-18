@@ -30,8 +30,8 @@
         - FullAuto
       soundGunshot: /Audio/Weapons/Guns/Gunshots/gun_sentry.ogg
       currentAngle: 25 # Fires first shot at min accuracy.
-      minAngle: 1 # Not guaranteed to hit their shots anymore.
-      maxAngle: 10 # Continuous fire makes their accuracy unreliable.
+      minAngle: 25 # Not guaranteed to hit their shots anymore.
+      maxAngle: 45 # Continuous fire makes their accuracy unreliable.
     - type: BallisticAmmoProvider
       proto: CartridgeCaselessRifle
       capacity: 200
@@ -49,8 +49,8 @@
         - FullAuto
       soundGunshot: /Audio/Weapons/Guns/Gunshots/minigun.ogg
       currentAngle: 45 # Fires first shot at min accuracy.
-      minAngle: 1 # Always cover the screen in bullets.
-      maxAngle: 10
+      minAngle: 45 # Always cover the screen in bullets.
+      maxAngle: 45
     # TODO: Power ammo provider?
     - type: BallisticAmmoProvider
       proto: CartridgeMinigun # BRRT FOOD

@@ -16,9 +16,9 @@
     - 0,1,0,1
     sprite: Objects/Weapons/Guns/Shotguns/flaregun.rsi
   - type: Gun
-    bonusAngleIncreaseMove: 10    # wwdp
-    bonusAngleIncreaseTurn: 0.2   # wwdp
-    bonusAngleDecay: 10           # wwdp
+    bonusAngleIncreaseMove: 20    # wwdp
+    bonusAngleIncreaseTurn: 0.4   # wwdp
+    bonusAngleDecay: 80           # wwdp
     maxBonusAngle: 10             # wwdp
     selectedMode: SemiAuto
     availableModes:

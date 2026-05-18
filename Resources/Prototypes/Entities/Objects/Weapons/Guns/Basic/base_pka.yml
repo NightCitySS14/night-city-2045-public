@@ -21,16 +21,16 @@
       tags:
       - PKAUpgrade
   #- type: GunWieldBonus
-  #  minAngle: 1
-  #  maxAngle: 10
+  #  minAngle: -43
+  #  maxAngle: -43
   #- type: Wieldable
   # Lavaland Change end
   - type: Gun
     fireRate: 0.7 #goobstation
     selectedMode: SemiAuto
-    #angleDecay: 1.0 # Lavaland Change
-    minAngle: 1 # Lavaland Change
-    maxAngle: 10 # Lavaland Change
+    #angleDecay: 45 # Lavaland Change
+    minAngle: 3 # Lavaland Change
+    maxAngle: 5 # Lavaland Change
     availableModes:
     - SemiAuto
     soundGunshot:

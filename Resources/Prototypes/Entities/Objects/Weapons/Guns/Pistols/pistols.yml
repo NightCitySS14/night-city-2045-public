@@ -29,12 +29,12 @@
   - type: Gun
     # WD EDIT START
     bonusAngleIncreaseTurn: 0.2
-    bonusAngleDecay: 10
+    bonusAngleDecay: 50
     maxBonusAngle: 10
-    minAngle: 1
+    minAngle: 2
     maxAngle: 10
-    angleIncrease: 1.5
-    angleDecay: 1.0
+    angleIncrease: 4
+    angleDecay: 10
     defaultDirection: 1, 0
     # WD EDIT END
     fireRate: 6
@@ -376,9 +376,9 @@
     sprite: Objects/Weapons/Guns/Pistols/N1984.rsi
   - type: Gun
     minAngle: 1
-    maxAngle: 10
-    angleIncrease: 1.5
-    angleDecay: 1.0
+    maxAngle: 20
+    angleIncrease: 8
+    angleDecay: 9
     fireRate: 4
     damageModifier: 0.74 # WWDP; 35 -> 25.9 dmg
     availableModes:

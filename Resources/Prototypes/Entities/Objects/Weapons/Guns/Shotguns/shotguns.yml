@@ -31,8 +31,8 @@
       path: /Audio/Weapons/Guns/Empty/empty.ogg
     fireOnDropChance: 0.2
     # WD EDIT START
-    angleIncrease: 1.5
-    maxAngle: 10
+    angleIncrease: 15
+    maxAngle: 75
     defaultDirection: 1, 0
     # WD EDIT END
   - type: SlowOnShoot
@@ -94,9 +94,9 @@
   abstract: true
   components:
   - type: Gun # change WeaponFlareGun too if updating this
-    bonusAngleIncreaseMove: 10
-    bonusAngleIncreaseTurn: 0.2
-    bonusAngleDecay: 10
+    bonusAngleIncreaseMove: 20
+    bonusAngleIncreaseTurn: 0.4
+    bonusAngleDecay: 80
     maxBonusAngle: 10
     fireRate: 2
 # WD EDIT END
@@ -143,9 +143,9 @@
     # WD EDIT START
     # shotgunSpreadMultiplier: 1.5
     # shotgunProjectileCountModifier: 1.33
-    maxAngle: 10
-    angleIncrease: 1.5
-    angleDecay: 1.0
+    maxAngle: 75
+    angleIncrease: 15
+    angleDecay: 10
   # - type: Wieldable
   # WD EDIT END
   - type: ItemSlots

@@ -21,8 +21,8 @@
     delay: 1
   - type: GunRequiresWield
   - type: Gun
-    minAngle: 1
-    maxAngle: 10
+    minAngle: 0
+    maxAngle: 5
     fireRate: 1
     selectedMode: SemiAuto
     availableModes:

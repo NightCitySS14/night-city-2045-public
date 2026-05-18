@@ -16,13 +16,13 @@
   # WD EDIT START
   - type: Wieldable
   - type: GunWieldBonus
-    minAngle: 1
-    maxAngle: 10
+    minAngle: -19
+    maxAngle: -16
   # WD EDIT END
   - type: Gun
     # WD EDIT START
-    minAngle: 1
-    maxAngle: 10
+    minAngle: 21
+    maxAngle: 32
     # WD EDIT END
     fireRate: 8
     shotsPerBurst: 5

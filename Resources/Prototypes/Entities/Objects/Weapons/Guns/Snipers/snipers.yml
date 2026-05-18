@@ -29,8 +29,8 @@
     soundGunshot:
       path: /Audio/Weapons/Guns/Gunshots/sniper.ogg
     # WD EDIT START
-    minAngle: 1
-    angleIncrease: 1.5
+    minAngle: 20
+    angleIncrease: 30
     defaultDirection: 1, 0
     # WD EDIT END
   - type: SlowOnShoot
@@ -175,9 +175,9 @@
   - type: Clothing
     sprite: _White/Objects/Weapons/Guns/Snipers/hristov.rsi # WWDP edit
   - type: Gun
-    angleDecay: 1.0
+    angleDecay: 1
     bonusAngleDecay: 10
-    bonusAngleIncreaseTurn: 0.2
+    bonusAngleIncreaseTurn: 1
     fireRate: 0.4
     selectedMode: SemiAuto
     availableModes:
@@ -280,14 +280,14 @@
   description: A pirate's companion. Yarrr! Uses musket cartridges. # Delta V - Ditto the above
   components:
   - type: Gun
-    minAngle: 1
-    maxAngle: 10 #miss him entirely because the barrel is smoothbore
+    minAngle: 0
+    maxAngle: 30 #miss him entirely because the barrel is smoothbore
     fireOnDropChance: 1
     # WD EDIT START
-    bonusAngleIncreaseMove: 10
-    bonusAngleIncreaseTurn: 0.2
-    bonusAngleDecay: 10
-    maxBonusAngle: 10
+    bonusAngleIncreaseMove: 30
+    bonusAngleIncreaseTurn: 0.4
+    bonusAngleDecay: 30
+    maxBonusAngle: 30
     # WD EDIT END
   - type: Item
     size: Small
