@@ -326,7 +326,8 @@ public abstract class SharedStorageSystem : EntitySystem
             UI.IsUiOpen(container.Owner, StorageComponent.StorageUiKey.Key, actor))
         {
             _nestedCheck = true;
-            HideStorageWindow(container.Owner, actor);
+            // NC Edit: Don't hide the parent storage window
+            // HideStorageWindow(container.Owner, actor);
             OpenStorageUIInternal(uid, actor, storageComp, silent: true);
             _nestedCheck = false;
         }
