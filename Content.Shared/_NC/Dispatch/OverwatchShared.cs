@@ -24,6 +24,7 @@ namespace Content.Shared._NC.Dispatch
         public string CameraName;
         public string TimeStr;
         public NetEntity CameraUid;
+        public NetCoordinates Coordinates;
         public bool Dispatched;
 
         /// <summary>
@@ -32,7 +33,7 @@ namespace Content.Shared._NC.Dispatch
         /// </summary>
         public NetEntity? TargetUid;
 
-        public OverwatchAlertData(int id, string type, string sector, string cameraName, string timeStr, NetEntity cameraUid, bool dispatched = false, NetEntity? targetUid = null)
+        public OverwatchAlertData(int id, string type, string sector, string cameraName, string timeStr, NetEntity cameraUid, NetCoordinates coordinates, bool dispatched = false, NetEntity? targetUid = null)
         {
             Id = id;
             Type = type;
@@ -40,6 +41,7 @@ namespace Content.Shared._NC.Dispatch
             CameraName = cameraName;
             TimeStr = timeStr;
             CameraUid = cameraUid;
+            Coordinates = coordinates;
             Dispatched = dispatched;
             TargetUid = targetUid;
         }

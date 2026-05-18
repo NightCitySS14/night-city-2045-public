@@ -196,8 +196,7 @@ namespace Content.Server._NC.Trauma
                         if (damageable.DamagePerGroup.TryGetValue("Toxin", out var toxinVal)) toxin = toxinVal.Float();
                     }
 
-                    var xform = Transform(patientUid);
-                    var targetCoords = GetNetCoordinates(xform.Coordinates);
+                    var targetCoords = GetNetCoordinates(_pinpointer.GetMoverCoordinates(patientUid));
 
                     var jobTitle = Loc.GetString("trauma-unknown-job");
                     if (TryComp<MindContainerComponent>(patientUid, out var mindContainer) &&
