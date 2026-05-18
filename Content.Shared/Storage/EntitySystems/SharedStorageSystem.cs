@@ -356,19 +356,6 @@ public abstract class SharedStorageSystem : EntitySystem
         if (!CanInteract(entity, (uid, storageComp), silent: silent))
             return;
 
-        if (storageComp.OpenDelay > TimeSpan.Zero)
-        {
-            var doAfterArgs = new DoAfterArgs(EntityManager, entity, storageComp.OpenDelay, new StorageOpenDoAfterEvent(), uid, target: uid)
-            {
-                BreakOnDamage = true,
-                BreakOnMove = false,
-                NeedHand = true
-            };
-
-            _doAfterSystem.TryStartDoAfter(doAfterArgs);
-            return;
-        }
-
         OpenStorageUIInternalFinal(uid, entity, storageComp, silent, useDelay);
     }
 
