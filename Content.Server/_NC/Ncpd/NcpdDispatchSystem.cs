@@ -103,7 +103,7 @@ namespace Content.Server._NC.Ncpd
         public void AddCall(string title, string sector, string description, NetCoordinates coordinates, string sourceId = "", EntityUid? targetUid = null)
         {
             // NC Edit Start: Safety check for invalid coordinates (0,0 bug prevention)
-            var coords = _entManager.GetCoordinates(coordinates);
+            var coords = EntityManager.GetCoordinates(coordinates);
             if (!coords.EntityId.Valid)
                 return;
             // NC Edit End
@@ -163,7 +163,7 @@ namespace Content.Server._NC.Ncpd
                 var activeCall = _activeCalls.FirstOrDefault(c => c.Id == activeCallId);
                 if (activeCall.Id != 0)
                 {
-                    var callCoords = _entManager.GetCoordinates(activeCall.Coordinates);
+                    var callCoords = EntityManager.GetCoordinates(activeCall.Coordinates);
                     if (callCoords.EntityId.Valid)
                     {
                         displayGrid = callCoords.EntityId;
@@ -190,7 +190,7 @@ namespace Content.Server._NC.Ncpd
                 if (!bComp.IsVisible) continue;
 
                 // Only show beacons for the current grid
-                if (bXform.GridUid != displayGrid && bXform.MapID != displayGrid)
+                if (bXform.GridUid != displayGrid && bXform.MapID != MapId.Nullspace)
                     continue;
                 
                 // SHOW ONLY PUBLIC BEACONS: No required role AND group is Public
@@ -222,7 +222,7 @@ namespace Content.Server._NC.Ncpd
                     if (EntityManager.EntityExists(targetEnt) && TryComp<TransformComponent>(targetEnt, out var targetXform))
                     {
                         // Check if target is on the grid we are looking at
-                        if (targetXform.GridUid != displayGrid && targetXform.MapID != displayGrid)
+                        if (targetXform.GridUid != displayGrid && targetXform.MapID != MapId.Nullspace)
                         {
                             // Optional: could show an indicator that target is off-grid
                         }
