@@ -25,5 +25,5 @@ public sealed partial class WireSpoolComponent : Component
 [Serializable, NetSerializable]
 public sealed class WireSpoolComponentState : ComponentState
 {
-    public EntityUid? ActiveProvider;
+    public NetEntity? ActiveProvider;
 }

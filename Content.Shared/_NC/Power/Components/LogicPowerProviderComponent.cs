@@ -19,5 +19,5 @@ public sealed partial class LogicPowerProviderComponent : Component
 [Serializable, NetSerializable]
 public sealed class LogicPowerProviderComponentState : ComponentState
 {
-    public List<EntityUid> Receivers = new();
+    public List<NetEntity> Receivers = new();
 }

@@ -20,33 +20,33 @@ public abstract class SharedLogicPowerSystem : EntitySystem
 
     private void OnSpoolGetState(EntityUid uid, WireSpoolComponent component, ref ComponentGetState args)
     {
-        args.State = new WireSpoolComponentState { ActiveProvider = component.ActiveProvider };
+        args.State = new WireSpoolComponentState { ActiveProvider = GetNetEntity(component.ActiveProvider) };
     }
 
     private void OnSpoolHandleState(EntityUid uid, WireSpoolComponent component, ref ComponentHandleState args)
     {
         if (args.Current is not WireSpoolComponentState state)
             return;
-        component.ActiveProvider = state.ActiveProvider;
+        component.ActiveProvider = GetEntity(state.ActiveProvider);
     }
 
     private void OnProviderGetState(EntityUid uid, LogicPowerProviderComponent component, ref ComponentGetState args)
     {
-        args.State = new LogicPowerProviderComponentState { Receivers = new List<EntityUid>(component.Receivers) };
+        args.State = new LogicPowerProviderComponentState { Receivers = GetNetEntityList(component.Receivers) };
     }
 
     private void OnProviderHandleState(EntityUid uid, LogicPowerProviderComponent component, ref ComponentHandleState args)
     {
         if (args.Current is not LogicPowerProviderComponentState state)
             return;
-        component.Receivers = new List<EntityUid>(state.Receivers);
+        component.Receivers = GetEntityList(state.Receivers);
     }
 
     private void OnReceiverGetState(EntityUid uid, LogicPowerReceiverComponent component, ref ComponentGetState args)
     {
         args.State = new LogicPowerReceiverComponentState
         {
-            Provider = component.Provider,
+            Provider = GetNetEntity(component.Provider),
             Powered = component.Powered,
             PowerLoad = component.PowerLoad
         };
@@ -56,7 +56,7 @@ public abstract class SharedLogicPowerSystem : EntitySystem
     {
         if (args.Current is not LogicPowerReceiverComponentState state)
             return;
-        component.Provider = state.Provider;
+        component.Provider = GetEntity(state.Provider);
         component.Powered = state.Powered;
         component.PowerLoad = state.PowerLoad;
     }

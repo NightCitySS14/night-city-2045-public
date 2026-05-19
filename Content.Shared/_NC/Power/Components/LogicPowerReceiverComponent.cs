@@ -31,7 +31,7 @@ public sealed partial class LogicPowerReceiverComponent : Component
 [Serializable, NetSerializable]
 public sealed class LogicPowerReceiverComponentState : ComponentState
 {
-    public EntityUid? Provider;
+    public NetEntity? Provider;
     public bool Powered;
     public float PowerLoad;
 }
