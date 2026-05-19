@@ -89,9 +89,8 @@
     idleLoad: 5
     batteryRechargeRate: 200
     batteryRechargeEfficiency: 1.225
-  - type: ApcPowerReceiver
+  - type: LogicPowerReceiver
     powerLoad: 5
-  - type: ExtensionCableReceiver
   - type: HTN
     rootTask:
       task: EnergyTurretCompound

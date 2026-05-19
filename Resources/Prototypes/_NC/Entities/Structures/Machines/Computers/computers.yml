@@ -58,5 +58,5 @@
       - ["NCPD_Armory"]
       - ["NCPD_Detective"]
       - ["NCPD_Command"]
-  - type: ApcPowerReceiver
+  - type: LogicPowerReceiver
     powerLoad: 1000

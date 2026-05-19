@@ -51,9 +51,8 @@
   parent: BaseMachine
   id: BaseMachinePowered
   components:
-  - type: ApcPowerReceiver
+  - type: LogicPowerReceiver
     powerLoad: 1000
-  - type: ExtensionCableReceiver
   - type: LightningTarget
     priority: 1
   - type: LanguageSpeaker # Yes, on BASE MACHINE. This is all I need to make sure that in 99% of cases, machines use the language system.

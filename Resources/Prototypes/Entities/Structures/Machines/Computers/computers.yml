@@ -538,7 +538,7 @@
         type: ResearchClientBoundUserInterface
       enum.WiresUiKey.Key:
         type: WiresBoundUserInterface
-  - type: ApcPowerReceiver
+  - type: LogicPowerReceiver
     powerLoad: 1000
   - type: Computer
     board: ResearchComputerCircuitboard
@@ -590,7 +590,7 @@
         type: ResearchClientBoundUserInterface
       enum.WiresUiKey.Key:
         type: WiresBoundUserInterface
-  - type: ApcPowerReceiver
+  - type: LogicPowerReceiver
     powerLoad: 1000
   - type: Computer
     board: AnalysisComputerCircuitboard
@@ -671,7 +671,7 @@
   name: body scanner computer
   description: A body scanner.
   components:
-  - type: ApcPowerReceiver
+  - type: LogicPowerReceiver
     powerLoad: 500
   - type: Computer
     board: BodyScannerComputerCircuitboard
@@ -1013,7 +1013,7 @@
       state: generic_keys
     - map: [ "enum.WiresVisualLayers.MaintenancePanel" ]
       state: generic_panel_open
-  - type: ApcPowerReceiver
+  - type: LogicPowerReceiver
     powerLoad: 3100 #We want this to fail first so I transferred most of the scanner and pod's power here. (3500 in total)
   - type: Computer
     board: CloningConsoleComputerCircuitboard
@@ -1331,7 +1331,7 @@
         type: RoboticsConsoleBoundUserInterface
       enum.WiresUiKey.Key:
         type: WiresBoundUserInterface
-  - type: ApcPowerReceiver
+  - type: LogicPowerReceiver
     powerLoad: 1000
   - type: DeviceNetwork
     deviceNetId: Wireless
@@ -1364,7 +1364,7 @@
       state: generic_keys
     - map: [ "enum.WiresVisualLayers.MaintenancePanel" ]
       state: generic_panel_open
-  - type: ApcPowerReceiver
+  - type: LogicPowerReceiver
     powerLoad: 1000
   - type: AccessReader
     access: [ [ "ResearchDirector" ] ]

@@ -40,7 +40,7 @@
   - type: DeviceLinkSink
     ports:
       - OrderReceiver
-  - type: ApcPowerReceiver
+  - type: LogicPowerReceiver
     powerLoad: 1000 # TODO if we keep this make it spike power draw when teleporting
   - type: CargoTelepad
   - type: Machine

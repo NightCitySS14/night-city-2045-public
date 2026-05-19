@@ -57,11 +57,10 @@
     - type: ContainerContainer
       containers:
         board: !type:Container
-    - type: ApcPowerReceiver
+    - type: LogicPowerReceiver
       powerLoad: 200
     - type: WallMount
       arc: 360
-    - type: ExtensionCableReceiver
     - type: Construction
       graph: StationMap
       node: station_map

@@ -36,10 +36,9 @@
   placement:
     mode: SnapgridCenter
   components:
-  - type: ExtensionCableReceiver
   - type: LightningTarget
     priority: 1
-  - type: ApcPowerReceiver
+  - type: LogicPowerReceiver
     powerLoad: 200
   - type: Rotatable
   - type: Transform
@@ -96,10 +95,9 @@
   placement:
     mode: SnapgridCenter
   components:
-    - type: ExtensionCableReceiver
     - type: LightningTarget
       priority: 1
-    - type: ApcPowerReceiver
+    - type: LogicPowerReceiver
       powerLoad: 200
     - type: Rotatable
     - type: Transform

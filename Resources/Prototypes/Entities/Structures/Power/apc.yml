@@ -79,6 +79,7 @@
     voltage: Apc
   - type: Apc
     voltage: Apc
+  - type: LogicPowerProvider
   - type: ExtensionCableProvider
   - type: UserInterface
     interfaces:

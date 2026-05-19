@@ -19,7 +19,7 @@
         - MidImpassable
         - LowImpassable
         hard: false
-  - type: ApcPowerReceiver
+  - type: LogicPowerReceiver
     powerLoad: 300
   - type: Appearance
   - type: ContainerContainer

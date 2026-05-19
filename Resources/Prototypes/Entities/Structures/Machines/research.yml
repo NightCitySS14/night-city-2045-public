@@ -18,9 +18,8 @@
     - Arsenal
     - Experimental
     - CivilianServices
-  - type: ApcPowerReceiver
+  - type: LogicPowerReceiver
     powerLoad: 200
-  - type: ExtensionCableReceiver
   - type: WiresPanel
   - type: WiresVisuals
   - type: Machine

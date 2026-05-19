@@ -7,9 +7,8 @@
   - type: Sprite
     sprite: Structures/Power/Generation/PA/control_box.rsi
   - type: ParticleAcceleratorControlBox
-  - type: ApcPowerReceiver
+  - type: LogicPowerReceiver
     powerLoad: 250
-  - type: ExtensionCableReceiver
   - type: Construction
     graph: ParticleAcceleratorControlBox
   - type: ActivatableUI

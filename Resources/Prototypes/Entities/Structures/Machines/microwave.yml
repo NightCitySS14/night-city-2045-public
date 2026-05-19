@@ -101,7 +101,7 @@
     intensitySlope: 5
     canCreateVacuum: false
     deleteAfterExplosion: false
-  - type: ApcPowerReceiver
+  - type: LogicPowerReceiver
     powerLoad: 400
   - type: Machine
     board: MicrowaveMachineCircuitboard

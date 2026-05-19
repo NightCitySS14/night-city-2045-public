@@ -70,9 +70,8 @@
       key: enum.PowerChargeUiKey.Key
     - type: ActivatableUIRequiresPower
     - type: Anchorable
-    - type: ApcPowerReceiver
+    - type: LogicPowerReceiver
       powerLoad: 2500
-    - type: ExtensionCableReceiver
     - type: Damageable
       damageContainer: Inorganic
       damageModifierSet: Metallic

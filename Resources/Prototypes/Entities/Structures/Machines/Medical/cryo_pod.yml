@@ -70,9 +70,8 @@
           node: machineFrame
         - !type:DoActsBehavior
           acts: [ "Destruction" ]
-  - type: ApcPowerReceiver
+  - type: LogicPowerReceiver
     powerLoad: 3000
-  - type: ExtensionCableReceiver
   - type: NodeContainer
     nodes:
       port:

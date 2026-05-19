@@ -31,8 +31,7 @@
     enabled: false
     usesApcPower: true
   - type: WallMount
-  - type: ApcPowerReceiver
-  - type: ExtensionCableReceiver
+  - type: LogicPowerReceiver
   - type: Eye
   - type: WiredNetworkConnection
   - type: DeviceNetworkRequiresPower

@@ -30,9 +30,8 @@
       autoConnect: false
     - type: WirelessNetworkConnection
       range: 10000 # Mega range for Listening Post
-    - type: ApcPowerReceiver
+    - type: LogicPowerReceiver
       powerLoad: 200
-    - type: ExtensionCableReceiver
     - type: Destructible
       thresholds:
         - trigger:

@@ -12,9 +12,8 @@
   - type: Sprite
     sprite: Structures/Machines/telecomms.rsi
     state: icon
-  - type: ApcPowerReceiver
+  - type: LogicPowerReceiver
     powerLoad: 200
-  - type: ExtensionCableReceiver
   - type: Anchorable
 
 # Предзаполненный вариант для маппинга

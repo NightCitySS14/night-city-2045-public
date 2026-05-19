@@ -228,9 +228,7 @@
     - coillv-10
     - coillv-20
     - coillv-30
-  - type: CablePlacer
-    cablePrototypeID: CableApcExtension
-    blockingWireType: Apc
+  - type: WireSpool
   - type: Appearance
   - type: Extractable
     grindableSolutionName: lvcable

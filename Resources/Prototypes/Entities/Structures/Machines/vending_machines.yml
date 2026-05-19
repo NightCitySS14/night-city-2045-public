@@ -98,7 +98,7 @@
     mask: /Textures/Effects/LightMasks/cone.png
     autoRot: true
   - type: LitOnPowered
-  - type: ApcPowerReceiver
+  - type: LogicPowerReceiver
     powerLoad: 200
   - type: Actions
   - type: SentienceTarget

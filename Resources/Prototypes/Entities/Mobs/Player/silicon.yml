@@ -755,7 +755,7 @@
           collection: MetalBreak
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
-  - type: ApcPowerReceiver
+  - type: LogicPowerReceiver
     powerLoad: 1000
   - type: StationAiCore
   - type: StationAiVision

@@ -16,9 +16,8 @@
     containers:
       - board
   - type: Computer
-  - type: ApcPowerReceiver
+  - type: LogicPowerReceiver
     powerLoad: 200
-  - type: ExtensionCableReceiver
   - type: ActivatableUIRequiresPower
   - type: Sprite
     sprite: Structures/Machines/computers.rsi

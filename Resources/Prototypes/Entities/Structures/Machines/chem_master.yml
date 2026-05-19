@@ -52,7 +52,7 @@
     interfaces:
       enum.ChemMasterUiKey.Key:
         type: ChemMasterBoundUserInterface
-  - type: ApcPowerReceiver
+  - type: LogicPowerReceiver
     powerLoad: 250
   - type: Appearance
   - type: GenericVisualizer

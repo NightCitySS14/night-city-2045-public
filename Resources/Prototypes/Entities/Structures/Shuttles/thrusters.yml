@@ -36,9 +36,8 @@
     - type: Sprite
     - type: Appearance
     - type: ThrusterVisuals
-    - type: ApcPowerReceiver
+    - type: LogicPowerReceiver
       powerLoad: 1500
-    - type: ExtensionCableReceiver
     - type: Damageable
       damageContainer: StructuralInorganic
       damageModifierSet: Electronic
@@ -119,7 +118,7 @@
   components:
   - type: Thruster
     requireSpace: false
-  - type: ApcPowerReceiver
+  - type: LogicPowerReceiver
     needsPower: false
     powerLoad: 0
   - type: Sprite
@@ -225,7 +224,7 @@
     requireSpace: false
     baseThrust: 100
     thrust: 100
-  - type: ApcPowerReceiver
+  - type: LogicPowerReceiver
     needsPower: false
     powerLoad: 0
   - type: Sprite

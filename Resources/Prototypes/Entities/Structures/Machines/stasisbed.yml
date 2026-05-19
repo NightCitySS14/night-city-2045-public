@@ -21,9 +21,8 @@
       map: ["enum.StasisBedVisualLayers.IsOn"]
   - type: StasisBedVisuals
   - type: Appearance
-  - type: ApcPowerReceiver
+  - type: LogicPowerReceiver
     powerLoad: 1000
-  - type: ExtensionCableReceiver
   - type: Damageable
     damageContainer: Inorganic
     damageModifierSet: Metallic

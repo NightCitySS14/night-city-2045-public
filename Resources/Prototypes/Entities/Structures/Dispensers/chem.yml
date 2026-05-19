@@ -18,8 +18,7 @@
       tags:
       - ChemDispensable
     pack: ChemDispenserStandardInventory
-  - type: ApcPowerReceiver
-  - type: ExtensionCableReceiver
+  - type: LogicPowerReceiver
   - type: Destructible
     thresholds:
     - trigger:

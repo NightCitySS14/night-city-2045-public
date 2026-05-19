@@ -18,7 +18,7 @@
     slotId: charger_slot
     portable: true
   - type: PowerChargerVisuals
-  - type: ApcPowerReceiver
+  - type: LogicPowerReceiver
     needsPower: false
     powerLoad: 0
   - type: StaticPrice

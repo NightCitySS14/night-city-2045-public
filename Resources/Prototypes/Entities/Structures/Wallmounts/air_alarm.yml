@@ -9,11 +9,10 @@
   components:
   - type: StationAiWhitelist
   - type: WallMount
-  - type: ApcPowerReceiver
+  - type: LogicPowerReceiver
   - type: Electrified
     enabled: false
     usesApcPower: true
-  - type: ExtensionCableReceiver
   - type: DeviceNetwork
     deviceNetId: AtmosDevices
     receiveFrequencyId: AtmosMonitor

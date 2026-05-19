@@ -14,8 +14,7 @@
     drawdepth: WallMountedItems
     sprite: Structures/Wallmounts/barsign.rsi
     state: empty
-  - type: ApcPowerReceiver
-  - type: ExtensionCableReceiver
+  - type: LogicPowerReceiver
   - type: BarSign
   - type: InteractionOutline
   - type: AccessReader
@@ -68,8 +67,7 @@
 #    drawdepth: WallTops
 #    sprite: Structures/Wallmounts/sylphs.rsi
 #    state: sylph
-#  - type: ApcPowerReceiver
-#  - type: ExtensionCableReceiver
+#  - type: LogicPowerReceiver
 #  - type: BarSign
 
 - type: entity

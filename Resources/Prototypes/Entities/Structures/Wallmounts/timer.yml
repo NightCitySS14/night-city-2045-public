@@ -35,12 +35,11 @@
     interfaces:
       enum.SignalTimerUiKey.Key:
         type: SignalTimerBoundUserInterface
-  - type: ApcPowerReceiver
+  - type: LogicPowerReceiver
     powerLoad: 100
   - type: Electrified
     enabled: false
     usesApcPower: true
-  - type: ExtensionCableReceiver
   - type: ActivatableUIRequiresPower
   - type: Construction
     graph: Timer

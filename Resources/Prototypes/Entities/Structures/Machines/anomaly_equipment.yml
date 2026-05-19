@@ -177,7 +177,7 @@
     fireBurstSize: 1
     baseFireBurstDelayMin: 2
     baseFireBurstDelayMax: 6
-  - type: ApcPowerReceiver
+  - type: LogicPowerReceiver
     powerLoad: 100
   - type: GuideHelp
     guides:
@@ -248,9 +248,8 @@
       map: ["enum.AnomalyGeneratorVisualLayers.Base"]
   - type: Transform
     anchored: true
-  - type: ApcPowerReceiver
+  - type: LogicPowerReceiver
     powerLoad: 1500
-  - type: ExtensionCableReceiver
   - type: AmbientSound
     range: 5
     volume: -6
