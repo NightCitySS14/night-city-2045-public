@@ -57,7 +57,7 @@
   - type: Tag
     tags:
     - WeldbotFixableStructure
-  - type: LogicPowerReceiver
+  - type: ApcPowerReceiver
   - type: DoorSignalControl
   - type: DeviceNetwork
     deviceNetId: Wireless

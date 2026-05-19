@@ -18,7 +18,7 @@
     - Arsenal
     - Experimental
     - CivilianServices
-  - type: LogicPowerReceiver
+  - type: ApcPowerReceiver
     powerLoad: 200
   - type: WiresPanel
   - type: WiresVisuals

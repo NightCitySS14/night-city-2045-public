@@ -100,7 +100,7 @@
   - type: PoweredLight
     bulb: Bulb
     on: false
-  - type: LogicPowerReceiver
+  - type: ApcPowerReceiver
   - type: DeviceNetwork
     deviceNetId: Wireless
     receiveFrequencyId: SmartLight

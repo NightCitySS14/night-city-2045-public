@@ -31,7 +31,7 @@
     - type: WirelessNetworkConnection
       range: 10000 # Delta-V Maximises the range for the Crew Monitor Server to make it work for Listening Post
     - type: StationLimitedNetwork
-    - type: LogicPowerReceiver
+    - type: ApcPowerReceiver
       powerLoad: 200
     - type: Destructible
       thresholds:

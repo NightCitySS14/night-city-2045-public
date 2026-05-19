@@ -28,7 +28,7 @@
   placement:
     mode: SnapgridCenter
   components:
-    - type: LogicPowerReceiver
+    - type: ApcPowerReceiver
     - type: DeviceNetwork
       prefix: device-address-prefix-vent
     - type: Tag
@@ -113,7 +113,7 @@
   placement:
     mode: SnapgridCenter
   components:
-    - type: LogicPowerReceiver
+    - type: ApcPowerReceiver
     - type: DeviceNetwork
       prefix: device-address-prefix-scrubber
     - type: Tag
@@ -281,7 +281,7 @@
           False: { state: freezerOff }
   - type: GasThermoMachine
     coefficientOfPerformance: -3.9
-  - type: LogicPowerReceiver
+  - type: ApcPowerReceiver
     powerDisabled: true #starts off
   - type: Machine
     board: ThermomachineFreezerMachineCircuitBoard
@@ -296,7 +296,7 @@
   suffix: Enabled
   components:
   - type: GasThermoMachine
-  - type: LogicPowerReceiver
+  - type: ApcPowerReceiver
     powerDisabled: false
 
 - type: entity
@@ -326,7 +326,7 @@
           False: { state: heaterOff }
   - type: GasThermoMachine
     coefficientOfPerformance: 0.95
-  - type: LogicPowerReceiver
+  - type: ApcPowerReceiver
     powerDisabled: true #starts off
   - type: Machine
     board: ThermomachineHeaterMachineCircuitBoard
@@ -341,7 +341,7 @@
   suffix: Enabled
   components:
   - type: GasThermoMachine
-  - type: LogicPowerReceiver
+  - type: ApcPowerReceiver
     powerDisabled: false
 
 - type: entity
@@ -414,7 +414,7 @@
   - type: AtmosPipeColor
   - type: AtmosDevice
   # - type: PipeRestrictOverlap # Allow pipe stacking on device.
-  - type: LogicPowerReceiver
+  - type: ApcPowerReceiver
     powerLoad: 10000
   - type: Machine
     board: CondenserMachineCircuitBoard

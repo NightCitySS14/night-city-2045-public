@@ -14,7 +14,7 @@
     - map: ["enum.EntityHeaterVisuals.Setting"]
       shader: unshaded
       visible: false
-  - type: LogicPowerReceiver
+  - type: ApcPowerReceiver
     powerLoad: 0 # off by default
   - type: EntityHeater
   - type: ItemPlacer

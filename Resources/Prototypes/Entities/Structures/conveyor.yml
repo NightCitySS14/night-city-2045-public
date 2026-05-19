@@ -15,7 +15,7 @@
     sprite: Structures/conveyor.rsi
     state: conveyor_started_cw
     drawdepth: HighFloorObjects
-  - type: LogicPowerReceiver
+  - type: ApcPowerReceiver
   - type: Physics
     bodyType: Static
   - type: Fixtures

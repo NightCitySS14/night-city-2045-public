@@ -83,7 +83,7 @@
         friction: 0.2
   - type: Clickable
   - type: InteractionOutline
-  - type: LogicPowerReceiver
+  - type: ApcPowerReceiver
   - type: AccessReader
     access: [ [ "Atmospherics" ] ]
   - type: Construction

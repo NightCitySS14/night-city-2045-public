@@ -38,7 +38,7 @@
   components:
   - type: LightningTarget
     priority: 1
-  - type: LogicPowerReceiver
+  - type: ApcPowerReceiver
     powerLoad: 200
   - type: Rotatable
   - type: Transform
@@ -97,7 +97,7 @@
   components:
     - type: LightningTarget
       priority: 1
-    - type: LogicPowerReceiver
+    - type: ApcPowerReceiver
       powerLoad: 200
     - type: Rotatable
     - type: Transform

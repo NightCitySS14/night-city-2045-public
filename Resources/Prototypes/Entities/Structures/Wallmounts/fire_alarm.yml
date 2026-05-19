@@ -4,6 +4,7 @@
   description: A fire alarm. Spicy!
   components:
   - type: WallMount
+  - type: ApcPowerReceiver
   - type: LogicPowerReceiver
   - type: Electrified
     enabled: false

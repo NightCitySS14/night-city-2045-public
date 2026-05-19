@@ -177,7 +177,7 @@
   - type: LockedWiresPanel
 
   # General properties
-  - type: LogicPowerReceiver
+  - type: ApcPowerReceiver
   - type: Electrified
     enabled: false
     usesApcPower: true

@@ -26,7 +26,7 @@
     damage:
       types:
         Blunt: 100
-  - type: LogicPowerReceiver
+  - type: ApcPowerReceiver
     needsPower: false
     powerLoad: 250
   - type: FaxMachine

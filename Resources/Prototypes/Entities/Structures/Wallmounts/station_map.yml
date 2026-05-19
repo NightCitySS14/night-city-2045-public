@@ -57,7 +57,7 @@
     - type: ContainerContainer
       containers:
         board: !type:Container
-    - type: LogicPowerReceiver
+    - type: ApcPowerReceiver
       powerLoad: 200
     - type: WallMount
       arc: 360

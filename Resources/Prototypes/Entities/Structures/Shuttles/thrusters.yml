@@ -36,7 +36,7 @@
     - type: Sprite
     - type: Appearance
     - type: ThrusterVisuals
-    - type: LogicPowerReceiver
+    - type: ApcPowerReceiver
       powerLoad: 1500
     - type: Damageable
       damageContainer: StructuralInorganic
@@ -118,7 +118,7 @@
   components:
   - type: Thruster
     requireSpace: false
-  - type: LogicPowerReceiver
+  - type: ApcPowerReceiver
     needsPower: false
     powerLoad: 0
   - type: Sprite
@@ -224,7 +224,7 @@
     requireSpace: false
     baseThrust: 100
     thrust: 100
-  - type: LogicPowerReceiver
+  - type: ApcPowerReceiver
     needsPower: false
     powerLoad: 0
   - type: Sprite

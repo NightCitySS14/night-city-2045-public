@@ -64,6 +64,10 @@ public sealed class LogicPowerSystem : SharedLogicPowerSystem
                 if (isPowered)
                 {
                     _battery.SetCharge(uid, battery.CurrentCharge - receiver.PowerLoad * frameTime, battery);
+                    
+                    // Fire event to notify ApcSystem for UI/Visual updates
+                    var chargeEv = new ChargeChangedEvent();
+                    RaiseLocalEvent(uid, ref chargeEv);
                 }
             }
         }

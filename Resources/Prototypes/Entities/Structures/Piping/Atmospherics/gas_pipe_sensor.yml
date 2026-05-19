@@ -35,7 +35,7 @@
   - type: GasPipeSensor
   - type: AtmosMonitoringConsoleDevice
     navMapBlip: GasPipeSensor
-  - type: LogicPowerReceiver
+  - type: ApcPowerReceiver
   - type: Construction
     graph: GasPipeSensor
     node: sensor

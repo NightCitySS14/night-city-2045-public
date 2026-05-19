@@ -46,7 +46,7 @@
   - type: Transform
     anchored: true
     noRot: false
-  - type: LogicPowerReceiver
+  - type: ApcPowerReceiver
     powerLoad: 2500
     needsPower: true
   - type: UpgradePowerDraw

@@ -91,6 +91,8 @@
           False: { visible: False }
   - type: WiresVisuals
   - type: ElectrocutionHUDVisuals
+  - type: ApcPowerReceiver
+    powerLoad: 20
   - type: LogicPowerReceiver
     powerLoad: 20
   - type: Electrified

@@ -9,7 +9,7 @@
     syncWith:
     - FireAlarm
     - AirAlarm
-  - type: LogicPowerReceiver
+  - type: ApcPowerReceiver
   - type: DeviceNetwork
     deviceNetId: AtmosDevices
     receiveFrequencyId: AtmosMonitor

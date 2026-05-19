@@ -45,7 +45,7 @@
         nodeGroupID: Pipe
         rotationsEnabled: false
         volume: 1
-  - type: LogicPowerReceiver
+  - type: ApcPowerReceiver
     powerLoad: 2000
   - type: Appearance
   - type: GenericVisualizer
@@ -124,7 +124,7 @@
         - MachineMask
         layer:
         - MachineLayer
-  - type: LogicPowerReceiver
+  - type: ApcPowerReceiver
     powerDisabled: true #starts off
   - type: Sprite
     sprite: Structures/Piping/Atmospherics/Portable/portable_sheater.rsi
@@ -202,5 +202,5 @@
   id: SpaceHeaterEnabled
   suffix: Anchored, Enabled
   components:
-  - type: LogicPowerReceiver
+  - type: ApcPowerReceiver
     powerDisabled: false

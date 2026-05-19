@@ -24,7 +24,7 @@
         map: ["enum.GravityGeneratorVisualLayers.Core"]
   - type: Transform
     anchored: true
-  - type: LogicPowerReceiver
+  - type: ApcPowerReceiver
     powerLoad: 2500
   - type: Physics
     bodyType: Static
@@ -128,7 +128,7 @@
   - type: WiresPanel
   - type: Machine
     board: MiniGravityGeneratorCircuitboard
-  - type: LogicPowerReceiver
+  - type: ApcPowerReceiver
     powerLoad: 500
   - type: PowerCharge
     idlePower: 15

@@ -80,7 +80,7 @@
       supplyRampTolerance: 10000000000
 
     - type: Appearance
-    - type: LogicPowerReceiver
+    - type: ApcPowerReceiver
       powerLoad: 1000
 
     - type: LitOnPowered

@@ -19,7 +19,7 @@
   - type: Machine
     board: JukeboxCircuitBoard
   - type: Appearance
-  - type: LogicPowerReceiver
+  - type: ApcPowerReceiver
     powerLoad: 100
   - type: ActivatableUI
     key: enum.JukeboxUiKey.Key

@@ -11,7 +11,7 @@
   - type: Sprite
     snapCardinals: true
   - type: Appearance
-  - type: LogicPowerReceiver
+  - type: ApcPowerReceiver
     powerLoad: 5
   - type: Charger
     slotId: charger_slot

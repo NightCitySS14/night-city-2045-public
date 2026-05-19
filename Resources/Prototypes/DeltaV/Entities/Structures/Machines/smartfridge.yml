@@ -27,7 +27,7 @@
       smart_fridge_inventory: !type:Container
       smart_fridge_insertion: !type:ContainerSlot
   - type: LitOnPowered
-  - type: LogicPowerReceiver
+  - type: ApcPowerReceiver
     powerLoad: 200
   - type: SmartFridge
     whitelist:

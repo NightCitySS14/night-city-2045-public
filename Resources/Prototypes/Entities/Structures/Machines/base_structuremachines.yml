@@ -51,6 +51,8 @@
   parent: BaseMachine
   id: BaseMachinePowered
   components:
+  - type: ApcPowerReceiver
+    powerLoad: 1000
   - type: LogicPowerReceiver
     powerLoad: 1000
   - type: LightningTarget

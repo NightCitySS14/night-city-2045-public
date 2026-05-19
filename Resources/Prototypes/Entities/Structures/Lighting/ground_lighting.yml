@@ -84,7 +84,7 @@
   - type: ContainerContainer
     containers:
       light_bulb: !type:ContainerSlot
-  - type: LogicPowerReceiver
+  - type: ApcPowerReceiver
   - type: DeviceNetwork
     deviceNetId: Wireless
     receiveFrequencyId: SmartLight

@@ -5,7 +5,7 @@
   name: arcade
   parent: BaseComputer
   components:
-  - type: LogicPowerReceiver
+  - type: ApcPowerReceiver
     powerLoad: 350
   - type: PointLight
     radius: 1.8

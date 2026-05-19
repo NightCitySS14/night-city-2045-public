@@ -12,7 +12,7 @@
   - type: Sprite
     sprite: Structures/Machines/telecomms.rsi
     state: icon
-  - type: LogicPowerReceiver
+  - type: ApcPowerReceiver
     powerLoad: 200
   - type: Anchorable
 

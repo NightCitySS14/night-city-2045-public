@@ -6,6 +6,7 @@
   components:
   - type: StationAiWhitelist
   - type: WallMount
+  - type: ApcPowerReceiver
   - type: LogicPowerReceiver
   - type: Electrified
     enabled: false

@@ -27,7 +27,7 @@
   - type: Construction
     graph: Timer
     node: screen
-  - type: LogicPowerReceiver
+  - type: ApcPowerReceiver
     powerLoad: 100
   - type: Electrified
     enabled: false

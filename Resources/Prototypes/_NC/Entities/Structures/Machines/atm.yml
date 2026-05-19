@@ -21,6 +21,7 @@
         - MachineLayer
   - type: InteractionOutline
   - type: Clickable
+  - type: ApcPowerReceiver
   - type: LogicPowerReceiver
     powerLoad: 100
     needsPower: true

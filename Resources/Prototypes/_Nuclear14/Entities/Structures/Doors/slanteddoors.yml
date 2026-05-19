@@ -311,7 +311,7 @@
   - type: Damageable
     damageContainer: Inorganic
     damageModifierSet: StructuralMetallic
-  - type: LogicPowerReceiver
+  - type: ApcPowerReceiver
     powerLoad: 10
   - type: Airlock
   - type: LayerChangeOnWeld

@@ -16,7 +16,7 @@
     containers:
       - board
   - type: Computer
-  - type: LogicPowerReceiver
+  - type: ApcPowerReceiver
     powerLoad: 200
   - type: ActivatableUIRequiresPower
   - type: Sprite

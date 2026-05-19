@@ -42,7 +42,7 @@
   - type: Transform
     anchored: true
     noRot: false
-  - type: LogicPowerReceiver
+  - type: ApcPowerReceiver
     powerLoad: 12000
     needsPower: false #only turns on when scanning
   - type: ArtifactAnalyzer

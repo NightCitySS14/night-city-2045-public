@@ -781,7 +781,7 @@
     sound:
       path: /Audio/Ambience/Objects/vending_machine_hum.ogg
   - type: LitOnPowered
-  - type: LogicPowerReceiver
+  - type: ApcPowerReceiver
     powerLoad: 200
   # - type: Advertise
   #   pack: CuddlyCritterAds # TODO Change this

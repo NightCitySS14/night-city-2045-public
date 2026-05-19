@@ -18,7 +18,7 @@
         - LowImpassable
   - type: Physics
     canCollide: False
-  - type: LogicPowerReceiver
+  - type: ApcPowerReceiver
     powerLoad: 300
   - type: StationAiVision
   - type: Sprite

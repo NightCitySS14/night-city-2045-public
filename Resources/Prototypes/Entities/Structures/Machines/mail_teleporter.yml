@@ -27,7 +27,7 @@
   - type: Damageable
     damageContainer: StructuralInorganic
     damageModifierSet: StructuralMetallicStrong
-  - type: LogicPowerReceiver
+  - type: ApcPowerReceiver
     powerLoad: 1000
   - type: Appearance
   - type: GenericVisualizer

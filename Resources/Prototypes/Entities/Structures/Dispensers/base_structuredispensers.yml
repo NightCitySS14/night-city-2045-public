@@ -23,7 +23,7 @@
         - TabletopMachineMask
         layer:
         - TabletopMachineLayer
-  - type: LogicPowerReceiver
+  - type: ApcPowerReceiver
   - type: ActivatableUI
     key: enum.ReagentDispenserUiKey.Key
   - type: ActivatableUIRequiresPower
