@@ -13,4 +13,10 @@ public sealed partial class DirectorSpawneeComponent : Component
     /// </summary>
     [DataField]
     public EntityUid EventEntity;
+
+    /// <summary>
+    /// Tag to identify which group this entity belongs to (e.g., "GroupA").
+    /// </summary>
+    [DataField]
+    public string? GroupTag;
 }

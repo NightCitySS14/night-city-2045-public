@@ -9,8 +9,9 @@
       announcement: "director-test-event-gathering"
       locationTag: "Hidden"
       spawns:
-        - MobHumanSyndicateAgent
-        - MobHumanSyndicateAgent
+        - prototype: MobHumanSyndicateAgent
+          faction: NCBandit
+          amount: 2
       nextPhases:
         Skirmish: 70
         PoliceRaid: 30
@@ -31,7 +32,9 @@
       duration: 300
       announcement: "director-test-event-police-raid"
       spawns:
-        - MobHumanNukeOp # Using NukeOp as a placeholder for strong NCPD for now
+        - prototype: MobHumanNukeOp
+          faction: NCMilitech
+          amount: 1
       nextPhases:
         Cleanup: 100
 

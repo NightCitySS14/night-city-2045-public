@@ -86,7 +86,7 @@ public sealed partial class DirectorPhase
     /// Entities to spawn at the start of this phase.
     /// </summary>
     [DataField]
-    public List<string> Spawns { get; private set; } = new();
+    public List<DirectorSpawnGroup> Spawns { get; private set; } = new();
 
     /// <summary>
     /// List of triggers that can advance this phase.
@@ -100,6 +100,41 @@ public sealed partial class DirectorPhase
     /// </summary>
     [DataField]
     public Dictionary<string, float> NextPhases { get; private set; } = new();
+
+    /// <summary>
+    /// Faction IDs to apply to specific groups at the start of this phase.
+    /// Key is the GroupTag defined in DirectorSpawnGroup.
+    /// </summary>
+    [DataField]
+    public Dictionary<string, string> FactionOverrides { get; private set; } = new();
+}
+
+[DataDefinition]
+public sealed partial class DirectorSpawnGroup
+{
+    /// <summary>
+    /// Prototype ID of the entity to spawn.
+    /// </summary>
+    [IdDataField]
+    public string Prototype { get; private set; } = string.Empty;
+
+    /// <summary>
+    /// Optional tag to identify this group for faction overrides or AI changes.
+    /// </summary>
+    [DataField]
+    public string? GroupTag;
+
+    /// <summary>
+    /// Faction ID to assign to the spawned entity (e.g., "Maelstrom", "Valentino").
+    /// </summary>
+    [DataField]
+    public string? Faction;
+
+    /// <summary>
+    /// Number of entities of this prototype to spawn.
+    /// </summary>
+    [DataField]
+    public int Amount = 1;
 }
 
 [DataDefinition]

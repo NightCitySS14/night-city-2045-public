@@ -4,6 +4,7 @@ using Content.Server.NPC.HTN;
 using Content.Shared._NC.Director;
 using Content.Shared.Mobs;
 using Content.Shared.Mobs.Components;
+using Content.Shared.NPC.Systems;
 using Robust.Server.GameObjects;
 using Robust.Shared.Map;
 using Robust.Shared.Prototypes;
@@ -23,6 +24,7 @@ public sealed class GlobalDirectorSystem : EntitySystem
     [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly AnnouncerSystem _announcer = default!;
     [Dependency] private readonly HTNSystem _htn = default!;
+    [Dependency] private readonly NpcFactionSystem _faction = default!;
 
     private ISawmill _sawmill = default!;
 
@@ -256,17 +258,40 @@ public sealed class GlobalDirectorSystem : EntitySystem
             var coords = GetSpawnLocation(nextPhaseData.LocationTag);
             if (coords.IsValid(EntityManager))
             {
-                foreach (var spawnProto in nextPhaseData.Spawns)
+                foreach (var group in nextPhaseData.Spawns)
                 {
-                    var spawned = EntityManager.SpawnEntity(spawnProto, coords);
-                    var spawnee = EnsureComp<DirectorSpawneeComponent>(spawned);
-                    spawnee.EventEntity = uid;
-                    component.SpawnedEntities.Add(spawned);
+                    for (var i = 0; i < group.Amount; i++)
+                    {
+                        var spawned = EntityManager.SpawnEntity(group.Prototype, coords);
+                        var spawnee = EnsureComp<DirectorSpawneeComponent>(spawned);
+                        spawnee.EventEntity = uid;
+                        spawnee.GroupTag = group.GroupTag;
+                        component.SpawnedEntities.Add(spawned);
+
+                        if (group.Faction != null)
+                        {
+                            _faction.ClearFactions(spawned);
+                            _faction.AddFaction(spawned, group.Faction);
+                        }
+                    }
                 }
             }
             else
             {
                 _sawmill.Warning($"Could not find a valid spawn location for event {proto.Name} ({uid}) phase {nextPhaseId} with tag {nextPhaseData.LocationTag}");
+            }
+        }
+
+        // Apply Faction Overrides
+        foreach (var (tag, faction) in nextPhaseData.FactionOverrides)
+        {
+            foreach (var entity in component.SpawnedEntities)
+            {
+                if (TryComp<DirectorSpawneeComponent>(entity, out var spawnee) && spawnee.GroupTag == tag)
+                {
+                    _faction.ClearFactions(entity);
+                    _faction.AddFaction(entity, faction);
+                }
             }
         }
 
