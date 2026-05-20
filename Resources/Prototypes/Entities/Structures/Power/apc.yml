@@ -64,7 +64,7 @@
         !type:CableDeviceNode
         nodeGroupID: MVPower
       output:
-        !type:CableDeviceNode
+        !type:CableNode
         nodeGroupID: Apc
   - type: PowerMonitoringDevice
     group: APC
