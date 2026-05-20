@@ -159,9 +159,9 @@ public sealed class LogicPowerSystem : SharedLogicPowerSystem
             TryComp<ApcPowerReceiverComponent>(receiverUid, out var receiver))
         {
             // Sync wattage
-            if (TryComp<LogicPowerReceiverComponent>(receiverUid, out var logicReceiver))
+            if (TryComp<LogicPowerReceiverComponent>(receiverUid, out var targetReceiver))
             {
-                receiver.Load = logicReceiver.PowerLoad;
+                receiver.Load = targetReceiver.PowerLoad;
             }
 
             provider.AddReceiver(receiver);
