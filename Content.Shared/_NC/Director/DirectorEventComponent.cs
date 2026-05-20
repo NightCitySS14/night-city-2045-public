@@ -10,10 +10,10 @@ namespace Content.Shared._NC.Director;
 public sealed partial class DirectorEventComponent : Component
 {
     /// <summary>
-    /// The current phase index of the event.
+    /// The current phase ID of the event.
     /// </summary>
     [DataField, AutoNetworkedField]
-    public int CurrentPhase = 0;
+    public string? CurrentPhase;
 
     /// <summary>
     /// When the current phase is scheduled to end.
@@ -32,4 +32,11 @@ public sealed partial class DirectorEventComponent : Component
     /// </summary>
     [DataField, AutoNetworkedField]
     public string PrototypeId = string.Empty;
+
+    /// <summary>
+    /// Counter for triggers in the current phase.
+    /// Key is a string representation of the trigger (e.g., "MobKilled:MobHuman").
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public Dictionary<string, int> TriggerCounters = new();
 }

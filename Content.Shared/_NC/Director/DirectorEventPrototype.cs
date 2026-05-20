@@ -16,6 +16,12 @@ public sealed partial class DirectorEventPrototype : IPrototype
     public string Name { get; private set; } = string.Empty;
 
     /// <summary>
+    /// The ID of the phase to start with.
+    /// </summary>
+    [DataField]
+    public string StartPhase { get; private set; } = "Start";
+
+    /// <summary>
     /// ID of the announcer to use for phase announcements.
     /// If null, the director's default is used.
     /// </summary>
@@ -36,7 +42,7 @@ public sealed partial class DirectorEventPrototype : IPrototype
     public float Weight { get; private set; } = 10f;
 
     [DataField]
-    public List<DirectorPhase> Phases { get; private set; } = new();
+    public Dictionary<string, DirectorPhase> Phases { get; private set; } = new();
 }
 
 [DataDefinition]
@@ -59,6 +65,24 @@ public sealed partial class DirectorPhase
     public string? Announcement;
 
     /// <summary>
+    /// Tag for spawn points where entities should be spawned.
+    /// </summary>
+    [DataField]
+    public string? LocationTag;
+
+    /// <summary>
+    /// HTN Domain to apply to all spawned entities at the start of this phase.
+    /// </summary>
+    [DataField]
+    public string? AiDomain;
+
+    /// <summary>
+    /// If true, all spawned entities will be deleted at the END of this phase.
+    /// </summary>
+    [DataField]
+    public bool Cleanup;
+
+    /// <summary>
     /// Entities to spawn at the start of this phase.
     /// </summary>
     [DataField]
@@ -69,6 +93,13 @@ public sealed partial class DirectorPhase
     /// </summary>
     [DataField]
     public List<DirectorTrigger> Triggers { get; private set; } = new();
+
+    /// <summary>
+    /// Possible next phases with their respective weights.
+    /// Key is the phase ID from the prototype's Phases dictionary.
+    /// </summary>
+    [DataField]
+    public Dictionary<string, float> NextPhases { get; private set; } = new();
 }
 
 [DataDefinition]
@@ -82,6 +113,12 @@ public sealed partial class DirectorTrigger
     /// </summary>
     [DataField]
     public string? Target { get; private set; }
+
+    /// <summary>
+    /// Number of occurrences required to activate the trigger.
+    /// </summary>
+    [DataField]
+    public int Count { get; private set; } = 1;
 }
 
 public enum DirectorTriggerType : byte

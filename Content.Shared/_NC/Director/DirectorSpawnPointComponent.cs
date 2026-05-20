@@ -6,4 +6,9 @@ namespace Content.Shared._NC.Director;
 [RegisterComponent]
 public sealed partial class DirectorSpawnPointComponent : Component
 {
+    /// <summary>
+    /// Tag used to categorize this spawn point (e.g., "Maintenance", "Alley", "Hidden").
+    /// </summary>
+    [DataField]
+    public string? LocationTag;
 }

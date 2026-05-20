@@ -1,18 +1,43 @@
 - type: directorEvent
   id: TestLivingWorldEvent
   name: "Cyber-Gangs Skirmish"
+  startPhase: "Gathering"
   phases:
-    - name: "The Gathering"
+    Gathering:
+      name: "The Gathering"
       duration: 300
       announcement: "director-test-event-gathering"
+      locationTag: "Hidden"
       spawns:
         - MobHumanSyndicateAgent
         - MobHumanSyndicateAgent
-    - name: "The Conflict"
+      nextPhases:
+        Skirmish: 70
+        PoliceRaid: 30
+
+    Skirmish:
+      name: "The Conflict"
       duration: 600
       announcement: "director-test-event-conflict"
+      aiDomain: "TacticalCombat"
       triggers:
         - type: MobKilled
-    - name: "The Cleanup"
+          count: 2
+      nextPhases:
+        Cleanup: 100
+
+    PoliceRaid:
+      name: "NCPD Intervention"
       duration: 300
+      announcement: "director-test-event-police-raid"
+      spawns:
+        - MobHumanNukeOp # Using NukeOp as a placeholder for strong NCPD for now
+      nextPhases:
+        Cleanup: 100
+
+    Cleanup:
+      name: "The Cleanup"
+      duration: 120
       announcement: "director-test-event-cleanup"
+      aiDomain: "FleeToExtraction"
+      cleanup: true

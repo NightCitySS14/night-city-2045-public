@@ -1,5 +1,6 @@
 using System.Linq;
 using Content.Server.Announcements.Systems;
+using Content.Server.NPC.HTN;
 using Content.Shared._NC.Director;
 using Content.Shared.Mobs;
 using Content.Shared.Mobs.Components;
@@ -21,6 +22,7 @@ public sealed class GlobalDirectorSystem : EntitySystem
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly AnnouncerSystem _announcer = default!;
+    [Dependency] private readonly HTNSystem _htn = default!;
 
     private ISawmill _sawmill = default!;
 
@@ -106,23 +108,28 @@ public sealed class GlobalDirectorSystem : EntitySystem
         if (!_prototype.TryIndex<DirectorEventPrototype>(component.PrototypeId, out var proto))
             return false;
 
-        if (component.CurrentPhase < 0 || component.CurrentPhase >= proto.Phases.Count)
+        if (component.CurrentPhase == null || !proto.Phases.TryGetValue(component.CurrentPhase, out var phase))
             return false;
 
-        var phase = proto.Phases[component.CurrentPhase];
         foreach (var trigger in phase.Triggers)
         {
             if (trigger.Type != type)
                 continue;
 
-            if (trigger.Target != null)
-            {
-                var targetProto = MetaData(targetUid).EntityPrototype?.ID;
-                if (targetProto != trigger.Target)
-                    continue;
-            }
+            var targetProto = MetaData(targetUid).EntityPrototype?.ID;
+            if (trigger.Target != null && targetProto != trigger.Target)
+                continue;
 
-            return true;
+            // Update counter
+            var key = $"{type}:{trigger.Target ?? "any"}";
+            component.TriggerCounters.TryGetValue(key, out var currentCount);
+            currentCount++;
+            component.TriggerCounters[key] = currentCount;
+
+            if (currentCount >= trigger.Count)
+            {
+                return true;
+            }
         }
 
         return false;
@@ -169,7 +176,7 @@ public sealed class GlobalDirectorSystem : EntitySystem
         var uid = EntityManager.SpawnEntity(null, MapCoordinates.Nullspace);
         var directorEvent = EnsureComp<DirectorEventComponent>(uid);
         directorEvent.PrototypeId = proto.ID;
-        directorEvent.CurrentPhase = -1; // So AdvancePhase moves to 0
+        directorEvent.CurrentPhase = null; // Start from the beginning
         
         AdvancePhase(uid, directorEvent);
         return uid;
@@ -190,16 +197,49 @@ public sealed class GlobalDirectorSystem : EntitySystem
             return;
         }
 
-        component.CurrentPhase++;
+        string? nextPhaseId = null;
 
-        if (component.CurrentPhase >= proto.Phases.Count)
+        if (component.CurrentPhase == null)
+        {
+            nextPhaseId = proto.StartPhase;
+        }
+        else if (proto.Phases.TryGetValue(component.CurrentPhase, out var currentPhaseData))
+        {
+            // Cleanup previous phase if needed
+            if (currentPhaseData.Cleanup)
+            {
+                foreach (var entity in component.SpawnedEntities.ToArray())
+                {
+                    EntityManager.DeleteEntity(entity);
+                }
+            }
+
+            // Pick next phase
+            if (currentPhaseData.NextPhases.Count > 0)
+            {
+                var totalWeight = currentPhaseData.NextPhases.Values.Sum();
+                var pick = _random.NextFloat(totalWeight);
+                foreach (var (id, weight) in currentPhaseData.NextPhases)
+                {
+                    pick -= weight;
+                    if (pick <= 0)
+                    {
+                        nextPhaseId = id;
+                        break;
+                    }
+                }
+            }
+        }
+
+        if (nextPhaseId == null || !proto.Phases.TryGetValue(nextPhaseId, out var nextPhaseData))
         {
             _sawmill.Info($"Event {proto.Name} ({uid}) finished.");
             EntityManager.DeleteEntity(uid);
             return;
         }
 
-        var phase = proto.Phases[component.CurrentPhase];
+        component.CurrentPhase = nextPhaseId;
+        component.TriggerCounters.Clear();
 
         // Get director settings for defaults
         var directorQuery = EntityQueryEnumerator<GlobalDirectorComponent>();
@@ -209,14 +249,14 @@ public sealed class GlobalDirectorSystem : EntitySystem
             announcerId = proto.AnnouncerId ?? director.DefaultAnnouncerId;
             announcementColor = proto.AnnouncementColor ?? director.AnnouncementColor;
         }
-
+        
         // Handle Spawns
-        if (phase.Spawns.Count > 0)
+        if (nextPhaseData.Spawns.Count > 0)
         {
-            var coords = GetSpawnLocation();
+            var coords = GetSpawnLocation(nextPhaseData.LocationTag);
             if (coords.IsValid(EntityManager))
             {
-                foreach (var spawnProto in phase.Spawns)
+                foreach (var spawnProto in nextPhaseData.Spawns)
                 {
                     var spawned = EntityManager.SpawnEntity(spawnProto, coords);
                     var spawnee = EnsureComp<DirectorSpawneeComponent>(spawned);
@@ -226,24 +266,37 @@ public sealed class GlobalDirectorSystem : EntitySystem
             }
             else
             {
-                _sawmill.Warning($"Could not find a valid spawn location for event {proto.Name} ({uid}) phase {phase.Name}");
+                _sawmill.Warning($"Could not find a valid spawn location for event {proto.Name} ({uid}) phase {nextPhaseId} with tag {nextPhaseData.LocationTag}");
+            }
+        }
+
+        // Apply AI Domain (HTN)
+        if (nextPhaseData.AiDomain != null && _prototype.TryIndex<HTNCompoundPrototype>(nextPhaseData.AiDomain, out var domain))
+        {
+            foreach (var entity in component.SpawnedEntities)
+            {
+                if (TryComp<HTNComponent>(entity, out var htn))
+                {
+                    htn.RootTask = new HTNCompoundTask { Task = domain.ID };
+                    _htn.Replan(htn);
+                }
             }
         }
 
         // Handle Announcement
-        if (phase.Announcement != null)
+        if (nextPhaseData.Announcement != null)
         {
             _announcer.SendAnnouncement(
                 announcerId,
-                Loc.GetString(phase.Announcement),
+                Loc.GetString(nextPhaseData.Announcement),
                 colorOverride: announcementColor
             );
         }
 
         // Set timer for next phase
-        if (phase.Duration != null)
+        if (nextPhaseData.Duration != null)
         {
-            component.PhaseEndTime = _timing.CurTime + phase.Duration.Value;
+            component.PhaseEndTime = _timing.CurTime + nextPhaseData.Duration.Value;
         }
         else
         {
@@ -251,15 +304,18 @@ public sealed class GlobalDirectorSystem : EntitySystem
         }
         
         Dirty(uid, component);
-        _sawmill.Debug($"Event {proto.Name} ({uid}) advanced to phase {component.CurrentPhase}: {phase.Name}");
+        _sawmill.Debug($"Event {proto.Name} ({uid}) advanced to phase {component.CurrentPhase}: {nextPhaseData.Name}");
     }
 
-    private EntityCoordinates GetSpawnLocation()
+    private EntityCoordinates GetSpawnLocation(string? locationTag = null)
     {
         var query = EntityQueryEnumerator<DirectorSpawnPointComponent, TransformComponent>();
         var points = new List<EntityCoordinates>();
-        while (query.MoveNext(out var uid, out _, out var xform))
+        while (query.MoveNext(out var uid, out var spawnPoint, out var xform))
         {
+            if (locationTag != null && spawnPoint.LocationTag != locationTag)
+                continue;
+
             points.Add(xform.Coordinates);
         }
 
