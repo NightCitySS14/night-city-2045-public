@@ -1,0 +1,7 @@
+- type: entity
+  id: GlobalDirector
+  parent: BaseGameRule
+  components:
+  - type: GlobalDirector
+    minDelay: 300
+    maxDelay: 600

@@ -1,0 +1,18 @@
+- type: directorEvent
+  id: TestLivingWorldEvent
+  name: "Cyber-Gangs Skirmish"
+  phases:
+    - name: "The Gathering"
+      duration: 300
+      announcement: "director-test-event-gathering"
+      spawns:
+        - MobHumanSyndicateAgent
+        - MobHumanSyndicateAgent
+    - name: "The Conflict"
+      duration: 600
+      announcement: "director-test-event-conflict"
+      triggers:
+        - type: MobKilled
+    - name: "The Cleanup"
+      duration: 300
+      announcement: "director-test-event-cleanup"

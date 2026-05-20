@@ -1,0 +1,6 @@
+- type: entity
+  id: DirectorSpawnPoint
+  parent: MarkerBase
+  name: director spawn point
+  components:
+  - type: DirectorSpawnPoint
