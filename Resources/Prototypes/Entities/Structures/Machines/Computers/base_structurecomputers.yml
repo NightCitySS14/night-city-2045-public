@@ -5,10 +5,6 @@
   placement:
     mode: SnapgridCenter
   components:
-  - type: ApcPowerReceiver
-    powerLoad: 100
-  - type: LogicPowerReceiver
-    powerLoad: 100
   - type: Animateable
   - type: MeleeSound
     soundGroups:
@@ -21,6 +17,8 @@
       - board
   - type: Computer
   - type: ApcPowerReceiver
+    powerLoad: 200
+  - type: LogicPowerReceiver
     powerLoad: 200
   - type: ActivatableUIRequiresPower
   - type: Sprite
