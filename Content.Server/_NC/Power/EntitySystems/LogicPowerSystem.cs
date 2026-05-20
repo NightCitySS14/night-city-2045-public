@@ -19,8 +19,6 @@ public sealed class LogicPowerSystem : SharedLogicPowerSystem
     [Dependency] private readonly SharedPopupSystem _popup = default!;
     [Dependency] private readonly SharedStackSystem _stack = default!;
     [Dependency] private readonly InventorySystem _inventory = default!;
-    [Dependency] private readonly BatterySystem _battery = default!;
-    [Dependency] private readonly AppearanceSystem _appearance = default!;
     [Dependency] private readonly SharedToolSystem _toolSystem = default!;
 
     public override void Initialize()
@@ -31,46 +29,6 @@ public sealed class LogicPowerSystem : SharedLogicPowerSystem
 
         SubscribeLocalEvent<LogicPowerProviderComponent, ComponentShutdown>(OnProviderShutdown);
         SubscribeLocalEvent<LogicPowerReceiverComponent, ComponentShutdown>(OnReceiverShutdown);
-    }
-
-    public override void Update(float frameTime)
-    {
-        base.Update(frameTime);
-
-        var providerQuery = EntityQueryEnumerator<LogicPowerProviderComponent, ApcComponent, BatteryComponent>();
-        while (providerQuery.MoveNext(out var uid, out var logicProvider, out var apc, out var battery))
-        {
-            var canProvide = apc.MainBreakerEnabled && battery.CurrentCharge > 0;
-
-            foreach (var receiverUid in logicProvider.Receivers)
-            {
-                if (!TryComp<LogicPowerReceiverComponent>(receiverUid, out var receiver))
-                    continue;
-
-                var wasPowered = receiver.Powered;
-                var isPowered = canProvide; // For now, simple ON/OFF distribution
-
-                if (isPowered != wasPowered)
-                {
-                    receiver.Powered = isPowered;
-                    Dirty(receiverUid, receiver);
-
-                    var ev = new PowerChangedEvent(isPowered, isPowered ? receiver.PowerLoad : 0f);
-                    RaiseLocalEvent(receiverUid, ref ev);
-
-                    _appearance.SetData(receiverUid, PowerDeviceVisuals.Powered, isPowered);
-                }
-
-                if (isPowered)
-                {
-                    _battery.SetCharge(uid, battery.CurrentCharge - receiver.PowerLoad * frameTime, battery);
-                    
-                    // Fire event to notify ApcSystem for UI/Visual updates
-                    var chargeEv = new ChargeChangedEvent();
-                    RaiseLocalEvent(uid, ref chargeEv);
-                }
-            }
-        }
     }
 
     private void OnAfterInteract(EntityUid uid, WireSpoolComponent component, AfterInteractEvent args)
@@ -97,7 +55,7 @@ public sealed class LogicPowerSystem : SharedLogicPowerSystem
                 return;
 
             var providerUid = component.ActiveProvider.Value;
-            
+
             if (!HasComp<LogicPowerProviderComponent>(providerUid) && !HasComp<ApcComponent>(providerUid))
             {
                 component.ActiveProvider = null;
@@ -133,7 +91,7 @@ public sealed class LogicPowerSystem : SharedLogicPowerSystem
 
             // Establish link
             Link(providerUid, target);
-            
+
             _popup.PopupEntity(Loc.GetString("wire-spool-success"), uid, args.User);
             args.Handled = true;
         }
@@ -193,8 +151,16 @@ public sealed class LogicPowerSystem : SharedLogicPowerSystem
 
         if (!logicProvider.Receivers.Contains(receiverUid))
             logicProvider.Receivers.Add(receiverUid);
-            
+
         logicReceiver.Provider = providerUid;
+
+        // CRITICAL: Integrate with vanilla Pow3r solver
+        if (TryComp<ApcPowerProviderComponent>(providerUid, out var provider) && 
+            TryComp<ApcPowerReceiverComponent>(receiverUid, out var receiver))
+        {
+            provider.AddReceiver(receiver);
+            receiver.Provider = provider;
+        }
 
         Dirty(providerUid, logicProvider);
         Dirty(receiverUid, logicReceiver);
@@ -212,12 +178,17 @@ public sealed class LogicPowerSystem : SharedLogicPowerSystem
             Dirty(providerUid, logicProvider);
         }
 
+        // CRITICAL: Clean up from vanilla Pow3r solver
+        if (TryComp<ApcPowerProviderComponent>(providerUid, out var provider) && 
+            TryComp<ApcPowerReceiverComponent>(receiverUid, out var receiver))
+        {
+            provider.RemoveReceiver(receiver);
+            receiver.Provider = null;
+        }
+
         logicReceiver.Provider = null;
         logicReceiver.Powered = false;
         Dirty(receiverUid, logicReceiver);
-
-        var ev = new PowerChangedEvent(false, 0f);
-        RaiseLocalEvent(receiverUid, ref ev);
-        _appearance.SetData(receiverUid, PowerDeviceVisuals.Powered, false);
     }
 }
+
