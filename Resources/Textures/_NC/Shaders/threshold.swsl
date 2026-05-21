@@ -1,0 +1,13 @@
+light_mode unshaded;
+uniform sampler2D SCREEN_TEXTURE;
+uniform highp float threshold;
+
+void fragment() {
+    highp vec4 col = texture(SCREEN_TEXTURE, UV);
+    highp float brightness = dot(col.rgb, vec3(0.2126, 0.7152, 0.0722));
+    if (brightness > threshold) {
+        COLOR = col;
+    } else {
+        COLOR = vec4(0.0, 0.0, 0.0, 1.0);
+    }
+}

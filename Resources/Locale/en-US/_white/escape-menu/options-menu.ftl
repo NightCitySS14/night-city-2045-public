@@ -13,6 +13,9 @@ ui-options-hud-theme-xenomorph = Xenomorph
 
 ui-options-film-grain = Grain
 ui-options-film-grain-strength = Grain intensity: { $strength }
+ui-options-bloom = Bloom
+ui-options-bloom-intensity = Bloom intensity: { $intensity }
+ui-options-vignette = Vignette
 
 ui-options-bark-volume = Bark volume
 ui-options-bark-limit = Bark limit
