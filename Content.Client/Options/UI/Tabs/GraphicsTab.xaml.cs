@@ -76,6 +76,7 @@ public sealed partial class GraphicsTab : Control
             200,
             (_, value) => (value / 100.0f).ToString("F2"));
         Control.AddOptionCheckBox(WhiteCVars.Vignette, VignetteCheckBox);
+        Control.AddOptionCheckBox(WhiteCVars.SplitToning, SplitToningCheckBox);
         // WD EDIT END
         Control.AddOptionCheckBox(CCVars.HudFpsCounterVisible, FpsCounterCheckBox);
         Control.AddOptionCheckBox(CCVars.MoodVisualEffects, MoodVisualEffectsCheckBox);

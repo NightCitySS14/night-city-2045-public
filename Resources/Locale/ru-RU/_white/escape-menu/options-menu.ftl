@@ -16,6 +16,7 @@ ui-options-film-grain-strength = Интенсивность зернистост
 ui-options-bloom = Блум
 ui-options-bloom-intensity = Интенсивность блума: { $intensity }
 ui-options-vignette = Виньетирование
+ui-options-split-toning = Умная цветокоррекция (Split Toning)
 
 ui-options-bark-volume = Громкость лая
 ui-options-bark-limit = Лимит лая
