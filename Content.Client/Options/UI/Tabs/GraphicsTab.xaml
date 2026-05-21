@@ -21,7 +21,6 @@
                 <CheckBox Name="BloomCheckBox" Text="{Loc 'ui-options-bloom'}" />
                 <ui:OptionSlider Name="BloomIntensitySlider" Title="{Loc 'ui-options-bloom-intensity'}" />
                 <CheckBox Name="VignetteCheckBox" Text="{Loc 'ui-options-vignette'}" />
-                <CheckBox Name="SplitToningCheckBox" Text="{Loc 'ui-options-split-toning'}" />
                 <!-- WD EDIT END -->
 
                 <!-- Interface -->

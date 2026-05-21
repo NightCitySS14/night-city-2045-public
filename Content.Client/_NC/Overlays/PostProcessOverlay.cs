@@ -102,8 +102,6 @@ public sealed class PostProcessOverlay : Overlay
             _postProcessShader.SetParameter("grainStrength", _cfg.GetCVar(WhiteCVars.FilmGrainStrength) / 100f);
         }
 
-        _postProcessShader.SetParameter("splitToningEnabled", _cfg.GetCVar(WhiteCVars.SplitToning));
-
         worldHandle.UseShader(_postProcessShader);
         worldHandle.DrawRect(args.WorldBounds, Color.White);
         worldHandle.UseShader(null);

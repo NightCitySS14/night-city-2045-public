@@ -52,9 +52,4 @@ public sealed partial class WhiteCVars
     public static readonly CVarDef<float> VignetteSoftness =
         CVarDef.Create("graphics.vignette_softness", 0.5f, CVar.CLIENTONLY | CVar.ARCHIVE);
 
-    /// <summary>
-    /// Smart Split Toning on/off (Cinematic Color Correction)
-    /// </summary>
-    public static readonly CVarDef<bool> SplitToning =
-        CVarDef.Create("graphics.split_toning", false, CVar.CLIENTONLY | CVar.ARCHIVE);
 }

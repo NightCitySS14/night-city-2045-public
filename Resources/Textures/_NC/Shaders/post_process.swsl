@@ -13,40 +13,49 @@ uniform highp vec4 vignetteColor;
 uniform bool grainEnabled;
 uniform highp float grainStrength;
 
-uniform bool splitToningEnabled;
+// ACES Filmic Tonemapping
+highp vec3 ACESFilm(highp vec3 x) {
+    highp float a = 2.51;
+    highp float b = 0.03;
+    highp float c = 2.43;
+    highp float d = 0.59;
+    highp float e = 0.14;
+    return clamp((x*(a*x+b))/(x*(c*x+d)+e), 0.0, 1.0);
+}
 
 void fragment() {
     highp vec2 screenUV = FRAGCOORD.xy * SCREEN_PIXEL_SIZE.xy;
     highp vec4 scene = texture(SCREEN_TEXTURE, screenUV);
     highp vec3 result = scene.rgb;
 
-    // Smart Split Toning
-    if (splitToningEnabled) {
-        highp float luma = dot(result, vec3(0.299, 0.587, 0.114));
-        if (luma <= 0.8) {
-            highp vec3 shadowColor = vec3(0.05, 0.05, 0.2);
-            // Apply blue tint to shadows, decreasing as it gets closer to the threshold
-            result = mix(shadowColor, result, smoothstep(0.0, 0.8, luma));
-        } else {
-            // Neon Vibrance: boost saturation for highlights
-            result = mix(vec3(luma), result, 1.3);
-        }
-    }
+    // 1. Cinematic Color Grading (Teal & Orange / Split Toning)
+    highp float luma = dot(result, vec3(0.2126, 0.7152, 0.0722));
+    
+    // Shadows: Deep Teal/Blue
+    highp vec3 shadowColor = vec3(0.05, 0.07, 0.15);
+    // Midtones/Highlights: Warm/Orange boost
+    highp vec3 highlightColor = vec3(1.1, 1.05, 1.0);
 
-    // Bloom
+    highp vec3 graded = mix(shadowColor, result * highlightColor, smoothstep(-0.2, 0.8, luma));
+    result = mix(result, graded, 0.7); // Apply 70% of grading to keep it natural
+
+    // 2. Bloom
     if (bloomEnabled) {
         highp vec3 bloom = texture(BLOOM_TEXTURE, screenUV).rgb;
-        result += bloom * bloomIntensity;
+        result += bloom * (bloomIntensity / 100.0);
     }
 
-    // Vignette
+    // 3. Tonemapping (Filmic Look)
+    result = ACESFilm(result * 1.1); // Slight exposure boost before tonemapping
+
+    // 4. Vignette
     if (vignetteEnabled) {
         highp float dist = distance(screenUV, vec2(0.5));
         highp float vignette = smoothstep(vignetteRadius, vignetteRadius - vignetteSoftness, dist);
         result = mix(vignetteColor.rgb, result, vignette);
     }
 
-    // Film Grain
+    // 5. Film Grain
     if (grainEnabled) {
         highp float x = (screenUV.x + 4.0) * (screenUV.y + 4.0) * (TIME * 10.0);
         highp float grain = (mod((mod(x, 13.0) + 1.0) * (mod(x, 123.0) + 1.0), 0.01) - 0.005) * grainStrength;
