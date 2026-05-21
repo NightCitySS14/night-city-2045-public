@@ -8,7 +8,7 @@ public sealed partial class WhiteCVars
     /// What intensity will the grain shader be at
     /// </summary>
     public static readonly CVarDef<float> FilmGrainStrength =
-        CVarDef.Create("graphics.film_grain_strength", 50f, CVar.CLIENTONLY | CVar.ARCHIVE);
+        CVarDef.Create("graphics.film_grain_strength", 60f, CVar.CLIENTONLY | CVar.ARCHIVE);
 
     /// <summary>
     /// Grain shader on/off
@@ -26,13 +26,13 @@ public sealed partial class WhiteCVars
     /// Bloom intensity
     /// </summary>
     public static readonly CVarDef<int> BloomIntensity =
-        CVarDef.Create("graphics.bloom_intensity", 100, CVar.CLIENTONLY | CVar.ARCHIVE);
+        CVarDef.Create("graphics.bloom_intensity", 150, CVar.CLIENTONLY | CVar.ARCHIVE);
 
     /// <summary>
     /// Bloom threshold
     /// </summary>
     public static readonly CVarDef<float> BloomThreshold =
-        CVarDef.Create("graphics.bloom_threshold", 0.8f, CVar.CLIENTONLY | CVar.ARCHIVE);
+        CVarDef.Create("graphics.bloom_threshold", 0.5f, CVar.CLIENTONLY | CVar.ARCHIVE);
 
     /// <summary>
     /// Vignette shader on/off
