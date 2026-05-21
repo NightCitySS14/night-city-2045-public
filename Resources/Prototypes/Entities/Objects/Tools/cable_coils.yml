@@ -212,7 +212,7 @@
   parent: CableStack
   id: CableApcStack
   name: LV cable coil
-  description: Low-Voltage stack of wires for connecting APCs to machines and other purposes.
+  description: Low-Voltage stack of wires for establishing logical power links.
   suffix: Full
   components:
   - type: Sprite
@@ -228,6 +228,8 @@
     - coillv-10
     - coillv-20
     - coillv-30
+  - type: CablePlacer
+    enabled: false # Explicitly disable inherited placer
   - type: WireSpool
   - type: Appearance
   - type: Extractable

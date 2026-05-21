@@ -10,6 +10,7 @@ using Content.Shared.Stacks;
 using Content.Shared.Tools.Components;
 using Content.Shared.Tools.Systems;
 using Robust.Server.GameObjects;
+using Robust.Shared.GameObjects;
 using Robust.Shared.Player;
 
 namespace Content.Server._NC.Power.EntitySystems;
@@ -19,58 +20,38 @@ public sealed class LogicPowerSystem : SharedLogicPowerSystem
     [Dependency] private readonly SharedPopupSystem _popup = default!;
     [Dependency] private readonly SharedStackSystem _stack = default!;
     [Dependency] private readonly InventorySystem _inventory = default!;
-    [Dependency] private readonly BatterySystem _battery = default!;
-    [Dependency] private readonly AppearanceSystem _appearance = default!;
     [Dependency] private readonly SharedToolSystem _toolSystem = default!;
 
     public override void Initialize()
     {
         base.Initialize();
         SubscribeLocalEvent<WireSpoolComponent, AfterInteractEvent>(OnAfterInteract);
-        SubscribeLocalEvent<LogicPowerReceiverComponent, InteractUsingEvent>(OnInteractUsing);
+        SubscribeLocalEvent<LogicPowerReceiverComponent, InteractUsingEvent>(OnInteractUsingReceiver);
 
         SubscribeLocalEvent<LogicPowerProviderComponent, ComponentShutdown>(OnProviderShutdown);
         SubscribeLocalEvent<LogicPowerReceiverComponent, ComponentShutdown>(OnReceiverShutdown);
     }
 
-    public override void Update(float frameTime)
+    private void OnInteractUsingReceiver(EntityUid uid, LogicPowerReceiverComponent component, InteractUsingEvent args)
     {
-        base.Update(frameTime);
+        if (args.Handled)
+            return;
 
-        var providerQuery = EntityQueryEnumerator<LogicPowerProviderComponent, ApcComponent, BatteryComponent>();
-        while (providerQuery.MoveNext(out var uid, out var logicProvider, out var apc, out var battery))
-        {
-            var canProvide = apc.MainBreakerEnabled && battery.CurrentCharge > 0;
+        // Logic for cutting wires
+        // Check for wirecutters
+        if (!_toolSystem.HasQuality(args.Used, SharedToolSystem.CutQuality))
+            return;
 
-            foreach (var receiverUid in logicProvider.Receivers)
-            {
-                if (!TryComp<LogicPowerReceiverComponent>(receiverUid, out var receiver))
-                    continue;
+        // Also check if player is wearing AR glasses
+        if (!HasARVisor(args.User))
+            return;
 
-                var wasPowered = receiver.Powered;
-                var isPowered = canProvide; // For now, simple ON/OFF distribution
+        if (component.Provider == null)
+            return;
 
-                if (isPowered != wasPowered)
-                {
-                    receiver.Powered = isPowered;
-                    Dirty(receiverUid, receiver);
-
-                    var ev = new PowerChangedEvent(isPowered, isPowered ? receiver.PowerLoad : 0f);
-                    RaiseLocalEvent(receiverUid, ref ev);
-
-                    _appearance.SetData(receiverUid, PowerDeviceVisuals.Powered, isPowered);
-                }
-
-                if (isPowered)
-                {
-                    _battery.SetCharge(uid, battery.CurrentCharge - receiver.PowerLoad * frameTime, battery);
-                    
-                    // Fire event to notify ApcSystem for UI/Visual updates
-                    var chargeEv = new ChargeChangedEvent();
-                    RaiseLocalEvent(uid, ref chargeEv);
-                }
-            }
-        }
+        Unlink(uid, component);
+        _popup.PopupEntity(Loc.GetString("wire-spool-cut"), uid, args.User);
+        args.Handled = true;
     }
 
     private void OnAfterInteract(EntityUid uid, WireSpoolComponent component, AfterInteractEvent args)
@@ -91,13 +72,10 @@ public sealed class LogicPowerSystem : SharedLogicPowerSystem
         }
 
         // Stage 2: Linking to Consumer
-        if (component.ActiveProvider != null)
+        if (component.ActiveProvider != null && TryComp<LogicPowerReceiverComponent>(target, out var receiverComp))
         {
-            if (!HasComp<LogicPowerReceiverComponent>(target))
-                return;
-
             var providerUid = component.ActiveProvider.Value;
-            
+
             if (!HasComp<LogicPowerProviderComponent>(providerUid) && !HasComp<ApcComponent>(providerUid))
             {
                 component.ActiveProvider = null;
@@ -115,7 +93,7 @@ public sealed class LogicPowerSystem : SharedLogicPowerSystem
             }
 
             // Check if already linked
-            if (TryComp<LogicPowerReceiverComponent>(target, out var logicReceiver) && logicReceiver.Provider == providerUid)
+            if (receiverComp.Provider == providerUid)
             {
                 _popup.PopupEntity(Loc.GetString("wire-spool-already-linked"), uid, args.User);
                 args.Handled = true;
@@ -133,31 +111,11 @@ public sealed class LogicPowerSystem : SharedLogicPowerSystem
 
             // Establish link
             Link(providerUid, target);
-            
+
             _popup.PopupEntity(Loc.GetString("wire-spool-success"), uid, args.User);
             args.Handled = true;
+            return;
         }
-    }
-
-    private void OnInteractUsing(EntityUid uid, LogicPowerReceiverComponent component, InteractUsingEvent args)
-    {
-        if (args.Handled)
-            return;
-
-        // Check for wirecutters
-        if (!_toolSystem.HasQuality(args.Used, SharedToolSystem.CutQuality))
-            return;
-
-        // Also check if player is wearing AR glasses
-        if (!HasARVisor(args.User))
-            return;
-
-        if (component.Provider == null)
-            return;
-
-        Unlink(uid, component);
-        _popup.PopupEntity(Loc.GetString("wire-spool-cut"), uid, args.User);
-        args.Handled = true;
     }
 
     private bool HasARVisor(EntityUid user)
@@ -193,8 +151,25 @@ public sealed class LogicPowerSystem : SharedLogicPowerSystem
 
         if (!logicProvider.Receivers.Contains(receiverUid))
             logicProvider.Receivers.Add(receiverUid);
-            
+
         logicReceiver.Provider = providerUid;
+
+        // CRITICAL: Integrate with vanilla Pow3r solver
+        if (TryComp<ApcPowerProviderComponent>(providerUid, out var provider) && 
+            TryComp<ApcPowerReceiverComponent>(receiverUid, out var receiver))
+        {
+            // Sync wattage
+            if (TryComp<LogicPowerReceiverComponent>(receiverUid, out var targetReceiver))
+            {
+                receiver.Load = targetReceiver.PowerLoad;
+            }
+
+            provider.AddReceiver(receiver);
+            receiver.Provider = provider;
+            
+            // If the APC has no net (no cables), the solver might ignore it.
+            // PowerNetSystem will handle creating the group for the APC's own node.
+        }
 
         Dirty(providerUid, logicProvider);
         Dirty(receiverUid, logicReceiver);
@@ -212,12 +187,17 @@ public sealed class LogicPowerSystem : SharedLogicPowerSystem
             Dirty(providerUid, logicProvider);
         }
 
+        // CRITICAL: Clean up from vanilla Pow3r solver
+        if (TryComp<ApcPowerProviderComponent>(providerUid, out var provider) && 
+            TryComp<ApcPowerReceiverComponent>(receiverUid, out var receiver))
+        {
+            provider.RemoveReceiver(receiver);
+            receiver.Provider = null;
+        }
+
         logicReceiver.Provider = null;
         logicReceiver.Powered = false;
         Dirty(receiverUid, logicReceiver);
-
-        var ev = new PowerChangedEvent(false, 0f);
-        RaiseLocalEvent(receiverUid, ref ev);
-        _appearance.SetData(receiverUid, PowerDeviceVisuals.Powered, false);
     }
 }
+
