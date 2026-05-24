@@ -166,33 +166,19 @@ public sealed class NcpdForensicsSystem : EntitySystem
     public void SpawnDispatchTicket(EntityUid consoleUid, ForensicsAlertData alert)
     {
         var coords = _transformSystem.GetMoverCoordinates(consoleUid);
-        var ticket = EntityManager.SpawnEntity("Paper", coords);
+        var chip = EntityManager.SpawnEntity("NcpdEvidenceChip", coords);
         
         var metaSystem = EntityManager.System<MetaDataSystem>();
-        metaSystem.SetEntityName(ticket, $"Evidence Photo: {alert.Victim}");
-        metaSystem.SetEntityDescription(ticket, "A high-resolution crime scene photo extracted from a bio-chip.");
-
-        if (TryComp<PaperComponent>(ticket, out var paper))
-        {
-            paper.Content = $"[bold]NCPD FLATLINE EVIDENCE REPORT[/bold]\n" +
-                            $"-------------------\n" +
-                            $"VICTIM: {alert.Victim}\n" +
-                            $"LOCATION: {alert.Location}\n" +
-                            $"COORD: {alert.X:0.0}, {alert.Y:0.0}\n" +
-                            $"TIME: {alert.Time.ToString(@"hh\:mm\:ss")}\n" +
-                            $"-------------------\n" +
-                            $"ATTACHMENT: CRIME SCENE PHOTO CHIP";
-            Dirty(ticket, paper);
-        }
+        metaSystem.SetEntityName(chip, Loc.GetString("nc-forensics-chip-name", ("name", alert.Victim)));
+        metaSystem.SetEntityDescription(chip, Loc.GetString("nc-forensics-chip-desc"));
 
         if (alert.Coordinates != null)
         {
-            var photo = EnsureComp<ForensicPhotoComponent>(ticket);
-            photo.VictimName = alert.Victim;
-            photo.LocationName = alert.Location;
-            photo.Coordinates = alert.Coordinates.Value;
-            photo.Timestamp = alert.Time;
-            Dirty(ticket, photo);
+            var forensic = EnsureComp<ForensicChipComponent>(chip);
+            forensic.VictimName = alert.Victim;
+            forensic.Coordinates = alert.Coordinates.Value;
+            forensic.Timestamp = alert.Time;
+            Dirty(chip, forensic);
         }
     }
 }

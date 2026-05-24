@@ -21,7 +21,7 @@ public sealed class NcpdForensicsConsoleWindow : FancyWindow
 
     public NcpdForensicsConsoleWindow()
     {
-        Title = "NCPD Forensics Alerts";
+        Title = Loc.GetString("nc-forensics-console-title");
         MinSize = new Vector2(1000f, 650f);
         SetSize = new Vector2(1100f, 700f);
 
@@ -33,7 +33,7 @@ public sealed class NcpdForensicsConsoleWindow : FancyWindow
         leftPanel.PanelOverride = new StyleBoxFlat { BackgroundColor = Color.FromHex("#091316"), BorderColor = Color.FromHex("#14606E"), BorderThickness = new Thickness(1) };
         
         var listContainer = new BoxContainer { Orientation = BoxContainer.LayoutOrientation.Vertical, Margin = new Thickness(8) };
-        listContainer.AddChild(new Label { Text = "FLATLINE ALERTS", FontColorOverride = Color.FromHex("#00E5FF"), HorizontalAlignment = Control.HAlignment.Center, Margin = new Thickness(0, 0, 0, 8) });
+        listContainer.AddChild(new Label { Text = Loc.GetString("nc-forensics-console-header"), FontColorOverride = Color.FromHex("#00E5FF"), HorizontalAlignment = Control.HAlignment.Center, Margin = new Thickness(0, 0, 0, 8) });
         
         _list = new BoxContainer { Orientation = BoxContainer.LayoutOrientation.Vertical, SeparationOverride = 4 };
         var scroll = new ScrollContainer { VerticalExpand = true };
@@ -77,8 +77,8 @@ public sealed class NcpdForensicsConsoleWindow : FancyWindow
             header.AddChild(new Label { Text = alert.Victim.ToUpper(), FontColorOverride = Color.Yellow, HorizontalExpand = true, StyleClasses = { "LabelHeading" } });
             
             var actions = new BoxContainer { Orientation = BoxContainer.LayoutOrientation.Horizontal, SeparationOverride = 4 };
-            var archiveBtn = new Button { Text = "Архив", MinWidth = 80 };
-            var printBtn = new Button { Text = "Печать", MinWidth = 80, Modulate = Color.FromHex("#4DD0E1") };
+            var archiveBtn = new Button { Text = Loc.GetString("nc-forensics-console-btn-archive"), MinWidth = 80 };
+            var printBtn = new Button { Text = Loc.GetString("nc-forensics-console-btn-print"), MinWidth = 80, Modulate = Color.FromHex("#4DD0E1") };
 
             archiveBtn.OnPressed += _ => OnAlertAction?.Invoke(index, NcpdForensicsAlertAction.Archive);
             printBtn.OnPressed += _ => OnAlertAction?.Invoke(index, NcpdForensicsAlertAction.PrintTicket);
@@ -88,8 +88,8 @@ public sealed class NcpdForensicsConsoleWindow : FancyWindow
             header.AddChild(actions);
 
             row.AddChild(header);
-            row.AddChild(new Label { Text = $"Location: {alert.Location}", FontColorOverride = Color.FromHex("#4DD0E1") });
-            row.AddChild(new Label { Text = $"Time: {alert.Time:hh\\:mm\\:ss}", FontColorOverride = Color.LightSkyBlue });
+            row.AddChild(new Label { Text = Loc.GetString("nc-forensics-console-location", ("loc", alert.Location)), FontColorOverride = Color.FromHex("#4DD0E1") });
+            row.AddChild(new Label { Text = Loc.GetString("nc-forensics-console-time", ("time", alert.Time.ToString(@"hh\:mm\:ss"))), FontColorOverride = Color.LightSkyBlue });
             
             rowPanel.AddChild(row);
             _list.AddChild(rowPanel);
