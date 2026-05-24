@@ -1,0 +1,14 @@
+- type: htnCompound
+  id: DirectorGatherCompound
+  branches:
+    - preconditions:
+        - !type:KeyExistsPrecondition
+          key: TargetCoordinates
+      tasks:
+        - !type:HTNPrimitiveTask
+          operator: !type:MoveToOperator
+            targetKey: TargetCoordinates
+            pathfindInPlanning: false
+    - tasks:
+        - !type:HTNCompoundTask
+          task: IdleCompound

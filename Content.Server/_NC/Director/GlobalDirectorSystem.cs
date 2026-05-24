@@ -1,6 +1,8 @@
 using System.Linq;
+using System.Numerics;
 using Content.Server.Announcements.Systems;
 using Content.Server.NPC.HTN;
+using Content.Shared._NC.CitiNet;
 using Content.Shared._NC.Director;
 using Content.Shared.Mobs;
 using Content.Shared.Mobs.Components;
@@ -25,6 +27,7 @@ public sealed class GlobalDirectorSystem : EntitySystem
     [Dependency] private readonly AnnouncerSystem _announcer = default!;
     [Dependency] private readonly HTNSystem _htn = default!;
     [Dependency] private readonly NpcFactionSystem _faction = default!;
+    [Dependency] private readonly TransformSystem _transform = default!;
 
     private ISawmill _sawmill = default!;
 
@@ -255,14 +258,31 @@ public sealed class GlobalDirectorSystem : EntitySystem
         // Handle Spawns
         if (nextPhaseData.Spawns.Count > 0)
         {
-            var coords = GetSpawnLocation(nextPhaseData.LocationTag);
-            if (coords.IsValid(EntityManager))
+            var targetCoords = GetSpawnLocation(nextPhaseData.LocationTag, null);
+            var spawnCoordsBase = targetCoords;
+
+            // Determine the sector of the epicenter
+            var eventSector = GetSectorForCoordinates(targetCoords);
+
+            // If a separate SpawnTag is specified, try to find it IN THE SAME SECTOR.
+            if (nextPhaseData.SpawnTag != null)
+            {
+                var entryCoords = GetSpawnLocation(nextPhaseData.SpawnTag, eventSector, targetCoords);
+                if (entryCoords.IsValid(EntityManager))
+                    spawnCoordsBase = entryCoords;
+            }
+
+            if (spawnCoordsBase.IsValid(EntityManager))
             {
                 foreach (var group in nextPhaseData.Spawns)
                 {
                     for (var i = 0; i < group.Amount; i++)
                     {
-                        var spawned = EntityManager.SpawnEntity(group.Prototype, coords);
+                        // Add some randomness so they don't stack on top of each other
+                        var offset = _random.NextVector2(1.0f, 2.5f);
+                        var finalSpawnCoords = spawnCoordsBase.Offset(offset);
+
+                        var spawned = EntityManager.SpawnEntity(group.Prototype, finalSpawnCoords);
                         var spawnee = EnsureComp<DirectorSpawneeComponent>(spawned);
                         spawnee.EventEntity = uid;
                         spawnee.GroupTag = group.GroupTag;
@@ -273,12 +293,19 @@ public sealed class GlobalDirectorSystem : EntitySystem
                             _faction.ClearFactions(spawned);
                             _faction.AddFaction(spawned, group.Faction);
                         }
+
+                        // Tell the AI where the gathering point is
+                        if (targetCoords.IsValid(EntityManager) && TryComp<HTNComponent>(spawned, out var htn))
+                        {
+                            htn.Blackboard.SetValue("TargetCoordinates", targetCoords);
+                            _htn.Replan(htn);
+                        }
                     }
                 }
             }
             else
             {
-                _sawmill.Warning($"Could not find a valid spawn location for event {proto.Name} ({uid}) phase {nextPhaseId} with tag {nextPhaseData.LocationTag}");
+                _sawmill.Warning($"Could not find a valid spawn location for event {proto.Name} ({uid}) phase {nextPhaseId}. Tags: Location={nextPhaseData.LocationTag}, Spawn={nextPhaseData.SpawnTag}, Sector={eventSector}");
             }
         }
 
@@ -332,24 +359,63 @@ public sealed class GlobalDirectorSystem : EntitySystem
         _sawmill.Debug($"Event {proto.Name} ({uid}) advanced to phase {component.CurrentPhase}: {nextPhaseData.Name}");
     }
 
-    private EntityCoordinates GetSpawnLocation(string? locationTag = null)
+    private EntityUid? GetSectorForCoordinates(EntityCoordinates coords)
     {
-        var query = EntityQueryEnumerator<DirectorSpawnPointComponent, TransformComponent>();
-        var points = new List<EntityCoordinates>();
-        while (query.MoveNext(out var uid, out var spawnPoint, out var xform))
+        var worldPos = _transform.ToMapCoordinates(coords).Position;
+        var sectorQuery = EntityQueryEnumerator<MapSectorComponent, TransformComponent>();
+        while (sectorQuery.MoveNext(out var uid, out var sector, out var xform))
         {
-            if (locationTag != null && spawnPoint.LocationTag != locationTag)
+            if (xform.MapID != coords.GetMapId(EntityManager))
                 continue;
 
-            points.Add(xform.Coordinates);
+            var localPos = Vector2.Transform(worldPos, _transform.GetInvWorldMatrix(uid));
+            if (sector.Bounds.Contains(localPos))
+                return uid;
         }
 
-        if (points.Count > 0)
+        return null;
+    }
+
+    private EntityCoordinates GetSpawnLocation(string? tag, EntityUid? sectorUid, EntityCoordinates? relativeTo = null)
+    {
+        var query = EntityQueryEnumerator<DirectorSpawnPointComponent, TransformComponent>();
+        var candidates = new List<(EntityCoordinates Coords, float Distance)>();
+
+        while (query.MoveNext(out var uid, out var spawnPoint, out var xform))
         {
-            return _random.Pick(points);
+            if (tag != null && spawnPoint.LocationTag != tag)
+                continue;
+
+            // If a sector is specified, the spawn point MUST be in that same sector
+            if (sectorUid != null)
+            {
+                var currentSector = GetSectorForCoordinates(xform.Coordinates);
+                if (currentSector != sectorUid)
+                    continue;
+            }
+
+            var dist = 0f;
+            if (relativeTo != null)
+            {
+                xform.Coordinates.TryDistance(EntityManager, relativeTo.Value, out dist);
+            }
+
+            candidates.Add((xform.Coordinates, dist));
         }
 
-        return EntityCoordinates.Invalid;
+        if (candidates.Count == 0)
+            return EntityCoordinates.Invalid;
+
+        // If we have a relative point, sort by distance and pick from the closest ones
+        if (relativeTo != null)
+        {
+            var sorted = candidates.OrderBy(c => c.Distance).ToList();
+            // Pick from the top 3 closest to avoid being 100% predictable
+            var count = Math.Min(3, sorted.Count);
+            return sorted[_random.Next(count)].Coords;
+        }
+
+        return _random.Pick(candidates).Coords;
     }
 
     /// <summary>

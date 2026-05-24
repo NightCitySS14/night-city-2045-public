@@ -71,6 +71,13 @@ public sealed partial class DirectorPhase
     public string? LocationTag;
 
     /// <summary>
+    /// Optional tag for where entities should spawn initially.
+    /// If null, LocationTag is used with a random offset.
+    /// </summary>
+    [DataField]
+    public string? SpawnTag;
+
+    /// <summary>
     /// HTN Domain to apply to all spawned entities at the start of this phase.
     /// </summary>
     [DataField]
@@ -115,7 +122,7 @@ public sealed partial class DirectorSpawnGroup
     /// <summary>
     /// Prototype ID of the entity to spawn.
     /// </summary>
-    [IdDataField]
+    [DataField("prototype", required: true)]
     public string Prototype { get; private set; } = string.Empty;
 
     /// <summary>

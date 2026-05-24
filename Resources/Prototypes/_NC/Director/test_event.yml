@@ -8,9 +8,9 @@
       duration: 300
       announcement: "director-test-event-gathering"
       locationTag: "Hidden"
+      aiDomain: "DirectorGatherCompound"
       spawns:
-        - prototype: MobHumanSyndicateAgent
-          faction: NCBandit
+        - prototype: MobSyndicateFootsoldier
           amount: 2
       nextPhases:
         Skirmish: 70

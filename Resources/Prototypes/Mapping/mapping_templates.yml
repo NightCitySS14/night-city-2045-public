@@ -271,6 +271,8 @@
       - !type:MappingTemplatePrototype
         id: MarkerBase
       - !type:MappingTemplatePrototype
+        id: DirectorSpawnPoint
+      - !type:MappingTemplatePrototype
         id: Antags
         children:
           - !type:MappingTemplatePrototype

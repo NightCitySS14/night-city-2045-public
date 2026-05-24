@@ -2,5 +2,12 @@
   id: DirectorSpawnPoint
   parent: MarkerBase
   name: director spawn point
+  suffix: Director
   components:
+  - type: Sprite
+    layers:
+    - state: red
+      shader: unshaded
   - type: DirectorSpawnPoint
+ 
+ 

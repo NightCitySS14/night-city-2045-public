@@ -10,12 +10,13 @@
       duration: 180 # 3 minutes
       announcement: "backalley-deal-gathering"
       locationTag: "Alley"
+      aiDomain: "DirectorGatherCompound"
       spawns:
-        - prototype: MobHumanSyndicateAgent # Gang A (Maelstrom)
+        - prototype: MobSyndicateFootsoldier # Gang A (Maelstrom)
           groupTag: "GangA"
           faction: "Passive" # Все нейтральны на старте
           amount: 2
-        - prototype: MobHumanSyndicateAgent # Gang B (Valentino)
+        - prototype: MobSyndicateFootsoldier # Gang B (Valentino)
           groupTag: "GangB"
           faction: "Passive" # Все нейтральны на старте
           amount: 2
