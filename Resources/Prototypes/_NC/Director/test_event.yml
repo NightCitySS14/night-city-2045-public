@@ -11,7 +11,7 @@
       aiDomain: "DirectorGatherCompound"
       spawns:
         - prototype: MobSyndicateFootsoldier
-          amount: 2
+          amount: 3
       nextPhases:
         Skirmish: 70
         PoliceRaid: 30

@@ -9,5 +9,4 @@
     - state: red
       shader: unshaded
   - type: DirectorSpawnPoint
- 
- 
+  
