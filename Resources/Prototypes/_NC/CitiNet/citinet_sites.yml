@@ -14,6 +14,14 @@
   uiKey: CitiNetComm
 
 - type: netSite
+  id: NcpdForensics
+  name: "База данных Flatline"
+  url: "ncpd.gov/forensics"
+  uiKey: NcpdForensics
+  requiredAccess:
+  - Security
+
+- type: netSite
   id: NCPDDatabase
   name: NCPD Central Database
   url: ncpd.gov/records

@@ -33,3 +33,15 @@
     state: cart-red
   - type: DataChip
     unlockedSiteId: NCPDDatabase
+
+- type: entity
+  parent: BaseItem
+  id: CitiNetDataChipNCPDForensics
+  name: NCPD Forensics Access Chip
+  description: A small chip containing encrypted access keys for the NCPD forensics database.
+  components:
+  - type: Sprite
+    sprite: Objects/Devices/cartridge.rsi
+    state: cart-red
+  - type: DataChip
+    unlockedSiteId: NcpdForensics

@@ -124,6 +124,7 @@ public sealed class NetBrowserBoundUserInterface : BoundUserInterface
         {
             "NetHome" => new NetHomeSiteUIFragment(),
             "CitiNetComm" => new CitiNetUi(),
+            "NcpdForensics" => new Forensics.NcpdForensicsUIFragment(),
             _ => null
         };
     }
