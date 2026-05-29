@@ -5,6 +5,7 @@ using Content.Shared.Containers.ItemSlots;
 using Robust.Server.GameObjects;
 using Robust.Shared.Containers;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Log;
 
 namespace Content.Server._NC.CitiNet.Systems;
 
@@ -12,10 +13,14 @@ public sealed class NetBrowserSystem : SharedNetBrowserSystem
 {
     [Dependency] private readonly UserInterfaceSystem _uiSystem = default!;
     [Dependency] private readonly AccessReaderSystem _accessReader = default!;
+    
+    private ISawmill _sawmill = default!;
 
     public override void Initialize()
     {
         base.Initialize();
+        _sawmill = Logger.GetSawmill("citinet.browser");
+        
         SubscribeLocalEvent<NetBrowserComponent, BoundUIOpenedEvent>(OnUIOpened);
         SubscribeLocalEvent<NetBrowserComponent, EntInsertedIntoContainerMessage>(OnItemInserted);
         SubscribeLocalEvent<NetBrowserComponent, EntRemovedFromContainerMessage>(OnItemRemoved);
@@ -27,20 +32,29 @@ public sealed class NetBrowserSystem : SharedNetBrowserSystem
         var user = args.Actor;
         if (user == default) return;
 
+        _sawmill.Info($"Navigation request: '{args.Url}' from user {ToPrettyString(user)} via {ToPrettyString(uid)}");
+
         // Check if the target site is restricted and if the user has access
+        bool found = false;
         foreach (var site in PrototypeManager.EnumeratePrototypes<NetSitePrototype>())
         {
             if (site.URL == args.Url)
             {
+                found = true;
                 if (site.RequiredAccess.Count > 0 && 
                     !component.UnlockedUrls.Contains(site.URL) && 
                     !HasAccess(uid, user, site))
                 {
-                    // Access denied
+                    _sawmill.Warning($"Access denied to '{site.URL}' for {ToPrettyString(user)}");
                     return;
                 }
                 break;
             }
+        }
+
+        if (!found)
+        {
+            _sawmill.Warning($"Navigation failed: URL '{args.Url}' not found in prototypes.");
         }
 
         NavigateTo(uid, component, args.Url);
@@ -49,6 +63,7 @@ public sealed class NetBrowserSystem : SharedNetBrowserSystem
     private void OnUIOpened(EntityUid uid, NetBrowserComponent component, BoundUIOpenedEvent args)
     {
         UpdateUserInterface(uid, component, args.Actor);
+        RaiseLocalEvent(uid, new NetBrowserUrlChangedEvent(uid, component.CurrentUrl));
     }
 
     private void OnItemInserted(EntityUid uid, NetBrowserComponent component, EntInsertedIntoContainerMessage args)
@@ -147,5 +162,6 @@ public sealed class NetBrowserSystem : SharedNetBrowserSystem
     {
         base.NavigateTo(uid, component, url);
         UpdateAllUserInterfaces(uid, component);
+        RaiseLocalEvent(uid, new NetBrowserUrlChangedEvent(uid, url));
     }
 }

@@ -22,6 +22,12 @@
   - Security
 
 - type: netSite
+  id: NightMarket
+  name: "Ночной рынок"
+  url: "fixer.nc/market"
+  uiKey: FixerMarket
+
+- type: netSite
   id: NCPDDatabase
   name: NCPD Central Database
   url: ncpd.gov/records
