@@ -16,12 +16,23 @@ public sealed partial class NetHomeSiteUI : BoxContainer
 
     public NetHomeSiteUI()
     {
-        RobustXamlLoader.Load(this);
-        _protoManager = IoCManager.Resolve<IPrototypeManager>();
+        try 
+        {
+            RobustXamlLoader.Load(this);
+            _protoManager = IoCManager.Resolve<IPrototypeManager>();
+        }
+        catch (Exception e)
+        {
+            Logger.ErrorS("citinet.browser", $"NetHomeSiteUI XAML LOAD CRASH: {e}");
+            throw;
+        }
     }
 
     public void UpdateState(NetBrowserUiState state)
     {
+        if (SiteList == null)
+            return;
+
         SiteList.RemoveAllChildren();
         SiteList.AddChild(new Label { Text = "AVAILABLE_SERVICES:", FontColorOverride = Color.FromHex("#ff003c"), Margin = new Thickness(0, 0, 0, 10) });
 
@@ -36,7 +47,6 @@ public sealed partial class NetHomeSiteUI : BoxContainer
 
             var btn = new Button { 
                 Text = site.Name.ToUpper(), 
-                StyleClasses = { "FixerNavButton" }, // Using nav style for nice look
                 MinWidth = 200,
                 HorizontalAlignment = HAlignment.Left
             };

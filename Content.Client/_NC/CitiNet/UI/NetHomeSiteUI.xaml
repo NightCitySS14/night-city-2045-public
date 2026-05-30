@@ -3,14 +3,14 @@
               x:Class="Content.Client._NC.CitiNet.UI.NetHomeSiteUI"
               Orientation="Vertical"
               HorizontalExpand="True" VerticalExpand="True"
-              StyleClasses="FixerSiteMain"> <!-- Reusing background style for consistency -->
+              StyleClasses="FixerSiteMain">
     
     <Label Text="CITINET // HOME_PAGE" 
-           FontColorOverride="#00f2ff" 
+           FontColorOverride="#00f2ff"
            HorizontalAlignment="Center" 
            Margin="0 40"/>
     
-    <BoxContainer Orientation="Vertical" Margin="20" SeparationOverride="10" Name="SiteList">
+    <BoxContainer Orientation="Vertical" Margin="20" Name="SiteList">
         <Label Text="AVAILABLE_SERVICES:" FontColorOverride="#ff003c" Margin="0 0 0 10"/>
         <!-- Dynamic buttons will be added here -->
     </BoxContainer>

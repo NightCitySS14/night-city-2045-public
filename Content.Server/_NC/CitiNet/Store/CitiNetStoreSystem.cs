@@ -1,0 +1,161 @@
+using Content.Shared._NC.CitiNet;
+using Content.Shared._NC.CitiNet.Components;
+using Content.Shared._NC.CitiNet.Store;
+using Content.Server._NC.Bank;
+using Content.Server._NC.CitiNet.Delivery;
+using Content.Server.Chat.Managers;
+using Robust.Shared.Player;
+using Robust.Server.GameObjects;
+using Robust.Shared.Prototypes;
+using Robust.Shared.Utility;
+using System.Linq;
+
+namespace Content.Server._NC.CitiNet.Store;
+
+public sealed class CitiNetStoreSystem : EntitySystem
+{
+    [Dependency] private readonly UserInterfaceSystem _uiSystem = default!;
+    [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
+    [Dependency] private readonly BankSystem _bankSystem = default!;
+    [Dependency] private readonly DeliverySystem _deliverySystem = default!;
+    [Dependency] private readonly IChatManager _chatManager = default!;
+
+    public override void Initialize()
+    {
+        base.Initialize();
+        
+        Subs.BuiEvents<NetBrowserComponent>(NetBrowserUiKey.Key, subs => {
+            subs.Event<CitiNetStoreBuyRequestMessage>(OnBuyRequest);
+            subs.Event<CitiNetStoreRequestDataMessage>(OnRequestData);
+        });
+    }
+
+    private void OnRequestData(EntityUid uid, NetBrowserComponent component, CitiNetStoreRequestDataMessage msg)
+    {
+        var user = msg.Actor;
+        if (user == default) return;
+
+        UpdateStoreState(uid, component, user);
+    }
+
+    private void OnBuyRequest(EntityUid uid, NetBrowserComponent component, CitiNetStoreBuyRequestMessage msg)
+    {
+        var user = msg.Actor;
+        if (user == default) return;
+
+        var store = EnsureComp<CitiNetStoreComponent>(uid);
+        var siteProto = GetSiteForUrl(component.CurrentUrl);
+        if (siteProto?.StorePreset == null) return;
+
+        if (!_prototypeManager.TryIndex<CitiNetStorePresetPrototype>(siteProto.StorePreset, out var preset))
+            return;
+
+        CitiNetStoreEntry? targetEntry = null;
+        foreach (var catId in preset.Categories)
+        {
+            if (catId != msg.CategoryId) continue;
+            if (!_prototypeManager.TryIndex<CitiNetStoreCategoryPrototype>(catId, out var category)) continue;
+
+            targetEntry = category.Entries.FirstOrDefault(e => e.ProductId == msg.EntryProtoId);
+            break;
+        }
+
+        if (targetEntry == null) return;
+
+        // Check stock
+        if (targetEntry.InitialCount.HasValue)
+        {
+            var currentStock = store.Stock.GetValueOrDefault(targetEntry.ProductId, targetEntry.InitialCount.Value);
+            if (currentStock <= 0) return;
+        }
+
+        ProcessTransaction(uid, user, targetEntry, component, msg.DeliveryType);
+    }
+
+    private async void ProcessTransaction(EntityUid uid, EntityUid user, CitiNetStoreEntry entry, NetBrowserComponent component, Shared._NC.CitiNet.Delivery.DropType deliveryType)
+    {
+        if (await _bankSystem.TryBankWithdraw(user, entry.Price))
+        {
+            // Transaction successful, trigger delivery
+            if (_deliverySystem.TryDeliverItem(user, entry.ProductId, deliveryType, out var deliveryMsg))
+            {
+                // Update stock
+                if (entry.InitialCount.HasValue)
+                {
+                    var store = EnsureComp<CitiNetStoreComponent>(uid);
+                    var currentStock = store.Stock.GetValueOrDefault(entry.ProductId, entry.InitialCount.Value);
+                    store.Stock[entry.ProductId] = currentStock - 1;
+                }
+
+                // Notify player
+                if (TryComp<ActorComponent>(user, out var actor))
+                {
+                    _chatManager.DispatchServerMessage(actor.PlayerSession, deliveryMsg);
+                }
+                UpdateStoreState(uid, component, user);
+            }
+            else 
+            {
+                // Delivery failed (no free points), refund money
+                await _bankSystem.TryBankWithdraw(user, -entry.Price); // Negative withdraw is a deposit
+                if (TryComp<ActorComponent>(user, out var actor))
+                {
+                    _chatManager.DispatchServerMessage(actor.PlayerSession, "Ошибка доставки: " + deliveryMsg + " Деньги возвращены на счет.");
+                }
+            }
+        }
+    }
+
+    public void UpdateStoreState(EntityUid uid, NetBrowserComponent component, EntityUid user)
+    {
+        var siteProto = GetSiteForUrl(component.CurrentUrl);
+        if (siteProto?.StorePreset == null) return;
+
+        if (!_prototypeManager.TryIndex<CitiNetStorePresetPrototype>(siteProto.StorePreset, out var preset))
+            return;
+
+        var store = EnsureComp<CitiNetStoreComponent>(uid);
+        var balance = _bankSystem.GetBalance(user);
+        var categories = new List<CitiNetStoreCategoryData>();
+
+        foreach (var catId in preset.Categories)
+        {
+            if (!_prototypeManager.TryIndex<CitiNetStoreCategoryPrototype>(catId, out var category))
+                continue;
+
+            var entries = new List<CitiNetStoreEntryData>();
+            foreach (var entry in category.Entries)
+            {
+                if (!_prototypeManager.TryIndex<EntityPrototype>(entry.ProductId, out var proto))
+                    continue;
+
+                var stock = entry.InitialCount.HasValue 
+                    ? store.Stock.GetValueOrDefault(entry.ProductId, entry.InitialCount.Value)
+                    : (int?)null;
+
+                entries.Add(new CitiNetStoreEntryData(
+                    catId,
+                    entry.ProductId,
+                    entry.NameOverride ?? proto.Name,
+                    entry.DescriptionOverride ?? proto.Description,
+                    entry.Price,
+                    stock
+                ));
+            }
+
+            categories.Add(new CitiNetStoreCategoryData(category.Name, entries));
+        }
+
+        var state = new CitiNetStoreUpdateState(balance, categories);
+        _uiSystem.SetUiState(uid, NetBrowserUiKey.Key, state);
+    }
+
+    private NetSitePrototype? GetSiteForUrl(string url)
+    {
+        foreach (var site in _prototypeManager.EnumeratePrototypes<NetSitePrototype>())
+        {
+            if (site.URL == url) return site;
+        }
+        return null;
+    }
+}

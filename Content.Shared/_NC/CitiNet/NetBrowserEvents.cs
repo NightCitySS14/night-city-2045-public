@@ -7,10 +7,12 @@ public sealed class NetBrowserUrlChangedEvent : EntityEventArgs
 {
     public EntityUid Browser { get; }
     public string NewUrl { get; }
+    public EntityUid? Actor { get; }
 
-    public NetBrowserUrlChangedEvent(EntityUid browser, string newUrl)
+    public NetBrowserUrlChangedEvent(EntityUid browser, string newUrl, EntityUid? actor = null)
     {
         Browser = browser;
         NewUrl = newUrl;
+        Actor = actor;
     }
 }

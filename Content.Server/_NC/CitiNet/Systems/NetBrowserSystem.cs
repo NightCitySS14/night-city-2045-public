@@ -6,6 +6,7 @@ using Robust.Server.GameObjects;
 using Robust.Shared.Containers;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Log;
+using System.Linq;
 
 namespace Content.Server._NC.CitiNet.Systems;
 
@@ -24,7 +25,10 @@ public sealed class NetBrowserSystem : SharedNetBrowserSystem
         SubscribeLocalEvent<NetBrowserComponent, BoundUIOpenedEvent>(OnUIOpened);
         SubscribeLocalEvent<NetBrowserComponent, EntInsertedIntoContainerMessage>(OnItemInserted);
         SubscribeLocalEvent<NetBrowserComponent, EntRemovedFromContainerMessage>(OnItemRemoved);
-        SubscribeLocalEvent<NetBrowserComponent, NetBrowserNavigateMessage>(OnNavigateMessage);
+        
+        Subs.BuiEvents<NetBrowserComponent>(NetBrowserUiKey.Key, subs => {
+            subs.Event<NetBrowserNavigateMessage>(OnNavigateMessage);
+        });
     }
 
     private void OnNavigateMessage(EntityUid uid, NetBrowserComponent component, NetBrowserNavigateMessage args)
@@ -63,15 +67,13 @@ public sealed class NetBrowserSystem : SharedNetBrowserSystem
     private void OnUIOpened(EntityUid uid, NetBrowserComponent component, BoundUIOpenedEvent args)
     {
         UpdateUserInterface(uid, component, args.Actor);
-        RaiseLocalEvent(uid, new NetBrowserUrlChangedEvent(uid, component.CurrentUrl));
+        RaiseLocalEvent(uid, new NetBrowserUrlChangedEvent(uid, component.CurrentUrl, args.Actor));
     }
 
     private void OnItemInserted(EntityUid uid, NetBrowserComponent component, EntInsertedIntoContainerMessage args)
     {
-        // If a data chip or ID card is inserted, update the UI for all connected users
         UpdateAllUserInterfaces(uid, component);
         
-        // Check if it's a data chip and unlock the site
         if (TryComp<DataChipComponent>(args.Entity, out var chip) && chip.UnlockedSiteId != null)
         {
             if (PrototypeManager.TryIndex<NetSitePrototype>(chip.UnlockedSiteId, out var site))
@@ -101,6 +103,9 @@ public sealed class NetBrowserSystem : SharedNetBrowserSystem
     private void UpdateUserInterface(EntityUid uid, NetBrowserComponent component, EntityUid? user)
     {
         var availableSites = GetAvailableSites(uid, component, user);
+        
+        _sawmill.Info($"[CITINET] Sending state to {user} via {uid}. URL: '{component.CurrentUrl}'. Sites: {string.Join(", ", availableSites)}");
+        
         var state = new NetBrowserUiState(component.CurrentUrl, availableSites);
         _uiSystem.SetUiState(uid, NetBrowserUiKey.Key, state);
     }
@@ -108,7 +113,12 @@ public sealed class NetBrowserSystem : SharedNetBrowserSystem
     private List<string> GetAvailableSites(EntityUid uid, NetBrowserComponent component, EntityUid? user)
     {
         var result = new List<string>();
-        var sites = PrototypeManager.EnumeratePrototypes<NetSitePrototype>();
+        var sites = PrototypeManager.EnumeratePrototypes<NetSitePrototype>().ToList();
+
+        if (sites.Count == 0)
+        {
+            _sawmill.Error("[CITINET] NO NETSITE PROTOTYPES FOUND IN MANAGER!");
+        }
 
         foreach (var site in sites)
         {
@@ -162,6 +172,8 @@ public sealed class NetBrowserSystem : SharedNetBrowserSystem
     {
         base.NavigateTo(uid, component, url);
         UpdateAllUserInterfaces(uid, component);
-        RaiseLocalEvent(uid, new NetBrowserUrlChangedEvent(uid, url));
+        
+        var actor = _uiSystem.GetActors(uid, NetBrowserUiKey.Key).FirstOrDefault();
+        RaiseLocalEvent(uid, new NetBrowserUrlChangedEvent(uid, url, actor));
     }
 }
