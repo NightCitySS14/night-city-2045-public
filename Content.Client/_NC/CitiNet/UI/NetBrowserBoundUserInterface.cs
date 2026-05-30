@@ -30,18 +30,6 @@ public sealed class NetBrowserBoundUserInterface : BoundUserInterface
 
     protected override void UpdateState(BoundUserInterfaceState state)
     {
-        try 
-        {
-            UpdateStateInternal(state);
-        }
-        catch (Exception e)
-        {
-            Logger.ErrorS("citinet.browser", $"Exception in UpdateState: {e}");
-        }
-    }
-
-    private void UpdateStateInternal(BoundUserInterfaceState state)
-    {
         base.UpdateState(state);
 
         if (state is not NetBrowserUiState browserState)
@@ -51,8 +39,6 @@ public sealed class NetBrowserBoundUserInterface : BoundUserInterface
         }
 
         _window?.UpdateState(browserState);
-
-        Logger.DebugS("citinet.browser", $"Client UpdateState: URL='{browserState.CurrentUrl}', ActiveUrl='{_activeUrl}', ActiveUI='{_activeSiteUI?.GetType().Name}'");
 
         if (_activeUrl == browserState.CurrentUrl && _activeSiteUI != null)
         {
@@ -75,17 +61,13 @@ public sealed class NetBrowserBoundUserInterface : BoundUserInterface
 
         if (currentSite == null)
         {
-            Logger.WarningS("citinet.browser", $"No site prototype found for URL: {browserState.CurrentUrl}");
             DetachSiteUI();
             return;
         }
 
-        Logger.DebugS("citinet.browser", $"Found site '{currentSite.ID}' with UIKey '{currentSite.UiKey}'");
-
         var ui = GetUIFragment(currentSite.UiKey);
         if (ui == null)
         {
-            Logger.WarningS("citinet.browser", $"No UI fragment found for UIKey: {currentSite.UiKey}");
             DetachSiteUI();
             return;
         }
@@ -96,7 +78,6 @@ public sealed class NetBrowserBoundUserInterface : BoundUserInterface
 
         if (control == null)
         {
-            Logger.ErrorS("citinet.browser", $"UI fragment '{ui.GetType().Name}' returned null root control!");
             DetachSiteUI();
             return;
         }
@@ -107,7 +88,6 @@ public sealed class NetBrowserBoundUserInterface : BoundUserInterface
             return;
         }
 
-        Logger.DebugS("citinet.browser", $"Switching UI to {control.GetType().Name}");
         DetachSiteUI();
         AttachSiteUI(ui, control);
     }
@@ -134,8 +114,6 @@ public sealed class NetBrowserBoundUserInterface : BoundUserInterface
     protected override void ReceiveMessage(BoundUserInterfaceMessage message)
     {
         base.ReceiveMessage(message);
-        // This is where we would handle messages FROM the server TO the UI fragment if needed,
-        // but normally UpdateState handles that.
     }
 
     private UIFragment? GetUIFragment(string uiKey)
@@ -145,7 +123,6 @@ public sealed class NetBrowserBoundUserInterface : BoundUserInterface
             "NetHome" => new NetHomeSiteUIFragment(),
             "CitiNetComm" => new CitiNetUi(),
             "NcpdForensics" => new Forensics.NcpdForensicsUIFragment(),
-            "FixerMarket" => new FixerMarket.FixerMarketUIFragment(),
             _ => null
         };
     }
