@@ -22,10 +22,19 @@
   - Security
 
 - type: netSite
+  id: AstrozonHome
+  name: "Astrozon"
+  url: "astrozon.nc"
+  uiKey: FixerMarket
+  storePreset: AstrozonMarket
+
+- type: netSite
   id: NightMarket
   name: "Ночной рынок"
   url: "fixer.nc/market"
   uiKey: FixerMarket
+  requiredAccess:
+  - Fixer
   storePreset: NightMarketMarket
 
 - type: netSite

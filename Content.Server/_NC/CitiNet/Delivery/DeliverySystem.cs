@@ -65,9 +65,9 @@ public sealed class DeliverySystem : EntitySystem
     }
 
     /// <summary>
-    /// Delivers an item to a suitable drop point.
+    /// Delivers multiple items to a suitable drop point.
     /// </summary>
-    public bool TryDeliverItem(EntityUid buyer, string itemProto, DropType preferredType, out string message)
+    public bool TryDeliverItem(EntityUid buyer, string itemProto, int amount, DropType preferredType, out string message)
     {
         message = string.Empty;
         
@@ -90,16 +90,23 @@ public sealed class DeliverySystem : EntitySystem
         var selected = _random.Pick(candidates);
         var container = _container.EnsureContainer<Container>(selected.Uid, DeliveryContainerId);
         
-        var item = EntityManager.SpawnEntity(itemProto, Transform(selected.Uid).Coordinates);
-        if (!_container.Insert(item, container))
+        for (int i = 0; i < amount; i++)
         {
-            EntityManager.DeleteEntity(item);
-            message = "Ошибка при упаковке товара. Свяжитесь с техподдержкой.";
-            return false;
+            var item = EntityManager.SpawnEntity(itemProto, Transform(selected.Uid).Coordinates);
+            if (!_container.Insert(item, container))
+            {
+                // If it fails to insert (e.g. storage full), we stop spawning
+                if (i == 0)
+                {
+                    EntityManager.DeleteEntity(item);
+                    message = "Ошибка при упаковке товара. Свяжитесь с техподдержкой.";
+                    return false;
+                }
+                break;
+            }
         }
 
         selected.Comp.IsOccupied = true;
-        selected.Comp.ContainedItem = item;
         selected.Comp.DeliveryTime = _timing.CurTime;
 
         if (selected.Comp.DropType == DropType.Corporate)
@@ -111,16 +118,14 @@ public sealed class DeliverySystem : EntitySystem
                 keypad.IsLocked = true;
                 Dirty(selected.Uid, keypad);
             }
-            message = $"Груз доставлен. Локация: {selected.Comp.LocationName}. Код: {pin}. Срок хранения: 15 минут. Чип навигации выдан.";
+            message = $"Груз ({amount} шт.) доставлен. Локация: {selected.Comp.LocationName}. Код: {pin}. Срок хранения: 15 минут. Чип навигации выдан.";
         }
         else
         {
-            message = $"Фиксер оставил товар в: {selected.Comp.LocationName}. Поторопись, пока не нашли другие. Чип навигации выдан.";
+            message = $"Фиксер оставил товар ({amount} шт.) в: {selected.Comp.LocationName}. Поторопись, пока не нашли другие. Чип навигации выдан.";
         }
 
         // Spawn navigation chip at the terminal (Phase 1/2 integration)
-        // We assume 'buyer' is near the terminal or terminal is the source. 
-        // For now spawn at terminal.
         var chip = EntityManager.SpawnEntity("CitiNetDeliveryChip", Transform(buyer).Coordinates);
         var chipComp = EnsureComp<DeliveryChipComponent>(chip);
         chipComp.TargetDropPoint = selected.Uid;
@@ -133,11 +138,12 @@ public sealed class DeliverySystem : EntitySystem
 
     private void ExpireDelivery(EntityUid uid, DropPointComponent dropPoint)
     {
-        if (dropPoint.ContainedItem != null)
-            EntityManager.DeleteEntity(dropPoint.ContainedItem.Value);
+        if (_container.TryGetContainer(uid, DeliveryContainerId, out var container))
+        {
+            _container.CleanContainer(container);
+        }
 
         dropPoint.IsOccupied = false;
-        dropPoint.ContainedItem = null;
         dropPoint.DeliveryTime = null;
 
         if (TryComp<OTPKeypadComponent>(uid, out var keypad))

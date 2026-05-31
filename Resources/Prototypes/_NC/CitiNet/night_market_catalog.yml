@@ -65,6 +65,7 @@
 
 - type: citiNetStorePreset
   id: NightMarketMarket
+  defaultDelivery: DeadDrop
   categories:
   - NightMarket_Weapons
   - NightMarket_Armor

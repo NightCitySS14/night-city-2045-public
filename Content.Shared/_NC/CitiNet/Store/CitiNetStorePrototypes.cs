@@ -1,3 +1,4 @@
+using Content.Shared._NC.CitiNet.Delivery;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 
@@ -13,6 +14,9 @@ public sealed class CitiNetStorePresetPrototype : IPrototype
 
     [DataField("categories")]
     public List<ProtoId<CitiNetStoreCategoryPrototype>> Categories { get; private set; } = new();
+
+    [DataField("defaultDelivery")]
+    public DropType DefaultDelivery = DropType.Corporate;
 }
 
 /// <summary>

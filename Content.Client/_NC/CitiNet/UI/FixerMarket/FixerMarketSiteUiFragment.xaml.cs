@@ -13,7 +13,7 @@ namespace Content.Client._NC.CitiNet.UI.FixerMarket;
 [GenerateTypedNameReferences]
 public sealed partial class FixerMarketSiteUi : PanelContainer
 {
-    public event Action<string, string, Shared._NC.CitiNet.Delivery.DropType>? OnBuy;
+    public event Action<string, string, int>? OnBuy;
 
     public FixerMarketSiteUi()
     {
@@ -35,38 +35,78 @@ public sealed partial class FixerMarketSiteUi : PanelContainer
             
             foreach (var entry in category.Entries)
             {
-                var row = new PanelContainer { StyleClasses = { "PanelBackgroundBaseDark" }, MinHeight = 50, Margin = new Thickness(2) };
+                var isOutOfStock = entry.RemainingCount.HasValue && entry.RemainingCount.Value <= 0;
+
+                var row = new PanelContainer { StyleClasses = { "PanelBackgroundBaseDark" }, MinHeight = 60, Margin = new Thickness(2) };
+                if (isOutOfStock)
+                    row.Modulate = Color.FromHex("#333333");
+
                 var hBox = new BoxContainer { Orientation = BoxContainer.LayoutOrientation.Horizontal, Margin = new Thickness(8) };
                 
                 // Icon
-                var icon = new EntityPrototypeView { SetSize = new Vector2(32, 32), VerticalAlignment = VAlignment.Center, Margin = new Thickness(0, 0, 8, 0) };
+                var icon = new EntityPrototypeView { SetSize = new Vector2(48, 48), VerticalAlignment = VAlignment.Center, Margin = new Thickness(0, 0, 8, 0) };
                 icon.SetPrototype(entry.ProtoId);
                 hBox.AddChild(icon);
 
-                var vBox = new BoxContainer { Orientation = BoxContainer.LayoutOrientation.Vertical, HorizontalExpand = true };
+                var vBox = new BoxContainer { Orientation = BoxContainer.LayoutOrientation.Vertical, HorizontalExpand = true, VerticalAlignment = VAlignment.Center };
                 vBox.AddChild(new Label { Text = entry.Name.ToUpper(), StyleClasses = { "LabelHeading" } });
                 vBox.AddChild(new Label { Text = entry.Description, FontColorOverride = Color.Gray, ClipText = true });
                 
+                if (entry.RemainingCount.HasValue)
+                {
+                    var stockColor = isOutOfStock ? Color.Red : Color.FromHex("#00ff00");
+                    vBox.AddChild(new Label { 
+                        Text = isOutOfStock ? "НЕТ В НАЛИЧИИ" : $"В НАЛИЧИИ: {entry.RemainingCount} ШТ.", 
+                        FontColorOverride = stockColor
+                    });
+                }
+
                 hBox.AddChild(vBox);
                 
-                var priceLabel = new Label { Text = $"{entry.Price} ED", VerticalAlignment = VAlignment.Center, Margin = new Thickness(8, 0) };
+                // Quantity Selector
+                var amount = 1;
+                var amountBox = new BoxContainer { Orientation = BoxContainer.LayoutOrientation.Horizontal, VerticalAlignment = VAlignment.Center, Margin = new Thickness(8, 0) };
+                var minusBtn = new Button { Text = "-", MinSize = new Vector2(24, 24), Disabled = isOutOfStock };
+                var amountLabel = new Label { Text = "1", MinWidth = 30, HorizontalAlignment = HAlignment.Center };
+                var plusBtn = new Button { Text = "+", MinSize = new Vector2(24, 24), Disabled = isOutOfStock };
+
+                minusBtn.OnPressed += _ => {
+                    if (amount > 1) {
+                        amount--;
+                        amountLabel.Text = amount.ToString();
+                    }
+                };
+
+                plusBtn.OnPressed += _ => {
+                    if (!entry.RemainingCount.HasValue || amount < entry.RemainingCount.Value) {
+                        amount++;
+                        amountLabel.Text = amount.ToString();
+                    }
+                };
+
+                amountBox.AddChild(minusBtn);
+                amountBox.AddChild(amountLabel);
+                amountBox.AddChild(plusBtn);
+                
+                if (!isOutOfStock)
+                    hBox.AddChild(amountBox);
+
+                var priceLabel = new Label { Text = $"{entry.Price} ED", VerticalAlignment = VAlignment.Center, Margin = new Thickness(8, 0), MinWidth = 60 };
                 hBox.AddChild(priceLabel);
 
-                var buttonsBox = new BoxContainer { Orientation = BoxContainer.LayoutOrientation.Vertical, SeparationOverride = 2 };
-                
-                var buyCorpBtn = new Button { Text = "CORP", MinWidth = 80, ToolTip = "Доставка в защищенный почтомат (PIN-код)" };
-                var buyStreetBtn = new Button { Text = "STREET", MinWidth = 80, ToolTip = "Доставка в случайную закладку (без кода)" };
+                var buyBtn = new Button { 
+                    Text = isOutOfStock ? "SOLD OUT" : "ORDER", 
+                    MinWidth = 100, 
+                    VerticalAlignment = VAlignment.Center,
+                    Disabled = isOutOfStock
+                };
 
                 var catId = entry.Id;
                 var protoId = entry.ProtoId;
 
-                buyCorpBtn.OnPressed += _ => OnBuy?.Invoke(catId, protoId, Shared._NC.CitiNet.Delivery.DropType.Corporate);
-                buyStreetBtn.OnPressed += _ => OnBuy?.Invoke(catId, protoId, Shared._NC.CitiNet.Delivery.DropType.DeadDrop);
+                buyBtn.OnPressed += _ => OnBuy?.Invoke(catId, protoId, amount);
                 
-                buttonsBox.AddChild(buyCorpBtn);
-                buttonsBox.AddChild(buyStreetBtn);
-                
-                hBox.AddChild(buttonsBox);
+                hBox.AddChild(buyBtn);
                 row.AddChild(hBox);
                 list.AddChild(row);
             }
@@ -87,7 +127,7 @@ public sealed partial class FixerMarketUIFragment : UIFragment, ICitiNetSiteFrag
     public override void Setup(BoundUserInterface userInterface, EntityUid? fragmentOwner)
     {
         _control = new FixerMarketSiteUi();
-        _control.OnBuy += (catId, protoId, type) => userInterface.SendMessage(new CitiNetStoreBuyRequestMessage(catId, protoId, type));
+        _control.OnBuy += (catId, protoId, amount) => userInterface.SendMessage(new CitiNetStoreBuyRequestMessage(catId, protoId, amount));
         
         userInterface.SendMessage(new CitiNetStoreRequestDataMessage());
     }

@@ -42,6 +42,7 @@ public sealed class CitiNetStoreSystem : EntitySystem
     {
         var user = msg.Actor;
         if (user == default) return;
+        if (msg.Amount <= 0) return;
 
         var store = EnsureComp<CitiNetStoreComponent>(uid);
         var siteProto = GetSiteForUrl(component.CurrentUrl);
@@ -66,25 +67,27 @@ public sealed class CitiNetStoreSystem : EntitySystem
         if (targetEntry.InitialCount.HasValue)
         {
             var currentStock = store.Stock.GetValueOrDefault(targetEntry.ProductId, targetEntry.InitialCount.Value);
-            if (currentStock <= 0) return;
+            if (currentStock < msg.Amount) return;
         }
 
-        ProcessTransaction(uid, user, targetEntry, component, msg.DeliveryType);
+        ProcessTransaction(uid, user, targetEntry, msg.Amount, component, preset.DefaultDelivery);
     }
 
-    private async void ProcessTransaction(EntityUid uid, EntityUid user, CitiNetStoreEntry entry, NetBrowserComponent component, Shared._NC.CitiNet.Delivery.DropType deliveryType)
+    private async void ProcessTransaction(EntityUid uid, EntityUid user, CitiNetStoreEntry entry, int amount, NetBrowserComponent component, Shared._NC.CitiNet.Delivery.DropType deliveryType)
     {
-        if (await _bankSystem.TryBankWithdraw(user, entry.Price))
+        var totalPrice = entry.Price * amount;
+
+        if (await _bankSystem.TryBankWithdraw(user, totalPrice))
         {
             // Transaction successful, trigger delivery
-            if (_deliverySystem.TryDeliverItem(user, entry.ProductId, deliveryType, out var deliveryMsg))
+            if (_deliverySystem.TryDeliverItem(user, entry.ProductId, amount, deliveryType, out var deliveryMsg))
             {
                 // Update stock
                 if (entry.InitialCount.HasValue)
                 {
                     var store = EnsureComp<CitiNetStoreComponent>(uid);
                     var currentStock = store.Stock.GetValueOrDefault(entry.ProductId, entry.InitialCount.Value);
-                    store.Stock[entry.ProductId] = currentStock - 1;
+                    store.Stock[entry.ProductId] = currentStock - amount;
                 }
 
                 // Notify player
@@ -97,7 +100,7 @@ public sealed class CitiNetStoreSystem : EntitySystem
             else 
             {
                 // Delivery failed (no free points), refund money
-                await _bankSystem.TryBankWithdraw(user, -entry.Price); // Negative withdraw is a deposit
+                await _bankSystem.TryBankWithdraw(user, -totalPrice); // Negative withdraw is a deposit
                 if (TryComp<ActorComponent>(user, out var actor))
                 {
                     _chatManager.DispatchServerMessage(actor.PlayerSession, "Ошибка доставки: " + deliveryMsg + " Деньги возвращены на счет.");

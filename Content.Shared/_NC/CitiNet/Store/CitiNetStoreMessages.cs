@@ -56,13 +56,13 @@ public sealed class CitiNetStoreBuyRequestMessage : BoundUserInterfaceMessage
 {
     public string CategoryId { get; }
     public string EntryProtoId { get; }
-    public DropType DeliveryType { get; }
+    public int Amount { get; }
 
-    public CitiNetStoreBuyRequestMessage(string categoryId, string entryProtoId, DropType deliveryType)
+    public CitiNetStoreBuyRequestMessage(string categoryId, string entryProtoId, int amount = 1)
     {
         CategoryId = categoryId;
         EntryProtoId = entryProtoId;
-        DeliveryType = deliveryType;
+        Amount = amount;
     }
 }
 
