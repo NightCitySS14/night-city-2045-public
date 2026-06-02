@@ -48,24 +48,21 @@
     unlockedSiteId: NcpdForensics
 
 - type: entity
-  parent: LockerBaseSecure
+  parent: CrateBaseSecure
   id: CitiNetCorporateDropBox
   name: Почтомат "Vendit"
   description: Защищенный корпоративный терминал для получения посылок. Требуется PIN-код.
   components:
-  - type: Sprite
-    sprite: Structures/Storage/closet.rsi
-    layers:
-    - state: secure
-      map: ["enum.StorageVisualLayers.Base"]
-    - state: secure_door
-      map: ["enum.StorageVisualLayers.Door"]
   - type: DropPoint
     dropType: Corporate
     locationName: "Сектор 4, Главный холл"
   - type: OTPKeypad
+  - type: AccessReader # Overriding with empty access to prevent opening by any card
+    access: []
   - type: Lock
     locked: true
+    unlockOnClick: false
+    lockOnClick: false
   - type: ActivatableUI
     key: enum.OTPKeypadUiKey.Key
   - type: UserInterface

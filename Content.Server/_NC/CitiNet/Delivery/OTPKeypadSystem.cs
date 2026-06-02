@@ -17,18 +17,30 @@ public sealed class OTPKeypadSystem : EntitySystem
     public override void Initialize()
     {
         base.Initialize();
-        
+
+        SubscribeLocalEvent<OTPKeypadComponent, LockToggleAttemptEvent>(OnLockAttempt);
+
         Subs.BuiEvents<OTPKeypadComponent>(OTPKeypadUiKey.Key, subs => {
             subs.Event<OTPKeypadSubmitPinMessage>(OnSubmitPin);
         });
+    }
+
+    private void OnLockAttempt(EntityUid uid, OTPKeypadComponent component, ref LockToggleAttemptEvent args)
+    {
+        // If the keypad is currently managing the lock, block all standard attempts to toggle it
+        // This includes context menu verbs and clicking.
+        if (component.IsLocked)
+        {
+            args.Cancelled = true;
+        }
     }
 
     private void OnSubmitPin(EntityUid uid, OTPKeypadComponent component, OTPKeypadSubmitPinMessage msg)
     {
         if (msg.Pin == component.CurrentPin)
         {
+            // First, allow the system to toggle the lock by disabling our block
             component.IsLocked = false;
-            component.CurrentPin = null; // One-time use
             Dirty(uid, component);
 
             if (TryComp<LockComponent>(uid, out var lockComp))
@@ -36,8 +48,12 @@ public sealed class OTPKeypadSystem : EntitySystem
                 _lockSystem.Unlock(uid, msg.Actor, lockComp);
             }
 
+            // Clear PIN after successful use
+            component.CurrentPin = null;
+            Dirty(uid, component);
+
             _popup.PopupEntity("Код верный. Замок открыт.", uid);
-            
+
             if (TryComp<ActorComponent>(msg.Actor, out var actor))
             {
                 _chatManager.DispatchServerMessage(actor.PlayerSession, "Доступ разрешен. Заберите ваш товар.");
@@ -51,6 +67,7 @@ public sealed class OTPKeypadSystem : EntitySystem
         }
     }
 }
+
 
 
 

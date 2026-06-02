@@ -1,5 +1,6 @@
 using Content.Shared._NC.CitiNet.Delivery;
 using Content.Shared.Containers.ItemSlots;
+using Content.Shared.Lock;
 using Robust.Server.Containers;
 using Robust.Shared.Containers;
 using Robust.Shared.Random;
@@ -13,6 +14,7 @@ public sealed class DeliverySystem : EntitySystem
     [Dependency] private readonly ContainerSystem _container = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly IGameTiming _timing = default!;
+    [Dependency] private readonly LockSystem _lockSystem = default!;
 
     private const string DeliveryContainerId = "entity_storage";
     private readonly TimeSpan CorporateExpiryDelay = TimeSpan.FromMinutes(15);
@@ -42,6 +44,11 @@ public sealed class DeliverySystem : EntitySystem
             keypad.CurrentPin = null;
             keypad.IsLocked = false;
             Dirty(uid, keypad);
+        }
+
+        if (TryComp<LockComponent>(uid, out var lockComp))
+        {
+            _lockSystem.Lock(uid, null, lockComp);
         }
 
         Dirty(uid, component);
@@ -118,6 +125,12 @@ public sealed class DeliverySystem : EntitySystem
                 keypad.IsLocked = true;
                 Dirty(selected.Uid, keypad);
             }
+
+            if (TryComp<LockComponent>(selected.Uid, out var lockComp))
+            {
+                _lockSystem.Lock(selected.Uid, null, lockComp);
+            }
+
             message = $"Груз ({amount} шт.) доставлен. Локация: {selected.Comp.LocationName}. Код: {pin}. Срок хранения: 15 минут. Чип навигации выдан.";
         }
         else
