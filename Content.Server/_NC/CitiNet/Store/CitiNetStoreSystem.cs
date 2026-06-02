@@ -20,6 +20,13 @@ public sealed class CitiNetStoreSystem : EntitySystem
     [Dependency] private readonly DeliverySystem _deliverySystem = default!;
     [Dependency] private readonly IChatManager _chatManager = default!;
 
+    /// <summary>
+    /// GLOBAL SCARCITY STORAGE
+    /// Key: Product Prototype ID
+    /// Value: Remaining city-wide stock
+    /// </summary>
+    private readonly Dictionary<string, int> _globalStock = new();
+
     public override void Initialize()
     {
         base.Initialize();
@@ -44,7 +51,6 @@ public sealed class CitiNetStoreSystem : EntitySystem
         if (user == default) return;
         if (msg.Amount <= 0) return;
 
-        var store = EnsureComp<CitiNetStoreComponent>(uid);
         var siteProto = GetSiteForUrl(component.CurrentUrl);
         if (siteProto?.StorePreset == null) return;
 
@@ -63,11 +69,16 @@ public sealed class CitiNetStoreSystem : EntitySystem
 
         if (targetEntry == null) return;
 
-        // Check stock
+        // Check global stock
         if (targetEntry.InitialCount.HasValue)
         {
-            var currentStock = store.Stock.GetValueOrDefault(targetEntry.ProductId, targetEntry.InitialCount.Value);
-            if (currentStock < msg.Amount) return;
+            var currentStock = _globalStock.GetValueOrDefault(targetEntry.ProductId, targetEntry.InitialCount.Value);
+            if (currentStock < msg.Amount)
+            {
+                if (TryComp<ActorComponent>(user, out var actor))
+                    _chatManager.DispatchServerMessage(actor.PlayerSession, "Товар закончился на складах города!");
+                return;
+            }
         }
 
         ProcessTransaction(uid, user, targetEntry, msg.Amount, component, preset.DefaultDelivery);
@@ -82,12 +93,11 @@ public sealed class CitiNetStoreSystem : EntitySystem
             // Transaction successful, trigger delivery
             if (_deliverySystem.TryDeliverItem(user, entry.ProductId, amount, deliveryType, out var deliveryMsg))
             {
-                // Update stock
+                // Update global stock
                 if (entry.InitialCount.HasValue)
                 {
-                    var store = EnsureComp<CitiNetStoreComponent>(uid);
-                    var currentStock = store.Stock.GetValueOrDefault(entry.ProductId, entry.InitialCount.Value);
-                    store.Stock[entry.ProductId] = currentStock - amount;
+                    var currentStock = _globalStock.GetValueOrDefault(entry.ProductId, entry.InitialCount.Value);
+                    _globalStock[entry.ProductId] = currentStock - amount;
                 }
 
                 // Notify player
@@ -95,7 +105,9 @@ public sealed class CitiNetStoreSystem : EntitySystem
                 {
                     _chatManager.DispatchServerMessage(actor.PlayerSession, deliveryMsg);
                 }
-                UpdateStoreState(uid, component, user);
+
+                // Update ALL browsers to reflect new global stock
+                UpdateAllBrowsers();
             }
             else 
             {
@@ -109,6 +121,18 @@ public sealed class CitiNetStoreSystem : EntitySystem
         }
     }
 
+    private void UpdateAllBrowsers()
+    {
+        var query = EntityQueryEnumerator<NetBrowserComponent>();
+        while (query.MoveNext(out var uid, out var component))
+        {
+            foreach (var actor in _uiSystem.GetActors(uid, NetBrowserUiKey.Key))
+            {
+                UpdateStoreState(uid, component, actor);
+            }
+        }
+    }
+
     public void UpdateStoreState(EntityUid uid, NetBrowserComponent component, EntityUid user)
     {
         var siteProto = GetSiteForUrl(component.CurrentUrl);
@@ -117,7 +141,6 @@ public sealed class CitiNetStoreSystem : EntitySystem
         if (!_prototypeManager.TryIndex<CitiNetStorePresetPrototype>(siteProto.StorePreset, out var preset))
             return;
 
-        var store = EnsureComp<CitiNetStoreComponent>(uid);
         var balance = _bankSystem.GetBalance(user);
         var categories = new List<CitiNetStoreCategoryData>();
 
@@ -133,8 +156,12 @@ public sealed class CitiNetStoreSystem : EntitySystem
                     continue;
 
                 var stock = entry.InitialCount.HasValue 
-                    ? store.Stock.GetValueOrDefault(entry.ProductId, entry.InitialCount.Value)
+                    ? _globalStock.GetValueOrDefault(entry.ProductId, entry.InitialCount.Value)
                     : (int?)null;
+
+                // Sync the value back to dictionary if it's missing (first access)
+                if (entry.InitialCount.HasValue && !_globalStock.ContainsKey(entry.ProductId))
+                    _globalStock[entry.ProductId] = entry.InitialCount.Value;
 
                 entries.Add(new CitiNetStoreEntryData(
                     catId,
