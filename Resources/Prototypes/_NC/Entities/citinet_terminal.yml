@@ -53,6 +53,8 @@
   name: Почтомат "Vendit"
   description: Защищенный корпоративный терминал для получения посылок. Требуется PIN-код.
   components:
+  - type: Transform
+    anchored: true
   - type: DropPoint
     dropType: Corporate
     locationName: "Сектор 4, Главный холл"
@@ -76,6 +78,8 @@
   name: Старая мусорка
   description: Грязный бак, забитый старыми газетами. Кажется, тут что-то припрятано.
   components:
+  - type: Transform
+    anchored: true
   - type: DropPoint
     dropType: DeadDrop
     locationName: "Переулок за баром Джо"
