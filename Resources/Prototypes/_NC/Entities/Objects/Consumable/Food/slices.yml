@@ -196,6 +196,33 @@
 
 # endregion
 
+# region Mango
+
+- type: entity
+  parent: FoodLemonSlice
+  id: FoodMangoSlice
+  name: mango slice
+  components:
+  - type: FlavorProfile
+    flavors:
+      - sweet
+      - fruity
+  - type: Sprite
+    sprite: _NC/Objects/Consumable/Food/slices.rsi
+    state: mango
+  - type: Extractable
+    juiceSolution:
+      reagents:
+      - ReagentId: JungleBird
+        Quantity: 2.5
+  - type: FoodSequenceElement
+    entries:
+      Burger: MangoSliceBurger
+      Taco: MangoSlice
+      Skewer: MangoSlice
+
+# endregion
+
 # region Veggie
 
 - type: entity

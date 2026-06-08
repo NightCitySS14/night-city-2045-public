@@ -114,6 +114,20 @@
   sprites: [ { sprite: _NC/Objects/Consumable/Food/slices.rsi, state: orange } ]
   tags: [ Fruit, Slice ]
 
+# Mango
+
+- type: foodSequenceElement
+  id: MangoSliceBurger
+  name: food-sequence-burger-content-mango
+  sprites: [ { sprite: _Reserve/Objects/Consumable/Food/slices.rsi, state: mango } ]
+  tags: [ Fruit, Slice ]
+
+- type: foodSequenceElement
+  id: MangoSlice
+  name: food-sequence-content-mango
+  sprites: [ { sprite: _Reserve/Objects/Consumable/Food/slices.rsi, state: mango } ]
+  tags: [ Fruit, Slice ]
+
 # Carrot
 
 - type: foodSequenceElement

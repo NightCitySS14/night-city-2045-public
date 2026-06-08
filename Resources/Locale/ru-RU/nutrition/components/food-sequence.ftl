@@ -88,6 +88,7 @@ food-sequence-content-bluespace-tomato = блюспейс томатом
 food-sequence-content-pumpkin = тыквой
 food-sequence-content-blue-pumpkin = синетыквой
 food-sequence-content-laughin-pea = смешным горошком
+food-sequence-content-mango = манго
 
 # BURGERS
 
@@ -158,6 +159,7 @@ food-sequence-burger-content-potato = карто
 food-sequence-burger-content-pumpkin = тыкво
 food-sequence-burger-content-blue-pumpkin = синетыкво
 food-sequence-burger-content-laughin-pea = смехо
+food-sequence-burger-content-mango = манго
 
 # TACO
 

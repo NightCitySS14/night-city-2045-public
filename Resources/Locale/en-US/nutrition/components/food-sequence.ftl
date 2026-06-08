@@ -88,6 +88,7 @@ food-sequence-content-bluespace-tomato = bluespace tomato
 food-sequence-content-pumpkin = pumpkin
 food-sequence-content-blue-pumpkin = blue pumpkin
 food-sequence-content-laughin-pea = laughin pea
+food-sequence-content-mango = mango
 
 # BURGERS
 
@@ -158,6 +159,7 @@ food-sequence-burger-content-potato = potato
 food-sequence-burger-content-pumpkin = pumpkin
 food-sequence-burger-content-blue-pumpkin = blue
 food-sequence-burger-content-laughin-pea = laugh
+food-sequence-burger-content-mango = mango
 
 # TACO
 
