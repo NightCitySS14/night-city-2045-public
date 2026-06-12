@@ -1,6 +1,7 @@
 using Content.Shared._NC.CharacterNotes;
 using Content.Shared._NC.CharacterNotes.Components;
 using Content.Shared._NC.CharacterNotes.Events;
+using Content.Shared.Chat;
 using Content.Shared.GameTicking;
 using Content.Shared.IdentityManagement;
 using Robust.Client.Player;
@@ -62,6 +63,20 @@ public sealed class NCCharacterNotesSystem : EntitySystem
             return Identity.Name(target, EntityManager);
 
         return GetDisplayName(target, viewer.Value);
+    }
+
+    public string GetLocalChatNameColor(EntityUid target, string fallbackName)
+    {
+        if (!_knownIdentities.TryGetValue(target, out var note))
+            return SharedChatSystem.GetNameColor(fallbackName);
+
+        return note.ColorTag switch
+        {
+            NCCharacterNoteColorTag.Green => "#5AAE64",
+            NCCharacterNoteColorTag.Yellow => "#D6B44B",
+            NCCharacterNoteColorTag.Red => "#C85C5C",
+            _ => SharedChatSystem.GetNameColor(fallbackName),
+        };
     }
 
     private void OnResolveViewerDisplayName(EntityUid uid, NCCharacterIdentityComponent component, ref NCResolveViewerDisplayNameEvent args)
