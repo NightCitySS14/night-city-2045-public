@@ -1,5 +1,5 @@
-announcer-Director-name = Глобальный Директор
-director-test-event-gathering = Ходят слухи, что в тени собирается местная банда...
-director-test-event-conflict = Слышны выстрелы! Конфликт банд перешел в горячую фазу!
-director-test-event-police-raid = ВНИМАНИЕ: Полиция NCPD проводит рейд в секторе! Всем разойтись!
-director-test-event-cleanup = Ситуация успокаивается. Выжившие отступают.
+announcer-Director-name = Global Director
+director-test-event-gathering = Rumors point to a small booster crew gathering in the shadows.
+director-test-event-conflict = Gunfire detected. The local conflict has gone loud.
+director-test-event-corpo-sweep = Warning: a corporate response team is sweeping the sector. Civilians should clear the area.
+director-test-event-cleanup = The incident is burning out. Survivors are pulling back.

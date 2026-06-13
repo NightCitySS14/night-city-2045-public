@@ -1,24 +1,29 @@
 - type: directorEvent
   id: BackalleyDeal
+  parent: NCBaseDirectorEvent
   name: "The Backalley Deal"
+  weight: 18
   announcerId: "CitiNet"
   announcementColor: "#51f542"
   startPhase: "Gathering"
   phases:
     Gathering:
       name: "Gathering"
-      duration: 180 # 3 minutes
+      duration: 180
       announcement: "backalley-deal-gathering"
-      locationTag: "Alley"
+      locationTags: ["AlleyMeet"]
       aiDomain: "DirectorGatherCompound"
+      externalAggressionPhase: "Skirmish"
       spawns:
-        - prototype: MobSyndicateFootsoldier # Gang A (Maelstrom)
+        - prototype: MobNCBanditPistolUnlootable
           groupTag: "GangA"
-          faction: "Passive" # Все нейтральны на старте
+          faction: "Passive"
+          spawnLocationTags: ["GangAEntry"]
           amount: 2
-        - prototype: MobSyndicateFootsoldier # Gang B (Valentino)
+        - prototype: MobNCMilitechAvengerUnlootable
           groupTag: "GangB"
-          faction: "Passive" # Все нейтральны на старте
+          faction: "Passive"
+          spawnLocationTags: ["GangBEntry"]
           amount: 2
       nextPhases:
         Peace: 70
@@ -35,12 +40,16 @@
       name: "The Skirmish"
       duration: 600
       announcement: "backalley-deal-skirmish"
-      aiDomain: "TacticalCombat"
-      factionOverrides: # Смена фракций на враждебные
+      aiDomain: "DirectorCombatCompound"
+      factionOverrides:
         GangA: "NCBandit"
         GangB: "NCMilitech"
       triggers:
         - type: MobKilled
+          targetGroup: "GangA"
+          count: 2
+        - type: MobKilled
+          targetGroup: "GangB"
           count: 2
       nextPhases:
         Retreat: 100

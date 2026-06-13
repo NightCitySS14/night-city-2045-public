@@ -19,4 +19,17 @@ public sealed partial class DirectorSpawneeComponent : Component
     /// </summary>
     [DataField]
     public string? GroupTag;
+
+    /// <summary>
+    /// Phase id that originally spawned this entity.
+    /// Stored so trigger processing cannot leak across later phases.
+    /// </summary>
+    [DataField]
+    public string? PhaseId;
+
+    /// <summary>
+    /// Monotonic phase sequence of the parent event when this entity was spawned.
+    /// </summary>
+    [DataField]
+    public int PhaseSequence;
 }

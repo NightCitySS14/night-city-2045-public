@@ -3,5 +3,8 @@
   parent: BaseGameRule
   components:
   - type: GlobalDirector
-    minDelay: 300
-    maxDelay: 600
+    minDelay: 180
+    maxDelay: 360
+    minPlayers: 1
+    maxConcurrentEvents: 2
+    roundStartDelay: 300

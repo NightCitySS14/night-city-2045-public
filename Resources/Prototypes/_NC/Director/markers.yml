@@ -9,4 +9,94 @@
     - state: red
       shader: unshaded
   - type: DirectorSpawnPoint
+
+- type: entity
+  id: DirectorSpawnPointAlleyMeet
+  parent: DirectorSpawnPoint
+  name: director alley meet point
+  suffix: Director, Alley Meet
+  components:
+  - type: DirectorSpawnPoint
+    locationTags:
+    - AlleyMeet
+
+- type: entity
+  id: DirectorSpawnPointGangAEntry
+  parent: DirectorSpawnPoint
+  name: director gang A entry point
+  suffix: Director, Gang A Entry
+  components:
+  - type: DirectorSpawnPoint
+    locationTags:
+    - GangAEntry
+
+- type: entity
+  id: DirectorSpawnPointGangBEntry
+  parent: DirectorSpawnPoint
+  name: director gang B entry point
+  suffix: Director, Gang B Entry
+  components:
+  - type: DirectorSpawnPoint
+    locationTags:
+    - GangBEntry
+
+- type: entity
+  id: DirectorSpawnPointStreetMeet
+  parent: DirectorSpawnPoint
+  name: director street meet point
+  suffix: Director, Street Meet
+  components:
+  - type: DirectorSpawnPoint
+    locationTags:
+    - StreetMeet
+
+- type: entity
+  id: DirectorSpawnPointMarketMeet
+  parent: DirectorSpawnPoint
+  name: director market meet point
+  suffix: Director, Market Meet
+  components:
+  - type: DirectorSpawnPoint
+    locationTags:
+    - MarketMeet
+
+- type: entity
+  id: DirectorSpawnPointWarehouseMeet
+  parent: DirectorSpawnPoint
+  name: director warehouse meet point
+  suffix: Director, Warehouse Meet
+  components:
+  - type: DirectorSpawnPoint
+    locationTags:
+    - WarehouseMeet
+
+- type: entity
+  id: DirectorSpawnPointTransitEntry
+  parent: DirectorSpawnPoint
+  name: director transit entry point
+  suffix: Director, Transit Entry
+  components:
+  - type: DirectorSpawnPoint
+    locationTags:
+    - TransitEntry
+
+- type: entity
+  id: DirectorSpawnPointCheckpointEntry
+  parent: DirectorSpawnPoint
+  name: director checkpoint entry point
+  suffix: Director, Checkpoint Entry
+  components:
+  - type: DirectorSpawnPoint
+    locationTags:
+    - CheckpointEntry
+
+- type: entity
+  id: DirectorSpawnPointHiddenEntry
+  parent: DirectorSpawnPoint
+  name: director hidden entry point
+  suffix: Director, Hidden Entry
+  components:
+  - type: DirectorSpawnPoint
+    locationTags:
+    - HiddenEntry
   

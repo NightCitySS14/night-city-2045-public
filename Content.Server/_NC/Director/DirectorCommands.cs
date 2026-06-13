@@ -30,8 +30,14 @@ public sealed class StartDirectorEventCommand : IConsoleCommand
             return;
         }
 
-        system.StartEvent(proto);
-        shell.WriteLine($"Started event {args[0]}");
+        if (proto.Abstract)
+        {
+            shell.WriteError($"Director event prototype {args[0]} is abstract and cannot be started directly.");
+            return;
+        }
+
+        var uid = system.StartEvent(proto);
+        shell.WriteLine($"Started event {args[0]} as {uid}.");
     }
 }
 
@@ -52,12 +58,67 @@ public sealed class AdvanceDirectorEventCommand : IConsoleCommand
 
         if (!EntityUid.TryParse(args[0], out var uid))
         {
-             shell.WriteError("Invalid entity UID.");
-             return;
+            shell.WriteError("Invalid entity UID.");
+            return;
         }
 
         var system = IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<GlobalDirectorSystem>();
         system.AdvancePhase(uid);
-        shell.WriteLine($"Advanced event {uid}");
+        shell.WriteLine($"Advanced event {uid}.");
+    }
+}
+
+[AdminCommand(AdminFlags.Admin)]
+public sealed class CancelDirectorEventCommand : IConsoleCommand
+{
+    public string Command => "canceldirectorevent";
+    public string Description => "Cancels an active director event and cleans up owned entities.";
+    public string Help => "Usage: canceldirectorevent <entityUid>";
+
+    public void Execute(IConsoleShell shell, string argStr, string[] args)
+    {
+        if (args.Length != 1)
+        {
+            shell.WriteError(Help);
+            return;
+        }
+
+        if (!EntityUid.TryParse(args[0], out var uid))
+        {
+            shell.WriteError("Invalid entity UID.");
+            return;
+        }
+
+        var system = IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<GlobalDirectorSystem>();
+        if (!system.CancelEvent(uid))
+        {
+            shell.WriteError($"Entity {uid} is not an active director event.");
+            return;
+        }
+
+        shell.WriteLine($"Cancelled event {uid}.");
+    }
+}
+
+[AdminCommand(AdminFlags.Admin)]
+public sealed class DirectorStatusCommand : IConsoleCommand
+{
+    public string Command => "directorstatus";
+    public string Description => "Prints scheduler status, active events, and current eligibility of all director prototypes.";
+    public string Help => "Usage: directorstatus";
+
+    public void Execute(IConsoleShell shell, string argStr, string[] args)
+    {
+        if (args.Length != 0)
+        {
+            shell.WriteError(Help);
+            return;
+        }
+
+        var system = IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<GlobalDirectorSystem>();
+        foreach (var line in system.GetStatusReport())
+        {
+            shell.WriteLine(line);
+        }
     }
 }

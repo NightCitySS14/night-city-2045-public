@@ -34,6 +34,13 @@ public sealed partial class DirectorEventComponent : Component
     public string PrototypeId = string.Empty;
 
     /// <summary>
+    /// Incremented every time the event enters a phase.
+    /// Used to keep trigger handling scoped to the currently active phase.
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public int PhaseSequence;
+
+    /// <summary>
     /// Counter for triggers in the current phase.
     /// Key is a string representation of the trigger (e.g., "MobKilled:MobHuman").
     /// </summary>

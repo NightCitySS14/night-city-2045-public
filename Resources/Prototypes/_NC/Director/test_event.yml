@@ -1,38 +1,45 @@
 - type: directorEvent
   id: TestLivingWorldEvent
-  name: "Cyber-Gangs Skirmish"
+  parent: NCBaseDirectorEvent
+  name: "Director Validation Incident"
+  enabled: false
+  weight: 0
+  cooldown: 0
   startPhase: "Gathering"
   phases:
     Gathering:
       name: "The Gathering"
-      duration: 300
+      duration: 90
       announcement: "director-test-event-gathering"
-      locationTag: "Hidden"
+      locationTags: ["Hidden", "Alley"]
       aiDomain: "DirectorGatherCompound"
       spawns:
-        - prototype: MobSyndicateFootsoldier
-          amount: 3
+        - prototype: MobNCBanditPistolUnlootable
+          groupTag: "Bandits"
+          amount: 2
       nextPhases:
         Skirmish: 70
-        PoliceRaid: 30
+        CorpoSweep: 30
 
     Skirmish:
       name: "The Conflict"
-      duration: 600
+      duration: 180
       announcement: "director-test-event-conflict"
-      aiDomain: "TacticalCombat"
+      aiDomain: "DirectorCombatCompound"
+      factionOverrides:
+        Bandits: "NCBandit"
       triggers:
         - type: MobKilled
           count: 2
       nextPhases:
         Cleanup: 100
 
-    PoliceRaid:
-      name: "NCPD Intervention"
-      duration: 300
-      announcement: "director-test-event-police-raid"
+    CorpoSweep:
+      name: "Corporate Sweep"
+      duration: 120
+      announcement: "director-test-event-corpo-sweep"
       spawns:
-        - prototype: MobHumanNukeOp
+        - prototype: MobNCMilitechSaratogaUnlootable
           faction: NCMilitech
           amount: 1
       nextPhases:
@@ -40,7 +47,7 @@
 
     Cleanup:
       name: "The Cleanup"
-      duration: 120
+      duration: 60
       announcement: "director-test-event-cleanup"
       aiDomain: "FleeToExtraction"
       cleanup: true

@@ -7,8 +7,15 @@ namespace Content.Shared._NC.Director;
 public sealed partial class DirectorSpawnPointComponent : Component
 {
     /// <summary>
-    /// Tag used to categorize this spawn point (e.g., "Maintenance", "Alley", "Hidden").
+    /// Legacy single tag used to categorize this spawn point.
     /// </summary>
-    [DataField]
+    [DataField("locationTag")]
     public string? LocationTag;
+
+    /// <summary>
+    /// One or more tags that may be referenced by director phases.
+    /// This allows one mapping marker to serve multiple scenario templates.
+    /// </summary>
+    [DataField("locationTags")]
+    public List<string> LocationTags = new();
 }

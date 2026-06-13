@@ -34,6 +34,24 @@ public sealed partial class GlobalDirectorComponent : Component
     public bool Enabled = true;
 
     /// <summary>
+    /// Minimum connected player count required before the scheduler starts any event.
+    /// </summary>
+    [DataField]
+    public int MinPlayers = 0;
+
+    /// <summary>
+    /// Maximum number of concurrently active director events.
+    /// </summary>
+    [DataField]
+    public int MaxConcurrentEvents = 1;
+
+    /// <summary>
+    /// Delay from round start before the scheduler becomes active.
+    /// </summary>
+    [DataField]
+    public TimeSpan RoundStartDelay = TimeSpan.FromMinutes(5);
+
+    /// <summary>
     /// Color for phase announcements if not overridden by the event.
     /// </summary>
     [DataField]
@@ -44,4 +62,15 @@ public sealed partial class GlobalDirectorComponent : Component
     /// </summary>
     [DataField]
     public string DefaultAnnouncerId = "Director";
+
+    /// <summary>
+    /// Runtime history of the last successful start time for each prototype.
+    /// Stored on the rule entity so it resets with the round.
+    /// </summary>
+    public Dictionary<string, TimeSpan> LastRunAt = new();
+
+    /// <summary>
+    /// Runtime occurrence counter for each prototype during the round.
+    /// </summary>
+    public Dictionary<string, int> RunCounts = new();
 }

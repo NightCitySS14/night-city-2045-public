@@ -1,151 +1,192 @@
-# Документация системы «Живого Мира» (Global Director System)
+# Global Director
 
-Система **Global Director** — это автономный «рассказчик», который управляет динамическими сценариями. События теперь не просто случаются, а развиваются как нелинейные истории (State Machine), реагируя на мир и игроков.
+`Resources/Prototypes/_NC/Director` defines Night City ambient incidents for the `_NC` Global Director system.
 
----
+The runtime is owned by:
+- `Content.Server/_NC/Director/GlobalDirectorSystem.cs`
+- `Content.Shared/_NC/Director/*.cs`
 
-## 1. Глобальный Конфигуратор (Мозг Директора)
-Файл: `Resources/Prototypes/_NC/Director/gamerule.yml`
+The content contract is:
+- `gamerule.yml` defines the round-level scheduler rule entity.
+- `markers.yml` defines map markers used as spawn anchors.
+- `templates.yml` defines abstract reusable event bases.
+- `*.yml` event files define concrete incidents.
 
-**Внимание:** `GlobalDirector` — это игровое правило (Game Rule). Его **не нужно** спавнить на карте вручную. Он запускается автоматически в начале раунда или админом. Он существует как невидимая системная сущность.
+## Mental model
+
+Each `directorEvent` is a small state machine.
+
+1. The `GlobalDirector` gamerule waits for its scheduler timer.
+2. It filters all `directorEvent` prototypes by eligibility.
+3. It starts one eligible event by weight.
+4. The event enters its `startPhase`.
+5. Each phase may:
+   - announce text,
+   - spawn entities,
+   - change faction relationships,
+   - apply an HTN domain,
+   - move to the next phase by timer or trigger.
+6. The event ends when there is no valid next phase.
+
+## Scheduler fields
+
+Configured on the `GlobalDirector` component in `gamerule.yml`:
+
+- `minDelay`, `maxDelay`: seconds between scheduler attempts.
+- `minPlayers`: global hard gate for the scheduler.
+- `maxConcurrentEvents`: maximum active director events at once.
+- `roundStartDelay`: seconds after round start before the scheduler becomes active.
+- `defaultAnnouncerId`, `announcementColor`: fallback announcement identity.
+
+## Event fields
+
+Configured on `directorEvent` prototypes:
+
+- `enabled`: if false, the event can only be started manually.
+- `weight`: random selection weight.
+- `minPlayers`, `maxPlayers`: per-event player gate.
+- `minRoundDuration`: earliest round time when the event may start.
+- `cooldown`: delay before the same prototype may start again.
+- `maxOccurrences`: max starts per round. `0` means unlimited.
+- `maxSimultaneous`: max concurrent instances of the same prototype.
+- `cleanupOnEnd`: delete remaining event-owned entities when the event finishes.
+- `startPhase`: first phase id.
+- `phases`: state machine body.
+
+`directorEvent` supports inheritance through `parent`, so common defaults should live in abstract templates.
+
+## Phase fields
+
+Configured inside `phases.<PhaseId>`:
+
+- `duration`: seconds until automatic advance. Omit for trigger-only phases.
+- `announcement`: locale key broadcast on phase entry.
+- `locationTag`: legacy single anchor tag.
+- `locationTags`: preferred list of acceptable anchor tags.
+- `spawnTag`: legacy single entry tag.
+- `spawnTags`: preferred list of acceptable entry tags.
+- `aiDomain`: HTN compound id applied to event-owned entities.
+- `cleanup`: if true, all currently owned spawned entities are deleted before the next phase.
+- `spawns`: entity groups spawned on phase entry.
+- `triggers`: trigger rules that can advance the phase.
+- `nextPhases`: weighted next phase table.
+- `factionOverrides`: remap specific `groupTag` values to new factions.
+
+## Spawn groups
+
+Each item in `spawns` supports:
+
+- `prototype`: entity prototype id.
+- `groupTag`: logical label used by `factionOverrides` or trigger filters.
+- `spawnLocationTag`: legacy single entry tag for this group.
+- `spawnLocationTags`: preferred per-group entry tags.
+- `faction`: optional faction applied immediately after spawn.
+- `amount`: number of entities to spawn.
+
+Spawn resolution order is:
+
+1. `spawnLocationTags` on the spawn group.
+2. `spawnTags` on the phase.
+3. `locationTags` on the phase as the final fallback anchor.
+
+This lets multiple groups approach the same incident from different sides while still sharing a single scene center.
+
+## Triggers
+
+Supported trigger types:
+
+- `MobKilled`
+- `EntityDestroyed`
+
+Trigger fields:
+
+- `target`: legacy prototype filter.
+- `targetPrototype`: preferred prototype filter.
+- `targetGroup`: optional `groupTag` filter.
+- `count`: occurrences required before the phase advances.
+
+Trigger counting is phase-scoped. Kills or deletions from older phases do not leak into the current phase.
+
+## Mapping contract
+
+Place `DirectorSpawnPoint` on the map.
+
+Supported marker fields:
+
+- `locationTag`: legacy single tag.
+- `locationTags`: preferred list of tags.
+
+Recommended standard tags:
+
+- `Alley`
+- `Hidden`
+- `Street`
+- `Market`
+- `Checkpoint`
+- `Rooftop`
+- `Warehouse`
+
+Use a controlled tag vocabulary. Director content breaks down quickly if mappers invent near-duplicate tags.
+
+## Authoring template
 
 ```yaml
-- type: entity                 # Объявление новой сущности
-  id: GlobalDirector           # Уникальный ID для системы (используется в коде)
-  parent: BaseGameRule         # Наследование базовой логики игровых правил
-  components:                  # Список компонентов, прикрепленных к этой сущности
-  - type: GlobalDirector       # Логический компонент Директора
-    minDelay: 300              # Минимальное время покоя между событиями (в секундах)
-    maxDelay: 600              # Максимальное время покоя между событиями (в секундах)
-    defaultAnnouncerId: "Director" # Имя отправителя в чате (по умолчанию "Глобальный Директор")
-    announcementColor: "#00ffff"   # Цвет текста объявлений Директора (Cyan)
+- type: directorEvent
+  id: MyStreetIncident
+  parent: NCBaseDirectorEvent
+  name: "Street Incident"
+  weight: 12
+  announcerId: "CitiNet"
+  startPhase: "Gathering"
+  phases:
+    Gathering:
+      duration: 120
+      announcement: "my-incident-gathering"
+      locationTags: ["Alley", "Street"]
+      aiDomain: "DirectorGatherCompound"
+      spawns:
+        - prototype: MobNCBanditPistolUnlootable
+          groupTag: "Dealers"
+          faction: "Passive"
+          spawnLocationTags: ["DealersEntry"]
+          amount: 2
+      nextPhases:
+        Fight: 60
+        Disperse: 40
+
+    Fight:
+      duration: 180
+      announcement: "my-incident-fight"
+      aiDomain: "NCTacticalCombatCompound"
+      factionOverrides:
+        Dealers: "NCBandit"
+      triggers:
+        - type: MobKilled
+          targetGroup: "Dealers"
+          count: 2
+      nextPhases:
+        Cleanup: 100
+
+    Cleanup:
+      duration: 45
+      announcement: "my-incident-cleanup"
+      aiDomain: "FleeToExtraction"
+      cleanup: true
 ```
 
----
+## Admin commands
 
-## 2. Описание Сценария (DirectorEvent)
-Файл: `Resources/Prototypes/_NC/Director/*.yml`
+- `startdirectorevent <prototypeId>`
+- `advancedirectorevent <entityUid>`
+- `canceldirectorevent <entityUid>`
+- `directorstatus`
 
-### Заголовок события (Header)
-```yaml
-- type: directorEvent          # Указываем тип прототипа
-  id: TestEvent                # ID для спавна через консоль (startdirectorevent TestEvent)
-  name: "Тестовое событие"      # Понятное название для логов
-  weight: 10                   # Шанс выпадения (чем выше число, тем чаще выбирается)
-  announcerId: "Arasaka"       # Имя диктора для этого сценария
-  announcementColor: "red"     # Цвет текста для этого сценария
-  startPhase: "Initial"        # С какой фазы начинать
-```
+Use `directorstatus` first when an event does not start. It reports scheduler state, active events, and ineligibility reasons for every prototype.
 
-### Структура Фазы (Phases)
-Каждая фаза — это отдельный «слой» истории.
+## Content rules
 
-```yaml
-  phases:                      # Словарь всех фаз
-    Initial:                   # ID текущей фазы
-      name: "Подготовка"       # Название для отладки
-      duration: 300            # Таймер жизни фазы в секундах
-      announcement: "msg-id"   # Сообщение в чат в начале фазы
-      locationTag: "Hidden"    # Искать на карте DirectorSpawnPoint с этим тегом.
-                               # "Hidden" - за углом, "Alley" - в подворотне.
-                               # Эти точки расставляет маппер в редакторе!
-      aiDomain: "Tactical"     # Установить HTN-домен всем ботам события в этой фазе
-      cleanup: false           # Удалить сущности фазы при выходе из неё
-      spawns:                  # Список групп для появления
-        - prototype: MobHuman  # ID прототипа NPC
-          faction: NCBandit    # Фракция из ai_factions.yml (NCBandit, NCMilitech и т.д.)
-          amount: 2            # Количество (по умолчанию 1)
-      triggers:                # Условия для мгновенного перехода
-        - type: MobKilled      # Смерть заспавненного NPC
-          target: MobHuman     # Считать смерти только этого типа
-          count: 2             # Нужно 2 смерти
-      nextPhases:              # Куда идти дальше
-        Combat: 70             # 70% шанс перейти в 'Combat'
-        Police: 30             # 30% шанс перейти в 'Police'
-```
-
----
-
-## 3. Типы Триггеров (Triggers)
-
-*   `type: MobKilled` — Смерть NPC события.
-*   `type: EntityDestroyed` — Уничтожение объекта (турели, ящика).
-
----
-
-## 4. Пространственная привязка (Mapping)
-
-1. Маппер ставит сущность `DirectorSpawnPoint`.
-2. В компоненте пишет `locationTag: "MyTag"`.
-3. В YAML события пишет `locationTag: "MyTag"`.
-4. Директор выберет одну случайную точку с этим тегом.
-
----
-
-## 5. Локализация (Locale)
-Файл: `Resources/Locale/ru-RU/_NC/Director/director.ftl`
-
-```ftl
-announcer-Arasaka-name = СБ Арасака
-event-start-msg = Группа зачистки в пути
-```
-
----
-
-## 7. Как активировать Директора (Activation)
-
-Сам по себе прототип `GlobalDirector` в `gamerule.yml` — это просто описание. Чтобы система начала работать, её нужно запустить одним из способов:
-
-### А. Автоматически (через Пресеты)
-Добавьте ID правила в список `rules` вашего игрового пресета (например, в `roundstart.yml`):
-```yaml
-- type: gamePreset
-  id: MyPreset
-  rules:
-  - GlobalDirector  # Теперь Директор будет запускаться сам при старте раунда
-```
-
-### Б. Вручную (через Консоль Админа)
-Если раунд уже идет, введите команду:
-`addgamerule GlobalDirector`
-
----
-
-## 8. Команды управления
-
-*   `startdirectorevent <ID>` — Принудительный старт.
-*   `advancedirectorevent <UID>` — Переход к следующей фазе.
-*   `canceldirectorevent <UID>` — Жесткая остановка.
-
- Вот пошаговая цепочка, как игра находит точку в пространстве:
-
-  1. Подготовка на карте (Маппинг)
-  Маппер расставляет по всей карте невидимые маркеры — сущности DirectorSpawnPoint. 
-   * В параметрах каждой точки маппер пишет тег (ярлык).
-   * Например: В темном углу за баром он ставит точку и пишет locationTag: Alley. В вентиляции технического этажа ставит другую и пишет locationTag: Hidden.
-
-  2. Запрос в сценарии (YAML)
-  В файле события вы указываете, какой тип места вам нужен для конкретной фазы:
-
-   1     Gathering:
-   2       locationTag: "Alley" # Сценарий говорит Директору: "Найди мне подворотню"
-
-  3. Работа кода (Алгоритм выбора)
-  Когда наступает время спавна, система GlobalDirectorSystem выполняет следующий алгоритм:
-
-   1. Сканирование: Код «опрашивает» все маркеры DirectorSpawnPoint, которые существуют на текущей карте.
-   2. Фильтрация: Система отбрасывает те точки, тег которых не совпадает с тем, что указан в сценарии.
-       * Если в сценарии Alley, а на точке написано Hidden — она игнорируется.
-       * Если в сценарии тег НЕ указан, Директор возьмет вообще любую доступную точку спавна.
-   3. Случайный выбор: Из всех подходящих точек (например, на карте 5 подворотен) Директор выбирает одну случайную.
-   4. Группировка: Все NPC, указанные в списке spawns этой фазы, появятся в этой одной выбранной точке. Это гарантирует, что участники сделки окажутся рядом друг с другом, а не в разных концах карты.
-
-  4. Что если подходящих точек нет?
-  Если вы написали в сценарии locationTag: Rooftop, но маппер не поставил ни одной точки с таким тегом:
-   * Директор выдаст предупреждение (Warning) в консоль сервера.
-   * Событие попытается продолжиться (если там есть только сообщения), но NPC не заспавнятся.
-
-  Итог:
-  Игра понимает «где», просто сравнивая текст. Тег в YAML события должен в точности совпадать с тегом на маркере на карте. 
-
-  Совет для разработки: Создайте стандартный список тегов (например: Alley, Hidden, Maintenance, Office, Street) и используйте только их, чтобы мапперы и сценаристы всегда понимали друг друга.
+- Use `_NC` NPC prototypes, not generic station content, unless there is a deliberate design reason.
+- Prefer unlootable mobs for ambient incidents unless the event is intended as a reward source.
+- Keep phase logic in YAML and engine logic in the `_NC` Director systems.
+- Reuse abstract templates for shared defaults instead of copy-pasting scheduler gates into every event.
+- Use `locationTags` for the shared scene anchor and `spawnLocationTags` for side-specific entry points.

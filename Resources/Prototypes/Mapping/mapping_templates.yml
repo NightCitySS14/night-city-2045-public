@@ -267,16 +267,35 @@
           id: RandomPottedPlantSpawner
     - !type:MappingTemplatePrototype
       id: Markers
-      children:
-      - !type:MappingTemplatePrototype
-        id: MarkerBase
-      - !type:MappingTemplatePrototype
-        id: DirectorSpawnPoint
-      - !type:MappingTemplatePrototype
-        id: Antags
         children:
-          - !type:MappingTemplatePrototype
-            id: WarpPointBombing
+        - !type:MappingTemplatePrototype
+          id: MarkerBase
+        - !type:MappingTemplatePrototype
+          id: DirectorSpawnPoint
+          children:
+            - !type:MappingTemplatePrototype
+              id: DirectorSpawnPointAlleyMeet
+            - !type:MappingTemplatePrototype
+              id: DirectorSpawnPointGangAEntry
+            - !type:MappingTemplatePrototype
+              id: DirectorSpawnPointGangBEntry
+            - !type:MappingTemplatePrototype
+              id: DirectorSpawnPointStreetMeet
+            - !type:MappingTemplatePrototype
+              id: DirectorSpawnPointMarketMeet
+            - !type:MappingTemplatePrototype
+              id: DirectorSpawnPointWarehouseMeet
+            - !type:MappingTemplatePrototype
+              id: DirectorSpawnPointTransitEntry
+            - !type:MappingTemplatePrototype
+              id: DirectorSpawnPointCheckpointEntry
+            - !type:MappingTemplatePrototype
+              id: DirectorSpawnPointHiddenEntry
+        - !type:MappingTemplatePrototype
+          id: Antags
+          children:
+            - !type:MappingTemplatePrototype
+              id: WarpPointBombing
           - !type:MappingTemplatePrototype
             id: RendingRunePlacementMarker
       - !type:MappingTemplatePrototype
