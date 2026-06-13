@@ -10,8 +10,8 @@
         <BoxContainer Orientation="Vertical" HorizontalExpand="True" VerticalExpand="True" Margin="8">
             <PanelContainer StyleClasses="NightCityPhoneStatusBar" Margin="0 0 0 8">
                 <BoxContainer Orientation="Horizontal" HorizontalExpand="True" Margin="8 4 8 4">
-                    <Label Text="CitiNet" StyleClasses="NightCityGlowText" />
-                    <Label Name="ScreenTitleLabel" Text="CHATS" StyleClasses="NightCitySecondaryText" Margin="8 0 0 0" />
+                    <Label Text="{Loc 'citinet-ui-app-name'}" StyleClasses="NightCityGlowText" />
+                    <Label Name="ScreenTitleLabel" Text="{Loc 'citinet-ui-screen-chats'}" StyleClasses="NightCitySecondaryText" Margin="8 0 0 0" />
                     <Label Name="ScreenSubtitleLabel" Text="" StyleClasses="NightCityMutedText" Margin="8 0 0 0" />
                     <Control HorizontalExpand="True" />
                     <RichTextLabel Name="NetworkStatusLabel" VerticalAlignment="Center" />
@@ -23,8 +23,8 @@
                     <BoxContainer Orientation="Vertical" VerticalExpand="True" Margin="8">
                         <BoxContainer Orientation="Vertical" Margin="0 0 0 8">
                             <RichTextLabel Name="HeaderLabel" Margin="0 0 0 3" />
-                            <Label Name="ListTitleLabel" Text="CHAT ROOMS" StyleClasses="NightCityGlowText" Margin="0 0 0 2" />
-                            <Label Name="ListSubtitleLabel" Text="AVAILABLE NETWORKS" StyleClasses="NightCityMutedText" />
+                            <Label Name="ListTitleLabel" Text="{Loc 'citinet-ui-list-chat-rooms'}" StyleClasses="NightCityGlowText" Margin="0 0 0 2" />
+                            <Label Name="ListSubtitleLabel" Text="{Loc 'citinet-ui-subtitle-available-networks'}" StyleClasses="NightCityMutedText" />
                         </BoxContainer>
 
                         <PanelContainer StyleClasses="NightCityPhoneInset" VerticalExpand="True">
@@ -50,15 +50,15 @@
 
                         <PanelContainer Name="PasswordPanel" StyleClasses="NightCityPhoneActionCard" Visible="False" Margin="0 0 0 8">
                             <BoxContainer Orientation="Horizontal" HorizontalExpand="True" Margin="8">
-                                <LineEdit Name="PasswordInput" HorizontalExpand="True" PlaceHolder="ENTER ACCESS CODE..." StyleClasses="NightCityInput" />
-                                <Button Name="PasswordSubmitBtn" Text="UNLOCK" StyleClasses="NightCityButton" Margin="6 0 0 0" />
+                                <LineEdit Name="PasswordInput" HorizontalExpand="True" PlaceHolder="{Loc 'citinet-ui-placeholder-enter-access-code'}" StyleClasses="NightCityInput" />
+                                <Button Name="PasswordSubmitBtn" Text="{Loc 'citinet-ui-action-unlock'}" StyleClasses="NightCityButton" Margin="6 0 0 0" />
                             </BoxContainer>
                         </PanelContainer>
 
                         <PanelContainer Name="ActionControlsPanel" StyleClasses="NightCityPhoneActionCard" Visible="False" Margin="0 0 0 8">
                             <BoxContainer Orientation="Horizontal" HorizontalExpand="True" Margin="8">
                                 <LineEdit Name="ActionInput" HorizontalExpand="True" PlaceHolder="..." StyleClasses="NightCityInput" />
-                                <Button Name="ActionButton" Text="EXECUTE" StyleClasses="NightCityButton" Margin="6 0 0 0" />
+                                <Button Name="ActionButton" Text="{Loc 'citinet-ui-action-execute'}" StyleClasses="NightCityButton" Margin="6 0 0 0" />
                             </BoxContainer>
                         </PanelContainer>
 
@@ -66,13 +66,13 @@
                             <BoxContainer Orientation="Vertical" HorizontalExpand="True" Margin="8">
                                 <RichTextLabel Name="CallControlsStatusLabel" Margin="0 0 0 6" />
                                 <BoxContainer Orientation="Horizontal" HorizontalExpand="True">
-                                    <Button Name="CallDialButton" Text="DIAL" StyleClasses="NightCityButton" Visible="False" />
-                                    <Button Name="CallAcceptButton" Text="ACCEPT" StyleClasses="NightCityButton" Visible="False" Margin="4 0 0 0" />
-                                    <Button Name="CallDeclineButton" Text="DECLINE" StyleClasses="NightCityButtonDanger" Visible="False" Margin="4 0 0 0" />
-                                    <Button Name="CallJoinVoiceButton" Text="JOIN VOICE" StyleClasses="NightCityButton" Visible="False" Margin="4 0 0 0" />
-                                    <Button Name="CallLeaveVoiceButton" Text="LEAVE VOICE" StyleClasses="NightCityButtonDanger" Visible="False" Margin="4 0 0 0" />
-                                    <Button Name="CallPingLocationButton" Text="PING" StyleClasses="NightCityButtonGhost" Margin="4 0 0 0" />
-                                    <Button Name="CallHangUpButton" Text="HANG UP" StyleClasses="NightCityButtonDanger" Visible="False" Margin="4 0 0 0" />
+                                    <Button Name="CallDialButton" Text="{Loc 'citinet-ui-action-dial'}" StyleClasses="NightCityButton" Visible="False" />
+                                    <Button Name="CallAcceptButton" Text="{Loc 'citinet-ui-action-accept'}" StyleClasses="NightCityButton" Visible="False" Margin="4 0 0 0" />
+                                    <Button Name="CallDeclineButton" Text="{Loc 'citinet-ui-action-decline'}" StyleClasses="NightCityButtonDanger" Visible="False" Margin="4 0 0 0" />
+                                    <Button Name="CallJoinVoiceButton" Text="{Loc 'citinet-ui-action-join-voice'}" StyleClasses="NightCityButton" Visible="False" Margin="4 0 0 0" />
+                                    <Button Name="CallLeaveVoiceButton" Text="{Loc 'citinet-ui-action-leave-voice'}" StyleClasses="NightCityButtonDanger" Visible="False" Margin="4 0 0 0" />
+                                    <Button Name="CallPingLocationButton" Text="{Loc 'citinet-ui-action-ping'}" StyleClasses="NightCityButtonGhost" Margin="4 0 0 0" />
+                                    <Button Name="CallHangUpButton" Text="{Loc 'citinet-ui-action-hang-up'}" StyleClasses="NightCityButtonDanger" Visible="False" Margin="4 0 0 0" />
                                 </BoxContainer>
                             </BoxContainer>
                         </PanelContainer>
@@ -85,8 +85,8 @@
 
                         <PanelContainer Name="ChatInputPanel" StyleClasses="NightCityPhoneComposer">
                             <BoxContainer Orientation="Horizontal" HorizontalExpand="True" Margin="8">
-                                <LineEdit Name="ChatInput" HorizontalExpand="True" PlaceHolder="Transmit message..." StyleClasses="NightCityInput" />
-                                <Button Name="ChatSendButton" Text="SEND" StyleClasses="NightCityButton" Margin="6 0 0 0" />
+                                <LineEdit Name="ChatInput" HorizontalExpand="True" PlaceHolder="{Loc 'citinet-ui-placeholder-transmit-message'}" StyleClasses="NightCityInput" />
+                                <Button Name="ChatSendButton" Text="{Loc 'citinet-ui-action-send'}" StyleClasses="NightCityButton" Margin="6 0 0 0" />
                             </BoxContainer>
                         </PanelContainer>
                     </BoxContainer>
@@ -95,10 +95,10 @@
 
             <PanelContainer StyleClasses="NightCityPhoneNavBar" Margin="0 8 0 0">
                 <BoxContainer Orientation="Horizontal" HorizontalExpand="True" Margin="8 6 8 6">
-                    <Button Name="MenuDirectCallsBtn" Text="CALLS" HorizontalExpand="True" StyleClasses="NightCityTabButton" />
-                    <Button Name="MenuChatRoomsBtn" Text="CHATS" HorizontalExpand="True" StyleClasses="NightCityTabButton" Margin="6 0 0 0" />
-                    <Button Name="MenuDataPoolBtn" Text="POOL" HorizontalExpand="True" StyleClasses="NightCityTabButton" Margin="6 0 0 0" />
-                    <Button Name="MenuContactsBtn" Text="CONTACTS" HorizontalExpand="True" StyleClasses="NightCityTabButton" Margin="6 0 0 0" />
+                    <Button Name="MenuDirectCallsBtn" Text="{Loc 'citinet-ui-screen-calls'}" HorizontalExpand="True" StyleClasses="NightCityTabButton" />
+                    <Button Name="MenuChatRoomsBtn" Text="{Loc 'citinet-ui-screen-chats'}" HorizontalExpand="True" StyleClasses="NightCityTabButton" Margin="6 0 0 0" />
+                    <Button Name="MenuDataPoolBtn" Text="{Loc 'citinet-ui-screen-pool'}" HorizontalExpand="True" StyleClasses="NightCityTabButton" Margin="6 0 0 0" />
+                    <Button Name="MenuContactsBtn" Text="{Loc 'citinet-ui-screen-contacts'}" HorizontalExpand="True" StyleClasses="NightCityTabButton" Margin="6 0 0 0" />
                 </BoxContainer>
             </PanelContainer>
         </BoxContainer>

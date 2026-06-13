@@ -228,14 +228,14 @@ public sealed partial class CitiNetUiFragment : BoxContainer
 
         _lastState = state;
 
-        SetMarkup(HeaderLabel, $"[color={ColorReadableSlate.ToHex()}]Neural line #{state.OwnNumber}[/color]");
+        SetMarkup(HeaderLabel, $"[color={ColorReadableSlate.ToHex()}]{Escape(Loc.GetString("citinet-ui-neural-line", ("number", state.OwnNumber)))}[/color]");
         SetMarkup(NetworkStatusLabel, state.HasRelay
-            ? $"[color={ColorGood.ToHex()}]LINK STABLE[/color]"
-            : $"[color={ColorAlertRed.ToHex()}]RELAY LOST[/color]");
+            ? $"[color={ColorGood.ToHex()}]{Escape(Loc.GetString("citinet-ui-network-link-stable"))}[/color]"
+            : $"[color={ColorAlertRed.ToHex()}]{Escape(Loc.GetString("citinet-ui-network-relay-lost"))}[/color]");
         SetMarkup(OnlineStatusLabel, state.HasRelay
-            ? $"[color={ColorGood.ToHex()}]ONLINE[/color]"
-            : $"[color={ColorAlertRed.ToHex()}]OFFLINE[/color]");
-        SetMarkup(UsernameLabel, $"[color={ColorReadableCyan.ToHex()}]AGENT PROFILE // {state.OwnNumber}[/color]");
+            ? $"[color={ColorGood.ToHex()}]{Escape(Loc.GetString("citinet-ui-status-online"))}[/color]"
+            : $"[color={ColorAlertRed.ToHex()}]{Escape(Loc.GetString("citinet-ui-status-offline"))}[/color]");
+        SetMarkup(UsernameLabel, $"[color={ColorReadableCyan.ToHex()}]{Escape(Loc.GetString("citinet-ui-agent-profile", ("number", state.OwnNumber)))}[/color]");
 
         UpdateUIFields(state);
     }
@@ -270,22 +270,22 @@ public sealed partial class CitiNetUiFragment : BoxContainer
 
     private void RenderDirectCalls(CitiNetUiState state)
     {
-        ApplyScreenHeading("CALLS", "CONTACT ROUTING");
-        ListTitleLabel.Text = "DIRECT CALLS";
-        ListSubtitleLabel.Text = "CONTACT ROUTING";
-        SetMarkup(ContentHeaderLabel, $"[color={ColorGood.ToHex()}]P2P COMMUNICATION[/color]");
-        SetMarkup(ContentSubHeaderLabel, $"[color={ColorReadableSlate.ToHex()}]Direct messages and voice call.[/color]");
+        ApplyScreenHeading(Loc.GetString("citinet-ui-screen-calls"), Loc.GetString("citinet-ui-subtitle-contact-routing"));
+        ListTitleLabel.Text = Loc.GetString("citinet-ui-list-direct-calls");
+        ListSubtitleLabel.Text = Loc.GetString("citinet-ui-subtitle-contact-routing");
+        SetMarkup(ContentHeaderLabel, $"[color={ColorGood.ToHex()}]{Escape(Loc.GetString("citinet-ui-header-p2p-communication"))}[/color]");
+        SetMarkup(ContentSubHeaderLabel, $"[color={ColorReadableSlate.ToHex()}]{Escape(Loc.GetString("citinet-ui-copy-direct-messages-voice"))}[/color]");
         ConfigurePanelWidths(false);
 
         ActionControlsPanel.Visible = true;
         ActionInput.Visible = true;
-        ActionInput.PlaceHolder = "NEW AGENT NUMBER...";
-        ActionButton.Text = "START CHAT";
+        ActionInput.PlaceHolder = Loc.GetString("citinet-ui-placeholder-new-agent-number");
+        ActionButton.Text = Loc.GetString("citinet-ui-action-start-chat");
         _actionMode = ActionMode.StartP2P;
 
         if (state.Contacts.Count == 0)
         {
-            AddListEntry("NO ACTIVE CONTACTS", ColorDarkGrey);
+            AddListEntry(Loc.GetString("citinet-ui-empty-no-active-contacts"), ColorDarkGrey);
         }
         else
         {
@@ -302,7 +302,7 @@ public sealed partial class CitiNetUiFragment : BoxContainer
 
         if (state.CurrentContactNumber == null)
         {
-            AddMessage($"[color={ColorDarkGrey.ToHex()}]Select a contact to view traffic.[/color]");
+            AddMessage($"[color={ColorDarkGrey.ToHex()}]{Escape(Loc.GetString("citinet-ui-hint-select-contact"))}[/color]");
             return;
         }
 
@@ -325,25 +325,25 @@ public sealed partial class CitiNetUiFragment : BoxContainer
 
         SetMarkup(CallControlsStatusLabel, state.CallState switch
         {
-            CitiNetCallState.Active => $"[color={ColorGood.ToHex()}]VOICE CHANNEL // CONNECTED[/color]",
-            CitiNetCallState.Ringing => $"[color={ColorWarning.ToHex()}]VOICE CHANNEL // RINGING[/color]",
-            CitiNetCallState.Incoming => $"[color={ColorAlertRed.ToHex()}]VOICE CHANNEL // INCOMING[/color]",
-            _ => $"[color={ColorDarkGrey.ToHex()}]VOICE CHANNEL // IDLE[/color]"
+            CitiNetCallState.Active => $"[color={ColorGood.ToHex()}]{Escape(Loc.GetString("citinet-ui-voice-connected"))}[/color]",
+            CitiNetCallState.Ringing => $"[color={ColorWarning.ToHex()}]{Escape(Loc.GetString("citinet-ui-voice-ringing"))}[/color]",
+            CitiNetCallState.Incoming => $"[color={ColorAlertRed.ToHex()}]{Escape(Loc.GetString("citinet-ui-voice-incoming"))}[/color]",
+            _ => $"[color={ColorDarkGrey.ToHex()}]{Escape(Loc.GetString("citinet-ui-voice-idle"))}[/color]"
         });
     }
 
     private void RenderChatRooms(CitiNetUiState state)
     {
-        ApplyScreenHeading("CHATS", "AVAILABLE NETWORKS");
-        ListTitleLabel.Text = "CHAT ROOMS";
-        ListSubtitleLabel.Text = "AVAILABLE NETWORKS";
-        SetMarkup(ContentHeaderLabel, $"[color={ColorGood.ToHex()}]PUBLIC / SECURE BBS[/color]");
-        SetMarkup(ContentSubHeaderLabel, $"[color={ColorReadableSlate.ToHex()}]Channel feed.[/color]");
+        ApplyScreenHeading(Loc.GetString("citinet-ui-screen-chats"), Loc.GetString("citinet-ui-subtitle-available-networks"));
+        ListTitleLabel.Text = Loc.GetString("citinet-ui-list-chat-rooms");
+        ListSubtitleLabel.Text = Loc.GetString("citinet-ui-subtitle-available-networks");
+        SetMarkup(ContentHeaderLabel, $"[color={ColorGood.ToHex()}]{Escape(Loc.GetString("citinet-ui-header-public-secure-bbs"))}[/color]");
+        SetMarkup(ContentSubHeaderLabel, $"[color={ColorReadableSlate.ToHex()}]{Escape(Loc.GetString("citinet-ui-copy-channel-feed"))}[/color]");
         ConfigurePanelWidths(false);
 
         if (state.Channels.Count == 0)
         {
-            AddListEntry("NO CHANNELS FOUND", ColorDarkGrey);
+            AddListEntry(Loc.GetString("citinet-ui-empty-no-channels-found"), ColorDarkGrey);
             return;
         }
 
@@ -370,13 +370,13 @@ public sealed partial class CitiNetUiFragment : BoxContainer
 
         SetMarkup(ContentHeaderLabel, $"[color={currentChannel.Color.ToHex()}]{Escape(currentChannel.Name.ToUpperInvariant())}[/color]");
         SetMarkup(ContentSubHeaderLabel, currentChannel.IsJoined
-            ? $"[color={ColorReadableSlate.ToHex()}]Channel linked.[/color]"
-            : $"[color={ColorDarkGrey.ToHex()}]Access not established.[/color]");
+            ? $"[color={ColorReadableSlate.ToHex()}]{Escape(Loc.GetString("citinet-ui-channel-linked"))}[/color]"
+            : $"[color={ColorDarkGrey.ToHex()}]{Escape(Loc.GetString("citinet-ui-channel-access-not-established"))}[/color]");
 
         if (currentChannel.RequiresPassword && !currentChannel.IsJoined)
         {
             PasswordPanel.Visible = true;
-            AddMessage($"[color={ColorAlertRed.ToHex()}]SYSTEM // SECURED CHANNEL. ENTER ACCESS CODE.[/color]");
+            AddMessage($"[color={ColorAlertRed.ToHex()}]{Escape(Loc.GetString("citinet-ui-channel-secured-enter-code"))}[/color]");
             return;
         }
 
@@ -395,38 +395,38 @@ public sealed partial class CitiNetUiFragment : BoxContainer
 
         ActionControlsPanel.Visible = true;
         ActionInput.Visible = true;
-        ActionInput.PlaceHolder = "AGENT NUMBER...";
-        ActionButton.Text = "INVITE TO CHANNEL";
+        ActionInput.PlaceHolder = Loc.GetString("citinet-ui-placeholder-agent-number");
+        ActionButton.Text = Loc.GetString("citinet-ui-action-invite-to-channel");
         _actionMode = ActionMode.InviteToChannel;
         _actionChannelId = currentChannel.Id;
     }
 
     private void RenderDataPool(CitiNetUiState state)
     {
-        ApplyScreenHeading("POOL", "TACTICAL BRIDGE");
-        ListTitleLabel.Text = "DATA POOL";
-        ListSubtitleLabel.Text = "TACTICAL BRIDGE";
+        ApplyScreenHeading(Loc.GetString("citinet-ui-screen-pool"), Loc.GetString("citinet-ui-subtitle-tactical-bridge"));
+        ListTitleLabel.Text = Loc.GetString("citinet-ui-list-data-pool");
+        ListSubtitleLabel.Text = Loc.GetString("citinet-ui-subtitle-tactical-bridge");
         ConfigurePanelWidths(false);
 
         if (!state.InGroup)
         {
-            SetMarkup(ContentHeaderLabel, $"[color={ColorGood.ToHex()}]TACTICAL BRIDGE // OFFLINE[/color]");
-            SetMarkup(ContentSubHeaderLabel, $"[color={ColorDarkGrey.ToHex()}]No active bridge.[/color]");
-            AddListEntry("BRIDGE OFFLINE", ColorDarkGrey);
+            SetMarkup(ContentHeaderLabel, $"[color={ColorGood.ToHex()}]{Escape(Loc.GetString("citinet-ui-bridge-offline-header"))}[/color]");
+            SetMarkup(ContentSubHeaderLabel, $"[color={ColorDarkGrey.ToHex()}]{Escape(Loc.GetString("citinet-ui-copy-no-active-bridge"))}[/color]");
+            AddListEntry(Loc.GetString("citinet-ui-bridge-offline-list"), ColorDarkGrey);
 
             ActionControlsPanel.Visible = true;
             ActionInput.Visible = false;
-            ActionButton.Text = "CREATE TACTICAL BRIDGE";
+            ActionButton.Text = Loc.GetString("citinet-ui-action-create-tactical-bridge");
             _actionMode = ActionMode.GroupAction;
             return;
         }
 
-        SetMarkup(ContentHeaderLabel, $"[color={ColorGood.ToHex()}]TACTICAL BRIDGE // ONLINE[/color]");
-        SetMarkup(ContentSubHeaderLabel, $"[color={ColorReadableSlate.ToHex()}]Live squad mesh.[/color]");
+        SetMarkup(ContentHeaderLabel, $"[color={ColorGood.ToHex()}]{Escape(Loc.GetString("citinet-ui-bridge-online-header"))}[/color]");
+        SetMarkup(ContentSubHeaderLabel, $"[color={ColorReadableSlate.ToHex()}]{Escape(Loc.GetString("citinet-ui-copy-live-squad-mesh"))}[/color]");
         ActionControlsPanel.Visible = true;
         ActionInput.Visible = true;
-        ActionInput.PlaceHolder = "AGENT NUMBER...";
-        ActionButton.Text = "INVITE AGENT";
+        ActionInput.PlaceHolder = Loc.GetString("citinet-ui-placeholder-agent-number");
+        ActionButton.Text = Loc.GetString("citinet-ui-action-invite-agent");
         _actionMode = ActionMode.GroupAction;
 
         ChatInputPanel.Visible = true;
@@ -439,18 +439,20 @@ public sealed partial class CitiNetUiFragment : BoxContainer
         CallLeaveVoiceButton.Visible = state.InGroupVoice;
 
         SetMarkup(CallControlsStatusLabel, state.InGroupVoice
-            ? $"[color={ColorGood.ToHex()}]GROUP VOICE // ACTIVE[/color]"
-            : $"[color={ColorDarkGrey.ToHex()}]GROUP VOICE // STANDBY[/color]");
+            ? $"[color={ColorGood.ToHex()}]{Escape(Loc.GetString("citinet-ui-group-voice-active"))}[/color]"
+            : $"[color={ColorDarkGrey.ToHex()}]{Escape(Loc.GetString("citinet-ui-group-voice-standby"))}[/color]");
 
-        AddListEntry($"SLOTS: {state.GroupParticipants.Count}/{state.MaxGroupParticipants}", ColorCyberBlue);
+        AddListEntry(Loc.GetString("citinet-ui-group-slots", ("count", state.GroupParticipants.Count), ("max", state.MaxGroupParticipants)), ColorCyberBlue);
         foreach (var participant in state.GroupParticipants)
         {
             AddListEntry(
-                participant.IsAlive ? $"> {participant.Name}" : $"X {participant.Name} [FLATLINE]",
+                participant.IsAlive
+                    ? Loc.GetString("citinet-ui-group-member-alive", ("name", participant.Name))
+                    : Loc.GetString("citinet-ui-group-member-flatline", ("name", participant.Name)),
                 participant.IsAlive ? ColorGood : ColorAlertRed);
         }
 
-        var leaveButton = CreateNightCityButton("LEAVE BRIDGE", Color.White, "NightCityButtonDanger");
+        var leaveButton = CreateNightCityButton(Loc.GetString("citinet-ui-action-leave-bridge"), Color.White, "NightCityButtonDanger");
         leaveButton.OnPressed += _ => OnSendMessage?.Invoke(CitiNetUiMessageType.LeaveGroup, null, null);
         ListContainer.AddChild(leaveButton);
 
@@ -463,23 +465,23 @@ public sealed partial class CitiNetUiFragment : BoxContainer
 
     private void RenderContacts(CitiNetUiState state)
     {
-        ApplyScreenHeading("CONTACTS", "ACTIVE CITIZENS");
-        ListTitleLabel.Text = "CONTACTS";
-        ListSubtitleLabel.Text = "ACTIVE CITIZENS";
-        SetMarkup(ContentHeaderLabel, $"[color={ColorGood.ToHex()}]DIRECTORY[/color]");
-        SetMarkup(ContentSubHeaderLabel, $"[color={ColorReadableSlate.ToHex()}]Citizen directory and emergency actions.[/color]");
+        ApplyScreenHeading(Loc.GetString("citinet-ui-screen-contacts"), Loc.GetString("citinet-ui-subtitle-active-citizens"));
+        ListTitleLabel.Text = Loc.GetString("citinet-ui-screen-contacts");
+        ListSubtitleLabel.Text = Loc.GetString("citinet-ui-subtitle-active-citizens");
+        SetMarkup(ContentHeaderLabel, $"[color={ColorGood.ToHex()}]{Escape(Loc.GetString("citinet-ui-header-directory"))}[/color]");
+        SetMarkup(ContentSubHeaderLabel, $"[color={ColorReadableSlate.ToHex()}]{Escape(Loc.GetString("citinet-ui-copy-citizen-directory"))}[/color]");
         ConfigurePanelWidths(true);
 
         if (state.AllPlayers.Count == 0)
         {
-            AddListEntry("NO PLAYERS ONLINE", ColorDarkGrey);
+            AddListEntry(Loc.GetString("citinet-ui-empty-no-players-online"), ColorDarkGrey);
         }
         else
         {
             foreach (var player in state.AllPlayers)
             {
                 var button = CreateNightCityButton(
-                    $"{Escape(player.Name)} (ID: {player.Number})",
+                    Loc.GetString("citinet-ui-player-entry", ("name", player.Name), ("number", player.Number)),
                     player.Number == "N/A" ? ColorDarkGrey : ColorCyberBlue);
 
                 if (player.Number != "N/A" && player.Number != state.OwnNumber)
@@ -495,12 +497,14 @@ public sealed partial class CitiNetUiFragment : BoxContainer
             }
         }
 
-        AddMessage($"[color={ColorGood.ToHex()}]SYSTEM // Emergency line online.[/color]");
-        AddMessage($"[color={ColorCyberBlue.ToHex()}]NCPD // Dispatch to your position.[/color]");
-        AddMessage($"[color={ColorTrauma.ToHex()}]TRAUMA // Medical assistance.[/color]");
+        AddMessage($"[color={ColorGood.ToHex()}]{Escape(Loc.GetString("citinet-ui-emergency-line-online"))}[/color]");
+        AddMessage($"[color={ColorCyberBlue.ToHex()}]{Escape(Loc.GetString("citinet-ui-emergency-ncpd"))}[/color]");
+        AddMessage($"[color={ColorTrauma.ToHex()}]{Escape(Loc.GetString("citinet-ui-emergency-trauma"))}[/color]");
 
         var policeButton = CreateNightCityButton(
-            state.PoliceCooldown > 0 ? $"CALL POLICE ({(int) state.PoliceCooldown})" : "CALL POLICE",
+            state.PoliceCooldown > 0
+                ? Loc.GetString("citinet-ui-action-call-police-cooldown", ("seconds", (int) state.PoliceCooldown))
+                : Loc.GetString("citinet-ui-action-call-police"),
             Color.White,
             "NightCityButtonDanger");
         policeButton.Disabled = state.PoliceCooldown > 0;
@@ -508,13 +512,15 @@ public sealed partial class CitiNetUiFragment : BoxContainer
         ContentMessagesContainer.AddChild(policeButton);
 
         var traumaButton = CreateNightCityButton(
-            state.TraumaCooldown > 0 ? $"CALL TRAUMA ({(int) state.TraumaCooldown})" : "CALL TRAUMA",
+            state.TraumaCooldown > 0
+                ? Loc.GetString("citinet-ui-action-call-trauma-cooldown", ("seconds", (int) state.TraumaCooldown))
+                : Loc.GetString("citinet-ui-action-call-trauma"),
             Color.White);
         traumaButton.Disabled = state.TraumaCooldown > 0;
         traumaButton.OnPressed += _ => OnSendMessage?.Invoke(CitiNetUiMessageType.CallTrauma, null, null);
         ContentMessagesContainer.AddChild(traumaButton);
 
-        AddMessage($"[color={ColorDarkGrey.ToHex()}]False alarms are punishable.[/color]");
+        AddMessage($"[color={ColorDarkGrey.ToHex()}]{Escape(Loc.GetString("citinet-ui-false-alarms-warning"))}[/color]");
     }
 
     private void AddListEntry(string text, Color color)
