@@ -11,21 +11,21 @@
       name: "Gathering"
       duration: 180
       announcement: "backalley-deal-gathering"
-      locationTags: ["AlleyMeet"]
+      meetLocationTags: ["AlleyMeet"]
       aiDomain: "DirectorGatherCompound"
       externalAggressionPhase: "Skirmish"
       spawns:
         - prototype: MobNCBanditPistolUnlootable
           groupTag: "GangA"
           faction: "Passive"
-          location: "GangA"
-          spawnLocationTags: ["GangAEntry"]
+          exitLocationTags: ["GangA"]
+          entryLocationTags: ["GangAEntry"]
           amount: 2
         - prototype: MobNCMilitechAvengerUnlootable
           groupTag: "GangB"
           faction: "Passive"
-          location: "GangB"
-          spawnLocationTags: ["GangBEntry"]
+          exitLocationTags: ["GangB"]
+          entryLocationTags: ["GangBEntry"]
           amount: 2
       nextPhases:
         Peace: 70

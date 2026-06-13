@@ -440,17 +440,15 @@ public sealed class GlobalDirectorSystem : EntitySystem
 
         if (startPhase.Spawns.Count > 0)
         {
-            startPhase.NormalizeLegacyFields();
-
-            if (!HasSpawnLocation(startPhase.LocationTags))
+            if (!HasSpawnLocation(startPhase.MeetLocationTags))
             {
-                reason = "no matching locationTag/locationTags spawn point on the loaded map";
+                reason = "no matching meetLocationTags spawn point on the loaded map";
                 return false;
             }
 
-            if (startPhase.SpawnTags.Count > 0 && !HasSpawnLocation(startPhase.SpawnTags))
+            if (startPhase.EntryLocationTags.Count > 0 && !HasSpawnLocation(startPhase.EntryLocationTags))
             {
-                reason = "no matching spawnTag/spawnTags spawn point on the loaded map";
+                reason = "no matching entryLocationTags spawn point on the loaded map";
                 return false;
             }
         }
@@ -475,34 +473,29 @@ public sealed class GlobalDirectorSystem : EntitySystem
         string phaseId,
         DirectorPhase phase)
     {
-        phase.NormalizeLegacyFields();
-
-        var anchorCoords = GetSpawnLocation(phase.LocationTags, null);
-        var eventSector = anchorCoords != MapCoordinates.Nullspace ? GetSectorForCoordinates(anchorCoords) : null;
+        var anchorCoords = GetSpawnLocation(phase.MeetLocationTags, null);
 
         if (anchorCoords == MapCoordinates.Nullspace && phase.Spawns.Count > 0)
         {
             _sawmill.Warning(
                 $"Could not find a valid anchor location for event {proto.Name} ({eventUid}) phase {phaseId}. " +
-                $"locationTags=[{string.Join(", ", phase.LocationTags)}]");
+                $"meetLocationTags=[{string.Join(", ", phase.MeetLocationTags)}]");
             return;
         }
 
         foreach (var group in phase.Spawns)
         {
-            group.NormalizeLegacyFields();
-
-            var spawnCoordsBase = ResolveGroupSpawnLocation(group, phase, eventSector, anchorCoords);
+            var spawnCoordsBase = ResolveGroupSpawnLocation(group, phase, anchorCoords);
             if (spawnCoordsBase == MapCoordinates.Nullspace)
             {
                 _sawmill.Warning(
                     $"Could not find a valid group spawn location for event {proto.Name} ({eventUid}) phase {phaseId}, " +
-                    $"group={group.GroupTag ?? "<none>"}, groupSpawnTags=[{string.Join(", ", group.SpawnLocationTags)}], " +
-                    $"phaseSpawnTags=[{string.Join(", ", phase.SpawnTags)}], locationTags=[{string.Join(", ", phase.LocationTags)}]");
+                    $"group={group.GroupTag ?? "<none>"}, groupEntryLocationTags=[{string.Join(", ", group.EntryLocationTags)}], " +
+                    $"phaseEntryLocationTags=[{string.Join(", ", phase.EntryLocationTags)}], meetLocationTags=[{string.Join(", ", phase.MeetLocationTags)}]");
                 continue;
             }
 
-            var retreatCoordsBase = ResolveGroupRetreatLocation(group, phase, eventSector, anchorCoords, spawnCoordsBase);
+            var retreatCoordsBase = ResolveGroupRetreatLocation(group, phase, anchorCoords, spawnCoordsBase);
 
             for (var i = 0; i < group.Amount; i++)
             {
@@ -544,21 +537,20 @@ public sealed class GlobalDirectorSystem : EntitySystem
     private MapCoordinates ResolveGroupSpawnLocation(
         DirectorSpawnGroup group,
         DirectorPhase phase,
-        EntityUid? eventSector,
         MapCoordinates anchorCoords)
     {
         // Group-specific entry points take precedence over phase-wide entry tags.
-        if (group.SpawnLocationTags.Count > 0)
+        if (group.EntryLocationTags.Count > 0)
         {
-            var groupEntry = GetSpawnLocation(group.SpawnLocationTags, eventSector, anchorCoords != MapCoordinates.Nullspace ? anchorCoords : null);
+            var groupEntry = GetSpawnLocation(group.EntryLocationTags, null, anchorCoords != MapCoordinates.Nullspace ? anchorCoords : null);
             if (groupEntry != MapCoordinates.Nullspace)
                 return groupEntry;
         }
 
         // Phase-wide entry tags are the fallback for groups that do not define their own entry route.
-        if (phase.SpawnTags.Count > 0)
+        if (phase.EntryLocationTags.Count > 0)
         {
-            var phaseEntry = GetSpawnLocation(phase.SpawnTags, eventSector, anchorCoords != MapCoordinates.Nullspace ? anchorCoords : null);
+            var phaseEntry = GetSpawnLocation(phase.EntryLocationTags, null, anchorCoords != MapCoordinates.Nullspace ? anchorCoords : null);
             if (phaseEntry != MapCoordinates.Nullspace)
                 return phaseEntry;
         }
@@ -570,13 +562,12 @@ public sealed class GlobalDirectorSystem : EntitySystem
     private MapCoordinates ResolveGroupRetreatLocation(
         DirectorSpawnGroup group,
         DirectorPhase phase,
-        EntityUid? eventSector,
         MapCoordinates anchorCoords,
         MapCoordinates spawnCoordsBase)
     {
-        if (group.LocationTags.Count > 0)
+        if (group.ExitLocationTags.Count > 0)
         {
-            var retreat = GetSpawnLocation(group.LocationTags, eventSector, anchorCoords != MapCoordinates.Nullspace ? anchorCoords : null);
+            var retreat = GetSpawnLocation(group.ExitLocationTags, null, anchorCoords != MapCoordinates.Nullspace ? anchorCoords : null);
             if (retreat != MapCoordinates.Nullspace)
                 return retreat;
         }
@@ -888,6 +879,10 @@ public sealed class GlobalDirectorSystem : EntitySystem
                 continue;
 
             var mapCoords = _transform.GetMapCoordinates(uid, xform);
+
+            // Once the scene anchor is known, related entry/exit markers must resolve on that same map.
+            if (relativeTo != null && mapCoords.MapId != relativeTo.Value.MapId)
+                continue;
 
             // If a sector is specified, the spawn point must remain inside that same sector.
             if (sectorUid != null)

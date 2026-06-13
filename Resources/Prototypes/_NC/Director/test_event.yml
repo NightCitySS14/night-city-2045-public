@@ -11,11 +11,13 @@
       name: "The Gathering"
       duration: 90
       announcement: "director-test-event-gathering"
-      locationTags: ["Hidden", "Alley"]
+      meetLocationTags: ["TestLivingWorldMeet"]
       aiDomain: "DirectorGatherCompound"
       spawns:
         - prototype: MobNCBanditPistolUnlootable
           groupTag: "Bandits"
+          entryLocationTags: ["TestLivingWorldBanditsEntry"]
+          exitLocationTags: ["TestLivingWorldBanditsExit"]
           amount: 2
       nextPhases:
         Skirmish: 70

@@ -14,17 +14,20 @@
       name: "Convergence"
       duration: 120
       announcement: "scavenger-convergence"
-      locationTags: ["Warehouse", "Market", "Street"]
-      spawnTags: ["Hidden", "Alley"]
+      meetLocationTags: ["ScavengerRushMeet"]
       aiDomain: "DirectorGatherCompound"
       spawns:
         - prototype: MobNCBiotechnicaAvengerLootable
           groupTag: "ScavsA"
           faction: "Passive"
+          entryLocationTags: ["ScavengerRushScavsAEntry"]
+          exitLocationTags: ["ScavengerRushScavsAExit"]
           amount: 2
         - prototype: MobNCBanditPistolUnlootable
           groupTag: "ScavsB"
           faction: "Passive"
+          entryLocationTags: ["ScavengerRushScavsBEntry"]
+          exitLocationTags: ["ScavengerRushScavsBExit"]
           amount: 2
       nextPhases:
         Dispute: 100

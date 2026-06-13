@@ -14,17 +14,20 @@
       name: "Insertion"
       duration: 120
       announcement: "corp-sweep-insertion"
-      locationTags: ["Checkpoint", "Street", "Warehouse"]
-      spawnTags: ["Transit", "Hidden", "Street"]
+      meetLocationTags: ["CorporateSweepMeet"]
       aiDomain: "DirectorGatherCompound"
       spawns:
         - prototype: MobNCMilitechAvengerUnlootable
           groupTag: "Sweepers"
           faction: "Passive"
+          entryLocationTags: ["CorporateSweepEntry"]
+          exitLocationTags: ["CorporateSweepExit"]
           amount: 2
         - prototype: MobNCMilitechSaratogaUnlootable
           groupTag: "Sweepers"
           faction: "Passive"
+          entryLocationTags: ["CorporateSweepEntry"]
+          exitLocationTags: ["CorporateSweepExit"]
           amount: 1
       nextPhases:
         Pressure: 100

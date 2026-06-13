@@ -128,8 +128,6 @@ public sealed partial class DirectorEventPrototype : IPrototype, IInheritingProt
 
         foreach (var (phaseId, phase) in Phases)
         {
-            phase.NormalizeLegacyFields();
-
             foreach (var spawn in phase.Spawns)
             {
                 if (string.IsNullOrWhiteSpace(spawn.Prototype))
@@ -206,29 +204,16 @@ public sealed partial class DirectorPhase
     public string? Announcement;
 
     /// <summary>
-    /// Legacy single tag for the scene anchor point.
-    /// </summary>
-    [DataField("locationTag")]
-    public string? LocationTag;
-
-    /// <summary>
     /// One or more acceptable tags for the scene anchor point.
     /// </summary>
-    [DataField("locationTags")]
-    public List<string> LocationTags { get; private set; } = new();
-
-    /// <summary>
-    /// Legacy single tag for the entry spawn point.
-    /// If null, the anchor point is used with a random offset.
-    /// </summary>
-    [DataField("spawnTag")]
-    public string? SpawnTag;
+    [DataField("meetLocationTags")]
+    public List<string> MeetLocationTags { get; private set; } = new();
 
     /// <summary>
     /// One or more acceptable tags for the entry spawn point.
     /// </summary>
-    [DataField("spawnTags")]
-    public List<string> SpawnTags { get; private set; } = new();
+    [DataField("entryLocationTags")]
+    public List<string> EntryLocationTags { get; private set; } = new();
 
     /// <summary>
     /// HTN Domain to apply to all spawned entities at the start of this phase.
@@ -276,20 +261,6 @@ public sealed partial class DirectorPhase
     [DataField]
     public Dictionary<string, ProtoId<NpcFactionPrototype>> FactionOverrides { get; private set; } = new();
 
-    public void NormalizeLegacyFields()
-    {
-        MergeTag(LocationTag, LocationTags);
-        MergeTag(SpawnTag, SpawnTags);
-    }
-
-    private static void MergeTag(string? legacyTag, List<string> tags)
-    {
-        if (string.IsNullOrWhiteSpace(legacyTag))
-            return;
-
-        if (!tags.Contains(legacyTag))
-            tags.Add(legacyTag);
-    }
 }
 
 [DataDefinition]
@@ -308,37 +279,18 @@ public sealed partial class DirectorSpawnGroup
     public string? GroupTag;
 
     /// <summary>
-    /// Legacy single tag for the group's preferred entry point.
-    /// </summary>
-    [DataField("spawnLocationTag")]
-    public string? SpawnLocationTag;
-
-    /// <summary>
     /// One or more acceptable entry tags for this specific group.
-    /// If omitted, the phase-level spawn tags are used, then the phase anchor as final fallback.
+    /// If omitted, the phase-level entry tags are used, then the phase anchor as final fallback.
     /// </summary>
-    [DataField("spawnLocationTags")]
-    public List<string> SpawnLocationTags { get; private set; } = new();
-
-    /// <summary>
-    /// Legacy single tag for the group's retreat/extraction point.
-    /// Kept short because content authors often think of it as the group's "home side".
-    /// </summary>
-    [DataField("location")]
-    public string? Location;
-
-    /// <summary>
-    /// Legacy explicit retreat tag name for the group.
-    /// </summary>
-    [DataField("locationTag")]
-    public string? LocationTag;
+    [DataField("entryLocationTags")]
+    public List<string> EntryLocationTags { get; private set; } = new();
 
     /// <summary>
     /// One or more acceptable retreat tags for this specific group.
     /// Used when the event enters a cleanup / extraction beat.
     /// </summary>
-    [DataField("locationTags")]
-    public List<string> LocationTags { get; private set; } = new();
+    [DataField("exitLocationTags")]
+    public List<string> ExitLocationTags { get; private set; } = new();
 
     /// <summary>
     /// Faction ID to assign to the spawned entity.
@@ -352,17 +304,6 @@ public sealed partial class DirectorSpawnGroup
     [DataField]
     public int Amount = 1;
 
-    public void NormalizeLegacyFields()
-    {
-        if (!string.IsNullOrWhiteSpace(SpawnLocationTag) && !SpawnLocationTags.Contains(SpawnLocationTag))
-            SpawnLocationTags.Add(SpawnLocationTag);
-
-        if (!string.IsNullOrWhiteSpace(Location) && !LocationTags.Contains(Location))
-            LocationTags.Add(Location);
-
-        if (!string.IsNullOrWhiteSpace(LocationTag) && !LocationTags.Contains(LocationTag))
-            LocationTags.Add(LocationTag);
-    }
 }
 
 [DataDefinition]

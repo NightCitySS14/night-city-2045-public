@@ -13,17 +13,20 @@
       name: "Setup"
       duration: 90
       announcement: "checkpoint-setup"
-      locationTags: ["Checkpoint", "Street", "Transit"]
-      spawnTags: ["Transit", "Street"]
+      meetLocationTags: ["CheckpointMeet"]
       aiDomain: "DirectorGatherCompound"
       spawns:
         - prototype: MobNCMilitechBoomerUnlootable
           groupTag: "Inspectors"
           faction: "Passive"
+          entryLocationTags: ["CheckpointInspectorsEntry"]
+          exitLocationTags: ["CheckpointInspectorsExit"]
           amount: 1
         - prototype: MobNCMilitechAvengerUnlootable
           groupTag: "Inspectors"
           faction: "Passive"
+          entryLocationTags: ["CheckpointInspectorsEntry"]
+          exitLocationTags: ["CheckpointInspectorsExit"]
           amount: 2
       nextPhases:
         Hold: 100

@@ -11,17 +11,20 @@
       name: "Staging"
       duration: 120
       announcement: "shipment-staging"
-      locationTags: ["Warehouse", "Transit"]
-      spawnTags: ["Hidden", "Street"]
+      meetLocationTags: ["HijackedShipmentMeet"]
       aiDomain: "DirectorGatherCompound"
       spawns:
         - prototype: MobNCMilitechAvengerUnlootable
           groupTag: "Couriers"
           faction: "Passive"
+          entryLocationTags: ["ShipmentCouriersEntry"]
+          exitLocationTags: ["ShipmentCouriersExit"]
           amount: 2
         - prototype: MobNCBanditRifleUnlootable
           groupTag: "Hijackers"
           faction: "Passive"
+          entryLocationTags: ["ShipmentHijackersEntry"]
+          exitLocationTags: ["ShipmentHijackersExit"]
           amount: 2
       nextPhases:
         Intercept: 100

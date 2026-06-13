@@ -11,17 +11,20 @@
       name: "Arrival"
       duration: 120
       announcement: "street-tax-arrival"
-      locationTags: ["Market", "Street"]
-      spawnTags: ["Hidden", "Alley"]
+      meetLocationTags: ["StreetTaxMeet"]
       aiDomain: "DirectorGatherCompound"
       spawns:
         - prototype: MobNCBanditPistolUnlootable
           groupTag: "Collectors"
           faction: "Passive"
+          entryLocationTags: ["StreetTaxCollectorsEntry"]
+          exitLocationTags: ["StreetTaxCollectorsExit"]
           amount: 2
         - prototype: MobNCBanditMeleeSledgeUnlootable
           groupTag: "Collectors"
           faction: "Passive"
+          entryLocationTags: ["StreetTaxCollectorsEntry"]
+          exitLocationTags: ["StreetTaxCollectorsExit"]
           amount: 1
       nextPhases:
         Shakedown: 100

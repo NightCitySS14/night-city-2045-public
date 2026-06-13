@@ -61,10 +61,8 @@ Configured inside `phases.<PhaseId>`:
 
 - `duration`: seconds until automatic advance. Omit for trigger-only phases.
 - `announcement`: locale key broadcast on phase entry.
-- `locationTag`: legacy single anchor tag.
-- `locationTags`: preferred list of acceptable anchor tags.
-- `spawnTag`: legacy single entry tag.
-- `spawnTags`: preferred list of acceptable entry tags.
+- `meetLocationTags`: acceptable tags for the shared scene point.
+- `entryLocationTags`: acceptable phase-level entry tags when a group does not define its own side.
 - `aiDomain`: HTN compound id applied to event-owned entities.
 - `cleanup`: if true, all currently owned spawned entities are deleted before the next phase.
 - `spawns`: entity groups spawned on phase entry.
@@ -78,25 +76,22 @@ Each item in `spawns` supports:
 
 - `prototype`: entity prototype id.
 - `groupTag`: logical label used by `factionOverrides` or trigger filters.
-- `spawnLocationTag`: legacy single entry tag for this group.
-- `spawnLocationTags`: preferred per-group entry tags.
-- `location`: legacy single retreat tag for this group.
-- `locationTag`: explicit single retreat tag for this group.
-- `locationTags`: preferred per-group retreat tags.
+- `entryLocationTags`: preferred per-group entry tags.
+- `exitLocationTags`: preferred per-group retreat tags.
 - `faction`: optional faction applied immediately after spawn.
 - `amount`: number of entities to spawn.
 
 Spawn resolution order is:
 
-1. `spawnLocationTags` on the spawn group.
-2. `spawnTags` on the phase.
-3. `locationTags` on the phase as the final fallback anchor.
+1. `entryLocationTags` on the spawn group.
+2. `entryLocationTags` on the phase.
+3. `meetLocationTags` on the phase as the final fallback anchor.
 
 This lets multiple groups approach the same incident from different sides while still sharing a single scene center.
 
 Retreat resolution order is:
 
-1. `locationTags` on the spawn group.
+1. `exitLocationTags` on the spawn group.
 2. The resolved entry point for that same group.
 3. The phase anchor as the last fallback.
 
@@ -127,6 +122,16 @@ Supported marker fields:
 - `locationTag`: legacy single tag.
 - `locationTags`: preferred list of tags.
 
+Recommended event marker sets:
+
+- `BackalleyDeal`: `DirectorSpawnPointBackalleyDealMeet`, `DirectorSpawnPointBackalleyDealGangAEntry`, `DirectorSpawnPointBackalleyDealGangBEntry`, `DirectorSpawnPointBackalleyDealGangAExit`, `DirectorSpawnPointBackalleyDealGangBExit`.
+- `CheckpointShakedown`: `DirectorSpawnPointCheckpointShakedownMeet`, `DirectorSpawnPointCheckpointShakedownInspectorsEntry`, `DirectorSpawnPointCheckpointShakedownInspectorsExit`.
+- `CorporateSweep`: `DirectorSpawnPointCorporateSweepMeet`, `DirectorSpawnPointCorporateSweepEntry`, `DirectorSpawnPointCorporateSweepExit`.
+- `HijackedShipment`: `DirectorSpawnPointHijackedShipmentMeet`, `DirectorSpawnPointHijackedShipmentCouriersEntry`, `DirectorSpawnPointHijackedShipmentCouriersExit`, `DirectorSpawnPointHijackedShipmentHijackersEntry`, `DirectorSpawnPointHijackedShipmentHijackersExit`.
+- `ScavengerRush`: `DirectorSpawnPointScavengerRushMeet`, `DirectorSpawnPointScavengerRushScavsAEntry`, `DirectorSpawnPointScavengerRushScavsAExit`, `DirectorSpawnPointScavengerRushScavsBEntry`, `DirectorSpawnPointScavengerRushScavsBExit`.
+- `StreetTaxCollection`: `DirectorSpawnPointStreetTaxCollectionMeet`, `DirectorSpawnPointStreetTaxCollectionCollectorsEntry`, `DirectorSpawnPointStreetTaxCollectionCollectorsExit`.
+- `TestLivingWorldEvent`: `DirectorSpawnPointTestLivingWorldEventMeet`, `DirectorSpawnPointTestLivingWorldEventBanditsEntry`, `DirectorSpawnPointTestLivingWorldEventBanditsExit`.
+
 Recommended standard tags:
 
 - `Alley`
@@ -153,14 +158,14 @@ Use a controlled tag vocabulary. Director content breaks down quickly if mappers
     Gathering:
       duration: 120
       announcement: "my-incident-gathering"
-      locationTags: ["Alley", "Street"]
+      meetLocationTags: ["Alley", "Street"]
       aiDomain: "DirectorGatherCompound"
       spawns:
         - prototype: MobNCBanditPistolUnlootable
           groupTag: "Dealers"
           faction: "Passive"
-          location: "DealersHome"
-          spawnLocationTags: ["DealersEntry"]
+          exitLocationTags: ["DealersHome"]
+          entryLocationTags: ["DealersEntry"]
           amount: 2
       nextPhases:
         Fight: 60
@@ -201,4 +206,4 @@ Use `directorstatus` first when an event does not start. It reports scheduler st
 - Prefer unlootable mobs for ambient incidents unless the event is intended as a reward source.
 - Keep phase logic in YAML and engine logic in the `_NC` Director systems.
 - Reuse abstract templates for shared defaults instead of copy-pasting scheduler gates into every event.
-- Use phase `locationTags` for the shared scene anchor, `spawnLocationTags` for side-specific entry points, and group `location/locationTags` for retreat destinations.
+- Use phase `meetLocationTags` for the shared scene anchor, `entryLocationTags` for side-specific entry points, and group `exitLocationTags` for retreat destinations.
