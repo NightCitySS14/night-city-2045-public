@@ -2,6 +2,7 @@ using Content.StyleSheetify.Client.StyleSheet;
 using Robust.Client.ResourceManagement;
 using Robust.Client.UserInterface;
 using Robust.Shared.IoC;
+using System;
 
 namespace Content.Client.Stylesheets
 {
@@ -13,11 +14,14 @@ namespace Content.Client.Stylesheets
 
         public StylesheetReference SheetNano { get; private set; } = default!; // WWDP EDIT
         public StylesheetReference SheetSpace { get; private set; } = default!; // WWDP EDIT
+        public StylesheetReference SheetNightCity { get; private set; } = default!;
 
         public void Initialize()
         {
             SheetNano = _contentStyleSheetManager.MergeStyles(new StyleNano(_resourceCache).Stylesheet, "nano"); // WWDP EDIT
             SheetSpace = _contentStyleSheetManager.MergeStyles(new StyleSpace(_resourceCache).Stylesheet, "space"); // WWDP EDIT
+            // Night City uses its own visual layer, but still needs the base font and control rules.
+            SheetNightCity = _contentStyleSheetManager.MergeStyles(new StyleSpace(_resourceCache).Stylesheet, "night-city");
 
             _userInterfaceManager.Stylesheet = SheetNano;
         }

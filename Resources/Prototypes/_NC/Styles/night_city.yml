@@ -1,0 +1,410 @@
+- type: styleSheet
+  id: night-city
+  parents: [shared]
+  typeDefinition:
+    PanelContainer: "Robust.Client.UserInterface.Controls.PanelContainer"
+    Button: "Robust.Client.UserInterface.Controls.Button"
+    LineEdit: "Robust.Client.UserInterface.Controls.LineEdit"
+    Label: "Robust.Client.UserInterface.Controls.Label"
+  styles:
+    PanelContainer.NightCityTerminalPanel:
+      panel:
+        valueType: Robust.Client.Graphics.StyleBoxFlat
+        value:
+          backgroundColor: "#101418"
+          borderColor: "#4ff3ff"
+          borderThickness: 2,2,2,2
+          padding: 14,14,14,12
+
+    PanelContainer.NightCityPhoneShell:
+      panel:
+        valueType: Robust.Client.Graphics.StyleBoxFlat
+        value:
+          backgroundColor: "#0c1015"
+          borderColor: "#4ff3ff"
+          borderThickness: 1,1,1,1
+          padding: 12,12,12,12
+
+    PanelContainer.NightCityPhoneStatusBar:
+      panel:
+        valueType: Robust.Client.Graphics.StyleBoxFlat
+        value:
+          backgroundColor: "#0b0f13"
+          borderColor: "#4ff3ff3d"
+          borderThickness: 0,0,0,1
+          padding: 6,4,6,4
+
+    PanelContainer.NightCityPhoneAppHeader:
+      panel:
+        valueType: Robust.Client.Graphics.StyleBoxFlat
+        value:
+          backgroundColor: "#161d24"
+          borderColor: "#4ff3ff70"
+          borderThickness: 1,1,1,1
+          padding: 10,10,10,10
+
+    PanelContainer.NightCitySignalBadge:
+      panel:
+        valueType: Robust.Client.Graphics.StyleBoxFlat
+        value:
+          backgroundColor: "#0a1117"
+          borderColor: "#4ff3ff80"
+          borderThickness: 1,1,1,1
+          padding: 6,6,6,6
+
+    PanelContainer.NightCityPhoneHeroCard:
+      panel:
+        valueType: Robust.Client.Graphics.StyleBoxFlat
+        value:
+          backgroundColor: "#141a21"
+          borderColor: "#d14eff4d"
+          borderThickness: 1,1,1,1
+          padding: 10,9,10,9
+
+    PanelContainer.NightCityPhoneListPanel:
+      panel:
+        valueType: Robust.Client.Graphics.StyleBoxFlat
+        value:
+          backgroundColor: "#131920"
+          borderColor: "#4ff3ff80"
+          borderThickness: 1,1,1,1
+          padding: 8,8,8,8
+
+    PanelContainer.NightCityPhoneDetailPanel:
+      panel:
+        valueType: Robust.Client.Graphics.StyleBoxFlat
+        value:
+          backgroundColor: "#131920"
+          borderColor: "#4ff3ff80"
+          borderThickness: 1,1,1,1
+          padding: 8,8,8,8
+
+    PanelContainer.NightCityPhoneSectionHeader:
+      panel:
+        valueType: Robust.Client.Graphics.StyleBoxFlat
+        value:
+          backgroundColor: "#0b0f13"
+          borderColor: "#d14eff73"
+          borderThickness: 0,0,0,1
+          padding: 8,6,8,6
+
+    PanelContainer.NightCityPhoneInset:
+      panel:
+        valueType: Robust.Client.Graphics.StyleBoxFlat
+        value:
+          backgroundColor: "#090d12"
+          borderColor: "#4ff3ff59"
+          borderThickness: 1,1,1,1
+          padding: 8,8,8,8
+
+    PanelContainer.NightCityPhoneActionCard:
+      panel:
+        valueType: Robust.Client.Graphics.StyleBoxFlat
+        value:
+          backgroundColor: "#11181f"
+          borderColor: "#4ff3ff59"
+          borderThickness: 1,1,1,1
+          padding: 8,8,8,8
+
+    PanelContainer.NightCityPhoneCallCard:
+      panel:
+        valueType: Robust.Client.Graphics.StyleBoxFlat
+        value:
+          backgroundColor: "#15111a"
+          borderColor: "#ff5a5a59"
+          borderThickness: 1,1,1,1
+          padding: 8,8,8,8
+
+    PanelContainer.NightCityPhoneComposer:
+      panel:
+        valueType: Robust.Client.Graphics.StyleBoxFlat
+        value:
+          backgroundColor: "#11181f"
+          borderColor: "#4ff3ff73"
+          borderThickness: 1,1,1,1
+          padding: 8,8,8,8
+
+    PanelContainer.NightCityPhoneNavBar:
+      panel:
+        valueType: Robust.Client.Graphics.StyleBoxFlat
+        value:
+          backgroundColor: "#0b0f13"
+          borderColor: "#4ff3ff47"
+          borderThickness: 1,1,1,1
+          padding: 8,6,8,6
+
+    PanelContainer.NightCityTerminalHeader:
+      panel:
+        valueType: Robust.Client.Graphics.StyleBoxFlat
+        value:
+          backgroundColor: "#161d24"
+          borderColor: "#4ff3ff99"
+          borderThickness: 0,0,0,1
+          padding: 10,8,10,8
+
+    PanelContainer.NightCityPanel:
+      panel:
+        valueType: Robust.Client.Graphics.StyleBoxFlat
+        value:
+          backgroundColor: "#161d24"
+          borderColor: "#4ff3ff8c"
+          borderThickness: 1,1,1,1
+          padding: 10,10,10,10
+
+    PanelContainer.NightCityPanelDark:
+      panel:
+        valueType: Robust.Client.Graphics.StyleBoxFlat
+        value:
+          backgroundColor: "#0d1217"
+          borderColor: "#d14eff59"
+          borderThickness: 1,1,1,1
+          padding: 10,10,10,10
+
+    PanelContainer.NightCityPanelInset:
+      panel:
+        valueType: Robust.Client.Graphics.StyleBoxFlat
+        value:
+          backgroundColor: "#0b0f13"
+          borderColor: "#4ff3ff59"
+          borderThickness: 1,1,1,1
+          padding: 10,9,10,10
+
+    PanelContainer.NightCityTerminalSectionHeader:
+      panel:
+        valueType: Robust.Client.Graphics.StyleBoxFlat
+        value:
+          backgroundColor: "#0b0f13"
+          borderColor: "#d14eff73"
+          borderThickness: 0,0,0,1
+          padding: 10,7,10,7
+
+    PanelContainer.NightCityActionBar:
+      panel:
+        valueType: Robust.Client.Graphics.StyleBoxFlat
+        value:
+          backgroundColor: "#11181f"
+          borderColor: "#4ff3ff66"
+          borderThickness: 1,1,1,1
+          padding: 8,8,8,8
+
+    PanelContainer.NightCityDivider:
+      panel:
+        valueType: Robust.Client.Graphics.StyleBoxFlat
+        value:
+          backgroundColor: "#4ff3ff73"
+          contentMarginBottomOverride: 1
+          contentMarginLeftOverride: 1
+
+    Button.NightCityButton:
+      font-color: "#FFFFFF"
+      stylebox:
+        valueType: Robust.Client.Graphics.StyleBoxFlat
+        value:
+          backgroundColor: "#4ff3ff38"
+          borderColor: "#4ff3ffcc"
+          borderThickness: 1,1,1,1
+          padding: 4,4,4,4
+          contentMarginBottomOverride: 4
+          contentMarginLeftOverride: 8
+          contentMarginRightOverride: 8
+          contentMarginTopOverride: 4
+
+    Button.NightCityButton:hover:
+      stylebox:
+        valueType: Robust.Client.Graphics.StyleBoxFlat
+        value:
+          backgroundColor: "#8ef8ff40"
+          borderColor: "#8ef8ff"
+          borderThickness: 1,1,1,1
+          padding: 4,4,4,4
+          contentMarginBottomOverride: 4
+          contentMarginLeftOverride: 8
+          contentMarginRightOverride: 8
+          contentMarginTopOverride: 4
+
+    Button.NightCityButton:pressed:
+      stylebox:
+        valueType: Robust.Client.Graphics.StyleBoxFlat
+        value:
+          backgroundColor: "#30b7c759"
+          borderColor: "#30b7c7"
+          borderThickness: 1,1,1,1
+          padding: 4,4,4,4
+          contentMarginBottomOverride: 4
+          contentMarginLeftOverride: 8
+          contentMarginRightOverride: 8
+          contentMarginTopOverride: 4
+
+    Button.NightCityButton:disabled:
+      font-color: "#C7D1D7AA"
+      stylebox:
+        valueType: Robust.Client.Graphics.StyleBoxFlat
+        value:
+          backgroundColor: "#1a2026"
+          borderColor: "#49545e"
+          borderThickness: 1,1,1,1
+          padding: 4,4,4,4
+          contentMarginBottomOverride: 4
+          contentMarginLeftOverride: 8
+          contentMarginRightOverride: 8
+          contentMarginTopOverride: 4
+
+    Button.NightCityButtonDanger:
+      font-color: "#FFFFFF"
+      stylebox:
+        valueType: Robust.Client.Graphics.StyleBoxFlat
+        value:
+          backgroundColor: "#ff5a5a2e"
+          borderColor: "#ff5a5ae6"
+          borderThickness: 1,1,1,1
+          padding: 4,4,4,4
+          contentMarginBottomOverride: 4
+          contentMarginLeftOverride: 8
+          contentMarginRightOverride: 8
+          contentMarginTopOverride: 4
+
+    Button.NightCityButtonDanger:hover:
+      stylebox:
+        valueType: Robust.Client.Graphics.StyleBoxFlat
+        value:
+          backgroundColor: "#ff7f7f38"
+          borderColor: "#ff7f7f"
+          borderThickness: 1,1,1,1
+          padding: 4,4,4,4
+          contentMarginBottomOverride: 4
+          contentMarginLeftOverride: 8
+          contentMarginRightOverride: 8
+          contentMarginTopOverride: 4
+
+    Button.NightCityButtonDanger:pressed:
+      stylebox:
+        valueType: Robust.Client.Graphics.StyleBoxFlat
+        value:
+          backgroundColor: "#b8434359"
+          borderColor: "#b84343"
+          borderThickness: 1,1,1,1
+          padding: 4,4,4,4
+          contentMarginBottomOverride: 4
+          contentMarginLeftOverride: 8
+          contentMarginRightOverride: 8
+          contentMarginTopOverride: 4
+
+    Button.NightCityButtonGhost:
+      font-color: "#4ff3ff"
+      stylebox:
+        valueType: Robust.Client.Graphics.StyleBoxFlat
+        value:
+          backgroundColor: "#00000000"
+          borderColor: "#4ff3ff99"
+          borderThickness: 1,1,1,1
+          padding: 4,4,4,4
+          contentMarginBottomOverride: 4
+          contentMarginLeftOverride: 8
+          contentMarginRightOverride: 8
+          contentMarginTopOverride: 4
+
+    Button.NightCityButtonGhost:hover:
+      font-color: "#8ef8ff"
+      stylebox:
+        valueType: Robust.Client.Graphics.StyleBoxFlat
+        value:
+          backgroundColor: "#4ff3ff14"
+          borderColor: "#8ef8ff"
+          borderThickness: 1,1,1,1
+          padding: 4,4,4,4
+          contentMarginBottomOverride: 4
+          contentMarginLeftOverride: 8
+          contentMarginRightOverride: 8
+          contentMarginTopOverride: 4
+
+    Button.NightCityButtonGhost:pressed:
+      font-color: "#30b7c7"
+      stylebox:
+        valueType: Robust.Client.Graphics.StyleBoxFlat
+        value:
+          backgroundColor: "#4ff3ff24"
+          borderColor: "#30b7c7"
+          borderThickness: 1,1,1,1
+          padding: 4,4,4,4
+          contentMarginBottomOverride: 4
+          contentMarginLeftOverride: 8
+          contentMarginRightOverride: 8
+          contentMarginTopOverride: 4
+
+    Button.NightCityTabButton:
+      font-color: "#7f8f9c"
+      stylebox:
+        valueType: Robust.Client.Graphics.StyleBoxFlat
+        value:
+          backgroundColor: "#131920"
+          borderColor: "#29323b"
+          borderThickness: 1,1,1,1
+          padding: 5,5,5,5
+          contentMarginBottomOverride: 5
+          contentMarginLeftOverride: 6
+          contentMarginRightOverride: 6
+          contentMarginTopOverride: 5
+
+    Button.NightCityTabButton:hover:
+      font-color: "#9cecff"
+      stylebox:
+        valueType: Robust.Client.Graphics.StyleBoxFlat
+        value:
+          backgroundColor: "#17212a"
+          borderColor: "#4ff3ff80"
+          borderThickness: 1,1,1,1
+          padding: 5,5,5,5
+          contentMarginBottomOverride: 5
+          contentMarginLeftOverride: 6
+          contentMarginRightOverride: 6
+          contentMarginTopOverride: 5
+
+    Button.NightCityTabButton:pressed:
+      font-color: "#4ff3ff"
+      stylebox:
+        valueType: Robust.Client.Graphics.StyleBoxFlat
+        value:
+          backgroundColor: "#1a2830"
+          borderColor: "#4ff3ff"
+          borderThickness: 1,1,1,1
+          padding: 5,5,5,5
+          contentMarginBottomOverride: 5
+          contentMarginLeftOverride: 6
+          contentMarginRightOverride: 6
+          contentMarginTopOverride: 5
+
+    LineEdit.NightCityInput:
+      font-color: "#FFFFFF"
+      cursor-color: "#4ff3ff"
+      stylebox:
+        valueType: Robust.Client.Graphics.StyleBoxFlat
+        value:
+          backgroundColor: "#0b0f13"
+          borderColor: "#4ff3ff73"
+          borderThickness: 1,1,1,1
+          padding: 4,4,4,4
+          contentMarginBottomOverride: 4
+          contentMarginLeftOverride: 6
+          contentMarginRightOverride: 6
+          contentMarginTopOverride: 4
+
+    LineEdit.NightCityInput:placeholder:
+      font-color: "#7f8f9c"
+
+    .NightCityGlowText:
+      font-color: "#4ff3ff"
+
+    .NightCityMutedText:
+      font-color: "#7f8f9c"
+
+    .NightCitySecondaryText:
+      font-color: "#9fb4c4"
+
+    .NightCityStatusGood:
+      font-color: "#4ff3ff"
+
+    .NightCityStatusWarning:
+      font-color: "#ffb347"
+
+    .NightCityStatusDanger:
+      font-color: "#ff5a5a"

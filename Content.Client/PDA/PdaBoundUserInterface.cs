@@ -110,6 +110,8 @@ namespace Content.Client.PDA
 
         protected override void AttachCartridgeUI(Control cartridgeUIFragment, string? title)
         {
+            // Night City cartridge fragments opt into a separate chrome, so the default PDA shell remains unchanged elsewhere.
+            _menu?.SetNightCityChrome(IsNightCityCartridge(cartridgeUIFragment));
             _menu?.ProgramView.AddChild(cartridgeUIFragment);
             _menu?.ToProgramView(title ?? Loc.GetString("comp-pda-io-program-fallback-title"));
         }
@@ -121,6 +123,7 @@ namespace Content.Client.PDA
 
             _menu.ToHomeScreen();
             _menu.HideProgramHeader();
+            _menu.SetNightCityChrome(false);
             _menu.ProgramView.RemoveChild(cartridgeUIFragment);
         }
 
@@ -132,6 +135,14 @@ namespace Content.Client.PDA
         private PdaBorderColorComponent? GetBorderColorComponent()
         {
             return EntMan.GetComponentOrNull<PdaBorderColorComponent>(Owner);
+        }
+
+        /// <summary>
+        /// CitiNet programs live under the Night City namespace and should render with the dedicated shell.
+        /// </summary>
+        private static bool IsNightCityCartridge(Control cartridgeUIFragment)
+        {
+            return cartridgeUIFragment.GetType().Namespace?.StartsWith("Content.Client._NC.CitiNet", StringComparison.Ordinal) == true;
         }
     }
 }

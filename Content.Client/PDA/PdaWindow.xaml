@@ -1,10 +1,15 @@
-﻿<pda:PdaWindow  xmlns="https://spacestation14.io"
+<pda:PdaWindow  xmlns="https://spacestation14.io"
                 xmlns:pda="clr-namespace:Content.Client.PDA"
                 MouseFilter="Stop">
     <PanelContainer Name="Background" Access="Public" StyleClasses="PdaBackgroundRect" />
-    <!-- The negative markin fixes a gap between the window edges and the decorative panel -->
-    <PanelContainer Name="AccentH" Margin="-1 170 -2 170" Access="Public" StyleClasses="PdaBackground" />
-    <PanelContainer Name="AccentV" Margin="220 -1 220 -1" Access="Public" StyleClasses="PdaBackground" />
+    <!-- NC shell uses explicit accent visibility, so these panels should stay within the window bounds. -->
+    <PanelContainer Name="AccentH"
+                    Margin="220 0 220 0"
+                    SetHeight="22"
+                    VerticalAlignment="Top"
+                    Access="Public"
+                    StyleClasses="PdaBackground" />
+    <PanelContainer Name="AccentV" Margin="220 0 220 0" Access="Public" StyleClasses="PdaBackground" />
     <PanelContainer Name="Border" StyleClasses="PdaBorderRect" />
     <BoxContainer Orientation="Vertical" HorizontalExpand="True">
         <!--Heading-->
@@ -24,8 +29,8 @@
             </Control>
         </Control>
         <!--Footer-->
-        <BoxContainer Orientation="Horizontal" SetHeight="28">
-            <Label Text="{Loc 'comp-pda-ui-footer'}" StyleClasses="PdaWindowFooterText" Margin="32 0 0 6"/>
+        <BoxContainer Orientation="Horizontal" SetHeight="30">
+            <Label Name="WindowFooterLabel" Access="Public" Text="{Loc 'comp-pda-ui-footer'}" StyleClasses="PdaWindowFooterText" Margin="32 2 0 6"/>
         </BoxContainer>
     </BoxContainer>
 </pda:PdaWindow>

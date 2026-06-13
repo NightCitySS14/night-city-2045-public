@@ -19,6 +19,43 @@ namespace Content.Client.PDA
         [Dependency] private readonly IGameTiming _gameTiming = default!;
         [Dependency] private readonly IEntitySystemManager _entitySystem = default!;
         private readonly ClientGameTicker _gameTicker;
+        private bool _nightCityChrome;
+
+        // These style boxes replace the default PDA mustard shell only while CitiNet-family cartridges are active.
+        private readonly StyleBoxFlat _nightCityOuterFrame = new()
+        {
+            BackgroundColor = Color.FromHex("#0a0d12"),
+            BorderColor = Color.FromHex("#8a6a1c"),
+            BorderThickness = new Thickness(2)
+        };
+
+        private readonly StyleBoxFlat _nightCityAccentFrame = new()
+        {
+            BackgroundColor = Color.FromHex("#b8891f"),
+            BorderColor = Color.Transparent,
+            BorderThickness = new Thickness(0)
+        };
+
+        private readonly StyleBoxFlat _nightCityInnerFrame = new()
+        {
+            BackgroundColor = Color.Transparent,
+            BorderColor = Color.FromHex("#00f2ff"),
+            BorderThickness = new Thickness(1)
+        };
+
+        private readonly StyleBoxFlat _nightCityContentFrame = new()
+        {
+            BackgroundColor = Color.FromHex("#070b10"),
+            BorderColor = Color.FromHex("#00f2ff"),
+            BorderThickness = new Thickness(1)
+        };
+
+        private readonly StyleBoxFlat _nightCityFooterFrame = new()
+        {
+            BackgroundColor = Color.FromHex("#12161d"),
+            BorderColor = Color.FromHex("#00f2ff"),
+            BorderThickness = new Thickness(1, 1, 1, 0)
+        };
 
         public const int HomeView = 0;
         public const int ProgramListView = 1;
@@ -143,6 +180,33 @@ namespace Content.Client.PDA
 
             HideAllViews();
             ToHomeScreen();
+        }
+
+        /// <summary>
+        /// Switches the PDA shell between the default station chrome and the CitiNet Night City chrome.
+        /// </summary>
+        public void SetNightCityChrome(bool enabled)
+        {
+            _nightCityChrome = enabled;
+
+            Background.PanelOverride = enabled ? _nightCityOuterFrame : null;
+            AccentH.PanelOverride = enabled ? _nightCityAccentFrame : null;
+            AccentV.PanelOverride = null;
+            AccentH.Visible = enabled;
+            AccentV.Visible = false;
+            Border.PanelOverride = enabled ? _nightCityInnerFrame : null;
+            ContentBorder.PanelOverride = enabled ? _nightCityInnerFrame : null;
+            ContentBackground.PanelOverride = enabled ? _nightCityContentFrame : null;
+            ContentFooterPanel.PanelOverride = enabled ? _nightCityFooterFrame : null;
+            ContentFooterPanel.Visible = !enabled;
+
+            WindowFooterLabel.Text = enabled ? "CitiNet Neural Interface" : Loc.GetString("comp-pda-ui-footer");
+            ContentFooterLabel.Text = enabled ? "CitiNet shell // route sync" : "Robust#OS";
+            WindowFooterLabel.FontColorOverride = enabled ? Color.FromHex("#7f8f9c") : null;
+            ContentFooterLabel.FontColorOverride = enabled ? Color.FromHex("#9fb4c4") : null;
+            AddressLabel.FontColorOverride = enabled ? Color.FromHex("#9fb4c4") : null;
+
+            ApplyNavigationTheme(enabled);
         }
 
         public void UpdateState(PdaUpdateState state)
@@ -355,6 +419,32 @@ namespace Content.Client.PDA
             {
                 view.Visible = false;
             }
+        }
+
+        /// <summary>
+        /// Recolors the top shell controls so CitiNet gets distinct chrome without altering the rest of the PDA ecosystem.
+        /// </summary>
+        private void ApplyNavigationTheme(bool enabled)
+        {
+            foreach (var child in NavigationBar.Children)
+            {
+                if (child is PdaNavigationButton button)
+                    button.ApplyNightCityTheme(enabled);
+            }
+
+            if (enabled)
+            {
+                ProgramTitle.ActiveFgColor = "#ff38ee";
+                ProgramCloseButton.ActiveFgColor = "#ff6b4a";
+            }
+            else
+            {
+                ProgramTitle.ActiveFgColor = "#FFFFFF";
+                ProgramCloseButton.ActiveFgColor = "#FFFFFF";
+            }
+
+            ProgramTitle.ApplyNightCityTheme(enabled);
+            ProgramCloseButton.ApplyNightCityTheme(enabled);
         }
 
         protected override void Draw(DrawingHandleScreen handle)

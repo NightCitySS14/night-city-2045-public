@@ -1,104 +1,106 @@
 <BoxContainer xmlns="https://spacestation14.io"
               xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-              xmlns:viewport="clr-namespace:Content.Client.Viewport"
               x:Class="Content.Client._NC.CitiNet.UI.CitiNetUiFragment"
               Orientation="Vertical"
               HorizontalExpand="True"
               VerticalExpand="True"
               Margin="4">
 
-    <!-- HEADER / STATUS ROW -->
-    <BoxContainer Orientation="Horizontal" Margin="0 0 0 4">
-        <RichTextLabel Name="HeaderLabel" HorizontalExpand="True" VerticalAlignment="Center"/>
-        <BoxContainer Orientation="Vertical" HorizontalAlignment="Right">
-            <RichTextLabel Name="NetworkStatusLabel" HorizontalAlignment="Right"/>
-            <RichTextLabel Name="LocationLabel" HorizontalAlignment="Right"/>
+    <PanelContainer StyleClasses="NightCityPhoneShell" HorizontalExpand="True" VerticalExpand="True">
+        <BoxContainer Orientation="Vertical" HorizontalExpand="True" VerticalExpand="True" Margin="8">
+            <PanelContainer StyleClasses="NightCityPhoneStatusBar" Margin="0 0 0 8">
+                <BoxContainer Orientation="Horizontal" HorizontalExpand="True" Margin="8 4 8 4">
+                    <Label Text="CitiNet" StyleClasses="NightCityGlowText" />
+                    <Label Name="ScreenTitleLabel" Text="CHATS" StyleClasses="NightCitySecondaryText" Margin="8 0 0 0" />
+                    <Label Name="ScreenSubtitleLabel" Text="" StyleClasses="NightCityMutedText" Margin="8 0 0 0" />
+                    <Control HorizontalExpand="True" />
+                    <RichTextLabel Name="NetworkStatusLabel" VerticalAlignment="Center" />
+                </BoxContainer>
+            </PanelContainer>
+
+            <BoxContainer Orientation="Horizontal" HorizontalExpand="True" VerticalExpand="True">
+                <PanelContainer Name="ListPanel" StyleClasses="NightCityPhoneListPanel" MinWidth="250" Margin="0 0 8 0" VerticalExpand="True">
+                    <BoxContainer Orientation="Vertical" VerticalExpand="True" Margin="8">
+                        <BoxContainer Orientation="Vertical" Margin="0 0 0 8">
+                            <RichTextLabel Name="HeaderLabel" Margin="0 0 0 3" />
+                            <Label Name="ListTitleLabel" Text="CHAT ROOMS" StyleClasses="NightCityGlowText" Margin="0 0 0 2" />
+                            <Label Name="ListSubtitleLabel" Text="AVAILABLE NETWORKS" StyleClasses="NightCityMutedText" />
+                        </BoxContainer>
+
+                        <PanelContainer StyleClasses="NightCityPhoneInset" VerticalExpand="True">
+                            <ScrollContainer VerticalExpand="True" HScrollEnabled="False">
+                                <BoxContainer Name="ListContainer" Orientation="Vertical" Margin="8" />
+                            </ScrollContainer>
+                        </PanelContainer>
+                    </BoxContainer>
+                </PanelContainer>
+
+                <PanelContainer Name="DetailPanel" StyleClasses="NightCityPhoneDetailPanel" HorizontalExpand="True" VerticalExpand="True">
+                    <BoxContainer Orientation="Vertical" VerticalExpand="True" Margin="8">
+                        <BoxContainer Orientation="Horizontal" HorizontalExpand="True" Margin="0 0 0 8">
+                            <BoxContainer Orientation="Vertical" HorizontalExpand="True">
+                                <RichTextLabel Name="ContentHeaderLabel" Margin="0 0 0 3" />
+                                <RichTextLabel Name="ContentSubHeaderLabel" />
+                            </BoxContainer>
+                            <BoxContainer Orientation="Vertical" HorizontalAlignment="Right">
+                                <RichTextLabel Name="UsernameLabel" HorizontalAlignment="Right" />
+                                <RichTextLabel Name="OnlineStatusLabel" HorizontalAlignment="Right" Margin="0 3 0 0" />
+                            </BoxContainer>
+                        </BoxContainer>
+
+                        <PanelContainer Name="PasswordPanel" StyleClasses="NightCityPhoneActionCard" Visible="False" Margin="0 0 0 8">
+                            <BoxContainer Orientation="Horizontal" HorizontalExpand="True" Margin="8">
+                                <LineEdit Name="PasswordInput" HorizontalExpand="True" PlaceHolder="ENTER ACCESS CODE..." StyleClasses="NightCityInput" />
+                                <Button Name="PasswordSubmitBtn" Text="UNLOCK" StyleClasses="NightCityButton" Margin="6 0 0 0" />
+                            </BoxContainer>
+                        </PanelContainer>
+
+                        <PanelContainer Name="ActionControlsPanel" StyleClasses="NightCityPhoneActionCard" Visible="False" Margin="0 0 0 8">
+                            <BoxContainer Orientation="Horizontal" HorizontalExpand="True" Margin="8">
+                                <LineEdit Name="ActionInput" HorizontalExpand="True" PlaceHolder="..." StyleClasses="NightCityInput" />
+                                <Button Name="ActionButton" Text="EXECUTE" StyleClasses="NightCityButton" Margin="6 0 0 0" />
+                            </BoxContainer>
+                        </PanelContainer>
+
+                        <PanelContainer Name="CallControlsPanel" StyleClasses="NightCityPhoneCallCard" Visible="False" Margin="0 0 0 8">
+                            <BoxContainer Orientation="Vertical" HorizontalExpand="True" Margin="8">
+                                <RichTextLabel Name="CallControlsStatusLabel" Margin="0 0 0 6" />
+                                <BoxContainer Orientation="Horizontal" HorizontalExpand="True">
+                                    <Button Name="CallDialButton" Text="DIAL" StyleClasses="NightCityButton" Visible="False" />
+                                    <Button Name="CallAcceptButton" Text="ACCEPT" StyleClasses="NightCityButton" Visible="False" Margin="4 0 0 0" />
+                                    <Button Name="CallDeclineButton" Text="DECLINE" StyleClasses="NightCityButtonDanger" Visible="False" Margin="4 0 0 0" />
+                                    <Button Name="CallJoinVoiceButton" Text="JOIN VOICE" StyleClasses="NightCityButton" Visible="False" Margin="4 0 0 0" />
+                                    <Button Name="CallLeaveVoiceButton" Text="LEAVE VOICE" StyleClasses="NightCityButtonDanger" Visible="False" Margin="4 0 0 0" />
+                                    <Button Name="CallPingLocationButton" Text="PING" StyleClasses="NightCityButtonGhost" Margin="4 0 0 0" />
+                                    <Button Name="CallHangUpButton" Text="HANG UP" StyleClasses="NightCityButtonDanger" Visible="False" Margin="4 0 0 0" />
+                                </BoxContainer>
+                            </BoxContainer>
+                        </PanelContainer>
+
+                        <PanelContainer StyleClasses="NightCityPhoneInset" VerticalExpand="True" Margin="0 0 0 8">
+                            <ScrollContainer VerticalExpand="True" HScrollEnabled="False">
+                                <BoxContainer Name="ContentMessagesContainer" Orientation="Vertical" Margin="8" />
+                            </ScrollContainer>
+                        </PanelContainer>
+
+                        <PanelContainer Name="ChatInputPanel" StyleClasses="NightCityPhoneComposer">
+                            <BoxContainer Orientation="Horizontal" HorizontalExpand="True" Margin="8">
+                                <LineEdit Name="ChatInput" HorizontalExpand="True" PlaceHolder="Transmit message..." StyleClasses="NightCityInput" />
+                                <Button Name="ChatSendButton" Text="SEND" StyleClasses="NightCityButton" Margin="6 0 0 0" />
+                            </BoxContainer>
+                        </PanelContainer>
+                    </BoxContainer>
+                </PanelContainer>
+            </BoxContainer>
+
+            <PanelContainer StyleClasses="NightCityPhoneNavBar" Margin="0 8 0 0">
+                <BoxContainer Orientation="Horizontal" HorizontalExpand="True" Margin="8 6 8 6">
+                    <Button Name="MenuDirectCallsBtn" Text="CALLS" HorizontalExpand="True" StyleClasses="NightCityTabButton" />
+                    <Button Name="MenuChatRoomsBtn" Text="CHATS" HorizontalExpand="True" StyleClasses="NightCityTabButton" Margin="6 0 0 0" />
+                    <Button Name="MenuDataPoolBtn" Text="POOL" HorizontalExpand="True" StyleClasses="NightCityTabButton" Margin="6 0 0 0" />
+                    <Button Name="MenuContactsBtn" Text="CONTACTS" HorizontalExpand="True" StyleClasses="NightCityTabButton" Margin="6 0 0 0" />
+                </BoxContainer>
+            </PanelContainer>
         </BoxContainer>
-    </BoxContainer>
-
-    <!-- MAIN 3-COLUMN LAYOUT -->
-    <BoxContainer Orientation="Horizontal" VerticalExpand="True">
-
-        <!-- ======================= -->
-        <!-- COLUMN 1: SIDEBAR (MENU)-->
-        <!-- ======================= -->
-        <PanelContainer Name="LeftPanel" StyleClasses="BorderedWindowPanel" MinWidth="170" Margin="0 0 4 0">
-            <BoxContainer Orientation="Vertical" Margin="4">
-                <RichTextLabel Name="UsernameLabel" Margin="0 0 0 8"/>
-                <RichTextLabel Margin="0 0 0 4" Name="OnlineStatusLabel" />
-
-                <Label Text="[ MENU ]" FontColorOverride="#51f542" Margin="0 12 0 4"/>
-
-                <Button Name="MenuDirectCallsBtn" Text="[1] DIRECT CALLS" Margin="0 2 0 0" HorizontalAlignment="Left" StyleClasses="OpenRight"/>
-                <Button Name="MenuChatRoomsBtn" Text="[2] CHAT ROOMS" Margin="0 2 0 0" HorizontalAlignment="Left" StyleClasses="OpenRight"/>
-                <Button Name="MenuDataPoolBtn" Text="[3] DATA POOL" Margin="0 2 0 0" HorizontalAlignment="Left" StyleClasses="OpenRight"/>
-                <Button Name="MenuContactsBtn" Text="[4] CONTACTS" Margin="0 2 0 0" HorizontalAlignment="Left" StyleClasses="OpenRight"/>
-            </BoxContainer>
-        </PanelContainer>
-
-        <!-- ======================= -->
-        <!-- COLUMN 2: LIST (MIDDLE) -->
-        <!-- ======================= -->
-        <PanelContainer Name="MiddlePanel" StyleClasses="BorderedWindowPanel" MinWidth="220" Margin="0 0 4 0">
-            <BoxContainer Orientation="Vertical" Margin="4" VerticalExpand="True">
-                <BoxContainer Orientation="Horizontal" HorizontalExpand="True" Margin="0 0 0 4">
-                    <Label Name="ListTitleLabel" Text="[ CHAT ROOMS ]" FontColorOverride="#51f542" HorizontalExpand="True"/>
-                </BoxContainer>
-
-                <Label Name="ListSubtitleLabel" Text="ACTIVE CHANNELS:" FontColorOverride="#51f542" Margin="0 4 0 4"/>
-
-                <ScrollContainer VerticalExpand="True" HScrollEnabled="False">
-                    <BoxContainer Name="ListContainer" Orientation="Vertical"/>
-                </ScrollContainer>
-            </BoxContainer>
-        </PanelContainer>
-
-        <!-- ======================= -->
-        <!-- COLUMN 3: CONTENT (RIGHT) -->
-        <!-- ======================= -->
-        <PanelContainer Name="RightPanel" StyleClasses="BorderedWindowPanel" HorizontalExpand="True" MinWidth="350">
-            <BoxContainer Orientation="Vertical" Margin="4" VerticalExpand="True">
-
-                <!-- Chat Window Header -->
-                <RichTextLabel Name="ContentHeaderLabel" Margin="0 0 0 4"/>
-
-                <!-- Password Input (if needed for secure channel) -->
-                <BoxContainer Name="PasswordPanel" Orientation="Horizontal" Visible="False" Margin="0 0 0 4">
-                    <LineEdit Name="PasswordInput" HorizontalExpand="True" PlaceHolder="ENTER ACCESS CODE..."/>
-                    <Button Name="PasswordSubmitBtn" Text="[SUBMIT]" Margin="2 0 0 0"/>
-                </BoxContainer>
-
-                <!-- Chat Messages Scroll -->
-                <ScrollContainer VerticalExpand="True" HScrollEnabled="False">
-                    <BoxContainer Name="ContentMessagesContainer" Orientation="Vertical"/>
-                </ScrollContainer>
-
-                <!-- Active Call Control Panel (Visible only during calls/bridge) -->
-                <BoxContainer Name="CallControlsPanel" Orientation="Horizontal" Visible="False" Margin="0 4 0 4">
-                    <RichTextLabel Name="CallControlsStatusLabel" HorizontalExpand="True" VerticalAlignment="Center"/>
-                    <Button Name="CallDialButton" Text="DIAL VOICE" StyleClasses="ButtonColorGreen" Visible="False"/>
-                    <Button Name="CallAcceptButton" Text="ACCEPT" StyleClasses="ButtonColorGreen" Visible="False"/>
-                    <Button Name="CallDeclineButton" Text="DECLINE" StyleClasses="ButtonColorRed" Visible="False"/>
-                    <Button Name="CallJoinVoiceButton" Text="JOIN VOICE" StyleClasses="ButtonColorGreen" Visible="False"/>
-                    <Button Name="CallLeaveVoiceButton" Text="LEAVE VOICE" StyleClasses="ButtonColorRed" Margin="2 0 0 0" Visible="False"/>
-                    <Button Name="CallPingLocationButton" Text="PING LOCATION" Margin="2 0 0 0"/>
-                    <Button Name="CallHangUpButton" Text="HANG UP" StyleClasses="ButtonColorRed" Margin="2 0 0 0" Visible="False"/>
-                </BoxContainer>
-
-                <!-- Action Controls Panel (Contextual inputs: e.g. dial number, create bridge) -->
-                <BoxContainer Name="ActionControlsPanel" Orientation="Horizontal" Visible="False" Margin="0 4 0 4">
-                    <LineEdit Name="ActionInput" HorizontalExpand="True" PlaceHolder="..."/>
-                    <Button Name="ActionButton" Text="[ACTION]" Margin="2 0 0 0"/>
-                </BoxContainer>
-
-                <!-- Chat Input Line -->
-                <BoxContainer Name="ChatInputPanel" Orientation="Horizontal" Margin="0 4 0 0">
-                    <Label Text=">>" FontColorOverride="#51f542" VerticalAlignment="Center" Margin="0 0 4 0"/>
-                    <LineEdit Name="ChatInput" HorizontalExpand="True" PlaceHolder="Type your message: [                     ]"/>
-                    <Button Name="ChatSendButton" Text="[SEND]" Margin="2 0 0 0"/>
-                </BoxContainer>
-
-            </BoxContainer>
-        </PanelContainer>
-    </BoxContainer>
+    </PanelContainer>
 </BoxContainer>

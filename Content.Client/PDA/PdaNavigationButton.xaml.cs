@@ -10,6 +10,11 @@ namespace Content.Client.PDA;
 [GenerateTypedNameReferences]
 public sealed partial class PdaNavigationButton : ContainerButton
 {
+    private const string DefaultInactiveBgColor = "#202023";
+    private const string DefaultActiveBgColor = "#25252a";
+    private const string DefaultInactiveFgColor = "#5a5a5a";
+    private const string DefaultActiveFgColor = "#FFFFFF";
+    private const string DefaultBorderColor = "#5a5a5a";
 
     private bool _isCurrent;
     private bool _isActive = true;
@@ -19,15 +24,16 @@ public sealed partial class PdaNavigationButton : ContainerButton
 
     private readonly StyleBoxFlat _styleBox = new()
     {
-        BackgroundColor = Color.FromHex("#202023"),
-        BorderColor = Color.FromHex("#5a5a5a"),
+        BackgroundColor = Color.FromHex(DefaultInactiveBgColor),
+        BorderColor = Color.FromHex(DefaultBorderColor),
         BorderThickness = new Thickness(0, 0, 0, 2)
     };
 
-    public string InactiveBgColor { get; set; } = "#202023";
-    public string ActiveBgColor { get; set; } = "#25252a";
-    public string InactiveFgColor { get; set; } = "#5a5a5a";
-    public string ActiveFgColor { get; set; } = "#FFFFFF";
+    public string InactiveBgColor { get; set; } = DefaultInactiveBgColor;
+    public string ActiveBgColor { get; set; } = DefaultActiveBgColor;
+    public string InactiveFgColor { get; set; } = DefaultInactiveFgColor;
+    public string ActiveFgColor { get; set; } = DefaultActiveFgColor;
+    public string BorderColor { get; set; } = DefaultBorderColor;
 
     public SpriteSpecifier? IconTexture
     {
@@ -85,8 +91,7 @@ public sealed partial class PdaNavigationButton : ContainerButton
         set
         {
             _isCurrent = value;
-            _styleBox.BackgroundColor = Color.FromHex(value ? ActiveBgColor : InactiveBgColor);
-            _styleBox.BorderThickness = value ? CurrentTabBorderThickness : BorderThickness;
+            RefreshVisualState();
         }
     }
 
@@ -96,8 +101,7 @@ public sealed partial class PdaNavigationButton : ContainerButton
         set
         {
             _isActive = value;
-            Icon.Modulate = Color.FromHex(value ? ActiveFgColor : InactiveFgColor);
-            Label.FontColorOverride = Color.FromHex(value ? ActiveFgColor : InactiveFgColor);
+            RefreshVisualState();
         }
     }
 
@@ -105,5 +109,45 @@ public sealed partial class PdaNavigationButton : ContainerButton
     {
         RobustXamlLoader.Load(this);
         Background.PanelOverride = _styleBox;
+        RefreshVisualState();
+    }
+
+    /// <summary>
+    /// Applies a Night City palette to PDA shell tabs while preserving the original layout behavior.
+    /// </summary>
+    public void ApplyNightCityTheme(bool enabled)
+    {
+        if (enabled)
+        {
+            InactiveBgColor = "#0c1118";
+            ActiveBgColor = "#111b24";
+            InactiveFgColor = "#7b8b99";
+            ActiveFgColor = "#00f2ff";
+            BorderColor = "#00f2ff";
+        }
+        else
+        {
+            InactiveBgColor = DefaultInactiveBgColor;
+            ActiveBgColor = DefaultActiveBgColor;
+            InactiveFgColor = DefaultInactiveFgColor;
+            ActiveFgColor = DefaultActiveFgColor;
+            BorderColor = DefaultBorderColor;
+        }
+
+        RefreshVisualState();
+    }
+
+    /// <summary>
+    /// Rebuilds the tab chrome after a state or palette change.
+    /// </summary>
+    private void RefreshVisualState()
+    {
+        _styleBox.BackgroundColor = Color.FromHex(_isCurrent ? ActiveBgColor : InactiveBgColor);
+        _styleBox.BorderColor = Color.FromHex(BorderColor);
+        _styleBox.BorderThickness = _isCurrent ? CurrentTabBorderThickness : BorderThickness;
+
+        var foreground = Color.FromHex(_isActive ? ActiveFgColor : InactiveFgColor);
+        Icon.Modulate = foreground;
+        Label.FontColorOverride = foreground;
     }
 }
