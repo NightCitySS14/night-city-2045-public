@@ -321,6 +321,26 @@ public sealed partial class DirectorSpawnGroup
     public List<string> SpawnLocationTags { get; private set; } = new();
 
     /// <summary>
+    /// Legacy single tag for the group's retreat/extraction point.
+    /// Kept short because content authors often think of it as the group's "home side".
+    /// </summary>
+    [DataField("location")]
+    public string? Location;
+
+    /// <summary>
+    /// Legacy explicit retreat tag name for the group.
+    /// </summary>
+    [DataField("locationTag")]
+    public string? LocationTag;
+
+    /// <summary>
+    /// One or more acceptable retreat tags for this specific group.
+    /// Used when the event enters a cleanup / extraction beat.
+    /// </summary>
+    [DataField("locationTags")]
+    public List<string> LocationTags { get; private set; } = new();
+
+    /// <summary>
     /// Faction ID to assign to the spawned entity.
     /// </summary>
     [DataField]
@@ -336,6 +356,12 @@ public sealed partial class DirectorSpawnGroup
     {
         if (!string.IsNullOrWhiteSpace(SpawnLocationTag) && !SpawnLocationTags.Contains(SpawnLocationTag))
             SpawnLocationTags.Add(SpawnLocationTag);
+
+        if (!string.IsNullOrWhiteSpace(Location) && !LocationTags.Contains(Location))
+            LocationTags.Add(Location);
+
+        if (!string.IsNullOrWhiteSpace(LocationTag) && !LocationTags.Contains(LocationTag))
+            LocationTags.Add(LocationTag);
     }
 }
 

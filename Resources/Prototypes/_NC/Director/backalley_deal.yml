@@ -18,11 +18,13 @@
         - prototype: MobNCBanditPistolUnlootable
           groupTag: "GangA"
           faction: "Passive"
+          location: "GangA"
           spawnLocationTags: ["GangAEntry"]
           amount: 2
         - prototype: MobNCMilitechAvengerUnlootable
           groupTag: "GangB"
           faction: "Passive"
+          location: "GangB"
           spawnLocationTags: ["GangBEntry"]
           amount: 2
       nextPhases:

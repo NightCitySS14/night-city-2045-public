@@ -80,6 +80,9 @@ Each item in `spawns` supports:
 - `groupTag`: logical label used by `factionOverrides` or trigger filters.
 - `spawnLocationTag`: legacy single entry tag for this group.
 - `spawnLocationTags`: preferred per-group entry tags.
+- `location`: legacy single retreat tag for this group.
+- `locationTag`: explicit single retreat tag for this group.
+- `locationTags`: preferred per-group retreat tags.
 - `faction`: optional faction applied immediately after spawn.
 - `amount`: number of entities to spawn.
 
@@ -90,6 +93,14 @@ Spawn resolution order is:
 3. `locationTags` on the phase as the final fallback anchor.
 
 This lets multiple groups approach the same incident from different sides while still sharing a single scene center.
+
+Retreat resolution order is:
+
+1. `locationTags` on the spawn group.
+2. The resolved entry point for that same group.
+3. The phase anchor as the last fallback.
+
+This means a group can spawn from `GangAEntry`, walk to the shared meeting point, then withdraw to `GangA` before cleanup deletes it.
 
 ## Triggers
 
@@ -148,6 +159,7 @@ Use a controlled tag vocabulary. Director content breaks down quickly if mappers
         - prototype: MobNCBanditPistolUnlootable
           groupTag: "Dealers"
           faction: "Passive"
+          location: "DealersHome"
           spawnLocationTags: ["DealersEntry"]
           amount: 2
       nextPhases:
@@ -189,4 +201,4 @@ Use `directorstatus` first when an event does not start. It reports scheduler st
 - Prefer unlootable mobs for ambient incidents unless the event is intended as a reward source.
 - Keep phase logic in YAML and engine logic in the `_NC` Director systems.
 - Reuse abstract templates for shared defaults instead of copy-pasting scheduler gates into every event.
-- Use `locationTags` for the shared scene anchor and `spawnLocationTags` for side-specific entry points.
+- Use phase `locationTags` for the shared scene anchor, `spawnLocationTags` for side-specific entry points, and group `location/locationTags` for retreat destinations.

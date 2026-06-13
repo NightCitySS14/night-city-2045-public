@@ -1,4 +1,5 @@
 using Robust.Shared.GameStates;
+using Robust.Shared.Map;
 
 namespace Content.Shared._NC.Director;
 
@@ -32,4 +33,11 @@ public sealed partial class DirectorSpawneeComponent : Component
     /// </summary>
     [DataField]
     public int PhaseSequence;
+
+    /// <summary>
+    /// Map-space retreat point assigned by the Director for cleanup/extraction behavior.
+    /// Stored so the server can detect arrival and delete entities only after they make it out.
+    /// </summary>
+    [DataField]
+    public MapCoordinates? RetreatMapCoordinates;
 }

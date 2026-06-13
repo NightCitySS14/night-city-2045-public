@@ -1,5 +1,6 @@
 using System.Linq;
 using System.Numerics;
+using Content.Server.Administration.Managers;
 using Content.Server.Announcements.Systems;
 using Content.Server.NPC.HTN;
 using Content.Shared._NC.CitiNet;
@@ -74,6 +75,9 @@ public sealed class GlobalDirectorSystem : EntitySystem
         var eventQuery = EntityQueryEnumerator<DirectorEventComponent>();
         while (eventQuery.MoveNext(out var uid, out var directorEvent))
         {
+            if (TryProcessCleanupRetreat(uid, directorEvent))
+                continue;
+
             if (directorEvent.PhaseEndTime != null && _timing.CurTime >= directorEvent.PhaseEndTime)
                 AdvancePhase(uid, directorEvent);
         }
@@ -498,6 +502,8 @@ public sealed class GlobalDirectorSystem : EntitySystem
                 continue;
             }
 
+            var retreatCoordsBase = ResolveGroupRetreatLocation(group, phase, eventSector, anchorCoords, spawnCoordsBase);
+
             for (var i = 0; i < group.Amount; i++)
             {
                 // Light spread prevents stacked NPCs while keeping the scene coherent.
@@ -510,6 +516,7 @@ public sealed class GlobalDirectorSystem : EntitySystem
                 spawnee.GroupTag = group.GroupTag;
                 spawnee.PhaseId = phaseId;
                 spawnee.PhaseSequence = component.PhaseSequence;
+                spawnee.RetreatMapCoordinates = retreatCoordsBase != MapCoordinates.Nullspace ? retreatCoordsBase : null;
                 component.SpawnedEntities.Add(spawned);
 
                 if (group.Faction != null)
@@ -522,7 +529,8 @@ public sealed class GlobalDirectorSystem : EntitySystem
                 if (anchorCoords != MapCoordinates.Nullspace && TryComp<HTNComponent>(spawned, out var htn))
                 {
                     var targetNavigationCoords = ToNavigationCoordinates(spawned, anchorCoords);
-                    var retreatNavigationCoords = ToNavigationCoordinates(spawned, spawnCoordsBase);
+                    var retreatTarget = spawnee.RetreatMapCoordinates ?? spawnCoordsBase;
+                    var retreatNavigationCoords = ToNavigationCoordinates(spawned, retreatTarget);
 
                     htn.Blackboard.SetValue("TargetCoordinates", targetNavigationCoords);
                     htn.Blackboard.SetValue("FollowTarget", targetNavigationCoords);
@@ -557,6 +565,24 @@ public sealed class GlobalDirectorSystem : EntitySystem
 
         // If no dedicated entry exists, use the anchor itself.
         return anchorCoords;
+    }
+
+    private MapCoordinates ResolveGroupRetreatLocation(
+        DirectorSpawnGroup group,
+        DirectorPhase phase,
+        EntityUid? eventSector,
+        MapCoordinates anchorCoords,
+        MapCoordinates spawnCoordsBase)
+    {
+        if (group.LocationTags.Count > 0)
+        {
+            var retreat = GetSpawnLocation(group.LocationTags, eventSector, anchorCoords != MapCoordinates.Nullspace ? anchorCoords : null);
+            if (retreat != MapCoordinates.Nullspace)
+                return retreat;
+        }
+
+        // Old content did not author a dedicated retreat marker, so preserve current behavior.
+        return spawnCoordsBase != MapCoordinates.Nullspace ? spawnCoordsBase : anchorCoords;
     }
 
     private void ApplyFactionOverrides(DirectorEventComponent component, DirectorPhase phase)
@@ -729,6 +755,50 @@ public sealed class GlobalDirectorSystem : EntitySystem
         }
 
         component.SpawnedEntities.Clear();
+    }
+
+    private bool TryProcessCleanupRetreat(EntityUid eventUid, DirectorEventComponent component)
+    {
+        if (!_prototype.TryIndex<DirectorEventPrototype>(component.PrototypeId, out var proto) ||
+            component.CurrentPhase == null ||
+            !proto.Phases.TryGetValue(component.CurrentPhase, out var phase) ||
+            !phase.Cleanup)
+        {
+            return false;
+        }
+
+        var removedAny = false;
+
+        foreach (var entity in component.SpawnedEntities.ToArray())
+        {
+            if (!TryComp<DirectorSpawneeComponent>(entity, out var spawnee) ||
+                spawnee.PhaseSequence != component.PhaseSequence ||
+                spawnee.RetreatMapCoordinates == null)
+            {
+                continue;
+            }
+
+            var currentCoords = _transform.GetMapCoordinates(entity);
+            var retreatCoords = spawnee.RetreatMapCoordinates.Value;
+
+            if (currentCoords.MapId != retreatCoords.MapId)
+                continue;
+
+            // A small map-space threshold is enough; the HTN move task already handles pathing precision.
+            if ((currentCoords.Position - retreatCoords.Position).Length() > 1.5f)
+                continue;
+
+            EntityManager.DeleteEntity(entity);
+            removedAny = true;
+        }
+
+        if (component.SpawnedEntities.Count == 0)
+        {
+            FinishEvent(eventUid, component, proto);
+            return true;
+        }
+
+        return removedAny;
     }
 
     private GlobalDirectorComponent? GetFirstDirector()
