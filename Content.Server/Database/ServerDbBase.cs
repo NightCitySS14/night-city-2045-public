@@ -1,5 +1,7 @@
 using Content.Server.Administration.Logs;
 using Content.Server.Administration.Managers;
+using Content.Server._NC.CharacterNotes.Components;
+using Content.Shared._NC.CharacterNotes;
 using Content.Shared._White.Bark;
 using Content.Shared._White.CustomGhostSystem;
 using Content.Shared.Administration.Logs;
@@ -392,6 +394,93 @@ namespace Content.Server.Database
 
             return profile;
         }
+
+        #region Faction Bank
+        public async Task<Dictionary<int, int>> GetFactionBankBalancesAsync()
+        {
+            await using var db = await GetDb();
+            return await db.DbContext.FactionBankBalances.ToDictionaryAsync(f => f.FactionId, f => f.Balance);
+        }
+
+        public async Task SaveFactionBankBalanceAsync(int factionId, int balance)
+        {
+            await using var db = await GetDb();
+            var existing = await db.DbContext.FactionBankBalances.SingleOrDefaultAsync(f => f.FactionId == factionId);
+            if (existing == null)
+            {
+                db.DbContext.FactionBankBalances.Add(new FactionBankBalance
+                {
+                    FactionId = factionId,
+                    Balance = balance
+                });
+            }
+            else
+            {
+                existing.Balance = balance;
+            }
+            await db.DbContext.SaveChangesAsync();
+        }
+
+        public async Task<int?> GetProfileIdForSlotAsync(NetUserId userId, int slot)
+        {
+            await using var db = await GetDb();
+
+            return await db.DbContext.Profile
+                .Where(p => p.Preference.UserId == userId.UserId && p.Slot == slot)
+                .Select(p => (int?) p.Id)
+                .SingleOrDefaultAsync();
+        }
+
+        public async Task<Dictionary<int, NCCharacterNoteEntry>> GetNCCharacterNotesAsync(int ownerProfileId)
+        {
+            await using var db = await GetDb();
+
+            return await db.DbContext.NCCharacterNotes
+                .Where(n => n.OwnerProfileId == ownerProfileId)
+                .ToDictionaryAsync(
+                    n => n.TargetProfileId,
+                    n => new NCCharacterNoteEntry
+                    {
+                        CustomName = n.CustomName,
+                        ColorTag = n.ColorTag,
+                        Description = n.Description,
+                    });
+        }
+
+        public async Task SaveNCCharacterNoteAsync(
+            int ownerProfileId,
+            int targetProfileId,
+            string customName,
+            NCCharacterNoteColorTag colorTag,
+            string description)
+        {
+            await using var db = await GetDb();
+
+            var existing = await db.DbContext.NCCharacterNotes
+                .SingleOrDefaultAsync(n => n.OwnerProfileId == ownerProfileId && n.TargetProfileId == targetProfileId);
+
+            if (existing == null)
+            {
+                db.DbContext.NCCharacterNotes.Add(new NCCharacterNote
+                {
+                    OwnerProfileId = ownerProfileId,
+                    TargetProfileId = targetProfileId,
+                    CustomName = customName,
+                    ColorTag = colorTag,
+                    Description = description,
+                });
+            }
+            else
+            {
+                existing.CustomName = customName;
+                existing.ColorTag = colorTag;
+                existing.Description = description;
+            }
+
+            await db.DbContext.SaveChangesAsync();
+        }
+        #endregion
+
         #endregion
 
         #region User Ids

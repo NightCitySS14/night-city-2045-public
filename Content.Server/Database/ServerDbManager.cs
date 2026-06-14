@@ -1,4 +1,6 @@
 using Content.Server.Administration.Logs;
+using Content.Server._NC.CharacterNotes.Components;
+using Content.Shared._NC.CharacterNotes;
 using Content.Shared._White.CustomGhostSystem;
 using Content.Shared.Administration.Logs;
 using Content.Shared.CCVar;
@@ -50,6 +52,17 @@ namespace Content.Server.Database
         Task<PlayerPreferences?> GetPlayerPreferencesAsync(NetUserId userId, CancellationToken cancel);
 
         Task ResetAllBankBalances(int startingBalance);
+
+        Task<Dictionary<int, int>> GetFactionBankBalancesAsync();
+        Task SaveFactionBankBalanceAsync(int factionId, int balance);
+        Task<int?> GetProfileIdForSlotAsync(NetUserId userId, int slot);
+        Task<Dictionary<int, NCCharacterNoteEntry>> GetNCCharacterNotesAsync(int ownerProfileId);
+        Task SaveNCCharacterNoteAsync(
+            int ownerProfileId,
+            int targetProfileId,
+            string customName,
+            NCCharacterNoteColorTag colorTag,
+            string description);
         #endregion
 
         #region User Ids
@@ -510,6 +523,41 @@ namespace Content.Server.Database
         {
             DbWriteOpsMetric.Inc();
             return RunDbCommand(() => _db.ResetAllBankBalances(startingBalance));
+        }
+
+        public Task<Dictionary<int, int>> GetFactionBankBalancesAsync()
+        {
+            DbReadOpsMetric.Inc();
+            return RunDbCommand(() => _db.GetFactionBankBalancesAsync());
+        }
+
+        public Task SaveFactionBankBalanceAsync(int factionId, int balance)
+        {
+            DbWriteOpsMetric.Inc();
+            return RunDbCommand(() => _db.SaveFactionBankBalanceAsync(factionId, balance));
+        }
+
+        public Task<int?> GetProfileIdForSlotAsync(NetUserId userId, int slot)
+        {
+            DbReadOpsMetric.Inc();
+            return RunDbCommand(() => _db.GetProfileIdForSlotAsync(userId, slot));
+        }
+
+        public Task<Dictionary<int, NCCharacterNoteEntry>> GetNCCharacterNotesAsync(int ownerProfileId)
+        {
+            DbReadOpsMetric.Inc();
+            return RunDbCommand(() => _db.GetNCCharacterNotesAsync(ownerProfileId));
+        }
+
+        public Task SaveNCCharacterNoteAsync(
+            int ownerProfileId,
+            int targetProfileId,
+            string customName,
+            NCCharacterNoteColorTag colorTag,
+            string description)
+        {
+            DbWriteOpsMetric.Inc();
+            return RunDbCommand(() => _db.SaveNCCharacterNoteAsync(ownerProfileId, targetProfileId, customName, colorTag, description));
         }
 
         public Task AssignUserIdAsync(string name, NetUserId userId)
