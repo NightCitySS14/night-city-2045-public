@@ -106,3 +106,42 @@ ent-AutodocConsole = Терминал Автодока
 # Roles
 role-cyberpsycho-name = Киберпсих
 role-cyberpsycho-objective = Убить всех. Плоть слаба.
+
+# Therapy Words (Cyberpsychosis)
+therapy-word-machine = машина
+therapy-word-metal = металл
+therapy-word-glass = стекло
+therapy-word-void = пустота
+therapy-word-cold = холод
+therapy-word-alien = чужой
+therapy-word-wall = стена
+therapy-word-artificial = искусственный
+therapy-word-plastic = пластик
+therapy-word-mechanism = механизм
+therapy-word-blood = кровь
+therapy-word-knife = нож
+therapy-word-flesh = плоть
+therapy-word-scream = крик
+therapy-word-shot = выстрел
+therapy-word-bone = кость
+therapy-word-tear = разрыв
+therapy-word-death = смерть
+therapy-word-pain = боль
+therapy-word-meat = мясо
+therapy-word-shadow = тень
+therapy-word-footsteps = шаги
+therapy-word-whisper = шепот
+therapy-word-time = время
+therapy-word-surveillance = слежка
+therapy-word-eyes = глаза
+therapy-word-fast = быстро
+therapy-word-timer = таймер
+therapy-word-clock = часы
+therapy-word-pulse = пульс
+
+# Therapy Emotes
+therapy-emote-click = кажется, что-то щёлкнуло внутри
+therapy-emote-twitch = лицо дёргается от непонятного чувства
+therapy-emote-breathe = глаза расширяются, дыхание сбивается
+therapy-emote-exhale = выдыхает, пытаясь взять себя в руки
+therapy-emote-freeze = на секунду замирает, зрачки расширены

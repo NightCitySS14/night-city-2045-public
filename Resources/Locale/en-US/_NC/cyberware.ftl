@@ -106,3 +106,42 @@ ent-AutodocConsole = Autodoc Terminal
 # Roles
 role-cyberpsycho-name = Cyberpsycho
 role-cyberpsycho-objective = Kill everyone. Flesh is weak.
+
+# Therapy Words (Cyberpsychosis)
+therapy-word-machine = machine
+therapy-word-metal = metal
+therapy-word-glass = glass
+therapy-word-void = void
+therapy-word-cold = cold
+therapy-word-alien = alien
+therapy-word-wall = wall
+therapy-word-artificial = artificial
+therapy-word-plastic = plastic
+therapy-word-mechanism = mechanism
+therapy-word-blood = blood
+therapy-word-knife = knife
+therapy-word-flesh = flesh
+therapy-word-scream = scream
+therapy-word-shot = shot
+therapy-word-bone = bone
+therapy-word-tear = tear
+therapy-word-death = death
+therapy-word-pain = pain
+therapy-word-meat = meat
+therapy-word-shadow = shadow
+therapy-word-footsteps = footsteps
+therapy-word-whisper = whisper
+therapy-word-time = time
+therapy-word-surveillance = surveillance
+therapy-word-eyes = eyes
+therapy-word-fast = fast
+therapy-word-timer = timer
+therapy-word-clock = clock
+therapy-word-pulse = pulse
+
+# Therapy Emotes
+therapy-emote-click = seems like something clicked inside
+therapy-emote-twitch = face twitches from an unknown feeling
+therapy-emote-breathe = eyes widen, breathing becomes erratic
+therapy-emote-exhale = exhales, trying to pull themselves together
+therapy-emote-freeze = freezes for a second, pupils dilated
