@@ -1,6 +1,6 @@
 # NC Translation Service
 
-`NC Translation Service` это отдельный HTTP-сервис для автоматического перевода игрового чата `RU <-> EN` через `CTranslate2 + OPUS-MT`.
+`NC Translation Service` это отдельный HTTP-сервис для автоматического перевода игрового чата `RU <-> EN` через `CTranslate2 + OPUS-MT`
 
 Сервис можно запустить:
 
