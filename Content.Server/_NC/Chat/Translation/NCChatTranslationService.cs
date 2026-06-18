@@ -133,15 +133,23 @@ public sealed class NCChatTranslationService : INCChatTranslationService
         ChatChannel channel,
         CancellationToken cancel = default)
     {
-        var translationTask = TranslateAsync(text, fallbackLanguage, channel, cancel);
-        var softHoldMs = Math.Max(0, _config.GetCVar(CCVars.NCChatTranslationSoftHoldMs));
-        if (softHoldMs <= 0)
+        try
+        {
+            var translationTask = TranslateAsync(text, fallbackLanguage, channel, cancel);
+            var softHoldMs = Math.Max(0, _config.GetCVar(CCVars.NCChatTranslationSoftHoldMs));
+            if (softHoldMs <= 0)
+                return new NCChatTranslationDispatch(null, translationTask);
+
+            if (await Task.WhenAny(translationTask, Task.Delay(softHoldMs, CancellationToken.None)) == translationTask)
+                return new NCChatTranslationDispatch(await translationTask, null);
+
             return new NCChatTranslationDispatch(null, translationTask);
-
-        if (await Task.WhenAny(translationTask, Task.Delay(softHoldMs, CancellationToken.None)) == translationTask)
-            return new NCChatTranslationDispatch(await translationTask, null);
-
-        return new NCChatTranslationDispatch(null, translationTask);
+        }
+        catch (Exception e)
+        {
+            RegisterFailure($"Translation soft-hold failed for {channel}: {FlattenExceptionMessage(e)}");
+            return new NCChatTranslationDispatch(null, null);
+        }
     }
 
     public Task<NCChatTranslationPayload?> TranslateAsync(
@@ -150,7 +158,7 @@ public sealed class NCChatTranslationService : INCChatTranslationService
         ChatChannel channel,
         CancellationToken cancel = default)
     {
-        return TranslateCoreAsync(text, fallbackLanguage, IsConfiguredForChannel(channel), channel.ToString(), cancel);
+        return TranslateSafeAsync(text, fallbackLanguage, IsConfiguredForChannel(channel), channel.ToString(), cancel);
     }
 
     public Task<NCChatTranslationPayload?> TranslateAHelpAsync(
@@ -158,7 +166,25 @@ public sealed class NCChatTranslationService : INCChatTranslationService
         string? fallbackLanguage,
         CancellationToken cancel = default)
     {
-        return TranslateCoreAsync(text, fallbackLanguage, IsConfiguredForAHelp(), "AHelp", cancel);
+        return TranslateSafeAsync(text, fallbackLanguage, IsConfiguredForAHelp(), "AHelp", cancel);
+    }
+
+    private async Task<NCChatTranslationPayload?> TranslateSafeAsync(
+        string text,
+        string? fallbackLanguage,
+        bool enabled,
+        string channelName,
+        CancellationToken cancel)
+    {
+        try
+        {
+            return await TranslateCoreAsync(text, fallbackLanguage, enabled, channelName, cancel);
+        }
+        catch (Exception e) when (!cancel.IsCancellationRequested)
+        {
+            RegisterFailure($"Translation task failed for {channelName}: {FlattenExceptionMessage(e)}");
+            return null;
+        }
     }
 
     private bool IsChannelEnabled(string? channelKey)
@@ -470,6 +496,14 @@ public sealed class NCChatTranslationService : INCChatTranslationService
         var backoffSeconds = Math.Max(1, _config.GetCVar(CCVars.NCChatTranslationFailureBackoffSeconds));
         _failureBackoffUntil = DateTimeOffset.UtcNow.AddSeconds(backoffSeconds);
         _sawmill.Warning(reason);
+    }
+
+    private static string FlattenExceptionMessage(Exception exception)
+    {
+        if (exception is AggregateException aggregateException)
+            return string.Join("; ", aggregateException.Flatten().InnerExceptions.Select(e => e.Message));
+
+        return exception.Message;
     }
 
     private string BuildProviderCacheSegment(string provider, string sourceLanguage, IReadOnlyList<string> targetLanguages)
