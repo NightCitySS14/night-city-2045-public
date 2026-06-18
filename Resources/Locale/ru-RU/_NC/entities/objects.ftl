@@ -111,3 +111,81 @@ ent-BucketConstruction = строительное ведро
     .desc = Большое ведро, обычно используещеся для стройматериалов. Но в НайтСити "народные умельцы" находят ему другое применение...
 ent-BucketAdvanced = продвинутое ведро
     .desc = Технологичное ведро, способное вместить гораздо больше жидкости.
+ent-PDANCPD-desc = Стандартный КПК сотрудника Полицейского Департамента Найт-Сити.
+ent-PDAMaxTac-desc = Усиленный тактический КПК подразделения MaxTac.
+ent-PDATrauma-desc = Высокотехнологичный медицинский терминал сотрудника Trauma Team.
+ent-PDACafeOwner-desc = Компактный терминал с логотипом кофейного зерна.
+ent-PDARestaurantOwner-desc = Элегантный терминал с золотистой отделкой.
+ent-PDACitizen-desc = Обычный чип-терминал жителя Найт-Сити.
+ent-PDAEdgeRunner-desc = Кастомный терминал с защищенным каналом.
+ent-PDAFixer-desc = Инструмент для тех, кто решает проблемы.
+ent-PDARipper-desc = Медицинский терминал для работы в полевых условиях.
+ent-PDABiotechnicaChief-desc = Устройство связи руководителя объекта Biotechnica. Пахнет свежескошенной травой и корпоративным шпионажем.
+ent-PDABiotechnicaBotany-desc = КПК со встроенным датчиком влажности и анализатором почвы.
+ent-PDABiotechnicaMedTech-desc = Медицинский КПК с расширенной базой данных по биомодификациям.
+ent-PDABiotechnicaNetrunner-desc = Оптимизированное устройство для работы в сетях биотехнологических узлов.
+ent-PDABiotechnicaOperativeLead-desc = Устройство связи командира службы безопасности Biotechnica.
+ent-PDABiotechnicaOperative-desc = Стандартное устройство связи службы безопасности Biotechnica.
+ent-PDABiotechnicaParamedic-desc = Мобильное медицинское устройство для экстренного реагирования.
+ent-PDABiotechnicaTech-desc = КПК со встроенным вольтметром и диагностическими утилитами.
+
+# Remaining Devices
+ent-NCCitationTerminal = Полицейский терминал штрафов
+    .desc = Массивный прибор с встроенным сканером ID-карт. Служит для легализованного грабежа... то есть, взыскания штрафов на месте.
+ent-Cyberdeck = кибердека
+    .desc = Высокотехнологичный портативный компьютер, используемый для нетраннинга. Требует батарею и обе руки для работы.
+ent-Cyberdeck-Slot1 = Слот программ 1
+ent-Cyberdeck-Slot2 = Слот программ 2
+ent-Cyberdeck-Slot3 = Слот программ 3
+ent-BurnerChip = Одноразовый чип
+    .desc = Дешёвый чип с чёрного рынка. Предоставляет временный анонимный ID, который невозможно отследить по базам НКПД.
+
+# ID Cards
+ent-NCPDChiefIDCard = идентификационная карта шефа NCPD
+ent-NCPDCommanderIDCard = идентификационная карта коммандера NCPD
+ent-NCPDInspectorIDCard = идентификационная карта инспектора NCPD
+ent-NCPDLieutenantIDCard = идентификационная карта лейтенаннта NCPD
+ent-NCPDSergeantIDCard = идентификационная карта сержанта NCPD
+ent-NCPDOfficerIDCard = идентификационная карта офицера NCPD
+ent-NCPDWatchAgentIDCard = идентификационная карта патрульного NCPD
+
+ent-MaxTacCommanderIDCard = идентификационная карта коммандера MaxTac
+ent-MaxTacEraserIDCard = идентификационная карта штурмовика MaxTac
+ent-MaxTacInterdictorIDCard = идентификационная карта специалиста MaxTac
+ent-MaxTacNetrunnerIDCard = идентификационная карта нетранера MaxTac
+ent-MaxTacPretorIDCard = идентификационная карта претора MaxTac
+
+ent-TraumaTeamChiefIDCard = идентификационная карта шефа Trauma Team
+ent-TraumaTeamCoronerIDCard = идентификационная карта коронера Trauma Team
+ent-TraumaTeamDoctorIDCard = идентификационная карта доктора Trauma Team
+ent-TraumaTeamInternIDCard = идентификационная карта интерна Trauma Team
+ent-TraumaTeamOperativeIDCard = идентификационная карта оперативника Trauma Team
+ent-TraumaTeamParamedicIDCard = идентификационная карта парамедика Trauma Team
+ent-TraumaTeamPsychIDCard = идентификационная карта психолога Trauma Team
+ent-TraumaTeamTechIDCard = идентификационная карта техника Trauma Team
+
+ent-CafeOwnerIDCard = идентификационная карта владельца кафе
+ent-RestaurantOwnerIDCard = идентификационная карта владельца ресторана
+ent-CitizenIDCard = идентификационная карта жителя
+ent-EdgeRunnerIDCard = идентификационная карта эджраннера
+ent-FixerIDCard = идентификационная карта фиксера
+ent-RipperIDCard = идентификационная карта риппера
+
+ent-BiotechHeadIDCard = идентификационная карта руководителя Биотехники
+ent-BiotechnicaBotanistIDCard = идентификационная карта ботаника Биотехники
+ent-BiotechnicaMedTechIDCard = идентификационная карта мед-техника Биотехники
+ent-BiotechnicaNetrunnerIDCard = идентификационная карта нетранера Биотехники
+ent-BiotechnicaOperativeLeadIDCard = идентификационная карта начальника охраны Биотехники
+ent-BiotechnicaOperativeIDCard = идентификационная карта оперативника Биотехники
+ent-BiotechnicaParamedicIDCard = идентификационная карта парамедика Биотехники
+ent-BiotechnicaTechIDCard = идентификационная карта техника Биотехники
+
+# Misc
+ent-CitinetDriveEmpty = Пустой носитель
+    .desc = Массивный накопитель для извлечения данных из CitiNet. Перед использованием убедитесь в наличии стабильного питания.
+ent-CitinetDriveRawData = Диск с необработанными данными
+    .desc = Диск, содержащий необработанные данные, извлеченные из различных источников. Требуется оцифровка для выгрузки в тех-принтере.
+ent-NCPDBulletDeformed = деформированная пуля
+    .desc = Сплющенный кусок свинца, извлеченный из тела. На нем остались уникальные нарезы ствола.
+ent-NCPDBallisticAnalyzer = баллистический анализатор
+    .desc = Высокотехнологичная консоль для сличения нарезов на пулях с конкретными стволами оружия.

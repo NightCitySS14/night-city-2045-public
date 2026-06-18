@@ -49,3 +49,64 @@ ent-ClothingEyesNetVisor = NetVisor
 
 ent-ClothingBeltBotany = botanical belt
     .desc = A corporate botanical belt, suitable for most related equipment.
+
+# Biotechnica Clothing
+ent-ClothingOuterApronBiotechnicaBotany = botanical apron
+    .desc = A corporate apron to protect uniforms from any plant-related mishaps.
+ent-ClothingUniformEnvirosuitBiotechnicaBotany = botanical envirosuit
+    .desc = Part of a complete environmental suit for protection against harmful gases.
+ent-ClothingHeadEnvirohelmBiotechnicaBotany = botanical envirohelm
+    .desc = Part of a complete environmental suit for protection against harmful gases.
+ent-ClothingHandsGlovesEnviroglovesBiotechnicaBotany = botanical envirogloves
+    .desc = Corporate agronomist gloves for working with plants in sterile conditions.
+ent-ClothingShoesEnviroshoesBiotechnicaBotany = botanical enviroshoes
+    .desc = Sterile sealed footwear for plant work. Protects against injury and thorns.
+ent-ClothingMaskBreathBiotechnicaBotany = botanical breath mask
+    .desc = This durable breath mask also protects the botanist's face from particularly thorny plants.
+ent-ClothingEyesGogglesBiotechnicaBotany = botanical goggles
+    .desc = Advanced goggles that protect your eyes from thorns and spikes.
+ent-LockerBiotechnica = Biotechnica locker
+    .desc = A locked locker for keeping corporate equipment under protection.
+ent-LockerBiotechnicaBotany-desc = A locked locker for keeping corporate equipment under protection.
+
+ent-ClothingBeltBiotechnicaTech = tech belt
+    .desc = A corporate tech belt, suitable for most relevant gear.
+ent-ClothingEyesGogglesBiotechnicaTech = tech goggles
+    .desc = Advanced goggles that protect your eyes from sparks, flashes, and burns.
+
+ent-ClothingBeltBiotechnicaMedTech = medtech belt
+    .desc = A corporate MedTech belt, suitable for most relevant gear.
+ent-ClothingOuterApronBiotechnica = laboratory apron
+    .desc = A corporate apron for light protection of uniforms from chemicals.
+ent-ClothingOuterCoatBiotechnica = chem-coat
+    .desc = Provides additional protection from spilled chemicals.
+ent-ClothingOuterCoatBiotechnicaRad = anti-radiation chem-coat
+    .desc = Provides additional protection from spilled chemicals and radiation background.
+ent-ClothingOuterCoatBiotechnicaAdvanced = advanced chem-coat
+    .desc = This corporate coat is made of special combinations that protect against chemicals, as well as minor burns and cuts.
+ent-ClothingHandsMittsBiotechnica = mitts
+    .desc = Warm mitts for working with chemicals and heated items. Protects against burns and overheating.
+ent-ClothingHeadHatBiotechnicaSterile = sterile cap
+    .desc = A sterile MedTech cap for scientific research.
+ent-ClothingMaskBreathBiotechnicaAdvanced = advanced breath mask
+    .desc = This mask provides additional protection against harmful chemicals.
+
+ent-ClothingBackpackBiotechnica = Biotechnica employee backpack
+    .desc = A simple backpack made of natural fabric grown by Biotechnica.
+ent-ClothingBackpackSatchelBiotechnica = Biotechnica employee satchel
+    .desc = A simple work satchel made of natural fabric grown by Biotechnica.
+ent-ClothingBackpackDuffelBiotechnica = Biotechnica employee duffel bag
+    .desc = A large duffel bag made of natural fabric grown by Biotechnica.
+
+ent-ClothingUniformEnvirosuitBiotechnica = envirosuit
+    .desc = Part of a complete environmental suit for protection against harmful chemicals.
+ent-ClothingHeadEnvirohelmBiotechnica = envirohelm
+    .desc = Part of a complete environmental suit for protection against harmful chemicals.
+ent-ClothingHandsGlovesEnviroglovesBiotechnica = envirogloves
+    .desc = Corporate protective gloves for working in sterile conditions.
+ent-ClothingShoesEnviroshoesBiotechnica = enviroshoes
+    .desc = Sterile sealed footwear for plant work. Protects against injury and thorns.
+
+ent-LockerBiotechnica-desc = A locked locker for keeping corporate equipment under protection.
+ent-LockerBiotechnicaFreezer = freezer
+    .desc = A locked refrigerated cabinet for keeping corporate chemicals under protection.

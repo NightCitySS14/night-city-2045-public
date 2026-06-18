@@ -4,7 +4,7 @@
   parent: BasePDA
   id: NCPDChiefPDA
   name: ent-PDANCPDChief
-  description: Стандартный КПК сотрудника Полицейского Департамента Найт-Сити.
+  description: ent-PDANCPD-desc
   components:
     - type: Pda
       id: NCPDChiefIDCard
@@ -19,7 +19,7 @@
   parent: BasePDA
   id: NCPDCommanderPDA
   name: ent-PDANCPDCommander
-  description: Стандартный КПК сотрудника Полицейского Департамента Найт-Сити.
+  description: ent-PDANCPD-desc
   components:
     - type: Pda
       id: NCPDCommanderIDCard
@@ -34,7 +34,7 @@
   parent: BasePDA
   id: NCPDInspectorPDA
   name: ent-PDANCPDInspector
-  description: Стандартный КПК сотрудника Полицейского Департамента Найт-Сити.
+  description: ent-PDANCPD-desc
   components:
     - type: Pda
       id: NCPDInspectorIDCard
@@ -49,7 +49,7 @@
   parent: BasePDA
   id: NCPDLieutenantPDA
   name: ent-PDANCPDLieutenant
-  description: Стандартный КПК сотрудника Полицейского Департамента Найт-Сити.
+  description: ent-PDANCPD-desc
   components:
     - type: Pda
       id: NCPDLieutenantIDCard
@@ -64,7 +64,7 @@
   parent: BasePDA
   id: NCPDSergeantPDA
   name: ent-PDANCPDSergeant
-  description: Стандартный КПК сотрудника Полицейского Департамента Найт-Сити.
+  description: ent-PDANCPD-desc
   components:
     - type: Pda
       id: NCPDSergeantIDCard
@@ -79,7 +79,7 @@
   parent: BasePDA
   id: NCPDOfficerPDA
   name: ent-PDANCPDOfficer
-  description: Стандартный КПК сотрудника Полицейского Департамента Найт-Сити.
+  description: ent-PDANCPD-desc
   components:
     - type: Pda
       id: NCPDOfficerIDCard
@@ -94,7 +94,7 @@
   parent: BasePDA
   id: NCPDWatchAgentPDA
   name: ent-PDANCPDPatrol
-  description: Стандартный КПК сотрудника Полицейского Департамента Найт-Сити.
+  description: ent-PDANCPD-desc
   components:
     - type: Pda
       id: NCPDWatchAgentIDCard
@@ -111,7 +111,7 @@
   parent: BasePDA
   id: MaxTacCommanderPDA
   name: ent-PDAMaxTacCommander
-  description: Усиленный тактический КПК подразделения MaxTac.
+  description: ent-PDAMaxTac-desc
   components:
     - type: Pda
       id: MaxTacCommanderIDCard
@@ -127,7 +127,7 @@
   parent: BasePDA
   id: MaxTacEraserPDA
   name: ent-PDAMaxTacAssault
-  description: Усиленный тактический КПК подразделения MaxTac.
+  description: ent-PDAMaxTac-desc
   components:
     - type: Pda
       id: MaxTacEraserIDCard
@@ -143,7 +143,7 @@
   parent: BasePDA
   id: MaxTacInterdictorPDA
   name: ent-PDAMaxTacSpecialist
-  description: Усиленный тактический КПК подразделения MaxTac.
+  description: ent-PDAMaxTac-desc
   components:
     - type: Pda
       id: MaxTacInterdictorIDCard
@@ -159,7 +159,7 @@
   parent: BasePDA
   id: MaxTacNetrunnerPDA
   name: ent-PDAMaxTacNetrunner
-  description: Усиленный тактический КПК подразделения MaxTac.
+  description: ent-PDAMaxTac-desc
   components:
     - type: Pda
       id: MaxTacNetrunnerIDCard
@@ -175,7 +175,7 @@
   parent: BasePDA
   id: MaxTacPretorPDA
   name: ent-PDAMaxTacPretor
-  description: Усиленный тактический КПК подразделения MaxTac.
+  description: ent-PDAMaxTac-desc
   components:
     - type: Pda
       id: MaxTacPretorIDCard
@@ -193,7 +193,7 @@
   parent: BaseMedicalPDA
   id: TraumaTeamChiefPDA
   name: ent-PDATraumaChief
-  description: Высокотехнологичный медицинский терминал сотрудника Trauma Team.
+  description: ent-PDATrauma-desc
   components:
     - type: Pda
       id: TraumaTeamChiefIDCard
@@ -209,7 +209,7 @@
   parent: BaseMedicalPDA
   id: TraumaTeamCoronerPDA
   name: ent-PDATraumaCoroner
-  description: Высокотехнологичный медицинский терминал сотрудника Trauma Team.
+  description: ent-PDATrauma-desc
   components:
     - type: Pda
       id: TraumaTeamCoronerIDCard
@@ -225,7 +225,7 @@
   parent: BaseMedicalPDA
   id: TraumaTeamDoctorPDA
   name: ent-PDATraumaDoctor
-  description: Высокотехнологичный медицинский терминал сотрудника Trauma Team.
+  description: ent-PDATrauma-desc
   components:
     - type: Pda
       id: TraumaTeamDoctorIDCard
@@ -241,7 +241,7 @@
   parent: BaseMedicalPDA
   id: TraumaTeamOperativePDA
   name: ent-PDATraumaOperative
-  description: Высокотехнологичный медицинский терминал сотрудника Trauma Team.
+  description: ent-PDATrauma-desc
   components:
     - type: Pda
       id: TraumaTeamOperativeIDCard
@@ -257,7 +257,7 @@
   parent: BaseMedicalPDA
   id: TraumaTeamParamedicPDA
   name: ent-PDATraumaParamedic
-  description: Высокотехнологичный медицинский терминал сотрудника Trauma Team.
+  description: ent-PDATrauma-desc
   components:
     - type: Pda
       id: TraumaTeamParamedicIDCard
@@ -273,7 +273,7 @@
   parent: BaseMedicalPDA
   id: TraumaTeamPsychPDA
   name: ent-PDATraumaPsych
-  description: Высокотехнологичный медицинский терминал сотрудника Trauma Team.
+  description: ent-PDATrauma-desc
   components:
     - type: Pda
       id: TraumaTeamPsychIDCard
@@ -289,7 +289,7 @@
   parent: BaseMedicalPDA
   id: TraumaTeamTechPDA
   name: ent-PDATraumaTech
-  description: Высокотехнологичный медицинский терминал сотрудника Trauma Team.
+  description: ent-PDATrauma-desc
   components:
     - type: Pda
       id: TraumaTeamTechIDCard
@@ -305,7 +305,7 @@
   parent: BaseMedicalPDA
   id: TraumaTeamInternPDA
   name: ent-PDATraumaIntern
-  description: Высокотехнологичный медицинский терминал сотрудника Trauma Team.
+  description: ent-PDATrauma-desc
   components:
     - type: Pda
       id: TraumaTeamInternIDCard
@@ -323,7 +323,7 @@
   parent: BasePDA
   id: CafeOwnerPDA
   name: ent-PDACafeOwner
-  description: Компактный терминал с логотипом кофейного зерна.
+  description: ent-PDACafeOwner-desc
   components:
     - type: Pda
       id: CafeOwnerIDCard
@@ -339,7 +339,7 @@
   parent: BasePDA
   id: RestaurantOwnerPDA
   name: ent-PDARestaurantOwner
-  description: Элегантный терминал с золотистой отделкой.
+  description: ent-PDARestaurantOwner-desc
   components:
     - type: Pda
       id: RestaurantOwnerIDCard
@@ -355,7 +355,7 @@
   parent: BasePDA
   id: CitizenPDA
   name: ent-PDACitizen
-  description: Обычный чип-терминал жителя Найт-Сити.
+  description: ent-PDACitizen-desc
   components:
     - type: Pda
       id: CitizenIDCard
@@ -370,7 +370,7 @@
   parent: BasePDA
   id: EdgeRunnerPDA
   name: ent-PDAEdgeRunner
-  description: Кастомный терминал с защищенным каналом.
+  description: ent-PDAEdgeRunner-desc
   components:
     - type: Pda
       id: EdgeRunnerIDCard
@@ -386,7 +386,7 @@
   parent: BasePDA
   id: FixerPDA
   name: ent-PDAFixer
-  description: Инструмент для тех, кто решает проблемы.
+  description: ent-PDAFixer-desc
   components:
     - type: Pda
       id: FixerIDCard
@@ -402,7 +402,7 @@
   parent: BaseMedicalPDA
   id: RipperPDA
   name: ent-PDARipper
-  description: Медицинский терминал для работы в полевых условиях.
+  description: ent-PDARipper-desc
   components:
     - type: Pda
       id: RipperIDCard
@@ -420,7 +420,7 @@
   parent: BasePDA
   id: BiotechnicaChiefPDA
   name: ent-PDABiotechnicaChief
-  description: Устройство связи руководителя объекта Biotechnica. Пахнет свежескошенной травой и корпоративным шпионажем.
+  description: ent-PDABiotechnicaChief-desc
   components:
     - type: Pda
       id: BiotechHeadIDCard
@@ -436,7 +436,7 @@
   parent: BasePDA
   id: BiotechnicaBotanistPDA
   name: ent-PDABiotechnicaBotany
-  description: КПК со встроенным датчиком влажности и анализатором почвы.
+  description: ent-PDABiotechnicaBotany-desc
   components:
     - type: Pda
       id: BiotechnicaBotanistIDCard
@@ -452,7 +452,7 @@
   parent: BaseMedicalPDA
   id: BiotechnicaMedTechPDA
   name: ent-PDABiotechnicaMedTech
-  description: Медицинский КПК с расширенной базой данных по биомодификациям.
+  description: ent-PDABiotechnicaMedTech-desc
   components:
     - type: Pda
       id: BiotechnicaMedTechIDCard
@@ -468,7 +468,7 @@
   parent: BasePDA
   id: BiotechnicaNetrunnerPDA
   name: ent-PDABiotechnicaNetrunner
-  description: Оптимизированное устройство для работы в сетях биотехнологических узлов.
+  description: ent-PDABiotechnicaNetrunner-desc
   components:
     - type: Pda
       id: BiotechnicaNetrunnerIDCard
@@ -484,7 +484,7 @@
   parent: BasePDA
   id: BiotechnicaOperativeLeadPDA
   name: ent-PDABiotechnicaOperativeLead
-  description: Устройство связи командира службы безопасности Biotechnica.
+  description: ent-PDABiotechnicaOperativeLead-desc
   components:
     - type: Pda
       id: BiotechnicaOperativeLeadIDCard
@@ -500,7 +500,7 @@
   parent: BasePDA
   id: BiotechnicaOperativePDA
   name: ent-PDABiotechnicaOperative
-  description: Стандартное устройство связи службы безопасности Biotechnica.
+  description: ent-PDABiotechnicaOperative-desc
   components:
     - type: Pda
       id: BiotechnicaOperativeIDCard
@@ -516,7 +516,7 @@
   parent: BaseMedicalPDA
   id: BiotechnicaParamedicPDA
   name: ent-PDABiotechnicaParamedic
-  description: Мобильное медицинское устройство для экстренного реагирования.
+  description: ent-PDABiotechnicaParamedic-desc
   components:
     - type: Pda
       id: BiotechnicaParamedicIDCard
@@ -532,7 +532,7 @@
   parent: BasePDA
   id: BiotechnicaTechPDA
   name: ent-PDABiotechnicaTech
-  description: КПК со встроенным вольтметром и диагностическими утилитами.
+  description: ent-PDABiotechnicaTech-desc
   components:
     - type: Pda
       id: BiotechnicaTechIDCard

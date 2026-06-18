@@ -111,3 +111,81 @@ ent-BucketConstruction = construction bucket
     .desc = A large bucket, usually used for construction materials. But in Night City, "folk craftsmen" find other uses for it...
 ent-BucketAdvanced = advanced bucket
     .desc = A high-tech bucket capable of holding much more liquid.
+ent-PDANCPD-desc = Standard issue PDA of the Night City Police Department.
+ent-PDAMaxTac-desc = Reinforced tactical PDA of the MaxTac unit.
+ent-PDATrauma-desc = High-tech medical terminal for Trauma Team employees.
+ent-PDACafeOwner-desc = Compact terminal with a coffee bean logo.
+ent-PDARestaurantOwner-desc = Elegant terminal with gold trim.
+ent-PDACitizen-desc = Standard chip-terminal of a Night City citizen.
+ent-PDAEdgeRunner-desc = Custom terminal with a secure channel.
+ent-PDAFixer-desc = A tool for those who solve problems.
+ent-PDARipper-desc = Medical terminal for field work.
+ent-PDABiotechnicaChief-desc = Communication device for a Biotechnica facility manager. Smells like fresh-cut grass and corporate espionage.
+ent-PDABiotechnicaBotany-desc = PDA with a built-in moisture sensor and soil analyzer.
+ent-PDABiotechnicaMedTech-desc = Medical PDA with an extensive bio-modification database.
+ent-PDABiotechnicaNetrunner-desc = Optimized device for working within biotechnological node networks.
+ent-PDABiotechnicaOperativeLead-desc = Communication device for a Biotechnica security commander.
+ent-PDABiotechnicaOperative-desc = Standard security communication device for Biotechnica.
+ent-PDABiotechnicaParamedic-desc = Mobile medical device for emergency response.
+ent-PDABiotechnicaTech-desc = PDA with a built-in voltmeter and diagnostic utilities.
+
+# Remaining Devices
+ent-NCCitationTerminal = Police Citation Terminal
+    .desc = A massive device with a built-in ID card scanner. Used for legalized robbery... I mean, collecting fines on the spot.
+ent-Cyberdeck = cyberdeck
+    .desc = A high-tech portable computer used for netrunning. Requires a battery and both hands to operate.
+ent-Cyberdeck-Slot1 = Program Slot 1
+ent-Cyberdeck-Slot2 = Program Slot 2
+ent-Cyberdeck-Slot3 = Program Slot 3
+ent-BurnerChip = burner chip
+    .desc = A cheap chip from the black market. Provides a temporary anonymous ID that cannot be tracked through NCPD databases.
+
+# ID Cards
+ent-NCPDChiefIDCard = NCPD Chief ID card
+ent-NCPDCommanderIDCard = NCPD Commander ID card
+ent-NCPDInspectorIDCard = NCPD Inspector ID card
+ent-NCPDLieutenantIDCard = NCPD Lieutenant ID card
+ent-NCPDSergeantIDCard = NCPD Sergeant ID card
+ent-NCPDOfficerIDCard = NCPD Officer ID card
+ent-NCPDWatchAgentIDCard = NCPD Patrol ID card
+
+ent-MaxTacCommanderIDCard = MaxTac Commander ID card
+ent-MaxTacEraserIDCard = MaxTac Assault ID card
+ent-MaxTacInterdictorIDCard = MaxTac Specialist ID card
+ent-MaxTacNetrunnerIDCard = MaxTac Netrunner ID card
+ent-MaxTacPretorIDCard = MaxTac Pretor ID card
+
+ent-TraumaTeamChiefIDCard = Trauma Team Chief ID card
+ent-TraumaTeamCoronerIDCard = Trauma Team Coroner ID card
+ent-TraumaTeamDoctorIDCard = Trauma Team Doctor ID card
+ent-TraumaTeamInternIDCard = Trauma Team Intern ID card
+ent-TraumaTeamOperativeIDCard = Trauma Team Operative ID card
+ent-TraumaTeamParamedicIDCard = Trauma Team Paramedic ID card
+ent-TraumaTeamPsychIDCard = Trauma Team Psychologist ID card
+ent-TraumaTeamTechIDCard = Trauma Team Tech ID card
+
+ent-CafeOwnerIDCard = Cafe Owner ID card
+ent-RestaurantOwnerIDCard = Restaurant Owner ID card
+ent-CitizenIDCard = Citizen ID card
+ent-EdgeRunnerIDCard = Edgerunner ID card
+ent-FixerIDCard = Fixer ID card
+ent-RipperIDCard = Ripper ID card
+
+ent-BiotechHeadIDCard = Biotechnica Chief ID card
+ent-BiotechnicaBotanistIDCard = Biotechnica Botanist ID card
+ent-BiotechnicaMedTechIDCard = Biotechnica MedTech ID card
+ent-BiotechnicaNetrunnerIDCard = Biotechnica Netrunner ID card
+ent-BiotechnicaOperativeLeadIDCard = Biotechnica Security Lead ID card
+ent-BiotechnicaOperativeIDCard = Biotechnica Operative ID card
+ent-BiotechnicaParamedicIDCard = Biotechnica Paramedic ID card
+ent-BiotechnicaTechIDCard = Biotechnica Tech ID card
+
+# Misc
+ent-CitinetDriveEmpty = Empty Media Drive
+    .desc = A massive drive for extracting data from CitiNet. Ensure stable power before use.
+ent-CitinetDriveRawData = Raw Data Disk
+    .desc = A disk containing raw data extracted from various sources. Requires digitization for output in a tech-printer.
+ent-NCPDBulletDeformed = deformed bullet
+    .desc = A flattened piece of lead extracted from a body. Unique barrel rifling remains on it.
+ent-NCPDBallisticAnalyzer = ballistic analyzer
+    .desc = A high-tech console for comparing rifling on bullets with specific weapon barrels.
