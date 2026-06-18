@@ -589,7 +589,7 @@ public sealed class OptionSliderIntCVar : BaseOptionCVar<int>
 public sealed class OptionDropDownCVar<T> : BaseOptionCVar<T> where T : notnull
 {
     private readonly OptionDropDown _dropDown;
-    private readonly ItemEntry[] _entries;
+    private ItemEntry[] _entries;
 
     protected override T Value
     {
@@ -622,9 +622,34 @@ public sealed class OptionDropDownCVar<T> : BaseOptionCVar<T> where T : notnull
             throw new ArgumentException("Need at least one option!");
 
         _dropDown = dropDown;
+        _entries = Array.Empty<ItemEntry>();
+        SetOptions(options);
+
+        dropDown.Button.OnItemSelected += args =>
+        {
+            dropDown.Button.SelectId(args.Id);
+            ValueChanged();
+        };
+    }
+
+    /// <summary>
+    /// Reloads the drop-down items while preserving the bound CVar behavior.
+    /// </summary>
+    public void ReloadOptions(IReadOnlyCollection<ValueOption> options)
+    {
+        if (options.Count == 0)
+            throw new ArgumentException("Need at least one option!", nameof(options));
+
+        SetOptions(options);
+    }
+
+    private void SetOptions(IReadOnlyCollection<ValueOption> options)
+    {
         _entries = new ItemEntry[options.Count];
 
-        var button = dropDown.Button;
+        var button = _dropDown.Button;
+        button.Clear();
+
         var i = 0;
         foreach (var option in options)
         {
@@ -637,12 +662,6 @@ public sealed class OptionDropDownCVar<T> : BaseOptionCVar<T> where T : notnull
             button.SetItemMetadata(button.GetIdx(i), option.Key);
             i += 1;
         }
-
-        dropDown.Button.OnItemSelected += args =>
-        {
-            dropDown.Button.SelectId(args.Id);
-            ValueChanged();
-        };
     }
 
     private int FindValueId(T value)

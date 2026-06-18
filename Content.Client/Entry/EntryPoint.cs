@@ -1,3 +1,4 @@
+using System.Globalization;
 using Content.Client._NC.Overlays;
 using Content.Client._White.ItemSlotRenderer;
 using Content.Shared._White.CCVar;
@@ -39,6 +40,7 @@ using Robust.Client.UserInterface;
 using Robust.Shared;
 using Robust.Shared.Configuration;
 using Robust.Shared.ContentPack;
+using Robust.Shared.Localization;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Replays;
 using Robust.Shared.Timing;
@@ -80,6 +82,7 @@ namespace Content.Client.Entry
         [Dependency] private readonly TitleWindowManager _titleWindowManager = default!;
         [Dependency] private readonly JoinQueueManager _joinQueue = default!;
         [Dependency] private readonly DiscordAuthManager _discordAuth = default!;
+        [Dependency] private readonly ILocalizationManager _localization = default!;
 
         public override void Init()
         {
@@ -187,6 +190,7 @@ namespace Content.Client.Entry
             _titleWindowManager.Initialize();
             _joinQueue.Initialize();
             _discordAuth.Initialize();
+            _configManager.OnValueChanged(CVars.LocCultureName, OnLanguageChanged, true);
 
             _baseClient.RunLevelChanged += (_, args) =>
             {
@@ -201,6 +205,12 @@ namespace Content.Client.Entry
             _userInterfaceManager.MainViewport.Visible = false;
 
             SwitchToDefaultState();
+        }
+
+        private void OnLanguageChanged(string cultureName)
+        {
+            var culture = CultureInfo.GetCultureInfo(cultureName, predefinedOnly: false);
+            _localization.SetCulture(culture);
         }
 
         private void SwitchToDefaultState(bool disconnected = false)

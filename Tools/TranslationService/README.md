@@ -17,7 +17,7 @@
 1. `Tools/TranslationService`.
    Это отдельный Python/FastAPI сервис, который принимает HTTP-запросы на перевод.
 
-2. Серверные настройки `WH14K`.
+2. Серверные настройки `NC`.
    Игра отправляет сообщения в локальный сервис, получает перевод и подставляет его в чат.
 
 На практике это выглядит так:
@@ -134,6 +134,12 @@ New-Item -ItemType Directory -Force .\tokenizers\opus-mt-ru-en | Out-Null
 
 ```powershell
 .\.venv\Scripts\python.exe -m pip install -r requirements.txt
+```
+
+Если при конвертации вы видите ошибку `NameError: name 'torch' is not defined`, значит в окружении не установлен `torch`. Исправление:
+
+```powershell
+.\.venv\Scripts\python.exe -m pip install torch
 ```
 
 Сконвертируйте модели:
