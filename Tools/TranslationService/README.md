@@ -1,6 +1,6 @@
 # NC Translation Service
 
-`NC Translation Service` это отдельный HTTP-сервис для автоматического перевода игрового чата `RU <-> EN` через `CTranslate2 + OPUS-MT`.
+`NC Translation Service` это отдельный HTTP-сервис для автоматического перевода игрового чата `RU <-> EN` через `CTranslate2 + OPUS-MT`
 
 Сервис можно запустить:
 
@@ -8,7 +8,7 @@
 - на отдельной VPS или домашнем сервере;
 - в Docker-контейнере.
 
-Серверная часть `WH14K` уже умеет работать с этим сервисом напрямую. Также в коде заранее подготовлен альтернативный режим с `DeepL API`, если вы позже захотите отказаться от локальных моделей.
+Серверная часть `NC` уже умеет работать с этим сервисом напрямую. Также в коде заранее подготовлен альтернативный режим с `DeepL API`, если вы позже захотите отказаться от локальных моделей.
 
 ## Что входит в систему
 
@@ -67,7 +67,7 @@
 ### 1. Перейдите в каталог сервиса
 
 ```powershell
-Set-Location "c:\path\to\WH14K\Tools\TranslationService"
+Set-Location "c:\path\to\NC\Tools\TranslationService"
 ```
 
 ### 2. Подготовьте `.env` и glossary
@@ -181,7 +181,7 @@ for source, target_dir in models.items():
 ### 1. Перейдите в каталог сервиса
 
 ```bash
-cd /path/to/WH14K/Tools/TranslationService
+cd /path/to/night-city-2045-public/Tools/TranslationService
 ```
 
 ### 2. Подготовьте `.env` и glossary
@@ -482,7 +482,7 @@ Invoke-RestMethod -Method Post -Uri http://127.0.0.1:8090/glossary/reload -Heade
 
 ### `401 invalid_api_key`
 
-Ключ в `.env` и ключ в конфиге `WH14K` не совпадают.
+Ключ в `.env` и ключ в конфиге `night-city-2045-public` не совпадают.
 
 ### `404` или нет соединения с сервисом
 
