@@ -5,8 +5,8 @@
 - type: entity
   parent: [ClothingBeltPlant, BiotechnicaContraband]
   id: ClothingBeltBiotechnicaBotany
-  name: ботанический пояс
-  description: Корпоративный ботанический пояс, подходящий для большинства соответственного снаряжения.
+  name: ent-ClothingBeltBotany
+  description: ent-ClothingBeltBotany-desc
   suffix: Biotechnica, Гидропоника, Ботаника
   components:
   - type: Sprite
@@ -17,8 +17,8 @@
 - type: entity
   parent: ClothingBeltBiotechnicaBotany
   id: ClothingBeltBiotechnicaBotanyFilled
-  name: ботанический пояс
-  description: Корпоративный ботанический пояс, подходящий для большинства соответственного снаряжения.
+  name: ent-ClothingBeltBotany
+  description: ent-ClothingBeltBotany-desc
   suffix: Заполненный, Biotechnica, Гидропоника, Ботаника
   components:
   - type: StorageFill
@@ -30,8 +30,8 @@
 - type: entity
   parent: ClothingBeltBiotechnicaBotany
   id: ClothingBeltBiotechnicaBotanyFilledFull
-  name: ботанический пояс
-  description: Корпоративный ботанический пояс, подходящий для большинства соответственного снаряжения.
+  name: ent-ClothingBeltBotany
+  description: ent-ClothingBeltBotany-desc
   suffix: Заполненный максимально, Biotechnica, Гидропоника, Ботаника
   components:
   - type: StorageFill

@@ -3,7 +3,7 @@
 - type: entity
   parent: BasePDA
   id: NCPDChiefPDA
-  name: КПК шефа NCPD
+  name: ent-PDANCPDChief
   description: Стандартный КПК сотрудника Полицейского Департамента Найт-Сити.
   components:
     - type: Pda
@@ -18,7 +18,7 @@
 - type: entity
   parent: BasePDA
   id: NCPDCommanderPDA
-  name: КПК коммандера NCPD
+  name: ent-PDANCPDCommander
   description: Стандартный КПК сотрудника Полицейского Департамента Найт-Сити.
   components:
     - type: Pda
@@ -33,7 +33,7 @@
 - type: entity
   parent: BasePDA
   id: NCPDInspectorPDA
-  name: КПК инспектора NCPD
+  name: ent-PDANCPDInspector
   description: Стандартный КПК сотрудника Полицейского Департамента Найт-Сити.
   components:
     - type: Pda
@@ -48,7 +48,7 @@
 - type: entity
   parent: BasePDA
   id: NCPDLieutenantPDA
-  name: КПК лейтенанта NCPD
+  name: ent-PDANCPDLieutenant
   description: Стандартный КПК сотрудника Полицейского Департамента Найт-Сити.
   components:
     - type: Pda
@@ -63,7 +63,7 @@
 - type: entity
   parent: BasePDA
   id: NCPDSergeantPDA
-  name: КПК сержанта NCPD
+  name: ent-PDANCPDSergeant
   description: Стандартный КПК сотрудника Полицейского Департамента Найт-Сити.
   components:
     - type: Pda
@@ -78,7 +78,7 @@
 - type: entity
   parent: BasePDA
   id: NCPDOfficerPDA
-  name: КПК офицера NCPD
+  name: ent-PDANCPDOfficer
   description: Стандартный КПК сотрудника Полицейского Департамента Найт-Сити.
   components:
     - type: Pda
@@ -93,7 +93,7 @@
 - type: entity
   parent: BasePDA
   id: NCPDWatchAgentPDA
-  name: КПК патрульного NCPD
+  name: ent-PDANCPDPatrol
   description: Стандартный КПК сотрудника Полицейского Департамента Найт-Сити.
   components:
     - type: Pda
@@ -110,7 +110,7 @@
 - type: entity
   parent: BasePDA
   id: MaxTacCommanderPDA
-  name: КПК коммандера MaxTac
+  name: ent-PDAMaxTacCommander
   description: Усиленный тактический КПК подразделения MaxTac.
   components:
     - type: Pda
@@ -126,7 +126,7 @@
 - type: entity
   parent: BasePDA
   id: MaxTacEraserPDA
-  name: КПК штурмовика MaxTac
+  name: ent-PDAMaxTacAssault
   description: Усиленный тактический КПК подразделения MaxTac.
   components:
     - type: Pda
@@ -142,7 +142,7 @@
 - type: entity
   parent: BasePDA
   id: MaxTacInterdictorPDA
-  name: КПК специалиста MaxTac
+  name: ent-PDAMaxTacSpecialist
   description: Усиленный тактический КПК подразделения MaxTac.
   components:
     - type: Pda
@@ -158,7 +158,7 @@
 - type: entity
   parent: BasePDA
   id: MaxTacNetrunnerPDA
-  name: КПК нетранера MaxTac
+  name: ent-PDAMaxTacNetrunner
   description: Усиленный тактический КПК подразделения MaxTac.
   components:
     - type: Pda
@@ -174,7 +174,7 @@
 - type: entity
   parent: BasePDA
   id: MaxTacPretorPDA
-  name: КПК претора MaxTac
+  name: ent-PDAMaxTacPretor
   description: Усиленный тактический КПК подразделения MaxTac.
   components:
     - type: Pda
@@ -192,7 +192,7 @@
 - type: entity
   parent: BaseMedicalPDA
   id: TraumaTeamChiefPDA
-  name: КПК шефа Trauma Team
+  name: ent-PDATraumaChief
   description: Высокотехнологичный медицинский терминал сотрудника Trauma Team.
   components:
     - type: Pda
@@ -208,7 +208,7 @@
 - type: entity
   parent: BaseMedicalPDA
   id: TraumaTeamCoronerPDA
-  name: КПК коронера Trauma Team
+  name: ent-PDATraumaCoroner
   description: Высокотехнологичный медицинский терминал сотрудника Trauma Team.
   components:
     - type: Pda
@@ -224,7 +224,7 @@
 - type: entity
   parent: BaseMedicalPDA
   id: TraumaTeamDoctorPDA
-  name: КПК доктора Trauma Team
+  name: ent-PDATraumaDoctor
   description: Высокотехнологичный медицинский терминал сотрудника Trauma Team.
   components:
     - type: Pda
@@ -240,7 +240,7 @@
 - type: entity
   parent: BaseMedicalPDA
   id: TraumaTeamOperativePDA
-  name: КПК оперативника Trauma Team
+  name: ent-PDATraumaOperative
   description: Высокотехнологичный медицинский терминал сотрудника Trauma Team.
   components:
     - type: Pda
@@ -256,7 +256,7 @@
 - type: entity
   parent: BaseMedicalPDA
   id: TraumaTeamParamedicPDA
-  name: КПК парамедика Trauma Team
+  name: ent-PDATraumaParamedic
   description: Высокотехнологичный медицинский терминал сотрудника Trauma Team.
   components:
     - type: Pda
@@ -272,7 +272,7 @@
 - type: entity
   parent: BaseMedicalPDA
   id: TraumaTeamPsychPDA
-  name: КПК психолога Trauma Team
+  name: ent-PDATraumaPsych
   description: Высокотехнологичный медицинский терминал сотрудника Trauma Team.
   components:
     - type: Pda
@@ -288,7 +288,7 @@
 - type: entity
   parent: BaseMedicalPDA
   id: TraumaTeamTechPDA
-  name: КПК техника Trauma Team
+  name: ent-PDATraumaTech
   description: Высокотехнологичный медицинский терминал сотрудника Trauma Team.
   components:
     - type: Pda
@@ -304,7 +304,7 @@
 - type: entity
   parent: BaseMedicalPDA
   id: TraumaTeamInternPDA
-  name: КПК интерна Trauma Team
+  name: ent-PDATraumaIntern
   description: Высокотехнологичный медицинский терминал сотрудника Trauma Team.
   components:
     - type: Pda
@@ -322,7 +322,7 @@
 - type: entity
   parent: BasePDA
   id: CafeOwnerPDA
-  name: КПК владельца кафе
+  name: ent-PDACafeOwner
   description: Компактный терминал с логотипом кофейного зерна.
   components:
     - type: Pda
@@ -338,7 +338,7 @@
 - type: entity
   parent: BasePDA
   id: RestaurantOwnerPDA
-  name: КПК владельца ресторана
+  name: ent-PDARestaurantOwner
   description: Элегантный терминал с золотистой отделкой.
   components:
     - type: Pda
@@ -354,7 +354,7 @@
 - type: entity
   parent: BasePDA
   id: CitizenPDA
-  name: КПК жителя
+  name: ent-PDACitizen
   description: Обычный чип-терминал жителя Найт-Сити.
   components:
     - type: Pda
@@ -369,7 +369,7 @@
 - type: entity
   parent: BasePDA
   id: EdgeRunnerPDA
-  name: КПК эджраннера
+  name: ent-PDAEdgeRunner
   description: Кастомный терминал с защищенным каналом.
   components:
     - type: Pda
@@ -385,7 +385,7 @@
 - type: entity
   parent: BasePDA
   id: FixerPDA
-  name: КПК фиксера
+  name: ent-PDAFixer
   description: Инструмент для тех, кто решает проблемы.
   components:
     - type: Pda
@@ -401,7 +401,7 @@
 - type: entity
   parent: BaseMedicalPDA
   id: RipperPDA
-  name: КПК риппера
+  name: ent-PDARipper
   description: Медицинский терминал для работы в полевых условиях.
   components:
     - type: Pda
@@ -419,7 +419,7 @@
 - type: entity
   parent: BasePDA
   id: BiotechnicaChiefPDA
-  name: КПК руководителя Biotechnica
+  name: ent-PDABiotechnicaChief
   description: Устройство связи руководителя объекта Biotechnica. Пахнет свежескошенной травой и корпоративным шпионажем.
   components:
     - type: Pda
@@ -435,7 +435,7 @@
 - type: entity
   parent: BasePDA
   id: BiotechnicaBotanistPDA
-  name: КПК ботаника Biotechnica
+  name: ent-PDABiotechnicaBotany
   description: КПК со встроенным датчиком влажности и анализатором почвы.
   components:
     - type: Pda
@@ -451,7 +451,7 @@
 - type: entity
   parent: BaseMedicalPDA
   id: BiotechnicaMedTechPDA
-  name: КПК медтеха Biotechnica
+  name: ent-PDABiotechnicaMedTech
   description: Медицинский КПК с расширенной базой данных по биомодификациям.
   components:
     - type: Pda
@@ -467,7 +467,7 @@
 - type: entity
   parent: BasePDA
   id: BiotechnicaNetrunnerPDA
-  name: КПК нетраннера Biotechnica
+  name: ent-PDABiotechnicaNetrunner
   description: Оптимизированное устройство для работы в сетях биотехнологических узлов.
   components:
     - type: Pda
@@ -483,7 +483,7 @@
 - type: entity
   parent: BasePDA
   id: BiotechnicaOperativeLeadPDA
-  name: КПК лидера оперативников Biotechnica
+  name: ent-PDABiotechnicaOperativeLead
   description: Устройство связи командира службы безопасности Biotechnica.
   components:
     - type: Pda
@@ -499,7 +499,7 @@
 - type: entity
   parent: BasePDA
   id: BiotechnicaOperativePDA
-  name: КПК оперативника Biotechnica
+  name: ent-PDABiotechnicaOperative
   description: Стандартное устройство связи службы безопасности Biotechnica.
   components:
     - type: Pda
@@ -515,7 +515,7 @@
 - type: entity
   parent: BaseMedicalPDA
   id: BiotechnicaParamedicPDA
-  name: КПК парамедика Biotechnica
+  name: ent-PDABiotechnicaParamedic
   description: Мобильное медицинское устройство для экстренного реагирования.
   components:
     - type: Pda
@@ -531,7 +531,7 @@
 - type: entity
   parent: BasePDA
   id: BiotechnicaTechPDA
-  name: КПК техника Biotechnica
+  name: ent-PDABiotechnicaTech
   description: КПК со встроенным вольтметром и диагностическими утилитами.
   components:
     - type: Pda
