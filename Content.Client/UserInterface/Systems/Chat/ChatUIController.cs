@@ -265,6 +265,14 @@ public sealed class ChatUIController : UIController
         SetMainChat(false);
     }
 
+    public void RefreshLocalization()
+    {
+        foreach (var chat in _chats)
+        {
+            chat.Relocalize();
+        }
+    }
+
     private void OnChatWindowOpacityChanged(float opacity)
     {
         SetChatWindowOpacity(opacity);

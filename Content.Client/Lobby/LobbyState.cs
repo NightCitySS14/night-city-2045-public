@@ -108,6 +108,23 @@ namespace Content.Client.Lobby
             Lobby?.SwitchState(state);
         }
 
+        public void RefreshLocalization()
+        {
+            if (Lobby is null)
+                return;
+
+            var lobbyNameCvar = _cfg.GetCVar(CCVars.ServerLobbyName);
+            var serverName = _baseClient.GameInfo?.ServerName ?? string.Empty;
+
+            Lobby.ServerName.Text = string.IsNullOrEmpty(lobbyNameCvar)
+                ? Loc.GetString("ui-lobby-title", ("serverName", serverName))
+                : lobbyNameCvar;
+
+            Lobby.Relocalize();
+            UpdateLobbyUi();
+            UpdateLobbyBackground();
+        }
+
         private void OnSetupPressed(BaseButton.ButtonEventArgs args)
         {
             SetReady(false);

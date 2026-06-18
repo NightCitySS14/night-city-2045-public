@@ -184,6 +184,18 @@ public sealed partial class OptionsTabControlRow : Control
         Initialize();
     }
 
+    public void RefreshLocalization()
+    {
+        DefaultButton.Text = _loc.GetString("ui-options-default");
+        ResetButton.Text = _loc.GetString("ui-options-reset-all");
+        ApplyButton.Text = _loc.GetString("ui-options-apply");
+
+        foreach (var option in _options)
+        {
+            option.RefreshLocalization();
+        }
+    }
+
     /// <summary>
     /// Called by <see cref="BaseOption"/> to signal that an option's value changed through user interaction.
     /// </summary>
@@ -278,6 +290,10 @@ public abstract class BaseOption(OptionsTabControlRow controller)
     /// Loads the value represented by this option from its backing store, into the UI state.
     /// </summary>
     public abstract void LoadValue();
+
+    public virtual void RefreshLocalization()
+    {
+    }
 
     /// <summary>
     /// Saves the value in the UI state to the backing store.
@@ -516,6 +532,11 @@ public sealed class OptionSliderFloatCVar : BaseOptionCVar<float>
     {
         _slider.ValueLabel.Text = _format(this, _slider.Slider.Value);
     }
+
+    public override void RefreshLocalization()
+    {
+        UpdateLabelValue();
+    }
 }
 
 /// <summary>
@@ -579,6 +600,11 @@ public sealed class OptionSliderIntCVar : BaseOptionCVar<int>
     private void UpdateLabelValue()
     {
         _slider.ValueLabel.Text = _format(this, (int) _slider.Slider.Value);
+    }
+
+    public override void RefreshLocalization()
+    {
+        UpdateLabelValue();
     }
 }
 

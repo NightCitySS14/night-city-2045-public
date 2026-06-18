@@ -100,7 +100,7 @@ public sealed partial class MiscTab : Control
     {
         base.EnteredTree();
         _cfg.OnValueChanged(CVars.LocCultureName, OnLanguageChanged);
-        RefreshLocalization();
+        Relocalize();
     }
 
     protected override void ExitedTree()
@@ -144,10 +144,10 @@ public sealed partial class MiscTab : Control
 
     private void OnLanguageChanged(string _)
     {
-        RefreshLocalization();
+        Relocalize();
     }
 
-    private void RefreshLocalization()
+    public void Relocalize()
     {
         UiStyleHeaderLabel.Text = Loc.GetString("ui-options-general-ui-style");
         LanguageHeaderLabel.Text = Loc.GetString("ui-options-general-language-translation");
@@ -175,11 +175,17 @@ public sealed partial class MiscTab : Control
         StaticStorageUI.Text = Loc.GetString("ui-options-static-storage-ui");
         DisableFiltersCheckBox.Text = Loc.GetString("ui-options-no-filters");
         ModernProgressBar.Text = Loc.GetString("ui-options-modern-progress-bar");
+        EnableColorBubbleChatCheckBox.Text = Loc.GetString("ui-options-enable-color-in-bubble-chat");
+        EnableChatFancyFontCheckBox.Text = Loc.GetString("ui-options-enable-chat-fancy-font");
+        ChatStackOption.Title = Loc.GetString("ui-options-chatstack");
+        LogInChatCheckBox.Text = Loc.GetString("ui-options-log-in-chat");
+        DropDownEmotesMenuType.Title = Loc.GetString("ui-options-emotes-menu");
 
         _languageOption.ReloadOptions(BuildLanguageEntries());
         _chatTranslationLanguageOption.ReloadOptions(BuildChatTranslationLanguageEntries());
         _languageOption.LoadValue();
         _chatTranslationLanguageOption.LoadValue();
+        Control.RefreshLocalization();
     }
 
     private static string FormatCultureLabel(CultureInfo culture)
