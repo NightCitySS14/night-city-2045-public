@@ -33,6 +33,14 @@ namespace Content.Client.Lobby.UI
 
         public void Relocalize()
         {
+            ReadyButton.ButtonText = Loc.GetString("lobby-state-player-status-not-ready");
+            ObserveButton.ButtonText = Loc.GetString("ui-lobby-observe-button");
+            CharacterSetupButton.ButtonText = Loc.GetString("lobby-character-preview-panel-character-setup-button");
+            ManifestButton.ButtonText = Loc.GetString("ui-lobby-manifest-button");
+            OptionsButton.ButtonText = Loc.GetString("ui-lobby-options-button");
+            AHelpButton.ButtonText = Loc.GetString("ui-lobby-ahelp-button");
+            ChangelogButton.ButtonText = Loc.GetString("ui-lobby-changelog-button");
+            QuitButton.ButtonText = Loc.GetString("ui-lobby-leave-button");
             LobbySong.SetMarkup(Loc.GetString("lobby-state-song-no-song-text"));
             LobbyBackground.SetMarkup(Loc.GetString("lobby-state-background-no-background-text"));
         }
