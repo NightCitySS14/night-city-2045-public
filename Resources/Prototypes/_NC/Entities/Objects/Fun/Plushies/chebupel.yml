@@ -1,0 +1,48 @@
+- type: entity
+  parent: BasePlushie
+  id: PlushieChebupel
+  name: плюшевый Чебупель
+  description: Сама ты чебупель блять.
+  components:
+  - type: Sprite
+    sprite: Objects/Fun/chebupel.rsi
+    state: icon
+  - type: Item
+    sprite: Objects/Fun/chebupel.rsi
+    inhandVisuals:
+      left:
+      - state: inhand-left
+        shader: shaded
+      right:
+      - state: inhand-right
+        shader: shaded
+  - type: EmitSoundOnUse
+    sound: &PlushieChebupelSound
+      path: /Audio/_NC/Items/Toys/uwu.ogg
+  - type: EmitSoundOnLand
+    sound: *PlushieChebupelSound
+  - type: EmitSoundOnActivate
+    sound: *PlushieChebupelSound
+  - type: EmitSoundOnTrigger
+    sound: *PlushieChebupelSound
+  - type: EmitSoundOnCollide
+    sound: *PlushieChebupelSound
+  - type: Food
+    requiresSpecialDigestion: true
+    useSound: *PlushieChebupelSound
+  - type: MeleeWeapon
+    wideAnimationRotation: 180
+    soundHit: *PlushieChebupelSound
+  - type: Clothing
+    clothingVisuals:
+      head:
+      - state: equipped-HELMET
+        shader: shaded
+    quickEquip: false
+    sprite: Objects/Fun/chebupel.rsi
+    slots:
+    - HEAD
+  - type: Tag
+    tags:
+    - Payload
+    - ClothMade
