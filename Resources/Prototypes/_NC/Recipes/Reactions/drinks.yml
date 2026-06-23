@@ -4,35 +4,35 @@
 
 # region Alt recipes for existing drinks
 
-- type: reaction
-  id: JungleBirdAlt
-  requiredMixerCategories:
-  - Shake
-  reactants:
-    Rum:
-      amount: 3
-    JuiceBungo:
-      amount: 1
-    Grenadine:
-      amount: 1
-    JuiceLemon:
-      amount: 1
-  products:
-    JungleBird: 6
+# - type: reaction
+#   id: JungleBirdAlt
+#   requiredMixerCategories:
+#   - Shake
+#   reactants:
+#     Rum:
+#       amount: 3
+#     JuiceBungo:
+#       amount: 1
+#     Grenadine:
+#       amount: 1
+#     JuiceLemon:
+#       amount: 1
+#   products:
+#     JungleBird: 6
 
-- type: reaction
-  id: JungleBirdAlt2
-  requiredMixerCategories:
-  - Shake
-  reactants:
-    Rum:
-      amount: 3
-    JuiceBungo:
-      amount: 1
-    TripleCitrus:
-      amount: 2
-  products:
-    JungleBird: 6
+# - type: reaction
+#   id: JungleBirdAlt2
+#   requiredMixerCategories:
+#   - Shake
+#   reactants:
+#     Rum:
+#       amount: 3
+#     JuiceBungo:
+#       amount: 1
+#     TripleCitrus:
+#       amount: 2
+#   products:
+#     JungleBird: 6
 
 - type: reaction
   id: MojitoAlt

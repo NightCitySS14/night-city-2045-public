@@ -213,8 +213,10 @@
   - type: Extractable
     juiceSolution:
       reagents:
-      - ReagentId: JungleBird
-        Quantity: 2.5
+      - ReagentId: JuiceBungo  # JungleBird and JuiceMango are missing
+        Quantity: 1.5
+      - ReagentId: Sugar
+        Quantity: 1
   - type: FoodSequenceElement
     entries:
       Burger: MangoSliceBurger
