@@ -123,8 +123,8 @@
     - Stir
   - type: ExaminableSolution
     heldOnly: false
-    examinableWhileClosed: true
-    exactVolume: true
+    # examinableWhileClosed: true
+    # exactVolume: true
   - type: Sprite
     sprite: _NC/Objects/Consumable/Drinks/shaker.rsi
     layers:
@@ -177,8 +177,8 @@
     solution: drink
   - type: ExaminableSolution
     heldOnly: false
-    examinableWhileClosed: true
-    exactVolume: true
+    # examinableWhileClosed: true
+    # exactVolume: true
   - type: Sprite
     sprite: _NC/Objects/Consumable/Drinks/kettle.rsi
     layers:

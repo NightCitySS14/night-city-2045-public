@@ -39,6 +39,14 @@
     Cloth: 100
 
 - type: latheRecipe
+  id: BucketBig
+  result: BucketBig
+  completetime: 2
+  materials:
+    Steel: 100
+    Plastic: 300
+
+- type: latheRecipe
   id: BluespaceBucket
   result: BluespaceBucket
   completetime: 3
