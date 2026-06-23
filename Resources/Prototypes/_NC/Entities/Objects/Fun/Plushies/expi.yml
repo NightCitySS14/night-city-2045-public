@@ -8,6 +8,8 @@
     sprite: &PlushieSprite _NC/Objects/Fun/Plushies/expi.rsi
   - type: Item
     sprite: *PlushieSprite
+  - type: Clothing
+    sprite: *PlushieSprite
   - type: EmitSoundOnUse
     sound: &PlushieSound
       path: /Audio/_NC/Items/Toys/arf.ogg
@@ -23,5 +25,3 @@
     useSound: *PlushieSound
   - type: MeleeWeapon
     soundHit: *PlushieSound
-  - type: Clothing
-    sprite: *PlushieSprite

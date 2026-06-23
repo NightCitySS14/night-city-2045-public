@@ -2,7 +2,7 @@
   parent: BasePlushie
   id: PlushieTrupozarka
   name: плюшевая Трупожарка
-  description: Арара. (с)
+  description: АРАРАР.
   components:
   - type: Sprite
     sprite: &PlushieSprite _NC/Objects/Fun/Plushies/ud.rsi
@@ -25,3 +25,18 @@
     sprite: *PlushieSprite
     slots:
     - HEAD
+  - type: EmitSoundOnUse
+    sound: &PlushieSound
+      path: /Audio/Items/Toys/rawr.ogg
+  - type: EmitSoundOnLand
+    sound: *PlushieSound
+  - type: EmitSoundOnActivate
+    sound: *PlushieSound
+  - type: EmitSoundOnTrigger
+    sound: *PlushieSound
+  - type: EmitSoundOnCollide
+    sound: *PlushieSound
+  - type: Food
+    useSound: *PlushieSound
+  - type: MeleeWeapon
+    soundHit: *PlushieSound
