@@ -1,0 +1,12 @@
+ent-ClothingTrupozarkaThongs = Thongs with trupozarka
+    .desc = trupozarka [WEH],  — at 7:59 PM WHERE IS THE MONEY FROM MERCH'S SALE, ASTRO!?
+    .suffix = { "" }
+ent-PlushieShark = Black Shark
+    .desc = It is not subject to racism.
+    .suffix = { "" }
+ent-PlushieChebupel = plush Chebupel
+    .desc = You're the fucking Chebupel.
+    .suffix = { "" }
+ent-PlushieExperiment = plush Chmonya
+    .desc = This one's a Chmonya, but he doesn't bite.
+    .suffix = { "" }
