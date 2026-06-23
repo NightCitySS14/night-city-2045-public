@@ -1,7 +1,7 @@
 name: PR Title Case
 on:
   pull_request_target:
-    types: [opened, edited, synchronize]
+    types: []  # [opened, edited, synchronize]  # Unskip when the token is fixed
 
 env:
   GITHUB_TOKEN: ${{ secrets.BOT_TOKEN }}
