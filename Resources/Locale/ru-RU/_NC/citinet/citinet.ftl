@@ -25,6 +25,8 @@ citinet-bbs-channel-trauma-comms = Корп. связь Trauma
 citinet-cartridge-name = CitiNet
 citinet-cartridge-description = Терминал городской сети связи Найт-Сити.
 
+citinet-delivery-cartridge-name = "QuickPath Navi"
+
 citinet-tab-calls = Звонки
 citinet-tab-group = Тактика
 citinet-tab-bbs = BBS
@@ -79,6 +81,8 @@ citinet-call-connection-lost = >> ОБРЫВ СВЯЗИ. СИГНАЛ RELAY ПО
 
 citinet-emergency-police-desc =  SOS: { $caller } вызов Траума.
 citinet-emergency-trauma-desc =  SOS: { $caller } вызов патрульных в { $sector }.
+citinet-p2p-game-chat = [CitiNet/ЛС] {$sender}: {$message}
+citinet-group-game-chat = [CitiNet/Мост] {$sender}: {$message}
 citinet-bbs-game-chat = [CitiNet/{$channel}] {$sender}: {$message}
 
 # Delivery
