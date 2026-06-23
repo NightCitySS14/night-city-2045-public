@@ -1,0 +1,27 @@
+- type: entity
+  parent: BasePlushie
+  id: PlushieTrupozarka
+  name: плюшевая Трупожарка
+  description: Арара. (с)
+  components:
+  - type: Sprite
+    sprite: &PlushieSprite _NC/Objects/Fun/Plushies/ud.rsi
+    state: icon
+  - type: Item
+    sprite: *PlushieSprite
+    inhandVisuals:
+      left:
+      - state: inhand-left
+        shader: shaded
+      right:
+      - state: inhand-right
+        shader: shaded
+  - type: Clothing
+    clothingVisuals:
+      head:
+      - state: equipped-HELMET
+        shader: shaded
+    quickEquip: false
+    sprite: *PlushieSprite
+    slots:
+    - HEAD
