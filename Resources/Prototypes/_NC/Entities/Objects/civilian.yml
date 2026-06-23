@@ -95,7 +95,7 @@
       Steel: 125
       Plastic: 125
       Plasma: 50
-      BSCrystal: 12
+      Bluespace: 12
   - type: ReverseEngineering
     difficulty: 5
     recipes:
@@ -254,7 +254,7 @@
       Steel: 25
       Plastic: 125
       Plasma: 37
-      BSCrystal: 12
+      Bluespace: 12
   - type: ReverseEngineering
     difficulty: 4
     recipes:

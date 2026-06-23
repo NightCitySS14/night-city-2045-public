@@ -46,7 +46,7 @@
     Steel: 100
     Plastic: 500
     Plasma: 150
-    BSCrystal: 50
+    Bluespace: 50
 
 - type: latheRecipe
   id: WateringCan
@@ -64,7 +64,7 @@
     Steel: 500
     Plastic: 500
     Plasma: 250
-    BSCrystal: 50
+    Bluespace: 50
 
 - type: latheRecipe
   id: WateringCanExperimental
@@ -98,7 +98,7 @@
     Plastic: 500
     Glass: 50
     Plasma: 50
-    BSCrystal: 50
+    Bluespace: 50
 
 - type: latheRecipe
   parent: BluespaceDrinkShakerAdvanced
