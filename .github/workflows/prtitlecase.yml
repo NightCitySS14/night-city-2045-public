@@ -27,8 +27,8 @@ jobs:
           npm install
         shell: bash
 
-      - name: Change Title
-        run: |
-          cd "Tools/prtitlecase"
-          node index.js
-        shell: bash
+      # - name: Change Title  # Unskip when the token is fixed
+      #   run: |
+      #     cd "Tools/prtitlecase"
+      #     node index.js
+      #   shell: bash
