@@ -1,0 +1,10 @@
+- type: entity
+  parent: ClothingHeadBase
+  id: ClothingHeadHatBiotechnicaCap
+  name: Стринги с трупожаркой
+  description: trupozarka [WEH],  — at 7:59 PM ГДЕ ДЕНЬГИ С МЕРЧА АСТРО!?
+  components:
+  - type: Sprite
+    sprite: _NC\Objects\Fun\trupozarka_thongs.rsi
+  - type: Clothing
+    sprite: _NC\Objects\Fun\trupozarka_thongs.rsi
