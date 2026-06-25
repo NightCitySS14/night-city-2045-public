@@ -1,7 +1,7 @@
 - type: entity
   parent: ClothingHeadBase
   id: ClothingTrupozarkaThongs
-  name: Стринги с трупожаркой
+  name: стринги с Трупожаркой
   description: trupozarka [WEH],  — at 7:59 PM ГДЕ ДЕНЬГИ С МЕРЧА АСТРО!?
   components:
   - type: Sprite
