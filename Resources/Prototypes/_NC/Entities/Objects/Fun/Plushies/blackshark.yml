@@ -1,7 +1,7 @@
 - type: entity
   parent: BasePlushie
   id: PlushieShark
-  name: Черная акула
+  name: чёрная плюшевая акула
   description: Расизму не подлежит.
   components:
   - type: Sprite
