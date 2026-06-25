@@ -1,0 +1,39 @@
+- type: entity
+  parent: BasePlushie
+  id: PlushieShark
+  name: чёрная плюшевая акула
+  description: Расизму не подлежит.
+  components:
+  - type: Sprite
+    sprite: _NC\Objects\Fun\Plushies\sharkblack.rsi
+    state: icon
+  - type: Item
+    sprite: _NC\Objects\Fun\Plushies\sharkblack.rsi
+    inhandVisuals:
+      left:
+      - state: inhand-left
+        shader: shaded
+      right:
+      - state: inhand-right
+        shader: shaded
+  - type: EmitSoundOnUse
+    sound: &PlushieSharkSound
+      path: /Audio/_NC/Items/Toys/uwu.ogg
+  - type: EmitSoundOnLand
+    sound: *PlushieSharklSound
+  - type: EmitSoundOnActivate
+    sound: *PlushieSharklSound
+  - type: EmitSoundOnTrigger
+    sound: *PlushieSharkSound
+  - type: EmitSoundOnCollide
+    sound: *PlushieSharkSound
+  - type: Food
+    requiresSpecialDigestion: true
+    useSound: *PlushieSharkSound
+  - type: MeleeWeapon
+    wideAnimationRotation: 180
+    soundHit: *PlushieSharkSound
+  - type: Tag
+    tags:
+    - Payload
+    - ClothMade

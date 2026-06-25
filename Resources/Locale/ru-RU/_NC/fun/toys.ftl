@@ -1,0 +1,12 @@
+ent-ClothingTrupozarkaThongs = стринги с Трупожаркой
+    .desc = trupozarka [WEH],  — at 7:59 PM ГДЕ ДЕНЬГИ С МЕРЧА АСТРО!?
+    .suffix = { "" }
+ent-PlushieShark = чёрная плюшевая акула
+    .desc = Расизму не подлежит.
+    .suffix = { "" }
+ent-PlushieChebupel = плюшевый Чебупель
+    .desc = Сама ты Чебупель блять.
+    .suffix = { "" }
+ent-PlushieExperiment = плюшевый Чмоня
+    .desc = Это чмоня, но этот не кусается.
+    .suffix = { "" }
