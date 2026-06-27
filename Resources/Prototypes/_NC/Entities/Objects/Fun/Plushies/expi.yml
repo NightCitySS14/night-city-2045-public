@@ -1,48 +1,27 @@
 - type: entity
-  parent: BasePlushie
+  parent: PlushieTrupozarka
   id: PlushieExperiment  # Arf!
   name: плюшевый Чмоня
   description: Это чмоня, но этот не кусается.
   components:
   - type: Sprite
-    sprite: _NC/Objects/Fun/Plushies/expi.rsi
-    state: icon
+    sprite: &PlushieSprite _NC/Objects/Fun/Plushies/expi.rsi
   - type: Item
-    sprite: _NC/Objects/Fun/Plushies/expi.rsi
-    inhandVisuals:
-      left:
-      - state: inhand-left
-        shader: shaded
-      right:
-      - state: inhand-right
-        shader: shaded
+    sprite: *PlushieSprite
+  - type: Clothing
+    sprite: *PlushieSprite
   - type: EmitSoundOnUse
-    sound: &PlushieExperimentSound
+    sound: &PlushieSound
       path: /Audio/_NC/Items/Toys/arf.ogg
   - type: EmitSoundOnLand
-    sound: *PlushieExperimentSound
+    sound: *PlushieSound
   - type: EmitSoundOnActivate
-    sound: *PlushieExperimentSound
+    sound: *PlushieSound
   - type: EmitSoundOnTrigger
-    sound: *PlushieExperimentSound
+    sound: *PlushieSound
   - type: EmitSoundOnCollide
-    sound: *PlushieExperimentSound
+    sound: *PlushieSound
   - type: Food
-    requiresSpecialDigestion: true
-    useSound: *PlushieExperimentSound
+    useSound: *PlushieSound
   - type: MeleeWeapon
-    wideAnimationRotation: 180
-    soundHit: *PlushieExperimentSound
-  - type: Clothing
-    clothingVisuals:
-      head:
-      - state: equipped-HELMET
-        shader: shaded
-    quickEquip: false
-    sprite: _NC/Objects/Fun/Plushies/expi.rsi
-    slots:
-    - HEAD
-  - type: Tag
-    tags:
-    - Payload
-    - ClothMade
+    soundHit: *PlushieSound
