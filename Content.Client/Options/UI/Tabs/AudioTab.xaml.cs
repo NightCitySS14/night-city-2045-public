@@ -18,6 +18,7 @@ public sealed partial class AudioTab : Control
     [Dependency] private readonly IAudioManager _audio = default!;
     [Dependency] private readonly IClientAdminManager _admin = default!;
     [Dependency] private readonly IConfigurationManager _cfg = default!;
+    private readonly OptionDropDownCVar<CharacterVoiceType> _voiceTypeOption;
 
     public AudioTab()
     {
@@ -92,7 +93,7 @@ public sealed partial class AudioTab : Control
         Control.AddOptionCheckBox(WhiteCVars.CombatModeSoundEnabled, CombatModeSoundCheckBox); // WD EDIT
 
         // WD EDIT START
-        Control.AddOptionDropDown(
+        _voiceTypeOption = Control.AddOptionDropDown(
             WhiteCVars.VoiceType,
             DropDownVoiceType,
             [
@@ -126,6 +127,13 @@ public sealed partial class AudioTab : Control
         BwoinkSoundCheckBox.Text = Loc.GetString("ui-options-bwoink-sound");
         CombatModeSoundCheckBox.Text = Loc.GetString("ui-options-toggle-combat-mode-sounds");
         DropDownVoiceType.Title = Loc.GetString("ui-voice-option");
+        _voiceTypeOption.ReloadOptions(
+            [
+                new(CharacterVoiceType.None, Loc.GetString("char-voice-none")),
+                new(CharacterVoiceType.Bark, Loc.GetString("char-voice-bark")),
+                new(CharacterVoiceType.TTS, Loc.GetString("char-voice-tts")),
+            ]);
+        _voiceTypeOption.LoadValue();
         Control.RefreshLocalization();
     }
 

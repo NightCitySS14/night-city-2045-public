@@ -14,6 +14,7 @@ namespace Content.Client.Options.UI.Tabs;
 public sealed partial class GraphicsTab : Control
 {
     [Dependency] private readonly IConfigurationManager _cfg = default!;
+    private readonly OptionDropDownCVar<float> _uiScaleOption;
 
     public GraphicsTab()
     {
@@ -24,7 +25,7 @@ public sealed partial class GraphicsTab : Control
         Control.AddOption(new OptionFullscreen(Control, _cfg, FullscreenCheckBox));
         Control.AddOption(new OptionLightingQuality(Control, _cfg, DropDownLightingQuality));
 
-        Control.AddOptionDropDown(
+        _uiScaleOption = Control.AddOptionDropDown(
             CVars.DisplayUIScale,
             DropDownUIScale,
             [
@@ -113,6 +114,19 @@ public sealed partial class GraphicsTab : Control
         FpsCounterCheckBox.Text = Loc.GetString("ui-options-fps-counter");
         MoodVisualEffectsCheckBox.Text = Loc.GetString("ui-options-mood-visual-effects");
         PixelSnapCameraCheckBox.Text = Loc.GetString("ui-options-pixel-snap-camera-experimental");
+        _uiScaleOption.ReloadOptions(
+            [
+                new OptionDropDownCVar<float>.ValueOption(
+                    0f,
+                    Loc.GetString("ui-options-scale-auto", ("scale", UserInterfaceManager.DefaultUIScale))),
+                new OptionDropDownCVar<float>.ValueOption(0.75f, Loc.GetString("ui-options-scale-75")),
+                new OptionDropDownCVar<float>.ValueOption(1.00f, Loc.GetString("ui-options-scale-100")),
+                new OptionDropDownCVar<float>.ValueOption(1.25f, Loc.GetString("ui-options-scale-125")),
+                new OptionDropDownCVar<float>.ValueOption(1.50f, Loc.GetString("ui-options-scale-150")),
+                new OptionDropDownCVar<float>.ValueOption(1.75f, Loc.GetString("ui-options-scale-175")),
+                new OptionDropDownCVar<float>.ValueOption(2.00f, Loc.GetString("ui-options-scale-200")),
+            ]);
+        _uiScaleOption.LoadValue();
         Control.RefreshLocalization();
     }
 

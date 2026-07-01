@@ -54,6 +54,14 @@ ent-PDABiotechnicaOperativeLead = Biotechnica Operative Lead PDA
 ent-PDABiotechnicaOperative = Biotechnica Operative PDA
 ent-PDABiotechnicaParamedic = Biotechnica Paramedic PDA
 ent-PDABiotechnicaTech = Biotechnica Tech PDA
+ent-PDAMilitechChief = Militech Chief PDA
+ent-PDAMilitechOperativeLead = Militech Operative Lead PDA
+ent-PDAMilitechOperative = Militech Operative PDA
+ent-PDAMilitechNetrunner = Militech Netrunner PDA
+ent-PDAMilitechSecuritySpecialist = Militech Security Specialist PDA
+ent-PDAMilitechCombatMedic = Militech Combat Medic PDA
+ent-PDAMilitechTech = Militech Tech PDA
+ent-PDAMilitechQuartermaster = Militech Quartermaster PDA
 
 # Netrunning Programs & ICE
 ent-NCProgramPing = Ping 1.0
@@ -128,6 +136,14 @@ ent-PDABiotechnicaOperativeLead-desc = Communication device for a Biotechnica se
 ent-PDABiotechnicaOperative-desc = Standard security communication device for Biotechnica.
 ent-PDABiotechnicaParamedic-desc = Mobile medical device for emergency response.
 ent-PDABiotechnicaTech-desc = PDA with a built-in voltmeter and diagnostic utilities.
+ent-PDAMilitechChief-desc = Hardened corporate command terminal with encrypted field channels.
+ent-PDAMilitechOperativeLead-desc = Tactical command PDA for a Militech squad lead.
+ent-PDAMilitechOperative-desc = Standard Militech field security PDA.
+ent-PDAMilitechNetrunner-desc = A dark tactical terminal tuned for hostile network operations.
+ent-PDAMilitechSecuritySpecialist-desc = PDA for a licensed Militech security specialist.
+ent-PDAMilitechCombatMedic-desc = Ruggedized medical terminal for battlefield stabilization.
+ent-PDAMilitechTech-desc = Diagnostic PDA for maintaining Militech equipment under field conditions.
+ent-PDAMilitechQuartermaster-desc = Logistics PDA for tracking restricted corporate materiel.
 
 # Remaining Devices
 ent-NCCitationTerminal = Police Citation Terminal
@@ -179,6 +195,14 @@ ent-BiotechnicaOperativeLeadIDCard = Biotechnica Security Lead ID card
 ent-BiotechnicaOperativeIDCard = Biotechnica Operative ID card
 ent-BiotechnicaParamedicIDCard = Biotechnica Paramedic ID card
 ent-BiotechnicaTechIDCard = Biotechnica Tech ID card
+ent-MilitechChiefIDCard = Militech Chief ID card
+ent-MilitechOperativeLeadIDCard = Militech Operative Lead ID card
+ent-MilitechOperativeIDCard = Militech Operative ID card
+ent-MilitechNetrunnerIDCard = Militech Netrunner ID card
+ent-MilitechSecuritySpecialistIDCard = Militech Security Specialist ID card
+ent-MilitechCombatMedicIDCard = Militech Combat Medic ID card
+ent-MilitechTechIDCard = Militech Tech ID card
+ent-MilitechQuartermasterIDCard = Militech Quartermaster ID card
 
 # Misc
 ent-CitinetDriveEmpty = Empty Media Drive

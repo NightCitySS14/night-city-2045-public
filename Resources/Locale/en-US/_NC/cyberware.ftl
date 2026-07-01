@@ -103,6 +103,12 @@ ent-CyberwareExternalReactiveSubdermalLayer-desc = Elite military development. M
 ent-AutodocConsole = Autodoc Terminal
     .desc = A medical machine for safe cyber-implant integration. Requires a buckled patient.
 
+# Cyberware Fab
+ent-NCCyberwareFab = Cyberware Fabricator
+ent-NCCyberwareFab-desc = A machine for assembling and printing cyberware implants from production prototypes.
+ent-NCCyberwareFabCircuitboard = Cyberware Fabricator Board
+ent-NCCyberwareFabCircuitboard-desc = A machine board for a cyberware fabricator.
+
 # Roles
 role-cyberpsycho-name = Cyberpsycho
 role-cyberpsycho-objective = Kill everyone. Flesh is weak.

@@ -103,6 +103,12 @@ ent-CyberwareExternalReactiveSublayer-desc = Элитная военная ра�
 ent-AutodocConsole = Терминал Автодока
     .desc = Медицинская машина для безопасной интеграции киберимплантов. Требует пристегнутого пациента.
 
+# Cyberware Fab
+ent-NCCyberwareFab = Фабрикатор киберимплантов
+ent-NCCyberwareFab-desc = Станок для сборки и печати киберимплантов по производственным прототипам.
+ent-NCCyberwareFabCircuitboard = Плата фабрикатора киберимплантов
+ent-NCCyberwareFabCircuitboard-desc = Машинная плата для фабрикатора киберимплантов.
+
 # Roles
 role-cyberpsycho-name = Киберпсих
 role-cyberpsycho-objective = Убить всех. Плоть слаба.

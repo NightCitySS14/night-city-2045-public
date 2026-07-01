@@ -311,9 +311,6 @@ Resources/MapImages
 package-lock.json
 
 .docs/
-.translate/
-Tools/TranslationService/.env
-
-.docs/
+.agents/
 .translate/
 Tools/TranslationService/.env

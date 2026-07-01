@@ -54,6 +54,14 @@ ent-PDABiotechnicaOperativeLead = КПК лидера оперативников
 ent-PDABiotechnicaOperative = КПК оперативника Biotechnica
 ent-PDABiotechnicaParamedic = КПК парамедика Biotechnica
 ent-PDABiotechnicaTech = КПК техника Biotechnica
+ent-PDAMilitechChief = КПК руководителя Militech
+ent-PDAMilitechOperativeLead = КПК лидера оперативников Militech
+ent-PDAMilitechOperative = КПК оперативника Militech
+ent-PDAMilitechNetrunner = КПК нетраннера Militech
+ent-PDAMilitechSecuritySpecialist = КПК специалиста безопасности Militech
+ent-PDAMilitechCombatMedic = КПК боевого медика Militech
+ent-PDAMilitechTech = КПК техника Militech
+ent-PDAMilitechQuartermaster = КПК квартирмейстера Militech
 
 # Netrunning Programs & ICE
 ent-NCProgramPing = Пинг 1.0
@@ -128,6 +136,14 @@ ent-PDABiotechnicaOperativeLead-desc = Устройство связи кома�
 ent-PDABiotechnicaOperative-desc = Стандартное устройство связи службы безопасности Biotechnica.
 ent-PDABiotechnicaParamedic-desc = Мобильное медицинское устройство для экстренного реагирования.
 ent-PDABiotechnicaTech-desc = КПК со встроенным вольтметром и диагностическими утилитами.
+ent-PDAMilitechChief-desc = Усиленный корпоративный командный терминал с шифрованными полевыми каналами.
+ent-PDAMilitechOperativeLead-desc = Тактический командный КПК лидера отряда Militech.
+ent-PDAMilitechOperative-desc = Стандартный полевой КПК службы безопасности Militech.
+ent-PDAMilitechNetrunner-desc = Тёмный тактический терминал для враждебных сетевых операций.
+ent-PDAMilitechSecuritySpecialist-desc = КПК лицензированного специалиста безопасности Militech.
+ent-PDAMilitechCombatMedic-desc = Усиленный медицинский терминал для стабилизации раненых в бою.
+ent-PDAMilitechTech-desc = Диагностический КПК для обслуживания оборудования Militech в полевых условиях.
+ent-PDAMilitechQuartermaster-desc = Логистический КПК для учёта ограниченного корпоративного снаряжения.
 
 # Remaining Devices
 ent-NCCitationTerminal = Полицейский терминал штрафов
@@ -179,6 +195,14 @@ ent-BiotechnicaOperativeLeadIDCard = идентификационная карт
 ent-BiotechnicaOperativeIDCard = идентификационная карта оперативника Биотехники
 ent-BiotechnicaParamedicIDCard = идентификационная карта парамедика Биотехники
 ent-BiotechnicaTechIDCard = идентификационная карта техника Биотехники
+ent-MilitechChiefIDCard = идентификационная карта руководителя Militech
+ent-MilitechOperativeLeadIDCard = идентификационная карта лидера оперативников Militech
+ent-MilitechOperativeIDCard = идентификационная карта оперативника Militech
+ent-MilitechNetrunnerIDCard = идентификационная карта нетраннера Militech
+ent-MilitechSecuritySpecialistIDCard = идентификационная карта специалиста безопасности Militech
+ent-MilitechCombatMedicIDCard = идентификационная карта боевого медика Militech
+ent-MilitechTechIDCard = идентификационная карта техника Militech
+ent-MilitechQuartermasterIDCard = идентификационная карта квартирмейстера Militech
 
 # Misc
 ent-CitinetDriveEmpty = Пустой носитель
