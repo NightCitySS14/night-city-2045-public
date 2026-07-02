@@ -4,9 +4,11 @@ using Content.Server.NPC;
 using Content.Server.NPC.HTN;
 using Content.Server.NPC.Systems;
 using Content.Shared.Administration;
+using Content.Shared._NC.Rigger.Components;
 using Content.Shared._NC.RTS.Components;
 using Content.Shared._NC.RTS.Events;
 using Robust.Shared.Map;
+using Robust.Shared.Player;
 
 namespace Content.Server._NC.RTS.Systems;
 
@@ -31,14 +33,18 @@ public sealed partial class RTSSystem : EntitySystem
 
     private void OnCommandReceived(RTSCommandEvent ev, EntitySessionEventArgs args)
     {
-        if (!_adminManager.HasAdminFlag(args.SenderSession, AdminFlags.Admin))
+        var isAdmin = _adminManager.HasAdminFlag(args.SenderSession, AdminFlags.Admin);
+        var rigger = GetRiggerSession(args.SenderSession);
+        if (!isAdmin && rigger == null)
             return;
 
         foreach (var netEntity in ev.SelectedNpcs)
         {
             var uid = GetEntity(netEntity);
 
-            if (!Exists(uid) || !TryComp<RTSControllableComponent>(uid, out var rts))
+            if (!Exists(uid) ||
+                !TryComp<RTSControllableComponent>(uid, out var rts) ||
+                rigger != null && !rigger.Value.Comp.LinkedDrones.Contains(uid))
                 continue;
 
             rts.Destination = null;
@@ -92,13 +98,26 @@ public sealed partial class RTSSystem : EntitySystem
             else
                 htn.Blackboard.Remove<object>(ManualCommandKey);
 
-            // Shut the running plan down immediately so the manual order wins now,
-            // not after the next natural HTN transition.
+            // Shut the running plan down immediately so direct RTS execution owns the NPC.
             if (htn.Plan != null)
                 _htn.ShutdownPlan(htn);
 
-            _htn.Replan(htn);
+            if (rts.ActiveCommand == null)
+                _htn.Replan(htn);
         }
+    }
+
+    private Entity<RiggerConsoleUserComponent>? GetRiggerSession(ICommonSession session)
+    {
+        var attached = session.AttachedEntity;
+        if (attached == null ||
+            !TryComp<RiggerConsoleUserComponent>(attached.Value, out var rigger) ||
+            !rigger.RtsEnabled)
+        {
+            return null;
+        }
+
+        return (attached.Value, rigger);
     }
 
     /// <summary>

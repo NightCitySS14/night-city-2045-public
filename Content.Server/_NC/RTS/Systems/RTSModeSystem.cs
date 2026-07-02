@@ -86,6 +86,7 @@ public sealed partial class RTSModeSystem : EntitySystem
         comp.Enabled = false;
         _actions.SetToggled(comp.ToggleActionEntity, false);
         _actions.RemoveAction(uid, comp.ToggleActionEntity);
+        comp.ToggleActionEntity = null;
         RemComp(uid, comp);
     }
 
@@ -110,6 +111,9 @@ public sealed partial class RTSModeSystem : EntitySystem
 
     private void OnShutdown(Entity<RTSModeComponent> ent, ref ComponentShutdown args)
     {
+        if (ent.Comp.ToggleActionEntity == null)
+            return;
+
         _actions.RemoveAction(ent.Owner, ent.Comp.ToggleActionEntity);
     }
 

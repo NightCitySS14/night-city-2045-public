@@ -13,6 +13,7 @@ using Content.Shared.Mobs.Components;
 using Content.Shared.NPC.Systems;
 using Content.Shared.Physics;
 using Content.Shared.Weapons.Ranged.Components;
+using Content.Shared.Weapons.Ranged.Systems;
 using Robust.Shared.Map;
 
 namespace Content.Server._NC.RTS.Systems;
@@ -31,6 +32,7 @@ public sealed partial class GMCommandSystem : EntitySystem
 
     [Dependency] private SharedCombatModeSystem _combatMode = default!;
     [Dependency] private NpcFactionSystem _faction = default!;
+    [Dependency] private SharedGunSystem _gun = default!;
     [Dependency] private HandsSystem _hands = default!;
     [Dependency] private HTNSystem _htn = default!;
     [Dependency] private InteractionSystem _interaction = default!;
@@ -82,8 +84,7 @@ public sealed partial class GMCommandSystem : EntitySystem
             return;
         }
 
-        _combatMode.SetInCombatMode(uid, false);
-        RemComp<NPCRangedCombatComponent>(uid);
+        SuppressRangedCombat(uid);
         EnsureSteering(uid, rts.Destination.Value);
     }
 
@@ -101,8 +102,32 @@ public sealed partial class GMCommandSystem : EntitySystem
             return;
         }
 
+        if (rts.TargetEntity is { } currentTarget)
+        {
+            if (CanEngageHostile(uid, currentTarget))
+            {
+                _steering.Unregister(uid);
+                EngageTarget(uid, currentTarget);
+                return;
+            }
+
+            rts.TargetEntity = null;
+            Dirty(uid, rts);
+            SuppressRangedCombat(uid);
+        }
+
+        if (TryGetNearestHostile(uid, out var hostile))
+        {
+            rts.TargetEntity = hostile;
+            Dirty(uid, rts);
+
+            _steering.Unregister(uid);
+            EngageTarget(uid, hostile);
+            return;
+        }
+
+        SuppressRangedCombat(uid);
         EnsureSteering(uid, rts.Destination.Value);
-        TryEngageNearestHostile(uid);
     }
 
     private void HandleAttackTarget(EntityUid uid, RTSControllableComponent rts)
@@ -148,20 +173,36 @@ public sealed partial class GMCommandSystem : EntitySystem
 
     private void TryEngageNearestHostile(EntityUid uid)
     {
+        if (TryGetNearestHostile(uid, out var hostile))
+            EngageTarget(uid, hostile);
+    }
+
+    private bool TryGetNearestHostile(EntityUid uid, out EntityUid hostile)
+    {
+        hostile = EntityUid.Invalid;
+
         if (!_hands.TryGetActiveItem(uid, out var heldItem) || !HasComp<GunComponent>(heldItem))
-            return;
+            return false;
 
-        var collisionGroup = CollisionGroup.Impassable | CollisionGroup.InteractImpassable;
-        var hostiles = _faction.GetNearbyHostiles(uid, DefaultScanRadius);
-        var hostile = hostiles.FirstOrDefault(h => _interaction.InRangeUnobstructed(uid, h, DefaultScanRadius, collisionGroup));
+        hostile = _faction.GetNearbyHostiles(uid, DefaultScanRadius)
+            .FirstOrDefault(h => CanEngageHostile(uid, h));
 
+        return hostile != EntityUid.Invalid && Exists(hostile);
+    }
+
+    private bool CanEngageHostile(EntityUid uid, EntityUid hostile)
+    {
         if (hostile == EntityUid.Invalid || !Exists(hostile))
-            return;
+            return false;
 
         if (TryComp<MobStateComponent>(hostile, out var mobState) && mobState.CurrentState > MobState.Alive)
-            return;
+            return false;
 
-        EngageTarget(uid, hostile);
+        if (Transform(hostile).MapID != Transform(uid).MapID)
+            return false;
+
+        var collisionGroup = CollisionGroup.Impassable | CollisionGroup.InteractImpassable;
+        return _interaction.InRangeUnobstructed(uid, hostile, DefaultScanRadius, collisionGroup);
     }
 
     /// <summary>
@@ -183,8 +224,7 @@ public sealed partial class GMCommandSystem : EntitySystem
         Dirty(uid, rts);
 
         _steering.Unregister(uid);
-        _combatMode.SetInCombatMode(uid, false);
-        RemComp<NPCRangedCombatComponent>(uid);
+        SuppressRangedCombat(uid);
 
         if (!TryComp<HTNComponent>(uid, out var htn))
             return;
@@ -193,5 +233,40 @@ public sealed partial class GMCommandSystem : EntitySystem
         htn.Blackboard.Remove<object>(TargetCoordinatesKey);
         htn.Blackboard.Remove<object>(ManualCommandKey);
         _htn.Replan(htn);
+    }
+
+    /// <summary>
+    /// Plain RTS movement must not allow stale ranged AI state to keep firing
+    /// while the NPC is walking to the ordered point.
+    /// </summary>
+    private void SuppressRangedCombat(EntityUid uid)
+    {
+        _combatMode.SetInCombatMode(uid, false);
+        RemComp<NPCRangedCombatComponent>(uid);
+
+        if (TryComp<HTNComponent>(uid, out var htn))
+        {
+            htn.Blackboard.Remove<object>(TargetKey);
+            htn.Blackboard.Remove<object>(TargetCoordinatesKey);
+        }
+
+        if (TryComp<AutoShootGunComponent>(uid, out var ownerAutoShoot))
+            _gun.SetEnabled(uid, ownerAutoShoot, false);
+
+        if (!_hands.TryGetActiveItem(uid, out var heldItem))
+            return;
+
+        if (TryComp<AutoShootGunComponent>(heldItem, out var heldAutoShoot))
+            _gun.SetEnabled(heldItem.Value, heldAutoShoot, false);
+
+        if (!TryComp<GunComponent>(heldItem, out var gun))
+            return;
+
+        gun.ShootCoordinates = null;
+        gun.Target = null;
+        gun.ShotCounter = 0;
+        gun.BurstActivated = false;
+        gun.BurstShotsCount = 0;
+        Dirty(heldItem.Value, gun);
     }
 }

@@ -5,6 +5,7 @@ using Content.Client._NC.RTS.Components;
 using Content.Client._NC.RTS.Overlays;
 using Content.Client._NC.RTS.UI;
 using Content.Shared.Administration;
+using Content.Shared._NC.Rigger.Components;
 using Content.Shared._NC.RTS.Components;
 using Content.Shared._NC.RTS.Events;
 using Content.Shared.Ghost;
@@ -163,7 +164,7 @@ public sealed class RTSSelectionSystem : EntitySystem
 
         var entities = _lookup
             .GetEntitiesIntersecting(startMap.MapId, box)
-            .Where(uid => HasComp<RTSControllableComponent>(uid));
+            .Where(uid => HasComp<RTSControllableComponent>(uid) && IsSelectableByLocalUser(uid));
 
         foreach (var uid in entities)
         {
@@ -276,14 +277,29 @@ public sealed class RTSSelectionSystem : EntitySystem
 
     private bool IsModeActive()
     {
-        if (!_adminManager.IsActive() || !_adminManager.HasFlag(AdminFlags.Admin))
-            return false;
-
         var attached = _playerManager.LocalSession?.AttachedEntity;
         if (attached == null)
             return false;
 
-        return TryComp(attached.Value, out RTSModeComponent? mode) && mode.Enabled;
+        if (TryComp(attached.Value, out RiggerConsoleUserComponent? rigger))
+            return rigger.RtsEnabled;
+
+        return _adminManager.IsActive() &&
+               _adminManager.HasFlag(AdminFlags.Admin) &&
+               TryComp(attached.Value, out RTSModeComponent? mode) &&
+               mode.Enabled;
+    }
+
+    private bool IsSelectableByLocalUser(EntityUid uid)
+    {
+        var attached = _playerManager.LocalSession?.AttachedEntity;
+        if (attached == null)
+            return false;
+
+        if (TryComp(attached.Value, out RiggerConsoleUserComponent? rigger))
+            return rigger.LinkedDrones.Contains(uid);
+
+        return true;
     }
 
     private EntityUid? GetEntityUnderPosition(MapCoordinates mapCoords)

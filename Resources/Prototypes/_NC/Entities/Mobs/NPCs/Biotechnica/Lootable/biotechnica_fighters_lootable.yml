@@ -70,7 +70,9 @@
   components:
   - type: NpcFactionMember
     factions:
-    - NCBiotechnica
+    - NanoTrasen
+  - type: RiggerDrone
+  - type: RTSControllable
   - type: HTN
     rootTask:
       task: NCBanditTier2RootCompound
