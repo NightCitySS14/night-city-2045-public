@@ -10,7 +10,6 @@ using Content.Shared.Mobs.Components;
 using Content.Shared.NPC.Components;
 using Content.Shared.NPC.Systems;
 using Content.Shared.Weapons.Ranged.Components;
-using Robust.Shared.Map;
 
 namespace Content.Server._NC.RTS.Systems;
 
@@ -45,32 +44,57 @@ public sealed class RTSRetaliationCombatSystem : EntitySystem
             return;
         }
 
-        // A direct move order explicitly ignores enemies and aggression.
-        if (ent.Comp.ActiveCommand == RTSCommandType.Move)
+        // Manual RTS orders own the NPC until they end. Plain Move explicitly
+        // ignores aggression, and AttackTarget should not be retargeted by chip damage.
+        if (ent.Comp.ActiveCommand != null)
             return;
 
-        if (TryComp<NPCRetaliationComponent>(ent.Owner, out var retaliation) &&
-            !retaliation.RetaliateFriendlies &&
-            _faction.IsEntityFriendly(ent.Owner, attacker))
+        if (!HasComp<NPCRetaliationComponent>(ent.Owner))
+            return;
+
+        // Do not use vanilla friendly filtering here: RTS drones must answer
+        // the entity that actually damaged them even in peaceful faction mode.
+        _faction.AggroEntity(ent.Owner, attacker);
+
+        if (!_hands.TryGetActiveItem(ent.Owner, out var heldItem) || !HasComp<GunComponent>(heldItem))
         {
+            RetaliateWithDefaultNpcCombat(ent.Owner, attacker);
             return;
         }
 
-        if (!_hands.TryGetActiveItem(ent.Owner, out var heldItem) ||
-            !HasComp<GunComponent>(heldItem))
-        {
-            return;
-        }
+        RetaliateWithRangedCombat(ent.Owner, attacker);
+    }
 
-        _steering.Unregister(ent.Owner);
-        RemComp<NPCMeleeCombatComponent>(ent.Owner);
+    private void RetaliateWithRangedCombat(EntityUid uid, EntityUid attacker)
+    {
+        _steering.Unregister(uid);
+        RemComp<NPCMeleeCombatComponent>(uid);
 
-        var ranged = EnsureComp<NPCRangedCombatComponent>(ent.Owner);
+        var ranged = EnsureComp<NPCRangedCombatComponent>(uid);
         ranged.Target = attacker;
+        ranged.Status = CombatStatus.Normal;
+        ranged.ShootAccumulator = 0f;
+        ranged.LOSAccumulator = 0f;
+        ranged.TargetInLOS = false;
 
-        _combatMode.SetInCombatMode(ent.Owner, true);
+        _combatMode.SetInCombatMode(uid, true);
 
-        if (!TryComp<HTNComponent>(ent.Owner, out var htn))
+        if (!TryComp<HTNComponent>(uid, out var htn))
+            return;
+
+        htn.Blackboard.SetValue(TargetKey, attacker);
+        htn.Blackboard.SetValue(TargetCoordinatesKey, Transform(attacker).Coordinates);
+
+        if (htn.Plan != null)
+            _htn.ShutdownPlan(htn);
+
+        _htn.Replan(htn);
+    }
+
+    private void RetaliateWithDefaultNpcCombat(EntityUid uid, EntityUid attacker)
+    {
+        // Fall back to the vanilla faction exception path for non-ranged NPCs.
+        if (!TryComp<HTNComponent>(uid, out var htn))
             return;
 
         htn.Blackboard.SetValue(TargetKey, attacker);
