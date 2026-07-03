@@ -18,6 +18,8 @@ public sealed partial class RTSControlWindow : DefaultWindow
         MoveButton.OnPressed += _ => OnCommandIssued?.Invoke(RTSCommandType.Move);
         AttackMoveButton.OnPressed += _ => OnCommandIssued?.Invoke(RTSCommandType.AttackMove);
         AttackTargetButton.OnPressed += _ => OnCommandIssued?.Invoke(RTSCommandType.AttackTarget);
+        PeacefulButton.OnPressed += _ => OnCommandIssued?.Invoke(RTSCommandType.SetPeacefulMode);
+        NormalButton.OnPressed += _ => OnCommandIssued?.Invoke(RTSCommandType.SetNormalMode);
         HoldButton.OnPressed += _ => OnCommandIssued?.Invoke(RTSCommandType.HoldPosition);
         StopButton.OnPressed += _ => OnStopIssued?.Invoke();
     }

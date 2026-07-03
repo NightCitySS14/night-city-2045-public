@@ -103,19 +103,6 @@ public sealed class RTSSelectionSystem : EntitySystem
 
         if (args.State == BoundKeyState.Down)
         {
-            if (_pendingCommand != null)
-            {
-                IssueCommand(_pendingCommand.Value, args.ScreenCoordinates);
-                _pendingCommand = null;
-                return true;
-            }
-
-            if (_inputManager.IsKeyDown(Keyboard.Key.A))
-            {
-                IssueCommand(RTSCommandType.AttackMove, args.ScreenCoordinates);
-                return true;
-            }
-
             if (IsDragging)
                 return true;
 
@@ -140,6 +127,30 @@ public sealed class RTSSelectionSystem : EntitySystem
 
         var mapCoords = _eyeManager.ScreenToMap(args.ScreenCoordinates);
         var targetEntity = GetEntityUnderPosition(mapCoords);
+        var pendingCommand = _pendingCommand;
+        _pendingCommand = null;
+
+        if (pendingCommand != null)
+        {
+            switch (pendingCommand.Value)
+            {
+                case RTSCommandType.AttackTarget when targetEntity != null:
+                    IssueCommand(RTSCommandType.AttackTarget, args.ScreenCoordinates, targetEntity);
+                    break;
+                case RTSCommandType.AttackTarget:
+                    IssueCommand(RTSCommandType.Move, args.ScreenCoordinates);
+                    break;
+                case RTSCommandType.Move:
+                case RTSCommandType.AttackMove:
+                    IssueCommand(pendingCommand.Value, args.ScreenCoordinates);
+                    break;
+                case RTSCommandType.HoldPosition:
+                    IssueCommand(RTSCommandType.HoldPosition, args.ScreenCoordinates);
+                    break;
+            }
+
+            return true;
+        }
 
         if (targetEntity != null)
             IssueCommand(RTSCommandType.AttackTarget, args.ScreenCoordinates, targetEntity);
@@ -200,7 +211,7 @@ public sealed class RTSSelectionSystem : EntitySystem
             _window = new RTSControlWindow();
             _window.OnCommandIssued += type =>
             {
-                if (type == RTSCommandType.HoldPosition)
+                if (type is RTSCommandType.HoldPosition or RTSCommandType.SetPeacefulMode or RTSCommandType.SetNormalMode)
                     IssueCommand(type, _inputManager.MouseScreenPosition);
                 else
                     _pendingCommand = type;

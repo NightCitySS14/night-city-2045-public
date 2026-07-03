@@ -10,7 +10,9 @@ public enum RTSCommandType : byte
     AttackMove,
     AttackTarget,
     HoldPosition,
-    Stop
+    Stop,
+    SetPeacefulMode,
+    SetNormalMode
 }
 
 /// <summary>

@@ -106,8 +106,7 @@ public sealed partial class GMCommandSystem : EntitySystem
         {
             if (CanEngageHostile(uid, currentTarget))
             {
-                _steering.Unregister(uid);
-                EngageTarget(uid, currentTarget);
+                ClearCommand(uid, rts);
                 return;
             }
 
@@ -118,11 +117,7 @@ public sealed partial class GMCommandSystem : EntitySystem
 
         if (TryGetNearestHostile(uid, out var hostile))
         {
-            rts.TargetEntity = hostile;
-            Dirty(uid, rts);
-
-            _steering.Unregister(uid);
-            EngageTarget(uid, hostile);
+            ClearCommand(uid, rts);
             return;
         }
 
@@ -149,7 +144,7 @@ public sealed partial class GMCommandSystem : EntitySystem
     private void HandleHoldPosition(EntityUid uid)
     {
         _steering.Unregister(uid);
-        TryEngageNearestHostile(uid);
+        SuppressRangedCombat(uid);
     }
 
     /// <summary>
@@ -169,12 +164,6 @@ public sealed partial class GMCommandSystem : EntitySystem
 
         _steering.Unregister(uid);
         _steering.Register(uid, target);
-    }
-
-    private void TryEngageNearestHostile(EntityUid uid)
-    {
-        if (TryGetNearestHostile(uid, out var hostile))
-            EngageTarget(uid, hostile);
     }
 
     private bool TryGetNearestHostile(EntityUid uid, out EntityUid hostile)
@@ -214,6 +203,16 @@ public sealed partial class GMCommandSystem : EntitySystem
         _combatMode.SetInCombatMode(uid, true);
         var combat = EnsureComp<NPCRangedCombatComponent>(uid);
         combat.Target = target;
+
+        // Ranged NPC combat sets Unspecified when the gun runs dry.
+        // A persistent RTS attack order must wake it back up after reload.
+        if (combat.Status != CombatStatus.Unspecified)
+            return;
+
+        combat.Status = CombatStatus.Normal;
+        combat.ShootAccumulator = 0f;
+        combat.LOSAccumulator = 0f;
+        combat.TargetInLOS = false;
     }
 
     private void ClearCommand(EntityUid uid, RTSControllableComponent rts)
